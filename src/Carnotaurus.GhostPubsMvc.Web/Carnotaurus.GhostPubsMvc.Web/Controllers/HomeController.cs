@@ -45,6 +45,8 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
 
             UpdateOrganisations(entities);
 
+            entities = new CMSEntities1();
+
             GenerateHtmlPages(entities);
 
             //var model = PrepareModel("Generated pages", "generate");
