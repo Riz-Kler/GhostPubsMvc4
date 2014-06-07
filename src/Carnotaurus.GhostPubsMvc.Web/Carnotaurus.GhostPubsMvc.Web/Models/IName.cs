@@ -17,25 +17,4 @@ namespace Carnotaurus.GhostPubsMvc.Web
         String Name { get; set; }
     }
 
-    public interface IOrgModel
-    {
-        String JumboTitle { get; set; }
-
-        String Action { get; set; }
-    }
-
-    //public partial class Region : IName
-    //{
-    //    public string Name
-    //    {
-    //        get
-    //        {
-    //            return this.Description;
-    //        }
-    //        set
-    //        {
-    //            this.Description = value;
-    //        }
-    //    }
-    //}
 }

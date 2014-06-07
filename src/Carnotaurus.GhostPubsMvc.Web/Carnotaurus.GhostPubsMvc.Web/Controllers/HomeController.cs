@@ -55,7 +55,14 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
         }
 
         private void GenerateHtmlPages(CMSEntities1 entities)
-        {
+        { 
+            //var entities = entities2.Orgs. Where(
+            //             x => x.Address != null
+            //               && x.AddressType != null
+            //               && x.AddressType.AddressTypeID == 1
+            //               && x.Tags.Any(y => y.Feature.FeatureID == 39)
+            //            ).ToList();
+
             var currentRoot = @"C:\Carnotaurus\" + Guid.NewGuid() + @"\haunted_pub";
 
             Directory.CreateDirectory(currentRoot);
@@ -63,13 +70,6 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             DeleteDirectory(currentRoot);
 
             Directory.CreateDirectory(currentRoot);
-
-            //    var entities = c.Entities.Where(
-            //                 x => x.Address != null
-            //                   && x.Address.AddressType != null
-            //                   && x.Address.AddressType.AddressTypeID == 1
-            //                   && x.Tags.Any(y => y.Feature.FeatureID == 39)
-            //                ).ToList();
 
             var regions = CreateRegionsFile(currentRoot, entities);
 
@@ -79,59 +79,56 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
 
                 var orgsInRegionCount = currentRegion.Counties.Sum(x => x.Orgs.Count(y => y.HauntedStatus == 1));
 
-               // if (orgsInRegionCount == 0) continue;
+                if (orgsInRegionCount == 0) continue;
 
                 var countiesInRegion = CreateRegionFile(currentRegion, currentRegionPath, orgsInRegionCount);
 
-                if (countiesInRegion != null)
-                    foreach (var currentCounty in countiesInRegion)
+                //if (countiesInRegion == null) continue;
+
+                foreach (var currentCounty in countiesInRegion)
+                {
+                    // county file needs knowledge of its addresses for Town
+                    if (currentCounty == null) continue;
+
+                    var orgsInCounty =
+                        currentCounty.Orgs.Where(x => x.Town != null && x.HauntedStatus == 1).ToList();
+
+                    // if (!orgsInCounty.Any()) continue;
+
+                    if (currentRegionPath == null) continue;
+
+                    var currentCountyPath = BuildPath(currentRegionPath, currentCounty.Name);
+
+                    // write county directory
+                    if (currentCountyPath == null) continue;
+
+                    Directory.CreateDirectory(currentCountyPath);
+
+                    var townsInCounty = orgsInCounty.Select(x => x.Town).Distinct().ToList();
+
+                    CreateCountyFile(currentCounty, currentCountyPath, townsInCounty, currentRegion, orgsInCounty.Count);
+
+                    var pubTownLinks = new List<KeyValuePair<String, Link>>();
+
+                    foreach (var currentOrg in orgsInCounty)
                     {
-                        // county file needs knowledge of its addresses for Town
-                        if (currentCounty != null)
-                        {
-                            var orgsInCounty =
-                                currentCounty.Orgs.Where(x => x.Town != null && x.HauntedStatus == 1).ToList();
+                        var currentTownPath = BuildPath(currentCountyPath, currentOrg.Town);
 
-                            // if (orgsInRegionCount == 0) continue;
+                        if (currentTownPath == null) continue;
 
-                            if (currentRegionPath != null)
-                            {
-                                var currentCountyPath = BuildPath(currentRegionPath, currentCounty.Name);
+                        Directory.CreateDirectory(currentTownPath);
 
-                                // write county directory
-                                if (currentCountyPath != null)
-                                {
-                                    Directory.CreateDirectory(currentCountyPath);
-
-                                    var townsInCounty = orgsInCounty.Select(x => x.Town).Distinct().ToList();
-
-                                    CreateCountyFile(currentCounty, currentCountyPath, townsInCounty, currentRegion, orgsInCounty.Count);
-
-                                    var pubTownLinks = new List<KeyValuePair<String, Link>>();
-
-                                    foreach (var currentOrg in orgsInCounty)
-                                    {
-                                        var currentTownPath = BuildPath(currentCountyPath, currentOrg.Town);
-
-                                        if (currentTownPath != null)
-                                        {
-                                            Directory.CreateDirectory(currentTownPath);
-
-                                            //town file needs knowledge of its pubs, e.g., trading name
-                                            // var pubs = currentAddress .Entities.OrderBy(x => x.TradingName).ToList();
-                                            CreatePubFile(pubTownLinks, currentTownPath, currentOrg);
-                                        }
-                                    }
-
-                                    // create the town pages
-                                    foreach (var town in townsInCounty)
-                                    {
-                                        CreateTownFile(currentCountyPath, pubTownLinks, town, currentCounty);
-                                    }
-                                }
-                            }
-                        }
+                        //town file needs knowledge of its pubs, e.g., trading name
+                        // var pubs = currentAddress .Entities.OrderBy(x => x.TradingName).ToList();
+                        CreatePubFile(pubTownLinks, currentTownPath, currentOrg);
                     }
+
+                    // create the town pages
+                    foreach (var town in townsInCounty)
+                    {
+                        CreateTownFile(currentCountyPath, pubTownLinks, town, currentCounty);
+                    }
+                }
             }
         }
 
@@ -327,9 +324,12 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             Directory.CreateDirectory(currentRegionPath);
 
             // region file needs knowledge of its counties
-            var countiesInRegion = currentRegion.Counties.ToList();
+            // should be list of counties that have ghost pubs?
+            // var countiesInRegion = currentRegion.Counties.ToList();
 
-            var countyLinks = countiesInRegion.Select(x => new Link
+            var hauntedCountiesInRegion = currentRegion.Counties.Where(x => x.Orgs.Any(y => y.HauntedStatus == 1)).ToList();
+
+            var countyLinks = hauntedCountiesInRegion.Select(x => new Link
             {
                 Text = x.Description,
                 Title = x.Description
@@ -348,7 +348,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
 
             WriteLines(regionModel);
 
-            return countiesInRegion;
+            return hauntedCountiesInRegion;
         }
 
         private void CreateTownFile(string currentCountyPath, IEnumerable<KeyValuePair<string, Link>> pubTownLinks,
@@ -545,9 +545,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
 
         protected String PrepareModel(OrgModel data)
         {
-            var output = String.Empty;
-
-            output = this.PrepareView(data, data.Action);
+            var output = this.PrepareView(data, data.Action);
 
             return output;
         }

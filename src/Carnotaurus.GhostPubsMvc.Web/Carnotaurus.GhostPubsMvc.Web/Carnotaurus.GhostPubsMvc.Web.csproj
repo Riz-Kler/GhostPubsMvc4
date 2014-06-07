@@ -243,9 +243,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\AboutModel.cs" />
-    <Compile Include="Models\Address.cs" />
-    <Compile Include="Models\Region.cs" />
+    <Compile Include="Models\IOrgModel.cs" />
+    <Compile Include="Models\PageModel.cs" />
+    <Compile Include="Models\Org.cs" />
+    <Compile Include="Models\Link.cs" />
+    <Compile Include="Models\OrgModel.cs" />
+    <Compile Include="Models\IName.cs" />
     <Compile Include="Note.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
