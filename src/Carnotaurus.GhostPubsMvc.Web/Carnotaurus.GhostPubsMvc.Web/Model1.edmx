@@ -1,0 +1,920 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AddressType">
+          <Key>
+            <PropertyRef Name="AddressTypeID" />
+          </Key>
+          <Property Name="AddressTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastModified" Type="datetime" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="300" />
+          <Property Name="Deleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="FeatureType">
+          <Key>
+            <PropertyRef Name="FeatureTypeID" />
+          </Key>
+          <Property Name="FeatureTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentFeatureTypeID" Type="int" />
+          <Property Name="LastModified" Type="datetime" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="300" />
+          <Property Name="Deleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="AdminArea">
+          <Key>
+            <PropertyRef Name="AdminAreaID" />
+          </Key>
+          <Property Name="AdminAreaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountyID" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="300" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="BookId" />
+          </Key>
+          <Property Name="BookId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Created" Type="datetime" />
+          <Property Name="Modified" Type="datetime" />
+          <Property Name="Deleted" Type="datetime" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BookItem">
+          <Key>
+            <PropertyRef Name="BookItemId" />
+          </Key>
+          <Property Name="BookItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Created" Type="datetime" />
+          <Property Name="Modified" Type="datetime" />
+          <Property Name="Deleted" Type="datetime" />
+          <Property Name="BookId" Type="int" Nullable="false" />
+          <Property Name="OrgId" Type="int" />
+          <Property Name="County" Type="nvarchar(max)" />
+          <Property Name="Town" Type="nvarchar(max)" />
+          <Property Name="AlternativeTown" Type="nvarchar(max)" />
+          <Property Name="TradingName" Type="nvarchar(max)" />
+          <Property Name="Text" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="250" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ContentPage">
+          <Key>
+            <PropertyRef Name="PageID" />
+          </Key>
+          <Property Name="PageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryID" Type="int" />
+          <Property Name="OrderID" Type="int" />
+          <Property Name="PageTemplateID" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" />
+          <Property Name="Lead" Type="nvarchar" MaxLength="1000" />
+          <Property Name="WellHeader" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="HtmlText" Type="nvarchar(max)" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateModified" Type="datetime" />
+          <Property Name="Deleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="County">
+          <Key>
+            <PropertyRef Name="CountyID" />
+          </Key>
+          <Property Name="CountyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RegionID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="300" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="RegionID" />
+          </Key>
+          <Property Name="RegionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Deleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Feature">
+          <Key>
+            <PropertyRef Name="FeatureID" />
+          </Key>
+          <Property Name="FeatureID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastModified" Type="datetime" Nullable="false" />
+          <Property Name="FeatureTypeID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="Note">
+          <Key>
+            <PropertyRef Name="NoteID" />
+          </Key>
+          <Property Name="NoteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastModified" Type="datetime" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="OrgID" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Org">
+          <Key>
+            <PropertyRef Name="OrgID" />
+          </Key>
+          <Property Name="OrgID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+          <Property Name="Modified" Type="datetime" Nullable="false" />
+          <Property Name="Deleted" Type="datetime" />
+          <Property Name="AddressTypeID" Type="int" />
+          <Property Name="CountyID" Type="int" />
+          <Property Name="ParentID" Type="int" />
+          <Property Name="TradingStatus" Type="int" />
+          <Property Name="HauntedStatus" Type="int" />
+          <Property Name="TradingName" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="AlternateName" Type="nvarchar" MaxLength="300" />
+          <Property Name="SearchName" Type="nvarchar" MaxLength="300" />
+          <Property Name="Locality" Type="nvarchar" MaxLength="300" />
+          <Property Name="Town" Type="nvarchar" MaxLength="300" />
+          <Property Name="Administrative_area_level_2" Type="nvarchar" MaxLength="300" />
+          <Property Name="Postcode" Type="nvarchar" MaxLength="8" />
+          <Property Name="Address" Type="nvarchar" MaxLength="300" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Twitter" Type="nvarchar" MaxLength="300" />
+          <Property Name="Email" Type="nvarchar" MaxLength="300" />
+          <Property Name="Facebook" Type="nvarchar" MaxLength="300" />
+          <Property Name="Website" Type="nvarchar" MaxLength="300" />
+          <Property Name="OSX" Type="int" />
+          <Property Name="OSY" Type="int" />
+          <Property Name="Lat" Type="float" />
+          <Property Name="Lon" Type="float" />
+          <Property Name="Tried" Type="int" />
+          <Property Name="GoogleMapData" Type="nvarchar(max)" />
+          <Property Name="ManualConfirmDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="TagID" />
+          </Key>
+          <Property Name="TagID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastModified" Type="datetime" Nullable="false" />
+          <Property Name="OrgID" Type="int" />
+          <Property Name="FeatureID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AdminArea_County">
+          <End Role="County" Type="Self.County" Multiplicity="0..1" />
+          <End Role="AdminArea" Type="Self.AdminArea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="County">
+              <PropertyRef Name="CountyID" />
+            </Principal>
+            <Dependent Role="AdminArea">
+              <PropertyRef Name="CountyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BookItem_Book">
+          <End Role="Org" Type="Self.Org" Multiplicity="0..1" />
+          <End Role="BookItem" Type="Self.BookItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Org">
+              <PropertyRef Name="OrgID" />
+            </Principal>
+            <Dependent Role="BookItem">
+              <PropertyRef Name="OrgId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_County_Region">
+          <End Role="Region" Type="Self.Region" Multiplicity="1" />
+          <End Role="County" Type="Self.County" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="RegionID" />
+            </Principal>
+            <Dependent Role="County">
+              <PropertyRef Name="RegionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Entity_County">
+          <End Role="County" Type="Self.County" Multiplicity="0..1" />
+          <End Role="Org" Type="Self.Org" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="County">
+              <PropertyRef Name="CountyID" />
+            </Principal>
+            <Dependent Role="Org">
+              <PropertyRef Name="CountyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feature_FeatureType">
+          <End Role="FeatureType" Type="Self.FeatureType" Multiplicity="1" />
+          <End Role="Feature" Type="Self.Feature" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FeatureType">
+              <PropertyRef Name="FeatureTypeID" />
+            </Principal>
+            <Dependent Role="Feature">
+              <PropertyRef Name="FeatureTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Note_Entity">
+          <End Role="Org" Type="Self.Org" Multiplicity="1" />
+          <End Role="Note" Type="Self.Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Org">
+              <PropertyRef Name="OrgID" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="OrgID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Org_AddressType">
+          <End Role="AddressType" Type="Self.AddressType" Multiplicity="0..1" />
+          <End Role="Org" Type="Self.Org" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AddressType">
+              <PropertyRef Name="AddressTypeID" />
+            </Principal>
+            <Dependent Role="Org">
+              <PropertyRef Name="AddressTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Page_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="ContentPage" Type="Self.ContentPage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="ContentPage">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tag_Feature">
+          <End Role="Feature" Type="Self.Feature" Multiplicity="1" />
+          <End Role="Tag" Type="Self.Tag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Feature">
+              <PropertyRef Name="FeatureID" />
+            </Principal>
+            <Dependent Role="Tag">
+              <PropertyRef Name="FeatureID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tag_Org">
+          <End Role="Org" Type="Self.Org" Multiplicity="0..1" />
+          <End Role="Tag" Type="Self.Tag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Org">
+              <PropertyRef Name="OrgID" />
+            </Principal>
+            <Dependent Role="Tag">
+              <PropertyRef Name="OrgID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CMSModelStoreContainer">
+          <EntitySet Name="AddressType" EntityType="Self.AddressType" Schema="Category" store:Type="Tables" />
+          <EntitySet Name="FeatureType" EntityType="Self.FeatureType" Schema="Category" store:Type="Tables" />
+          <EntitySet Name="AdminArea" EntityType="Self.AdminArea" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BookItem" EntityType="Self.BookItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContentPage" EntityType="Self.ContentPage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="County" EntityType="Self.County" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Region" EntityType="Self.Region" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feature" EntityType="Self.Feature" Schema="Organisation" store:Type="Tables" />
+          <EntitySet Name="Note" EntityType="Self.Note" Schema="Organisation" store:Type="Tables" />
+          <EntitySet Name="Org" EntityType="Self.Org" Schema="Organisation" store:Type="Tables" />
+          <EntitySet Name="Tag" EntityType="Self.Tag" Schema="Organisation" store:Type="Tables" />
+          <AssociationSet Name="FK_AdminArea_County" Association="Self.FK_AdminArea_County">
+            <End Role="County" EntitySet="County" />
+            <End Role="AdminArea" EntitySet="AdminArea" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BookItem_Book" Association="Self.FK_BookItem_Book">
+            <End Role="Org" EntitySet="Org" />
+            <End Role="BookItem" EntitySet="BookItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_County_Region" Association="Self.FK_County_Region">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="County" EntitySet="County" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Entity_County" Association="Self.FK_Entity_County">
+            <End Role="County" EntitySet="County" />
+            <End Role="Org" EntitySet="Org" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feature_FeatureType" Association="Self.FK_Feature_FeatureType">
+            <End Role="FeatureType" EntitySet="FeatureType" />
+            <End Role="Feature" EntitySet="Feature" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Note_Entity" Association="Self.FK_Note_Entity">
+            <End Role="Org" EntitySet="Org" />
+            <End Role="Note" EntitySet="Note" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Org_AddressType" Association="Self.FK_Org_AddressType">
+            <End Role="AddressType" EntitySet="AddressType" />
+            <End Role="Org" EntitySet="Org" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Page_Category" Association="Self.FK_Page_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="ContentPage" EntitySet="ContentPage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tag_Feature" Association="Self.FK_Tag_Feature">
+            <End Role="Feature" EntitySet="Feature" />
+            <End Role="Tag" EntitySet="Tag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tag_Org" Association="Self.FK_Tag_Org">
+            <End Role="Org" EntitySet="Org" />
+            <End Role="Tag" EntitySet="Tag" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AddressType">
+          <Key>
+            <PropertyRef Name="AddressTypeID" />
+          </Key>
+          <Property Name="AddressTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Orgs" Relationship="CMSModel.FK_Org_AddressType" FromRole="AddressType" ToRole="Org" />
+        </EntityType>
+        <EntityType Name="FeatureType">
+          <Key>
+            <PropertyRef Name="FeatureTypeID" />
+          </Key>
+          <Property Name="FeatureTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentFeatureTypeID" Type="Int32" />
+          <Property Name="LastModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Features" Relationship="Self.FK_Attribute_AttributeType" FromRole="FeatureType" ToRole="Feature" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ContentPages" Relationship="CMSModel.FK_Page_Category" FromRole="Category" ToRole="ContentPage" />
+        </EntityType>
+        <EntityType Name="County">
+          <Key>
+            <PropertyRef Name="CountyID" />
+          </Key>
+          <Property Name="CountyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RegionID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Region" Relationship="Self.FK_County_Region" FromRole="County" ToRole="Region" />
+          <NavigationProperty Name="Orgs" Relationship="Self.FK_Entity_County" FromRole="County" ToRole="Org" />
+          <NavigationProperty Name="AdminAreas" Relationship="CMSModel.FK_AdminArea_County" FromRole="County" ToRole="AdminArea" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="RegionID" />
+          </Key>
+          <Property Name="RegionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Counties" Relationship="Self.FK_County_Region" FromRole="Region" ToRole="County" />
+        </EntityType>
+        <EntityType Name="Feature">
+          <Key>
+            <PropertyRef Name="FeatureID" />
+          </Key>
+          <Property Name="FeatureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FeatureTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FeatureType" Relationship="Self.FK_Attribute_AttributeType" FromRole="Feature" ToRole="FeatureType" />
+          <NavigationProperty Name="Tags" Relationship="CMSModel.FK_Tag_Feature" FromRole="Feature" ToRole="Tag" />
+        </EntityType>
+        <EntityType Name="Note">
+          <Key>
+            <PropertyRef Name="NoteID" />
+          </Key>
+          <Property Name="NoteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="OrgID" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Org" Relationship="Self.FK_Note_Entity" FromRole="Note" ToRole="Org" />
+        </EntityType>
+        <EntityType Name="Org">
+          <Key>
+            <PropertyRef Name="OrgID" />
+          </Key>
+          <Property Name="OrgID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <Property Name="AddressTypeID" Type="Int32" />
+          <Property Name="CountyID" Type="Int32" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="TradingStatus" Type="Int32" />
+          <Property Name="HauntedStatus" Type="Int32" />
+          <Property Name="TradingName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SearchName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Town" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Postcode" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Twitter" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Facebook" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="OSX" Type="Int32" />
+          <Property Name="OSY" Type="Int32" />
+          <Property Name="Lat" Type="Double" />
+          <Property Name="Lon" Type="Double" />
+          <Property Name="Tried" Type="Int32" />
+          <NavigationProperty Name="County" Relationship="Self.FK_Entity_County" FromRole="Org" ToRole="County" />
+          <NavigationProperty Name="Notes" Relationship="Self.FK_Note_Entity" FromRole="Org" ToRole="Note" />
+          <NavigationProperty Name="Tags" Relationship="Self.FK_Tag_Entity" FromRole="Org" ToRole="Tag" />
+          <Property Name="GoogleMapData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Locality" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Administrative_area_level_2" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Modified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ManualConfirmDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="BookItems" Relationship="CMSModel.FK_BookItem_Book1" FromRole="Org" ToRole="BookItem" />
+          <NavigationProperty Name="AddressType" Relationship="CMSModel.FK_Org_AddressType" FromRole="Org" ToRole="AddressType" />
+          <Property Name="AlternateName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="TagID" />
+          </Key>
+          <Property Name="TagID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastModified" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="OrgID" Type="Int32" />
+          <Property Name="FeatureID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Org" Relationship="Self.FK_Tag_Entity" FromRole="Tag" ToRole="Org" />
+          <NavigationProperty Name="Feature" Relationship="CMSModel.FK_Tag_Feature" FromRole="Tag" ToRole="Feature" />
+        </EntityType>
+        <Association Name="FK_Attribute_AttributeType">
+          <End Role="FeatureType" Type="Self.FeatureType" Multiplicity="1" />
+          <End Role="Feature" Type="Self.Feature" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FeatureType">
+              <PropertyRef Name="FeatureTypeID" />
+            </Principal>
+            <Dependent Role="Feature">
+              <PropertyRef Name="FeatureTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_County_Region">
+          <End Role="Region" Type="Self.Region" Multiplicity="1" />
+          <End Role="County" Type="Self.County" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="RegionID" />
+            </Principal>
+            <Dependent Role="County">
+              <PropertyRef Name="RegionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Entity_County">
+          <End Role="County" Type="Self.County" Multiplicity="0..1" />
+          <End Role="Org" Type="Self.Org" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="County">
+              <PropertyRef Name="CountyID" />
+            </Principal>
+            <Dependent Role="Org">
+              <PropertyRef Name="CountyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Note_Entity">
+          <End Role="Org" Type="Self.Org" Multiplicity="1" />
+          <End Role="Note" Type="Self.Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Org">
+              <PropertyRef Name="OrgID" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="OrgID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tag_Entity">
+          <End Role="Org" Type="Self.Org" Multiplicity="0..1" />
+          <End Role="Tag" Type="Self.Tag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Org">
+              <PropertyRef Name="OrgID" />
+            </Principal>
+            <Dependent Role="Tag">
+              <PropertyRef Name="OrgID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CMSEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AddressTypes" EntityType="Self.AddressType" />
+          <EntitySet Name="FeatureTypes" EntityType="Self.FeatureType" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Counties" EntityType="Self.County" />
+          <EntitySet Name="Regions" EntityType="Self.Region" />
+          <EntitySet Name="Features" EntityType="Self.Feature" />
+          <EntitySet Name="Notes" EntityType="Self.Note" />
+          <EntitySet Name="Orgs" EntityType="Self.Org" />
+          <EntitySet Name="Tags" EntityType="Self.Tag" />
+          <AssociationSet Name="FK_Attribute_AttributeType" Association="Self.FK_Attribute_AttributeType">
+            <End Role="FeatureType" EntitySet="FeatureTypes" />
+            <End Role="Feature" EntitySet="Features" />
+          </AssociationSet>
+          <AssociationSet Name="FK_County_Region" Association="Self.FK_County_Region">
+            <End Role="Region" EntitySet="Regions" />
+            <End Role="County" EntitySet="Counties" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Entity_County" Association="Self.FK_Entity_County">
+            <End Role="County" EntitySet="Counties" />
+            <End Role="Org" EntitySet="Orgs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Note_Entity" Association="Self.FK_Note_Entity">
+            <End Role="Org" EntitySet="Orgs" />
+            <End Role="Note" EntitySet="Notes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tag_Entity" Association="Self.FK_Tag_Entity">
+            <End Role="Org" EntitySet="Orgs" />
+            <End Role="Tag" EntitySet="Tags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tag_Feature" Association="CMSModel.FK_Tag_Feature">
+            <End Role="Feature" EntitySet="Features" />
+            <End Role="Tag" EntitySet="Tags" />
+          </AssociationSet>
+          <EntitySet Name="AdminAreas" EntityType="CMSModel.AdminArea" />
+          <EntitySet Name="Books" EntityType="CMSModel.Book" />
+          <EntitySet Name="BookItems" EntityType="CMSModel.BookItem" />
+          <AssociationSet Name="FK_BookItem_Book" Association="CMSModel.FK_BookItem_Book">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="BookItem" EntitySet="BookItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BookItem_Book1" Association="CMSModel.FK_BookItem_Book1">
+            <End Role="Org" EntitySet="Orgs" />
+            <End Role="BookItem" EntitySet="BookItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Org_AddressType" Association="CMSModel.FK_Org_AddressType">
+            <End Role="AddressType" EntitySet="AddressTypes" />
+            <End Role="Org" EntitySet="Orgs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AdminArea_County" Association="CMSModel.FK_AdminArea_County">
+            <End Role="County" EntitySet="Counties" />
+            <End Role="AdminArea" EntitySet="AdminAreas" />
+          </AssociationSet>
+          <EntitySet Name="ContentPages" EntityType="CMSModel.ContentPage" />
+          <AssociationSet Name="FK_Page_Category" Association="CMSModel.FK_Page_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="ContentPage" EntitySet="ContentPages" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_Tag_Feature">
+          <End Type="CMSModel.Feature" Role="Feature" Multiplicity="1" />
+          <End Type="CMSModel.Tag" Role="Tag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Feature">
+              <PropertyRef Name="FeatureID" />
+            </Principal>
+            <Dependent Role="Tag">
+              <PropertyRef Name="FeatureID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AdminArea">
+          <Key>
+            <PropertyRef Name="AdminAreaID" />
+          </Key>
+          <Property Name="AdminAreaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountyID" Type="Int32" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="County" Relationship="CMSModel.FK_AdminArea_County" FromRole="AdminArea" ToRole="County" />
+        </EntityType>
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="BookId" />
+          </Key>
+          <Property Name="BookId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BookItems" Relationship="CMSModel.FK_BookItem_Book" FromRole="Book" ToRole="BookItem" />
+          <Property Name="Created" Type="DateTime" Precision="3" />
+          <Property Name="Modified" Type="DateTime" Precision="3" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="BookItem">
+          <Key>
+            <PropertyRef Name="BookItemId" />
+          </Key>
+          <Property Name="BookItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookId" Type="Int32" Nullable="false" />
+          <Property Name="OrgId" Type="Int32" />
+          <Property Name="County" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Town" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TradingName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Book" Relationship="CMSModel.FK_BookItem_Book" FromRole="BookItem" ToRole="Book" />
+          <NavigationProperty Name="Org" Relationship="CMSModel.FK_BookItem_Book1" FromRole="BookItem" ToRole="Org" />
+          <Property Name="Created" Type="DateTime" Precision="3" />
+          <Property Name="Modified" Type="DateTime" Precision="3" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <Property Name="AlternativeTown" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_BookItem_Book">
+          <End Type="CMSModel.Book" Role="Book" Multiplicity="1" />
+          <End Type="CMSModel.BookItem" Role="BookItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="BookId" />
+            </Principal>
+            <Dependent Role="BookItem">
+              <PropertyRef Name="BookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BookItem_Book1">
+          <End Type="CMSModel.Org" Role="Org" Multiplicity="0..1" />
+          <End Type="CMSModel.BookItem" Role="BookItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Org">
+              <PropertyRef Name="OrgID" />
+            </Principal>
+            <Dependent Role="BookItem">
+              <PropertyRef Name="OrgId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Org_AddressType">
+          <End Type="CMSModel.AddressType" Role="AddressType" Multiplicity="0..1" />
+          <End Type="CMSModel.Org" Role="Org" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AddressType">
+              <PropertyRef Name="AddressTypeID" />
+            </Principal>
+            <Dependent Role="Org">
+              <PropertyRef Name="AddressTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AdminArea_County">
+          <End Type="CMSModel.County" Role="County" Multiplicity="0..1" />
+          <End Type="CMSModel.AdminArea" Role="AdminArea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="County">
+              <PropertyRef Name="CountyID" />
+            </Principal>
+            <Dependent Role="AdminArea">
+              <PropertyRef Name="CountyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ContentPage">
+          <Key>
+            <PropertyRef Name="PageID" />
+          </Key>
+          <Property Name="PageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryID" Type="Int32" />
+          <Property Name="OrderID" Type="Int32" />
+          <Property Name="PageTemplateID" Type="Int32" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Lead" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="WellHeader" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="HtmlText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="Deleted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Category" Relationship="CMSModel.FK_Page_Category" FromRole="ContentPage" ToRole="Category" />
+        </EntityType>
+        <Association Name="FK_Page_Category">
+          <End Type="CMSModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="CMSModel.ContentPage" Role="ContentPage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="ContentPage">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CMSModelStoreContainer" CdmEntityContainer="CMSEntities1">
+          <EntitySetMapping Name="AddressTypes">
+            <EntityTypeMapping TypeName="CMSModel.AddressType">
+              <MappingFragment StoreEntitySet="AddressType">
+                <ScalarProperty Name="AddressTypeID" ColumnName="AddressTypeID" />
+                <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FeatureTypes">
+            <EntityTypeMapping TypeName="CMSModel.FeatureType">
+              <MappingFragment StoreEntitySet="FeatureType">
+                <ScalarProperty Name="FeatureTypeID" ColumnName="FeatureTypeID" />
+                <ScalarProperty Name="ParentFeatureTypeID" ColumnName="ParentFeatureTypeID" />
+                <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="CMSModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Counties">
+            <EntityTypeMapping TypeName="CMSModel.County">
+              <MappingFragment StoreEntitySet="County">
+                <ScalarProperty Name="CountyID" ColumnName="CountyID" />
+                <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Regions">
+            <EntityTypeMapping TypeName="CMSModel.Region">
+              <MappingFragment StoreEntitySet="Region">
+                <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Features">
+            <EntityTypeMapping TypeName="CMSModel.Feature">
+              <MappingFragment StoreEntitySet="Feature">
+                <ScalarProperty Name="FeatureID" ColumnName="FeatureID" />
+                <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+                <ScalarProperty Name="FeatureTypeID" ColumnName="FeatureTypeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notes">
+            <EntityTypeMapping TypeName="CMSModel.Note">
+              <MappingFragment StoreEntitySet="Note">
+                <ScalarProperty Name="NoteID" ColumnName="NoteID" />
+                <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="OrgID" ColumnName="OrgID" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orgs">
+            <EntityTypeMapping TypeName="CMSModel.Org">
+              <MappingFragment StoreEntitySet="Org">
+                <ScalarProperty Name="AlternateName" ColumnName="AlternateName" />
+                <ScalarProperty Name="ManualConfirmDate" ColumnName="ManualConfirmDate" />
+                <ScalarProperty Name="Modified" ColumnName="Modified" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Administrative_area_level_2" ColumnName="Administrative_area_level_2" />
+                <ScalarProperty Name="Locality" ColumnName="Locality" />
+                <ScalarProperty Name="GoogleMapData" ColumnName="GoogleMapData" />
+                <ScalarProperty Name="OrgID" ColumnName="OrgID" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="AddressTypeID" ColumnName="AddressTypeID" />
+                <ScalarProperty Name="CountyID" ColumnName="CountyID" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="TradingStatus" ColumnName="TradingStatus" />
+                <ScalarProperty Name="HauntedStatus" ColumnName="HauntedStatus" />
+                <ScalarProperty Name="TradingName" ColumnName="TradingName" />
+                <ScalarProperty Name="SearchName" ColumnName="SearchName" />
+                <ScalarProperty Name="Town" ColumnName="Town" />
+                <ScalarProperty Name="Postcode" ColumnName="Postcode" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Twitter" ColumnName="Twitter" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Facebook" ColumnName="Facebook" />
+                <ScalarProperty Name="OSX" ColumnName="OSX" />
+                <ScalarProperty Name="OSY" ColumnName="OSY" />
+                <ScalarProperty Name="Lat" ColumnName="Lat" />
+                <ScalarProperty Name="Lon" ColumnName="Lon" />
+                <ScalarProperty Name="Tried" ColumnName="Tried" />
+                </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="CMSModel.Tag">
+              <MappingFragment StoreEntitySet="Tag">
+                <ScalarProperty Name="TagID" ColumnName="TagID" />
+                <ScalarProperty Name="LastModified" ColumnName="LastModified" />
+                <ScalarProperty Name="OrgID" ColumnName="OrgID" />
+                <ScalarProperty Name="FeatureID" ColumnName="FeatureID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AdminAreas">
+            <EntityTypeMapping TypeName="CMSModel.AdminArea">
+              <MappingFragment StoreEntitySet="AdminArea">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CountyID" ColumnName="CountyID" />
+                <ScalarProperty Name="AdminAreaID" ColumnName="AdminAreaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Books">
+            <EntityTypeMapping TypeName="CMSModel.Book">
+              <MappingFragment StoreEntitySet="Book">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Modified" ColumnName="Modified" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BookId" ColumnName="BookId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookItems">
+            <EntityTypeMapping TypeName="CMSModel.BookItem">
+              <MappingFragment StoreEntitySet="BookItem">
+                <ScalarProperty Name="AlternativeTown" ColumnName="AlternativeTown" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="Modified" ColumnName="Modified" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="TradingName" ColumnName="TradingName" />
+                <ScalarProperty Name="Town" ColumnName="Town" />
+                <ScalarProperty Name="County" ColumnName="County" />
+                <ScalarProperty Name="OrgId" ColumnName="OrgId" />
+                <ScalarProperty Name="BookId" ColumnName="BookId" />
+                <ScalarProperty Name="BookItemId" ColumnName="BookItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContentPages">
+            <EntityTypeMapping TypeName="CMSModel.ContentPage">
+              <MappingFragment StoreEntitySet="ContentPage">
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="HtmlText" ColumnName="HtmlText" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="WellHeader" ColumnName="WellHeader" />
+                <ScalarProperty Name="Lead" ColumnName="Lead" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PageTemplateID" ColumnName="PageTemplateID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="PageID" ColumnName="PageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ce56fc4d52fa4a859b49f89cdc61f4d8" Name="Diagram1" ZoomLevel="58">
+        <EntityTypeShape EntityType="CMSModel.AddressType" Width="1.5" PointX="3" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSModel.FeatureType" Width="1.5" PointX="3" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSModel.Category" Width="1.5" PointX="10.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSModel.County" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSModel.Region" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSModel.Feature" Width="1.5" PointX="5.25" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSModel.Note" Width="1.5" PointX="7.5" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSModel.Org" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMSModel.Tag" Width="1.5" PointX="7.5" PointY="3" IsExpanded="true" />
+        <AssociationConnector Association="CMSModel.FK_Attribute_AttributeType" ManuallyRouted="false" />
+        <AssociationConnector Association="CMSModel.FK_County_Region" ManuallyRouted="false" />
+        <AssociationConnector Association="CMSModel.FK_Entity_County" ManuallyRouted="false" />
+        <AssociationConnector Association="CMSModel.FK_Note_Entity" ManuallyRouted="false" />
+        <AssociationConnector Association="CMSModel.FK_Tag_Entity" ManuallyRouted="false" />
+        <AssociationConnector Association="CMSModel.FK_Tag_Feature" />
+        <EntityTypeShape EntityType="CMSModel.AdminArea" Width="1.5" PointX="5.25" PointY="14.125" />
+        <EntityTypeShape EntityType="CMSModel.Book" Width="1.5" PointX="8.25" PointY="9.25" />
+        <EntityTypeShape EntityType="CMSModel.BookItem" Width="1.5" PointX="10.5" PointY="5.625" />
+        <AssociationConnector Association="CMSModel.FK_BookItem_Book" />
+        <AssociationConnector Association="CMSModel.FK_BookItem_Book1" />
+        <AssociationConnector Association="CMSModel.FK_Org_AddressType" />
+        <AssociationConnector Association="CMSModel.FK_AdminArea_County" />
+        <EntityTypeShape EntityType="CMSModel.ContentPage" Width="1.5" PointX="13" PointY="10" />
+        <AssociationConnector Association="CMSModel.FK_Page_Category" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

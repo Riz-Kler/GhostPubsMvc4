@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div class="jumbotron masthead">
+    <div class="container">
+        <div>
+            <div class="pull-left">
+                <div>
+                    <img class="img-circle face-absolute" src="~/Content/bootstrap/2.3.1/img/ghostpubs/padded-logo-125x125.png" alt="Ghost Pubs" title="Ghost Pubs" />
+                </div>
+            </div>
+            <div>
+                <h1>Ghost Pubs</h1>
+            </div>
+        </div>
+        <p style="font-family: 'Arial Black', Gadget, sans-serif">UNDER CONSTRUCTION</p>
+        <p style="font-family: 'Arial Black', Gadget, sans-serif">family entertainment coming soon</p>
+        <p>
+            <a href="~/home/cheshire" class="btn btn-danger btn-large">Try now for a sneak preview</a>
+        </p>
+        <ul class="masthead-links">
+            <li><a href="http://www.facebook.com/groups/ghostpubs/"><i class="icon-facebook"></i>fan page</a></li>
+            <li><a href="https://twitter.com/ghost_pubs"><i class="icon-twitter-sign"></i>twitter</a></li>
+            <li><a href="http://www.linkedin.com/groups/Ghost-Pubs-4935170"><i class="icon-linkedin-sign"></i>contact us</a></li>
+            @*            <li><a href="#typography"><i class="icon-google-plus-sign"></i>google</a></li>
+            <li><a href="#typography"><i class="icon-pinterest-sign"></i>notice board</a></li>*@
+        </ul>
+    </div>
+</div>
+
+<div class="bs-docs-social">
+    <div class="container">
+        <ul class="bs-docs-social-buttons">
+
+            <li class="follow-btn">
+                <a href="https://twitter.com/ghost_pubs" class="twitter-follow-button" data-link-color="#0069D6" data-show-count="true">Follow ghost_pubs</a>
+            </li>
+            @*<li class="tweet-btn">
+                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.ghostpubs.com" data-count="horizontal" data-via="ghost_pubs" data-related="mdo:Creator of Ghost Pubs">Tweet</a>
+            </li>*@
+        </ul>
+    </div>
+</div>
+ 

@@ -1,0 +1,56 @@
+﻿@using Carnotaurus.GhostPubsMvc.Web.Models
+@model PageModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Model.Title;
+    ViewBag.Description = Model.Description;
+    ViewBag.Link = Model.Link;
+    ViewBag.Tag = Model.Tag;
+}
+
+<!-- Subhead
+================================================== -->
+<header class="jumbotron subhead">
+    <div class="container">
+        <div>
+            <h1>@Model.Title</h1>
+            <p class="lead">
+                @Model.Lead
+            </p>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- Docs nav
+    ================================================== -->
+    <div class="row">
+        <div class="span4">
+            <div>
+                <div>
+                    <img class="img-circle face-relative" src="~/Content/bootstrap/231/img/ghostpubs/padded-logo-125x125.png" alt="Ghost Pubs" title="Ghost Pubs" />
+                </div>
+             </div>
+        </div>
+
+        <div class="span8">
+
+            <!-- Well
+          ================================================== -->
+            <section id="well">
+                <div class="page-header">
+                    <h1>@Model.Title</h1>
+                </div>
+                <h2>@Model.WellHeader</h2>
+                <div class="well well-large">
+                    <p>@Model.Description</p>
+                    @Model.HtmlText
+                </div>
+                <h2>More to follow ...</h2>
+                 
+                <hr>
+            </section>
+        </div>
+    </div>
+</div>

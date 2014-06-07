@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "About us";
+}
+
+<!-- Subhead
+================================================== -->
+<header class="jumbotron subhead">
+    <div class="container">
+        <div>
+            <h1>About us</h1>
+            <p class="lead">
+                About ghost pubs.com
+            </p>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+
+
+    <!-- Docs nav
+    ================================================== -->
+    <div class="row">
+        <div class="span4">
+            <div>
+                <div>
+                    <img class="img-circle face-relative" src="~/Content/bootstrap/2.3.1/img/ghostpubs/padded-logo-125x125.png" alt="Ghost Pubs" title="Ghost Pubs" />
+                </div>
+
+                @*                <div class="btn-group btn-group-vertical">
+                    <button class="btn btn-large btn-primary" style="min-width: 200px">Chester</button>
+                    <button class="btn btn-large disabled" style="min-width: 200px">Adlington</button>
+                    <button class="btn btn-large disabled" style="min-width: 200px">Knutsford</button>
+                    <button class="btn btn-large disabled" style="min-width: 200px">Macclesfield</button>
+                </div>*@
+            </div>
+        </div>
+
+        <div class="span8">
+
+
+            <!-- Well
+          ================================================== -->
+            <section id="well">
+                <div class="page-header">
+                    <h1>All about Ghost Pubs dot Com</h1>
+                </div>
+                <h2>Let's tell you who we are</h2>
+                <div class="well well-large">
+                    <p>
+                        We are chaps involved in running <a href="http://www.myPubGuide.com">myPUBGUIDE.com</a>.
+    We have noticed that almost sixty public houses close each month. Therefore, given
+    the success of myPUBGUIDE, we thought it would be a good idea to launch a similar
+    website for drinking establishments that are haunted, closed, abandoned, and demolished.
+                    </p>
+                    <p>
+                        Clearly such establishments do not belong on an active pub search. These deserve
+    a special website of their own, where your contribution would be encouraged. We
+    intend to launch this website in early 2013. We are sure that you have a ghost story
+    to share with us about your old local.
+                    </p>
+                    <p>
+                        As the name suggests Ghost Pubs we are looking for any information you can give
+    regarding any hauntings or paranormal phenomena regarding your local pub.
+                    </p>
+                </div>
+
+                <hr>
+            </section>
+
+        </div>
+    </div>
+
+</div>

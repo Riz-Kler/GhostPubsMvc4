@@ -1,0 +1,75 @@
+﻿@using Carnotaurus.GhostPubsMvc.Web.Models
+@model OrgModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Model.JumboTitle;
+}
+
+<!-- Subhead
+================================================== -->
+<header class="jumbotron subhead">
+    <div class="container">
+        <div>
+            <h1>@Model.JumboTitle</h1>
+            <p class="lead">
+                Ghost pub details for @Model.JumboTitle
+            </p>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- Docs nav
+    ================================================== -->
+    <div class="row">
+        <div class="span4">
+            <div>
+                <div>
+                    <img class="img-circle face-relative" src="~/Content/bootstrap/231/img/ghostpubs/padded-logo-125x125.png" alt="Ghost Pubs" title="Ghost Pubs" />
+                </div>
+
+                @*                <div class="btn-group btn-group-vertical">
+                    <button class="btn btn-large btn-primary" style="min-width: 200px">Chester</button>
+                    <button class="btn btn-large disabled" style="min-width: 200px">Adlington</button>
+                    <button class="btn btn-large disabled" style="min-width: 200px">Knutsford</button>
+                    <button class="btn btn-large disabled" style="min-width: 200px">Macclesfield</button>
+                </div>*@
+            </div>
+        </div>
+
+        <div class="span8">
+
+            <!-- Well
+          ================================================== -->
+            <section id="well">
+                <div class="page-header">
+                    <h1>All about @Model.JumboTitle</h1>
+                </div>
+                <h2>@Model.JumboTitle</h2>
+                <div class="well well-large">
+                    <p>@Model.Description</p>
+                    <ul>
+                        @foreach (var link in @Model.Links)
+                        {
+                            <li>
+                                @link.Text
+                            </li>
+                        }
+                    </ul>
+                    @foreach (var tag in @Model.Tags)
+                    {
+                        <span class="label label-info">@tag</span>
+                    }
+                </div>
+                <h2>More to follow ...</h2>
+                <div class="well well-large">
+                    <p>Please provide us with more detail.</p>
+                    <p><a href='../../../@Model.Parent.Value/detail.html' title="Back to @Model.Parent.Key">Back to @Model.Parent.Key</a></p>
+              @*      <iframe src="https://www.google.com/maps/embed?q=sk1+3jt" width="600" height="450" frameborder="0" style="border:0"></iframe>*@
+                </div>
+                <hr>
+            </section>
+        </div>
+    </div>
+</div>

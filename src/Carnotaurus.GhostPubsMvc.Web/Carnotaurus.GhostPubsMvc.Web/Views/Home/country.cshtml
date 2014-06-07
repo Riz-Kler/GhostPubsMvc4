@@ -1,0 +1,116 @@
+﻿@using Carnotaurus.GhostPubsMvc.Web.Models
+@model OrgModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Model.JumboTitle;
+}
+
+<!-- Subhead
+================================================== -->
+<header class="jumbotron subhead">
+    <div class="container">
+        <div>
+            <h1>@Model.JumboTitle</h1>
+            <p class="lead">
+                @Model.Description
+            </p>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- Docs nav
+    ================================================== -->
+    <div class="row">
+        <div class="span4 bs-docs-sidebar">
+            <div>
+                <div>
+                    <img class="img-circle face-relative" src="~/Content/bootstrap/231/img/ghostpubs/padded-logo-125x125.png" alt="Ghost Pubs" title="Ghost Pubs" />
+                </div>
+
+                <div class="btn-group btn-group-vertical">
+                    @foreach (var link in Model.Links)
+                    {
+                        <a class="btn btn-large btn-primary" style="min-width: 200px" title='@link.Title' href='@link.Url/detail.html'>@link.Text</a>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="span8">
+
+            <!-- Carousel
+          ================================================== -->
+            <section id="carousel">
+                <div class="page-header">
+                    <h1>@Model.JumboTitle</h1>
+                </div>
+                <h2>Let's journey through our haunted locations</h2>
+                <p>Please select from a haunted region from the following list:</p>
+                <ul>
+                    @foreach (var link in @Model.Links)
+                    {
+                        <li>
+                            <a title='@link.Title' href='@link.Url/detail.html'>@link.Text</a>
+                        </li>
+                    }
+                </ul>
+                <p><a href='/' title="Back to @Model.Parent.Key">Back to @Model.Parent.Key</a></p>
+                @*              <div class="bs-docs-example">
+                    <div id="myCarousel" class="carousel slide">
+                        <ol class="carousel-indicators">
+                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                            <li class="" data-target="#myCarousel" data-slide-to="1"></li>
+                            <li class="" data-target="#myCarousel" data-slide-to="2"></li>
+                            <li class="" data-target="#myCarousel" data-slide-to="3"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img src="@Url.Content("~/content/bootstrap/231/img/ghostpubs/locations/cheshire/chester.png")" onclick="window.open('chester', '_self')" alt="">
+                                <div class="carousel-caption">
+                                    <h4>Chester</h4>
+                                    <p>
+                                        I discovered the Ye Olde King's Head on Lower Bridge Street. A brief history of this establishment is found on myPUBGUIDE. However, it is its haunting aspects that interests us.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="@Url.Content("~/content/bootstrap/231/img/ghostpubs/locations/cheshire/addlington.png")" onclick="window.open('chester', '_self')" alt="">
+                                <div class="carousel-caption">
+                                    <h4>Adlington</h4>
+                                    <p>
+                                        It is known as Eduluintune in the Domesday Book...
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <img src="@Url.Content("~/content/bootstrap/231/img/ghostpubs/locations/cheshire/knutsford.png")" onclick="window.open('chester', '_self')" alt="">
+                                <div class="carousel-caption">
+                                    <h4>Knutsford</h4>
+                                    <p>
+                                        Knutsford was recorded in the William the Conqueror's Domesday Book of 1086 as Cunetesford ("Canute's ford"). King Canute (Knútr in Old Norse) was the king of England (1016–1035) and later king of Denmark, Norway and parts of Sweden as well. Local tradition says that King Canute forded the River Lily ...
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="@Url.Content("~/content/bootstrap/231/img/ghostpubs/locations/cheshire/macclesfield.png")" onclick="window.open('chester', '_self')" alt="">
+                                <div class="carousel-caption">
+                                    <h4>Macclesfield</h4>
+                                    <p>
+                                        Macclesfield was granted a borough charter by Earl Ranulf III of Chester, in the early 13th century, and a second charter was granted by the future King Edward I, in 1261...
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+                        <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+                    </div>
+                </div>*@
+
+                <hr class="bs-docs-separator">
+            </section>
+        </div>
+    </div>
+</div>
