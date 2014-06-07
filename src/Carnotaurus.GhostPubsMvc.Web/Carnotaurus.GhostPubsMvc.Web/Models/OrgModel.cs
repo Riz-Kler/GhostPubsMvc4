@@ -26,9 +26,12 @@ namespace Carnotaurus.GhostPubsMvc.Web.Models
         public KeyValuePair<String, String> Parent { get; set; }
 
         public List<String> Tags { get; set; }
+
         public String JumboTitle { get; set; }
 
         public String Action { get; set; }
+
+        public Int32? Total { get; set; }
     }
 
 }

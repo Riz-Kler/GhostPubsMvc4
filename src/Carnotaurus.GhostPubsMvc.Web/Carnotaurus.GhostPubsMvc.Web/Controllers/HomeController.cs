@@ -55,7 +55,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
         }
 
         private void GenerateHtmlPages(CMSEntities1 entities)
-        { 
+        {
             //var entities = entities2.Orgs. Where(
             //             x => x.Address != null
             //               && x.AddressType != null
@@ -337,13 +337,14 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
 
             var regionModel = new OrgModel
             {
-                JumboTitle = currentRegion.Name + " [" + orgsInRegionCount.ToString() + " haunted pubs registered]",
+                JumboTitle = currentRegion.Name,
                 Action = "region",
                 Links = countyLinks.OrderBy(x => x.Text).ToList(),
                 Description = "Ghost pubs in " + countyLinks.Select(x => x.Text).OxbridgeAnd(),
                 Unc = currentRegionPath,
                 Parent =
-                    new KeyValuePair<string, string>(currentRegion.Name, currentRegion.Name.Replace(" ", "_").ToLower())
+                    new KeyValuePair<string, string>(currentRegion.Name, currentRegion.Name.Replace(" ", "_").ToLower()),
+                Total = orgsInRegionCount
             };
 
             WriteLines(regionModel);
@@ -369,7 +370,8 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
                 Links = pubLinks,
                 Description = town,
                 Unc = townPath,
-                Parent = new KeyValuePair<string, string>(currentCounty.Description, String.Empty)
+                Parent = new KeyValuePair<string, string>(currentCounty.Description, String.Empty),
+                Total = pubLinks.Count
             };
 
             WriteLines(townModel);
@@ -428,13 +430,14 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
 
             var countyModel = new OrgModel
             {
-                JumboTitle = currentCounty.Name + " [" + count.ToString() + " haunted pubs]",
+                JumboTitle = currentCounty.Name,
                 Action = "county",
                 Links = townLinks.OrderBy(x => x.Text).ToList(),
                 Description = "Ghost pubs in " + townLinks.Select(x => x.Text).OxbridgeAnd(),
                 Unc = currentCountyPath,
                 Parent = new KeyValuePair<string, string>(currentRegion.Name,
-                    currentRegion.Name.Replace(" ", "_").ToLower())
+                    currentRegion.Name.Replace(" ", "_").ToLower()),
+                Total = count
             };
 
             // towns need to know about
