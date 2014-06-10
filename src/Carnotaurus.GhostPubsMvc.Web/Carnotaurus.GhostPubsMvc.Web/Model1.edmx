@@ -528,7 +528,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="CMSEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="GhostPubsEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AddressTypes" EntityType="Self.AddressType" />
           <EntitySet Name="FeatureTypes" EntityType="Self.FeatureType" />
           <EntitySet Name="Categories" EntityType="Self.Category" />
@@ -721,7 +721,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="CMSModelStoreContainer" CdmEntityContainer="CMSEntities1">
+        <EntityContainerMapping StorageEntityContainer="CMSModelStoreContainer" CdmEntityContainer="GhostPubsEntities">
           <EntitySetMapping Name="AddressTypes">
             <EntityTypeMapping TypeName="CMSModel.AddressType">
               <MappingFragment StoreEntitySet="AddressType">

@@ -13,10 +13,10 @@ namespace Carnotaurus.GhostPubsMvc.Web
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class CMSEntities1 : DbContext
+    public partial class GhostPubsEntities : DbContext
     {
-        public CMSEntities1()
-            : base("name=CMSEntities1")
+        public GhostPubsEntities()
+            : base("name=GhostPubsEntities")
         {
         }
     

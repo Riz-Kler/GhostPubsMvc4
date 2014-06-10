@@ -41,11 +41,11 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
 
         public ActionResult Generate()
         {
-            var entities = new CMSEntities1();
+            var entities = new GhostPubsEntities();
 
             UpdateOrganisations(entities);
 
-            entities = new CMSEntities1();
+            entities = new GhostPubsEntities();
 
             GenerateHtmlPages(entities);
 
@@ -56,7 +56,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             return View();
         }
 
-        private void GenerateHtmlPages(CMSEntities1 entities)
+        private void GenerateHtmlPages(GhostPubsEntities entities)
         {
             //var entities = entities2.Orgs. Where(
             //             x => x.Address != null
@@ -134,7 +134,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             }
         }
 
-        private static void UpdateOrganisations(CMSEntities1 entities)
+        private static void UpdateOrganisations(GhostPubsEntities entities)
         {
             var missingInfoOrgs = GetMissingInfoOrgsToUpdate(entities);
 
@@ -151,7 +151,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             }
         }
 
-        private static IEnumerable<Org> GetMissingInfoOrgsToUpdate(CMSEntities1 entities)
+        private static IEnumerable<Org> GetMissingInfoOrgsToUpdate(GhostPubsEntities entities)
         {
             var missingInfoOrgs =
                 entities.Orgs
@@ -171,7 +171,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             return missingInfoOrgs;
         }
 
-        private static ResultType UpdateOrganisation(Org missingInfoOrg, CMSEntities1 entities)
+        private static ResultType UpdateOrganisation(Org missingInfoOrg, GhostPubsEntities entities)
         {
             // source correct address, using google maps api or similar
 
@@ -229,7 +229,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             return isSuccess;
         }
 
-        private static void UpdateCounty(XElement result, CMSEntities1 entities, Org org)
+        private static void UpdateCounty(XElement result, GhostPubsEntities entities, Org org)
         {
             var countyResult =
                 result.Elements("address_component")
@@ -301,7 +301,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             }
         }
 
-        private IEnumerable<Region> CreateRegionsFile(string currentRoot, CMSEntities1 entities)
+        private IEnumerable<Region> CreateRegionsFile(string currentRoot, GhostPubsEntities entities)
         {
             var regions = entities.Regions.ToList();
 
