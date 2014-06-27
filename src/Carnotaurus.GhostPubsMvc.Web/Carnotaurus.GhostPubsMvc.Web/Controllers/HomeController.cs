@@ -4,12 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using System.Xml.Linq;
+using Carnotaurus.GhostPubsMvc.Web;
 using Carnotaurus.GhostPubsMvc.Web.Extensions;
 using Carnotaurus.GhostPubsMvc.Web.Helpers;
 using Carnotaurus.GhostPubsMvc.Web.Models;
 using RazorEngine;
-
-namespace Carnotaurus.GhostPubsMvc.Web.Controllers
+ 
+namespace Carnotaurus.GhostPubsMvc.Controllers
 {
     public class HomeController : Controller
     {
@@ -159,12 +160,9 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
                         f != null
                         && f.Address != null
                         && f.Postcode != null
-                            //  && f.Town == null
-                            // && f.Tried == null
-                            // && !f.Postcode.StartsWith("je")
-                            // && !f.Postcode.StartsWith("im")
-                        && f.GoogleMapData == null
-                        && f.TradingStatus == 1
+                        && f.AddressTypeID == 1
+                        && f.CountyID != null
+                        && f.Tried == null
                     )
                     .ToList();
 
@@ -309,7 +307,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             {
                 JumboTitle = "Haunted pubs in UK by region",
                 Action = "country",
-                Links = regions.Select(x => new Link { Text = x.Name, Title = x.Name }).OrderBy(x => x.Text).ToList(),
+                Links = regions.Select(x => new Link {Text = x.Name, Title = x.Name}).OrderBy(x => x.Text).ToList(),
                 Description = "Ghost pubs in " + regions.Select(x => x.Name).OxbridgeAnd(),
                 Unc = currentRoot,
                 Parent = new KeyValuePair<string, string>("Home page", @"/")
@@ -320,7 +318,8 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             return regions;
         }
 
-        private IEnumerable<County> CreateRegionFile(Region currentRegion, string currentRegionPath, Int32 orgsInRegionCount)
+        private IEnumerable<County> CreateRegionFile(Region currentRegion, string currentRegionPath,
+            Int32 orgsInRegionCount)
         {
             // write region directory
             Directory.CreateDirectory(currentRegionPath);
@@ -329,7 +328,8 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             // should be list of counties that have ghost pubs?
             // var countiesInRegion = currentRegion.Counties.ToList();
 
-            var hauntedCountiesInRegion = currentRegion.Counties.Where(x => x.Orgs.Any(y => y.HauntedStatus == 1)).ToList();
+            var hauntedCountiesInRegion =
+                currentRegion.Counties.Where(x => x.Orgs.Any(y => y.HauntedStatus == 1)).ToList();
 
             var countyLinks = hauntedCountiesInRegion.Select(x => new Link
             {

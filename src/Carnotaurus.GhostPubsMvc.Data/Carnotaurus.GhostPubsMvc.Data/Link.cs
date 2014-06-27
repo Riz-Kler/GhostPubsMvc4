@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Carnotaurus.GhostPubsMvc.Web.Extensions;
 
 namespace Carnotaurus.GhostPubsMvc.Web.Models
@@ -28,5 +25,4 @@ namespace Carnotaurus.GhostPubsMvc.Web.Models
 
         public Int32 Id { get; set; }
     }
-
 }

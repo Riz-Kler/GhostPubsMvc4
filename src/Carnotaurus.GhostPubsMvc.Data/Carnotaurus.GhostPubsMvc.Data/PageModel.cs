@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using Carnotaurus.GhostPubsMvc.Web.Extensions;
 
 namespace Carnotaurus.GhostPubsMvc.Web.Models
-{ 
+{
     public class PageModel
     {
         public Int32? PageID { get; set; }

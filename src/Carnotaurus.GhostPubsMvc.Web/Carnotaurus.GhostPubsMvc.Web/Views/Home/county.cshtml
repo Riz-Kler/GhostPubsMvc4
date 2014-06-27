@@ -25,41 +25,40 @@
         <div class="span4 bs-docs-sidebar">
             <div>
                 <div>
-                    @*<a href="/haunted_pub/detail.html">*@
                     <img onclick="window.open('http://www.ghostpubs.com/haunted_pub/detail.html', '_self');" class="img-circle face-relative" src="~/Content/bootstrap/231/img/ghostpubs/padded-logo-125x125.png" alt="Ghost Pubs" title="Ghost Pubs" />
-                    @*</a>*@
-                </div>
+                  </div>
 
                 <div class="btn-group btn-group-vertical">
                     @foreach (var link in Model.Links)
                     {
-                        <a class="btn btn-large btn-primary" style="min-width: 200px" title='@link.Title' href='@link.Url/detail.html'>@link.Text</a>
+                    <a class="btn btn-large btn-primary" style="min-width: 200px" title='@link.Title' href='@link.Url/detail.html'>@link.Text</a>
                     }
                 </div>
             </div>
         </div>
-
-        <div class="span8">
-
-            <!-- Carousel
-            ================================================== -->
-            <section id="carousel">
-                <div class="page-header">
-                    <h1>@Model.JumboTitle <span class="label label-info">@Model.Total haunted pubs</span></h1>
-                </div>
-                <h2>Let's journey through our haunted locations</h2>
-                <p>Please select from a haunted town from the following list:</p>
-                <ul>
-                    @foreach (var link in @Model.Links)
-                    {
-                        <li>
-                            <a title='@link.Title' href='@link.Url/detail.html'>@link.Text</a>
-                        </li>
-                    }
-                </ul>
-                <p><a href='../detail.html' title="Back to @Model.Parent.Key region">Back to @Model.Parent.Key region</a></p>
-                <hr class="bs-docs-separator">
-            </section>
-        </div>
     </div>
+
+    <div class="span8">
+
+        <!-- Carousel
+        ================================================== -->
+        <section id="carousel">
+            <div class="page-header">
+                <h1>@Model.JumboTitle <span class="label label-info">@Model.Total haunted pubs</span></h1>
+            </div>
+            <h2>Let's journey through our haunted locations</h2>
+            <p>Please select from a haunted town from the following list:</p>
+            <ul>
+                @foreach (var link in @Model.Links)
+                    {
+                    <li>
+                        <a title='@link.Title' href='@link.Url/detail.html'>@link.Text</a>
+                    </li>
+                    }
+            </ul>
+            <p><a href='../detail.html' title="Back to @Model.Parent.Key region">Back to @Model.Parent.Key region</a></p>
+            <hr class="bs-docs-separator">
+        </section>
+    </div>
+</div>
 </div>

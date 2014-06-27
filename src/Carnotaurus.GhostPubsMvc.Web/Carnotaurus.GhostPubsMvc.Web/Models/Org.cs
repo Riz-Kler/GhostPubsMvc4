@@ -1,8 +1,7 @@
-﻿namespace Carnotaurus.GhostPubsMvc.Web
-{
-    using System;
-    using System.Collections.Generic;
+﻿using System;
 
+namespace Carnotaurus.GhostPubsMvc.Web
+{
     public partial class Org
     {
         public string PostcodePrimaryPart
