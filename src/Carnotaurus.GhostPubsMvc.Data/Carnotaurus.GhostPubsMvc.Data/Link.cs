@@ -1,7 +1,7 @@
 ﻿using System;
-using Carnotaurus.GhostPubsMvc.Web.Extensions;
+using Carnotaurus.GhostPubsMvc.Common.Extensions;
 
-namespace Carnotaurus.GhostPubsMvc.Web.Models
+namespace Carnotaurus.GhostPubsMvc.Data
 {
     public class Link
     {

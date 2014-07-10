@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Carnotaurus.GhostPubsMvc.Web.Extensions;
 
-namespace Carnotaurus.GhostPubsMvc.Web.Tests
+namespace Carnotaurus.GhostPubsMvc.Tests
 {
     [TestClass]
     public class GrammarTests

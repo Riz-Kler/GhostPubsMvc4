@@ -4,13 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using System.Xml.Linq;
-using Carnotaurus.GhostPubsMvc.Web;
+using Carnotaurus.GhostPubsMvc.Common.Extensions;
+using Carnotaurus.GhostPubsMvc.Common.Helpers;
+using Carnotaurus.GhostPubsMvc.Data;
 using Carnotaurus.GhostPubsMvc.Web.Extensions;
-using Carnotaurus.GhostPubsMvc.Web.Helpers;
 using Carnotaurus.GhostPubsMvc.Web.Models;
 using RazorEngine;
- 
-namespace Carnotaurus.GhostPubsMvc.Controllers
+
+namespace Carnotaurus.GhostPubsMvc.Web.Controllers
 {
     public class HomeController : Controller
     {
@@ -21,10 +22,10 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             Success
         }
 
-        public static void DeleteDirectory(string target_dir)
+        public static void DeleteDirectory(string targetDir)
         {
-            var files = Directory.GetFiles(target_dir);
-            var dirs = Directory.GetDirectories(target_dir);
+            var files = Directory.GetFiles(targetDir);
+            var dirs = Directory.GetDirectories(targetDir);
 
             foreach (var file in files)
             {
@@ -37,7 +38,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 DeleteDirectory(dir);
             }
 
-            Directory.Delete(target_dir, false);
+            Directory.Delete(targetDir, false);
         }
 
         public ActionResult Generate()
@@ -66,7 +67,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             //               && x.Tags.Any(y => y.Feature.FeatureID == 39)
             //            ).ToList();
 
-            var currentRoot = @"C:\Carnotaurus\" + Guid.NewGuid() + @"\haunted_pub";
+            var currentRoot = String.Format(@"C:\Carnotaurus\{0}\haunted_pub", Guid.NewGuid());
 
             Directory.CreateDirectory(currentRoot);
 

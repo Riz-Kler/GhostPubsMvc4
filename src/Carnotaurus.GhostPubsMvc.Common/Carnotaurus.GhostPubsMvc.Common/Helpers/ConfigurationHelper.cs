@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using Carnotaurus.GhostPubsMvc.Web.Extensions;
+using Carnotaurus.GhostPubsMvc.Common.Extensions;
 
-namespace Carnotaurus.GhostPubsMvc.Web.Helpers
+namespace Carnotaurus.GhostPubsMvc.Common.Helpers
 {
     public class ConfigurationHelper
     {

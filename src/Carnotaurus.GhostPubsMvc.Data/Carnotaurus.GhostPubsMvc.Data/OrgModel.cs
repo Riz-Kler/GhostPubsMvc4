@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Carnotaurus.GhostPubsMvc.Web.Models;
 
-namespace Carnotaurus.GhostPubsMvc.Web.Models
+namespace Carnotaurus.GhostPubsMvc.Data
 {
     public class OrgModel : IOrgModel
     {

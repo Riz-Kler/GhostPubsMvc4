@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 
-namespace Carnotaurus.GhostPubsMvc.Web.Extensions
+namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 {
     public static class PrimativeExtensions
     {
