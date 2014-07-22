@@ -32,9 +32,14 @@ namespace Carnotaurus.GhostPubsMvc.Common.Helpers
             return ConfigurationManager.AppSettings.ToInt32(key);
         }
 
-        public static Int32 GetFilterMaximum()
+        public static Boolean GetAsBoolean(String key)
         {
-            return GetAsInt("FilterMaximum");
+            return Convert.ToBoolean(GetAsInt(key));
+        }
+
+        public static String GetConnectionString(String name)
+        {
+            return ConfigurationManager.ConnectionStrings[name].ConnectionString;
         }
     }
 }

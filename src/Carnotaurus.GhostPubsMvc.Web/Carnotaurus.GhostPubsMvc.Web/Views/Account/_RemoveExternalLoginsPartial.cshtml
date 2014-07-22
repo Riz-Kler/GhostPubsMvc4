@@ -5,7 +5,7 @@
     <h3>Registered external logins</h3>
     <table>
         <tbody>
-            @foreach (Carnotaurus.GhostPubsMvc.Web.Models.ExternalLogin externalLogin in Model)
+            @foreach (var externalLogin in Model)
             {
                 <tr>
                     <td>@externalLogin.ProviderDisplayName</td>
@@ -14,18 +14,18 @@
                         {
                             using (Html.BeginForm("Disassociate", "Account"))
                             {
-                            @Html.AntiForgeryToken()
-                            <div>
-                                @Html.Hidden("provider", externalLogin.Provider)
-                                @Html.Hidden("providerUserId", externalLogin.ProviderUserId)
-                                <input type="submit" value="Remove" title="Remove this @externalLogin.ProviderDisplayName credential from your account" />
-                            </div>
+                                @Html.AntiForgeryToken()
+                                <div>
+                                    @Html.Hidden("provider", externalLogin.Provider)
+                                    @Html.Hidden("providerUserId", externalLogin.ProviderUserId)
+                                    <input type="submit" value="Remove" title="Remove this @externalLogin.ProviderDisplayName credential from your account" />
+                                </div>
                             }
                         }
                         else
                         {
                             @: &nbsp;
-                    }
+                        }
                     </td>
                 </tr>
             }

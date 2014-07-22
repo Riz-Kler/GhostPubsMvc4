@@ -1,5 +1,7 @@
+using System.Web;
 using Carnotaurus.GhostPubsMvc.Web.App_Start;
-using WebActivator;
+
+//using WebActivator;
 
 [assembly: PreApplicationStartMethod(typeof (DontDropDbJustCreateTablesIfModelChangedStart), "Start")]
 

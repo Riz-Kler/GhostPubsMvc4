@@ -24,7 +24,7 @@ else
     @Html.Action("RemoveExternalLogins")
 
     <h3>Add an external login</h3>
-    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+    @Html.Action("ExternalLoginsList", new {ViewBag.ReturnUrl})
 </section>
 
 @section Scripts {

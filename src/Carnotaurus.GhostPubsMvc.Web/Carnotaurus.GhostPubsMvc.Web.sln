@@ -5,15 +5,7 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carnotaurus.GhostPubsMvc.Web", "Carnotaurus.GhostPubsMvc.Web\Carnotaurus.GhostPubsMvc.Web.csproj", "{A8F8CD36-55BB-4E18-91F3-60B62FA96868}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carnotaurus.GhostPubsMvc.Tests", "Carnotaurus.GhostPubsMvc.Web.Tests\Carnotaurus.GhostPubsMvc.Tests.csproj", "{79FADE47-2611-4E4F-A27C-11971A5C2CF3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carnotaurus.GhostPubsMvc.Controllers", "..\Carnotaurus.GhostPubsMvc.Controllers\Carnotaurus.GhostPubsMvc.Controllers\Carnotaurus.GhostPubsMvc.Controllers.csproj", "{FFE7A9A6-7F2C-45BC-8CDA-800E60FE85F3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carnotaurus.GhostPubsMvc.Filters", "..\Carnotaurus.GhostPubsMvc.Filters\Carnotaurus.GhostPubsMvc.Filters\Carnotaurus.GhostPubsMvc.Filters.csproj", "{1607249C-4A0A-433D-BF6D-DFB9CE85144F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carnotaurus.GhostPubsMvc.Common", "..\Carnotaurus.GhostPubsMvc.Common\Carnotaurus.GhostPubsMvc.Common\Carnotaurus.GhostPubsMvc.Common.csproj", "{16105531-A79A-4378-BFD5-F728CB39D1BE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carnotaurus.GhostPubsMvc.Models", "..\Carnotaurus.GhostPubsMvc.Models\Carnotaurus.GhostPubsMvc.Models\Carnotaurus.GhostPubsMvc.Models.csproj", "{6AB1DC38-288E-4DA4-A189-50A39B0CFD23}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carnotaurus.GhostPubsMvc.Data", "..\Carnotaurus.GhostPubsMvc.Data\Carnotaurus.GhostPubsMvc.Data\Carnotaurus.GhostPubsMvc.Data.csproj", "{06B94A41-AB7A-4AC7-944A-9A24695A1893}"
 EndProject
@@ -27,26 +19,10 @@ Global
 		{A8F8CD36-55BB-4E18-91F3-60B62FA96868}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8F8CD36-55BB-4E18-91F3-60B62FA96868}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8F8CD36-55BB-4E18-91F3-60B62FA96868}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79FADE47-2611-4E4F-A27C-11971A5C2CF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79FADE47-2611-4E4F-A27C-11971A5C2CF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79FADE47-2611-4E4F-A27C-11971A5C2CF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79FADE47-2611-4E4F-A27C-11971A5C2CF3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FFE7A9A6-7F2C-45BC-8CDA-800E60FE85F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FFE7A9A6-7F2C-45BC-8CDA-800E60FE85F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FFE7A9A6-7F2C-45BC-8CDA-800E60FE85F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FFE7A9A6-7F2C-45BC-8CDA-800E60FE85F3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1607249C-4A0A-433D-BF6D-DFB9CE85144F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1607249C-4A0A-433D-BF6D-DFB9CE85144F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1607249C-4A0A-433D-BF6D-DFB9CE85144F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1607249C-4A0A-433D-BF6D-DFB9CE85144F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{16105531-A79A-4378-BFD5-F728CB39D1BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{16105531-A79A-4378-BFD5-F728CB39D1BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16105531-A79A-4378-BFD5-F728CB39D1BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16105531-A79A-4378-BFD5-F728CB39D1BE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6AB1DC38-288E-4DA4-A189-50A39B0CFD23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6AB1DC38-288E-4DA4-A189-50A39B0CFD23}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6AB1DC38-288E-4DA4-A189-50A39B0CFD23}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6AB1DC38-288E-4DA4-A189-50A39B0CFD23}.Release|Any CPU.Build.0 = Release|Any CPU
 		{06B94A41-AB7A-4AC7-944A-9A24695A1893}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{06B94A41-AB7A-4AC7-944A-9A24695A1893}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06B94A41-AB7A-4AC7-944A-9A24695A1893}.Release|Any CPU.ActiveCfg = Release|Any CPU

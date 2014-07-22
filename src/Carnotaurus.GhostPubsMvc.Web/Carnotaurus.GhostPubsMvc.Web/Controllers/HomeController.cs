@@ -7,8 +7,7 @@ using System.Xml.Linq;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Common.Helpers;
 using Carnotaurus.GhostPubsMvc.Data;
-using Carnotaurus.GhostPubsMvc.Web.Extensions;
-using Carnotaurus.GhostPubsMvc.Web.Models;
+using Carnotaurus.GhostPubsMvc.Data.Models;
 using RazorEngine;
 
 namespace Carnotaurus.GhostPubsMvc.Web.Controllers
@@ -43,11 +42,11 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
 
         public ActionResult Generate()
         {
-            var entities = new GhostPubsEntities();
+            var entities = new CmsContext();
 
             UpdateOrganisations(entities);
 
-            entities = new GhostPubsEntities();
+            entities = new CmsContext();
 
             GenerateHtmlPages(entities);
 
@@ -58,7 +57,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             return View();
         }
 
-        private void GenerateHtmlPages(GhostPubsEntities entities)
+        private void GenerateHtmlPages(CmsContext entities)
         {
             //var entities = entities2.Orgs. Where(
             //             x => x.Address != null
@@ -136,7 +135,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             }
         }
 
-        private static void UpdateOrganisations(GhostPubsEntities entities)
+        private static void UpdateOrganisations(CmsContext entities)
         {
             var missingInfoOrgs = GetMissingInfoOrgsToUpdate(entities);
 
@@ -153,7 +152,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             }
         }
 
-        private static IEnumerable<Org> GetMissingInfoOrgsToUpdate(GhostPubsEntities entities)
+        private static IEnumerable<Org> GetMissingInfoOrgsToUpdate(CmsContext entities)
         {
             var missingInfoOrgs =
                 entities.Orgs
@@ -170,7 +169,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             return missingInfoOrgs;
         }
 
-        private static ResultType UpdateOrganisation(Org missingInfoOrg, GhostPubsEntities entities)
+        private static ResultType UpdateOrganisation(Org missingInfoOrg, CmsContext entities)
         {
             // source correct address, using google maps api or similar
 
@@ -228,7 +227,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             return isSuccess;
         }
 
-        private static void UpdateCounty(XElement result, GhostPubsEntities entities, Org org)
+        private static void UpdateCounty(XElement result, CmsContext entities, Org org)
         {
             var countyResult =
                 result.Elements("address_component")
@@ -300,7 +299,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             }
         }
 
-        private IEnumerable<Region> CreateRegionsFile(string currentRoot, GhostPubsEntities entities)
+        private IEnumerable<Region> CreateRegionsFile(string currentRoot, CmsContext entities)
         {
             var regions = entities.Regions.ToList();
 

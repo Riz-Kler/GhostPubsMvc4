@@ -2,7 +2,7 @@
 using System.IO;
 using System.Web.Mvc;
 
-namespace Carnotaurus.GhostPubsMvc.Web.Extensions
+namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 {
     public static class ControllerBaseExtensions
     {

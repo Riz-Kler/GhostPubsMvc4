@@ -1,50 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
+using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 {
     public static class PrimativeExtensions
     {
-        public static IDictionary<string, string> ToDictionary(this NameValueCollection col)
+        public static String DoubleApostrophes(this String value)
         {
-            IDictionary<string, string> dict = new Dictionary<string, string>();
+            var isNullOrEmpty = value.Replace("'", "''");
 
-            foreach (var k in col.AllKeys)
-            {
-                dict.Add(k, col[k]);
-            }
-
-            return dict;
+            return isNullOrEmpty;
         }
-
-        public static string Join(this IEnumerable<string> collection, String delimiter)
-        {
-            return String.Join(delimiter, collection);
-        }
-
-        public static string JoinWithComma(this IEnumerable<string> collection)
-        {
-            return collection.Join(", ");
-        }
-
-        public static string OxbridgeAnd(this IEnumerable<string> collection)
-        {
-            var output = String.Empty;
-
-            var list = collection.ToList();
-
-            if (list.Count > 1)
-            {
-                var delimited = String.Join(", ", list.Take(list.Count - 1));
-
-                output = String.Concat(delimited, ", and ", list.LastOrDefault());
-            }
-
-            return output;
-        }
-
 
         public static Boolean IsNotNullOrEmpty(this String value)
         {
@@ -118,18 +87,31 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             return result;
         }
 
-        public static Int32 ToInt32(this NameValueCollection collection, String key)
-        {
-            var result = collection[key].ToInt32();
-
-            return result;
-        }
-
         public static Boolean IsAboveZero(this Int32 value)
         {
             var result = value > 0;
 
             return result;
+        }
+
+        public static List<string> SplitOnComma(this string commaSeparatedString)
+        {
+            var output = commaSeparatedString.Split(',').ToList();
+            return output;
+        }
+
+        public static string FirstCharToUpper(this string input)
+        {
+            if (String.IsNullOrEmpty(input))
+                return input;
+
+            return input.First().ToString(CultureInfo.CurrentCulture).ToUpper()
+                   + String.Join(String.Empty, input.Skip(1));
+        }
+
+        public static string CamelCaseToWords(this string input)
+        {
+            return Regex.Replace(input.FirstCharToUpper(), "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ");
         }
     }
 }
