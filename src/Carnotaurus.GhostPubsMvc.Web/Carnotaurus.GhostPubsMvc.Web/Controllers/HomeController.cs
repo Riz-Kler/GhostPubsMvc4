@@ -160,8 +160,8 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
                         f != null
                         && f.Address != null
                         && f.Postcode != null
-                        && f.AddressTypeID == 1
-                        && f.CountyID != null
+                        && f.AddressTypeId == 1
+                        && f.CountyId != null
                         && f.Tried == null
                     )
                     .ToList();
@@ -240,13 +240,13 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
                 {
                     var outer = inner.Value;
 
-                    org.Administrative_area_level_2 = outer;
+                    org.AdministrativeAreaLevel2 = outer;
 
                     var match = entities.Counties.FirstOrDefault(x => x.Name == outer);
 
                     if (match != null)
                     {
-                        org.CountyID = match.CountyID;
+                        org.CountyId = match.CountyId;
                     }
                     //else
                     //{
@@ -381,14 +381,14 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
 
         private void CreatePubFile(List<KeyValuePair<string, Link>> pubTownLinks, string currentTownPath, Org pub)
         {
-            var current = BuildPath(currentTownPath, pub.OrgID.ToString(), pub.TradingName);
+            var current = BuildPath(currentTownPath, pub.OrgId.ToString(), pub.TradingName);
 
             var info = new KeyValuePair<String, Link>(pub.Town, new Link
             {
                 Text = pub.TradingName,
                 Title = pub.TradingName + ", " + pub.Postcode,
                 Unc = current,
-                Id = pub.OrgID
+                Id = pub.OrgId
             });
 
             pubTownLinks.Add(info);
@@ -402,7 +402,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
 
             var notes = pub.Notes.Select(x => new Link
             {
-                Id = x.NoteID,
+                Id = x.NoteId,
                 Text = x.Text,
                 Title = x.Text
             }).ToList();

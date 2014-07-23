@@ -7,7 +7,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
         public BookItemMap()
         {
             // Primary Key
-            this.HasKey(t => t.BookItemID);
+            this.HasKey(t => t.BookItemId);
 
             // Properties
             this.Property(t => t.Postcode)
@@ -15,12 +15,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
 
             // Table & Column Mappings
             this.ToTable("BookItem");
-            this.Property(t => t.BookItemID).HasColumnName("BookItemID");
+            this.Property(t => t.BookItemId).HasColumnName("BookItemID");
             this.Property(t => t.Created).HasColumnName("Created");
             this.Property(t => t.Modified).HasColumnName("Modified");
             this.Property(t => t.Deleted).HasColumnName("Deleted");
-            this.Property(t => t.BookID).HasColumnName("BookID");
-            this.Property(t => t.OrgID).HasColumnName("OrgID");
+            this.Property(t => t.BookId).HasColumnName("BookID");
+            this.Property(t => t.OrgId).HasColumnName("OrgID");
             this.Property(t => t.County).HasColumnName("County");
             this.Property(t => t.Town).HasColumnName("Town");
             this.Property(t => t.AlternativeTown).HasColumnName("AlternativeTown");
@@ -31,10 +31,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             // Relationships
             this.HasOptional(t => t.Book)
                 .WithMany(t => t.BookItems)
-                .HasForeignKey(d => d.BookID);
+                .HasForeignKey(d => d.BookId);
             this.HasOptional(t => t.Org)
                 .WithMany(t => t.BookItems)
-                .HasForeignKey(d => d.OrgID);
+                .HasForeignKey(d => d.OrgId);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
             this.Orgs = new List<Org>();
         }
 
-        public int AddressTypeID { get; set; }
+        public int AddressTypeId { get; set; }
         public DateTime LastModified { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

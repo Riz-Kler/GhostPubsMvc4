@@ -7,7 +7,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
         public CategoryMap()
         {
             // Primary Key
-            this.HasKey(t => t.CategoryID);
+            this.HasKey(t => t.CategoryId);
 
             // Properties
             this.Property(t => t.Name)
@@ -16,7 +16,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
 
             // Table & Column Mappings
             this.ToTable("Category");
-            this.Property(t => t.CategoryID).HasColumnName("CategoryID");
+            this.Property(t => t.CategoryId).HasColumnName("CategoryID");
             this.Property(t => t.Name).HasColumnName("Name");
         }
     }

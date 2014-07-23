@@ -9,8 +9,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
             this.Orgs = new List<Org>();
         }
 
-        public int CountyID { get; set; }
-        public int RegionID { get; set; }
+        public int CountyId { get; set; }
+        public int RegionId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public virtual Region Region { get; set; }

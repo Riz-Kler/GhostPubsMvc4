@@ -7,23 +7,23 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
         public TagMap()
         {
             // Primary Key
-            this.HasKey(t => t.TagID);
+            this.HasKey(t => t.TagId);
 
             // Properties
             // Table & Column Mappings
             this.ToTable("Tag", "Organisation");
-            this.Property(t => t.TagID).HasColumnName("TagID");
+            this.Property(t => t.TagId).HasColumnName("TagID");
             this.Property(t => t.LastModified).HasColumnName("LastModified");
-            this.Property(t => t.OrgID).HasColumnName("OrgID");
-            this.Property(t => t.FeatureID).HasColumnName("FeatureID");
+            this.Property(t => t.OrgId).HasColumnName("OrgID");
+            this.Property(t => t.FeatureId).HasColumnName("FeatureID");
 
             // Relationships
             this.HasRequired(t => t.Feature)
                 .WithMany(t => t.Tags)
-                .HasForeignKey(d => d.FeatureID);
+                .HasForeignKey(d => d.FeatureId);
             this.HasOptional(t => t.Org)
                 .WithMany(t => t.Tags)
-                .HasForeignKey(d => d.OrgID);
+                .HasForeignKey(d => d.OrgId);
         }
     }
 }

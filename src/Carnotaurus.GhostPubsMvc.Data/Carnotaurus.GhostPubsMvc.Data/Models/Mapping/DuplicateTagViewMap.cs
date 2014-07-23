@@ -8,17 +8,17 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
         public DuplicateTagViewMap()
         {
             // Primary Key
-            this.HasKey(t => t.FeatureID);
+            this.HasKey(t => t.FeatureId);
 
             // Properties
-            this.Property(t => t.FeatureID)
+            this.Property(t => t.FeatureId)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
             // Table & Column Mappings
             this.ToTable("DuplicateTagView");
             this.Property(t => t.Expr1).HasColumnName("Expr1");
-            this.Property(t => t.OrgID).HasColumnName("OrgID");
-            this.Property(t => t.FeatureID).HasColumnName("FeatureID");
+            this.Property(t => t.OrgId).HasColumnName("OrgID");
+            this.Property(t => t.FeatureId).HasColumnName("FeatureID");
         }
     }
 }

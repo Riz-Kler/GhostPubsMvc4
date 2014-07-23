@@ -7,7 +7,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
         public CountyMap()
         {
             // Primary Key
-            this.HasKey(t => t.CountyID);
+            this.HasKey(t => t.CountyId);
 
             // Properties
             this.Property(t => t.Name)
@@ -18,15 +18,15 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
 
             // Table & Column Mappings
             this.ToTable("County");
-            this.Property(t => t.CountyID).HasColumnName("CountyID");
-            this.Property(t => t.RegionID).HasColumnName("RegionID");
+            this.Property(t => t.CountyId).HasColumnName("CountyID");
+            this.Property(t => t.RegionId).HasColumnName("RegionID");
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.Description).HasColumnName("Description");
 
             // Relationships
             this.HasRequired(t => t.Region)
                 .WithMany(t => t.Counties)
-                .HasForeignKey(d => d.RegionID);
+                .HasForeignKey(d => d.RegionId);
         }
     }
 }

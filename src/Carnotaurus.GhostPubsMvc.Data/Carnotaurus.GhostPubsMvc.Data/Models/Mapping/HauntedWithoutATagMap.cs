@@ -8,10 +8,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
         public HauntedWithoutATagMap()
         {
             // Primary Key
-            this.HasKey(t => new {t.OrgID, t.Created, t.Modified, t.TradingName});
+            this.HasKey(t => new {OrgID = t.OrgId, t.Created, t.Modified, t.TradingName});
 
             // Properties
-            this.Property(t => t.OrgID)
+            this.Property(t => t.OrgId)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
 
             this.Property(t => t.TradingName)
@@ -30,7 +30,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             this.Property(t => t.Town)
                 .HasMaxLength(300);
 
-            this.Property(t => t.Administrative_area_level_2)
+            this.Property(t => t.AdministrativeAreaLevel2)
                 .HasMaxLength(300);
 
             this.Property(t => t.Postcode)
@@ -56,13 +56,13 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
 
             // Table & Column Mappings
             this.ToTable("HauntedWithoutATag");
-            this.Property(t => t.OrgID).HasColumnName("OrgID");
+            this.Property(t => t.OrgId).HasColumnName("OrgID");
             this.Property(t => t.Created).HasColumnName("Created");
             this.Property(t => t.Modified).HasColumnName("Modified");
             this.Property(t => t.Deleted).HasColumnName("Deleted");
-            this.Property(t => t.AddressTypeID).HasColumnName("AddressTypeID");
-            this.Property(t => t.CountyID).HasColumnName("CountyID");
-            this.Property(t => t.ParentID).HasColumnName("ParentID");
+            this.Property(t => t.AddressTypeId).HasColumnName("AddressTypeID");
+            this.Property(t => t.CountyId).HasColumnName("CountyID");
+            this.Property(t => t.ParentId).HasColumnName("ParentID");
             this.Property(t => t.TradingStatus).HasColumnName("TradingStatus");
             this.Property(t => t.HauntedStatus).HasColumnName("HauntedStatus");
             this.Property(t => t.TradingName).HasColumnName("TradingName");
@@ -70,7 +70,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             this.Property(t => t.SearchName).HasColumnName("SearchName");
             this.Property(t => t.Locality).HasColumnName("Locality");
             this.Property(t => t.Town).HasColumnName("Town");
-            this.Property(t => t.Administrative_area_level_2).HasColumnName("Administrative_area_level_2");
+            this.Property(t => t.AdministrativeAreaLevel2).HasColumnName("Administrative_area_level_2");
             this.Property(t => t.Postcode).HasColumnName("Postcode");
             this.Property(t => t.Address).HasColumnName("Address");
             this.Property(t => t.Phone).HasColumnName("Phone");
@@ -78,8 +78,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             this.Property(t => t.Email).HasColumnName("Email");
             this.Property(t => t.Facebook).HasColumnName("Facebook");
             this.Property(t => t.Website).HasColumnName("Website");
-            this.Property(t => t.OSX).HasColumnName("OSX");
-            this.Property(t => t.OSY).HasColumnName("OSY");
+            this.Property(t => t.OsX).HasColumnName("OSX");
+            this.Property(t => t.OsY).HasColumnName("OSY");
             this.Property(t => t.Lat).HasColumnName("Lat");
             this.Property(t => t.Lon).HasColumnName("Lon");
             this.Property(t => t.Tried).HasColumnName("Tried");

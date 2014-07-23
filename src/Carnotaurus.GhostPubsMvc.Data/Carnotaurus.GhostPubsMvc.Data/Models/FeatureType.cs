@@ -10,8 +10,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
             this.Features = new List<Feature>();
         }
 
-        public int FeatureTypeID { get; set; }
-        public int? ParentFeatureTypeID { get; set; }
+        public int FeatureTypeId { get; set; }
+        public int? ParentFeatureTypeId { get; set; }
         public DateTime LastModified { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

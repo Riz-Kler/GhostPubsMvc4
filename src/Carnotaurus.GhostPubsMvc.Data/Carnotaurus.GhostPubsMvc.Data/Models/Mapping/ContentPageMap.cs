@@ -7,7 +7,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
         public ContentPageMap()
         {
             // Primary Key
-            this.HasKey(t => t.PageID);
+            this.HasKey(t => t.PageId);
 
             // Properties
             this.Property(t => t.Name)
@@ -28,10 +28,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
 
             // Table & Column Mappings
             this.ToTable("ContentPage");
-            this.Property(t => t.PageID).HasColumnName("PageID");
-            this.Property(t => t.CategoryID).HasColumnName("CategoryID");
-            this.Property(t => t.OrderID).HasColumnName("OrderID");
-            this.Property(t => t.PageTemplateID).HasColumnName("PageTemplateID");
+            this.Property(t => t.PageId).HasColumnName("PageID");
+            this.Property(t => t.CategoryId).HasColumnName("CategoryID");
+            this.Property(t => t.OrderId).HasColumnName("OrderID");
+            this.Property(t => t.PageTemplateId).HasColumnName("PageTemplateID");
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.Title).HasColumnName("Title");
             this.Property(t => t.Lead).HasColumnName("Lead");
@@ -45,7 +45,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             // Relationships
             this.HasOptional(t => t.Category)
                 .WithMany(t => t.ContentPages)
-                .HasForeignKey(d => d.CategoryID);
+                .HasForeignKey(d => d.CategoryId);
         }
     }
 }

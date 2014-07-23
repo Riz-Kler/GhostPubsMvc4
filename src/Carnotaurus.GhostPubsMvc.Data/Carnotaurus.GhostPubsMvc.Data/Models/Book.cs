@@ -10,7 +10,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
             this.BookItems = new List<BookItem>();
         }
 
-        public int BookID { get; set; }
+        public int BookId { get; set; }
         public DateTime? Created { get; set; }
         public DateTime? Modified { get; set; }
         public DateTime? Deleted { get; set; }

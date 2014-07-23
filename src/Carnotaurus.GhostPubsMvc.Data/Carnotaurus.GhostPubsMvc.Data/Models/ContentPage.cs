@@ -4,10 +4,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
 {
     public class ContentPage
     {
-        public int PageID { get; set; }
-        public int? CategoryID { get; set; }
-        public int? OrderID { get; set; }
-        public int? PageTemplateID { get; set; }
+        public int PageId { get; set; }
+        public int? CategoryId { get; set; }
+        public int? OrderId { get; set; }
+        public int? PageTemplateId { get; set; }
         public string Name { get; set; }
         public string Title { get; set; }
         public string Lead { get; set; }
