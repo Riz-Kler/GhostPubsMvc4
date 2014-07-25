@@ -138,6 +138,11 @@
     <Compile Include="Interfaces\IOrgModel.cs" />
     <Compile Include="Interfaces\IReadStore.cs" />
     <Compile Include="Interfaces\IWriteStore.cs" />
+    <Compile Include="Migrations\201407251302086_codeFirst.cs" />
+    <Compile Include="Migrations\201407251302086_codeFirst.Designer.cs">
+      <DependentUpon>201407251302086_codeFirst.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AddressType.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\BookItem.cs" />
@@ -203,6 +208,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Extensions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201407251302086_codeFirst.resx">
+      <DependentUpon>201407251302086_codeFirst.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
