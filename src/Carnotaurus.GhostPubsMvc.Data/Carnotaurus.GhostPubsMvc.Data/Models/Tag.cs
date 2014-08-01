@@ -1,5 +1,5 @@
 using System;
- 
+
 namespace Carnotaurus.GhostPubsMvc.Data.Models
 {
     public class Tag

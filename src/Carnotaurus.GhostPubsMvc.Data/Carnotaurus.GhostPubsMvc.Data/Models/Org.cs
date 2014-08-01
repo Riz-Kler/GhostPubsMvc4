@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
- 
+
 namespace Carnotaurus.GhostPubsMvc.Data.Models
 {
     public class Org

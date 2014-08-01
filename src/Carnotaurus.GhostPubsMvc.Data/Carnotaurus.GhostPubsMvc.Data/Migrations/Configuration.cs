@@ -1,18 +1,15 @@
+using System.Data.Entity.Migrations;
+
 namespace Carnotaurus.GhostPubsMvc.Data.Migrations
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
-
-    internal sealed class Configuration : DbMigrationsConfiguration<Carnotaurus.GhostPubsMvc.Data.CmsContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<CmsContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Carnotaurus.GhostPubsMvc.Data.CmsContext context)
+        protected override void Seed(CmsContext context)
         {
             //  This method will be called after migrating to the latest version.
 
