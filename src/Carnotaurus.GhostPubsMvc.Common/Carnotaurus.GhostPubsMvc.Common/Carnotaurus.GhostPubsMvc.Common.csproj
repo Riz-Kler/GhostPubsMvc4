@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Humanizer">
+      <HintPath>..\..\Carnotaurus.GhostPubsMvc.Web\packages\Humanizer.1.28.0\lib\portable-win+net40+sl50+wp8+wpa81\Humanizer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="SimpleInjector">
       <HintPath>..\..\Carnotaurus.GhostPubsMvc.Web\packages\SimpleInjector.2.5.2\lib\net45\SimpleInjector.dll</HintPath>
