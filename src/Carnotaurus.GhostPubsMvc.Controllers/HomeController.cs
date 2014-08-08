@@ -1,27 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using System.Xml.Linq;
+using Carnotaurus.GhostPubsMvc.Common.Bespoke;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Common.Helpers;
 using Carnotaurus.GhostPubsMvc.Data;
 using Carnotaurus.GhostPubsMvc.Data.Models;
 using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
+using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
 using RazorEngine;
 
 namespace Carnotaurus.GhostPubsMvc.Controllers
 {
     public class HomeController : Controller
     {
-        public enum ResultType
-        {
-            Fail = 0,
-            NoResults,
-            Success
-        }
+     private readonly ICommandManager _commandManager;
 
+        private readonly IQueryManager _queryManager;
+
+        public HomeController(IQueryManager queryManager, ICommandManager commandManager)
+        {
+            _commandManager = commandManager;
+
+            _queryManager = queryManager;
+        }
+   
         public static void DeleteDirectory(string targetDir)
         {
             var files = Directory.GetFiles(targetDir);
@@ -144,7 +151,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             {
                 var isSuccess = UpdateOrganisation(missingInfoOrg, entities);
 
-                if (isSuccess == ResultType.Fail)
+                if (isSuccess == ResultTypeEnum.Fail)
                 {
                     break;
                 }
@@ -170,13 +177,13 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             return missingInfoOrgs;
         }
 
-        private static ResultType UpdateOrganisation(Org missingInfoOrg, CmsContext entities)
+        private static ResultTypeEnum UpdateOrganisation(Org missingInfoOrg, CmsContext entities)
         {
             // source correct address, using google maps api or similar
 
             // E.G., https://maps.googleapis.com/maps/api/geocode/xml?address=26%20Smithfield,%20London,%20Greater%20London,%20EC1A%209LB,%20uk&sensor=true&key=AIzaSyC2DCdkPGBtsooyft7sX3P9h2f4uQvLQj0
 
-            var key = ConfigurationHelper.GetValue("GoogleMapsApiKey"); // "AIzaSyC2DCdkPGBtsooyft7sX3P9h2f4uQvLQj0";
+            var key = ConfigurationHelper.GetValueAsString("GoogleMapsApiKey"); // "AIzaSyC2DCdkPGBtsooyft7sX3P9h2f4uQvLQj0";
 
             var requestUri = ("https://maps.google.com/maps/api/geocode/xml?address="
                               + missingInfoOrg.TradingName
@@ -190,7 +197,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             var xElement = xdoc.Element("GeocodeResponse");
 
-            var isSuccess = ResultType.Fail;
+            var isSuccess = ResultTypeEnum.Fail;
 
             if (xElement == null || xElement.Value.Contains("OVER_QUERY_LIMIT"))
             {
@@ -205,99 +212,103 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             if (xElement.Value.Contains("ZERO_RESULTS"))
             {
-                isSuccess = ResultType.NoResults;
+                isSuccess = ResultTypeEnum.NoResults;
 
                 return isSuccess;
             }
 
             var result = xElement.Element("result");
 
-            if (result != null)
-            {
-                isSuccess = ResultType.Success;
+            if (result == null) return isSuccess;
 
-                UpdateGeocodes(result, missingInfoOrg);
+            isSuccess = ResultTypeEnum.Success;
 
-                UpdateLocality(result, missingInfoOrg);
+            UpdateGeocodes(result, missingInfoOrg);
 
-                UpdateTown(result, missingInfoOrg);
+            UpdateLocality(result, missingInfoOrg);
 
-                UpdateCounty(result, entities, missingInfoOrg);
-            }
+            UpdateTown(result, missingInfoOrg);
+
+            UpdateCounty(result, entities, missingInfoOrg);
 
             return isSuccess;
         }
 
-        private static void UpdateCounty(XElement result, CmsContext entities, Org org)
+        private static void UpdateCounty(XContainer result, CmsContext entities, Org org)
         {
+            if (result == null) throw new ArgumentNullException("result");
+
             var countyResult =
                 result.Elements("address_component")
                     .FirstOrDefault(x => x.Value.EndsWith("administrative_area_level_2political"));
 
-            if (countyResult != null && countyResult.FirstNode != null)
-            {
-                var inner = countyResult.FirstNode as XElement;
-                if (inner != null)
-                {
-                    var outer = inner.Value;
+            if (countyResult == null || countyResult.FirstNode == null) return;
 
-                    org.AdministrativeAreaLevel2 = outer;
+            var inner = countyResult.FirstNode as XElement;
 
-                    var match = entities.Counties.FirstOrDefault(x => x.Name == outer);
+            if (inner == null) return;
 
-                    if (match != null)
-                    {
-                        org.CountyId = match.CountyId;
-                    }
-                    //else
-                    //{
-                    //    org.CountyID = null;
-                    //}
-                }
-            }
+            var outer = inner.Value;
+
+            org.AdministrativeAreaLevel2 = outer;
+
+            var match = entities.Counties.FirstOrDefault(x => x.Name == outer);
+
+            if (match == null) return;
+
+            org.CountyId = match.CountyId;
         }
 
-        private static void UpdateTown(XElement result, Org org)
+        private static void UpdateTown(XContainer result, Org org)
         {
+            if (result == null) throw new ArgumentNullException("result");
+
             var townResult =
                 result.Elements("address_component").FirstOrDefault(x => x.Value.EndsWith("postal_town"));
 
-            if (townResult != null && townResult.FirstNode != null)
-            {
-                var firstResult = townResult.FirstNode as XElement;
+            if (townResult == null || townResult.FirstNode == null) return;
 
-                if (firstResult != null) org.Town = firstResult.Value;
-            }
+            var firstResult = townResult.FirstNode as XElement;
+
+            if (firstResult != null) org.Town = firstResult.Value;
         }
 
 
-        private static void UpdateLocality(XElement result, Org org)
+        private static void UpdateLocality(XContainer result, Org org)
         {
+            if (result == null) throw new ArgumentNullException("result");
+
             var match =
                 result.Elements("address_component").FirstOrDefault(x => x.Value.EndsWith("localitypolitical"));
 
-            if (match != null && match.FirstNode != null)
-            {
-                var firstResult = match.FirstNode as XElement;
+            if (match == null || match.FirstNode == null) return;
 
-                if (firstResult != null) org.Locality = firstResult.Value;
-            }
+            var firstResult = match.FirstNode as XElement;
+
+            if (firstResult == null) return;
+
+            org.Locality = firstResult.Value;
         }
 
-        private static void UpdateGeocodes(XElement result, Org org)
+        private static void UpdateGeocodes(XContainer result, Org org)
         {
+            if (result == null) throw new ArgumentNullException("result");
+
             var element = result.Element("geometry");
-            if (element != null)
-            {
-                var locationElement = element.Element("location");
 
-                if (locationElement != null)
-                {
-                    org.Lat = Convert.ToDouble(locationElement.Element("lat").Value);
+            if (element == null) return;
 
-                    org.Lon = Convert.ToDouble(locationElement.Element("lng").Value);
-                }
-            }
+            var locationElement = element.Element("location");
+
+            if (locationElement == null) return;
+
+            var lat = locationElement.Element("lat");
+            if (lat != null)
+                org.Lat = Convert.ToDouble(lat.Value);
+
+            var lng = locationElement.Element("lng");
+            if (lng != null)
+                org.Lon = Convert.ToDouble(lng.Value);
         }
 
         private IEnumerable<Region> CreateRegionsFile(string currentRoot, CmsContext entities)
@@ -380,9 +391,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             WriteLines(townModel);
         }
 
-        private void CreatePubFile(List<KeyValuePair<string, LinkModel>> pubTownLinks, string currentTownPath, Org pub)
+        private void CreatePubFile(ICollection<KeyValuePair<string, LinkModel>> pubTownLinks, string currentTownPath, Org pub)
         {
-            var current = BuildPath(currentTownPath, pub.OrgId.ToString(), pub.TradingName);
+            var current = BuildPath(currentTownPath, pub.OrgId.ToString(CultureInfo.InvariantCulture), pub.TradingName);
 
             var info = new KeyValuePair<String, LinkModel>(pub.Town, new LinkModel
             {
@@ -556,33 +567,26 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             return output;
         }
 
-        private String GetViewHtmlIncludingLayout(Controller controller, Object model, String view, String layoutPath)
-        {
-            var template = controller.GetViewTemplate(view);
+        //private String GetViewHtmlIncludingLayout(Controller controller, Object model, String view, String layoutPath)
+        //{
+        //    var template = controller.GetViewTemplate(view);
 
-            var result = Razor.Parse(template, model);
+        //    var result = Razor.Parse(template, model);
 
-            var output = GetViewHtmlIncludingLayout(result, layoutPath);
+        //    var output = GetViewHtmlIncludingLayout(result, layoutPath);
 
-            return output;
-        }
+        //    return output;
+        //}
 
-        private String GetViewHtmlIncludingLayout(String viewHtml, String layoutPath)
-        {
-            var layoutTemplate = System.IO.File.ReadAllText(layoutPath);
+        //private static String GetViewHtmlIncludingLayout(String viewHtml, String layoutPath)
+        //{
+        //    var layoutTemplate = System.IO.File.ReadAllText(layoutPath);
 
-            var merged = layoutTemplate.Replace("{0}", viewHtml);
+        //    var merged = layoutTemplate.Replace("{0}", viewHtml);
 
-            return merged;
-        }
-         
-        public ActionResult Index()
-        {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
-            return View();
-        }
-
+        //    return merged;
+        //}
+          
         public void WriteLines(OrgModel entities)
         {
             var model = PrepareModel(entities);

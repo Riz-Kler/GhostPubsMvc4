@@ -13,7 +13,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Helpers
             return ConfigurationManager.AppSettings.ToDictionary();
         }
 
-        public static String GetValue(String key)
+        public static String GetValueAsString(String key)
         {
             var result = GetNameValuePair(key);
 
@@ -27,17 +27,17 @@ namespace Carnotaurus.GhostPubsMvc.Common.Helpers
             return result.First();
         }
 
-        public static Int32 GetAsInt(String key)
+        public static Int32 GetValueAsInt(String key)
         {
             return ConfigurationManager.AppSettings.ToInt32(key);
         }
 
-        public static Boolean GetAsBoolean(String key)
+        public static Boolean GetValueAsBoolean(String key)
         {
-            return Convert.ToBoolean(GetAsInt(key));
+            return Convert.ToBoolean(GetValueAsInt(key));
         }
 
-        public static String GetConnectionString(String name)
+        public static String GetConnectionStringValue(String name)
         {
             return ConfigurationManager.ConnectionStrings[name].ConnectionString;
         }

@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carnotaurus.GhostPubsMvc.Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carnotaurus.GhostPubsMvc.Controllers", "..\Carnotaurus.GhostPubsMvc.Controllers\Carnotaurus.GhostPubsMvc.Controllers.csproj", "{1B9F4372-BB86-4946-B942-A08FD58EEF91}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carnotaurus.GhostPubsMvc.Common.Bespoke", "..\Carnotaurus.GhostPubsMvc.Common.Bespoke\Carnotaurus.GhostPubsMvc.Common.Bespoke.csproj", "{6CE36DCA-0553-48AA-9B7A-86CBCDD6031B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carnotaurus.GhostPubsMvc.Managers", "..\Carnotaurus.GhostPubsMvc.Managers\Carnotaurus.GhostPubsMvc.Managers.csproj", "{58834AE9-B04E-4253-9FCA-802802135D7D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{1B9F4372-BB86-4946-B942-A08FD58EEF91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B9F4372-BB86-4946-B942-A08FD58EEF91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B9F4372-BB86-4946-B942-A08FD58EEF91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CE36DCA-0553-48AA-9B7A-86CBCDD6031B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CE36DCA-0553-48AA-9B7A-86CBCDD6031B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CE36DCA-0553-48AA-9B7A-86CBCDD6031B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CE36DCA-0553-48AA-9B7A-86CBCDD6031B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58834AE9-B04E-4253-9FCA-802802135D7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58834AE9-B04E-4253-9FCA-802802135D7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58834AE9-B04E-4253-9FCA-802802135D7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58834AE9-B04E-4253-9FCA-802802135D7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

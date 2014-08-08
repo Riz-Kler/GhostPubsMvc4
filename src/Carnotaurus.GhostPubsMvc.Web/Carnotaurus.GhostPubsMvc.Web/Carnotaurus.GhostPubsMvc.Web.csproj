@@ -712,9 +712,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Content\images\" />
-    <Folder Include="rebrand-mypubguide\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -734,6 +732,10 @@
     <ProjectReference Include="..\..\Carnotaurus.GhostPubsMvc.Data\Carnotaurus.GhostPubsMvc.Data\Carnotaurus.GhostPubsMvc.Data.csproj">
       <Project>{06b94a41-ab7a-4ac7-944a-9a24695a1893}</Project>
       <Name>Carnotaurus.GhostPubsMvc.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Carnotaurus.GhostPubsMvc.Managers\Carnotaurus.GhostPubsMvc.Managers.csproj">
+      <Project>{58834ae9-b04e-4253-9fca-802802135d7d}</Project>
+      <Name>Carnotaurus.GhostPubsMvc.Managers</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
