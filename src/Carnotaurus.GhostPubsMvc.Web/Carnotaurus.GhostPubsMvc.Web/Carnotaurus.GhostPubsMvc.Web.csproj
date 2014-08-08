@@ -165,7 +165,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -700,23 +699,9 @@
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\_RemoveExternalLoginsPartial.cshtml" />
-    <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Manage.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Home\contact.cshtml" />
     <Content Include="Views\Home\index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Bootstrap\Index.cshtml" />
-    <Content Include="Views\Bootstrap\Javascript.cshtml" />
     <Content Include="Views\Home\town.cshtml" />
     <Content Include="Views\Home\county.cshtml" />
     <Content Include="Views\Home\generate.cshtml" />
@@ -724,11 +709,11 @@
     <Content Include="Views\Home\pub.cshtml" />
     <Content Include="Views\Home\country.cshtml" />
     <Content Include="Views\Home\page.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\images\" />
-    <Folder Include="Filters\" />
     <Folder Include="rebrand-mypubguide\" />
   </ItemGroup>
   <ItemGroup>
@@ -741,6 +726,10 @@
     <ProjectReference Include="..\..\Carnotaurus.GhostPubsMvc.Common\Carnotaurus.GhostPubsMvc.Common\Carnotaurus.GhostPubsMvc.Common.csproj">
       <Project>{16105531-a79a-4378-bfd5-f728cb39d1be}</Project>
       <Name>Carnotaurus.GhostPubsMvc.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Carnotaurus.GhostPubsMvc.Controllers\Carnotaurus.GhostPubsMvc.Controllers.csproj">
+      <Project>{1b9f4372-bb86-4946-b942-a08fd58eef91}</Project>
+      <Name>Carnotaurus.GhostPubsMvc.Controllers</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Carnotaurus.GhostPubsMvc.Data\Carnotaurus.GhostPubsMvc.Data\Carnotaurus.GhostPubsMvc.Data.csproj">
       <Project>{06b94a41-ab7a-4ac7-944a-9a24695a1893}</Project>

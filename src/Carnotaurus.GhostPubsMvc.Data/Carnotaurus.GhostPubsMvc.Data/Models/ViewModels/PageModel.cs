@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Carnotaurus.GhostPubsMvc.Data.Models
+namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
     public class PageModel
     {

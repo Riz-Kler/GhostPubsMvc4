@@ -1,9 +1,9 @@
 ﻿using System;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 
-namespace Carnotaurus.GhostPubsMvc.Data.Models
+namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
-    public class Link
+    public class LinkModel
     {
         public String Url
         {

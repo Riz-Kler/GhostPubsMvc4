@@ -17,7 +17,7 @@ namespace Carnotaurus.GhostPubsMvc.Data
         }
 
         public CmsContext()
-            : base("Name=CMSContext")
+            : base("Name=CmsContext")
         {
         }
 
@@ -34,16 +34,6 @@ namespace Carnotaurus.GhostPubsMvc.Data
         public DbSet<Note> Notes { get; set; }
         public DbSet<Org> Orgs { get; set; }
         public DbSet<Tag> Tags { get; set; }
-        //public DbSet<DuplicateTagView> DuplicateTagViews { get; set; }
-        //public DbSet<Haunted1Notmapped> Haunted1Notmapped { get; set; }
-        //public DbSet<Haunted2MissingDetail> Haunted2MissingDetail { get; set; }
-        //public DbSet<Haunted3Mismapped> Haunted3Mismapped { get; set; }
-        //public DbSet<HauntedOrg> HauntedOrgs { get; set; }
-        //public DbSet<HauntedWithoutANote> HauntedWithoutANotes { get; set; }
-        //public DbSet<HauntedWithoutATag> HauntedWithoutATags { get; set; }
-        //public DbSet<OrgsNotFound> OrgsNotFounds { get; set; }
-        //public DbSet<OrgsOpenPossibleDupesGrouped> OrgsOpenPossibleDupesGroupeds { get; set; }
-
 
         public IQueryable<T> Items<T>(Expression<Func<T, bool>> predicate) where T : class, IEntity
         {
@@ -95,15 +85,6 @@ namespace Carnotaurus.GhostPubsMvc.Data
             modelBuilder.Configurations.Add(new NoteMap());
             modelBuilder.Configurations.Add(new OrgMap());
             modelBuilder.Configurations.Add(new TagMap());
-            //modelBuilder.Configurations.Add(new DuplicateTagViewMap());
-            //modelBuilder.Configurations.Add(new Haunted1NotmappedMap());
-            //modelBuilder.Configurations.Add(new Haunted2MissingDetailMap());
-            //modelBuilder.Configurations.Add(new Haunted3MismappedMap());
-            //modelBuilder.Configurations.Add(new HauntedOrgMap());
-            //modelBuilder.Configurations.Add(new HauntedWithoutANoteMap());
-            //modelBuilder.Configurations.Add(new HauntedWithoutATagMap());
-            //modelBuilder.Configurations.Add(new OrgsNotFoundMap());
-            //modelBuilder.Configurations.Add(new OrgsOpenPossibleDupesGroupedMap());
         }
     }
 }

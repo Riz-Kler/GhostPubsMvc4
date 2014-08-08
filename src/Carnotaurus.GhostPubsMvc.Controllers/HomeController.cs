@@ -8,9 +8,10 @@ using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Common.Helpers;
 using Carnotaurus.GhostPubsMvc.Data;
 using Carnotaurus.GhostPubsMvc.Data.Models;
+using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 using RazorEngine;
 
-namespace Carnotaurus.GhostPubsMvc.Web.Controllers
+namespace Carnotaurus.GhostPubsMvc.Controllers
 {
     public class HomeController : Controller
     {
@@ -111,7 +112,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
 
                     CreateCountyFile(currentCounty, currentCountyPath, townsInCounty, currentRegion, orgsInCounty.Count);
 
-                    var pubTownLinks = new List<KeyValuePair<String, Link>>();
+                    var pubTownLinks = new List<KeyValuePair<String, LinkModel>>();
 
                     foreach (var currentOrg in orgsInCounty)
                     {
@@ -307,7 +308,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             {
                 JumboTitle = "Haunted pubs in UK by region",
                 Action = "country",
-                Links = regions.Select(x => new Link {Text = x.Name, Title = x.Name}).OrderBy(x => x.Text).ToList(),
+                Links = regions.Select(x => new LinkModel {Text = x.Name, Title = x.Name}).OrderBy(x => x.Text).ToList(),
                 Description = "Ghost pubs in " + regions.Select(x => x.Name).OxbridgeAnd(),
                 Unc = currentRoot,
                 Parent = new KeyValuePair<string, string>("Home page", @"/")
@@ -331,7 +332,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             var hauntedCountiesInRegion =
                 currentRegion.Counties.Where(x => x.Orgs.Any(y => y.HauntedStatus == 1)).ToList();
 
-            var countyLinks = hauntedCountiesInRegion.Select(x => new Link
+            var countyLinks = hauntedCountiesInRegion.Select(x => new LinkModel
             {
                 Text = x.Description,
                 Title = x.Description
@@ -354,7 +355,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             return hauntedCountiesInRegion;
         }
 
-        private void CreateTownFile(string currentCountyPath, IEnumerable<KeyValuePair<string, Link>> pubTownLinks,
+        private void CreateTownFile(string currentCountyPath, IEnumerable<KeyValuePair<string, LinkModel>> pubTownLinks,
             string town,
             County currentCounty)
         {
@@ -379,11 +380,11 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             WriteLines(townModel);
         }
 
-        private void CreatePubFile(List<KeyValuePair<string, Link>> pubTownLinks, string currentTownPath, Org pub)
+        private void CreatePubFile(List<KeyValuePair<string, LinkModel>> pubTownLinks, string currentTownPath, Org pub)
         {
             var current = BuildPath(currentTownPath, pub.OrgId.ToString(), pub.TradingName);
 
-            var info = new KeyValuePair<String, Link>(pub.Town, new Link
+            var info = new KeyValuePair<String, LinkModel>(pub.Town, new LinkModel
             {
                 Text = pub.TradingName,
                 Title = pub.TradingName + ", " + pub.Postcode,
@@ -400,7 +401,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
             //    .Select(x => x.TradingName + " " + x.OrgID)
             //    .ToList();
 
-            var notes = pub.Notes.Select(x => new Link
+            var notes = pub.Notes.Select(x => new LinkModel
             {
                 Id = x.NoteId,
                 Text = x.Text,
@@ -424,7 +425,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
         private void CreateCountyFile(County currentCounty, string currentCountyPath, IEnumerable<string> towns,
             Region currentRegion, Int32 count)
         {
-            var townLinks = towns.Select(x => new Link
+            var townLinks = towns.Select(x => new LinkModel
             {
                 Text = x,
                 Title = x
@@ -574,14 +575,7 @@ namespace Carnotaurus.GhostPubsMvc.Web.Controllers
 
             return merged;
         }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
+         
         public ActionResult Index()
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";

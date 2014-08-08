@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 
-namespace Carnotaurus.GhostPubsMvc.Data.Models
+namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
     public class OrgModel : IOrgModel
     {
         public OrgModel()
         {
-            this.Links = new List<Link>();
+            this.Links = new List<LinkModel>();
             this.Tags = new List<String>();
         }
 
@@ -18,7 +18,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
 
         public String Tag { get; set; }
 
-        public List<Link> Links { get; set; }
+        public List<LinkModel> Links { get; set; }
 
         public String Unc { get; set; }
 
