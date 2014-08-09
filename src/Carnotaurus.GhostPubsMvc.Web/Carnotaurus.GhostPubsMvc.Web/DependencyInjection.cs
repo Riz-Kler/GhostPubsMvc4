@@ -22,10 +22,12 @@ namespace Carnotaurus.GhostPubsMvc.Web
 
             container.RegisterPerWebRequest<IWriteStore, WriteStore>();
 
-            container.RegisterPerWebRequest<IMailSender, MailSender>();
+            // container.RegisterPerWebRequest<IMailSender, MailSender>();
 
             container.Scan(typeof(CommandManager).Assembly);
-             
+
+       //     container.Scan(typeof(QueryManager).Assembly);
+
             container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
 
             // This is an extension method from the integration package as well.

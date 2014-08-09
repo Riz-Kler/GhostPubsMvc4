@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Carnotaurus.GhostPubsMvc.Data.Models;
 
 namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 {
     public interface IQueryManager
     {
+        IEnumerable<Org> GetMissingInfoOrgsToUpdate();
+
         // Read commands
 
         //List<Role> GetAllRoles();

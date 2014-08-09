@@ -182,6 +182,10 @@
     <Compile Include="WriteStore.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Carnotaurus.GhostPubsMvc.Common.Bespoke\Carnotaurus.GhostPubsMvc.Common.Bespoke.csproj">
+      <Project>{6ce36dca-0553-48aa-9b7a-86cbcdd6031b}</Project>
+      <Name>Carnotaurus.GhostPubsMvc.Common.Bespoke</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Carnotaurus.GhostPubsMvc.Common\Carnotaurus.GhostPubsMvc.Common\Carnotaurus.GhostPubsMvc.Common.csproj">
       <Project>{16105531-a79a-4378-bfd5-f728cb39d1be}</Project>
       <Name>Carnotaurus.GhostPubsMvc.Common</Name>

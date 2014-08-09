@@ -18,7 +18,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 {
     public class HomeController : Controller
     {
-     private readonly ICommandManager _commandManager;
+        private readonly ICommandManager _commandManager;
 
         private readonly IQueryManager _queryManager;
 
@@ -28,7 +28,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             _queryManager = queryManager;
         }
-   
+
         public static void DeleteDirectory(string targetDir)
         {
             var files = Directory.GetFiles(targetDir);
@@ -143,9 +143,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             }
         }
 
-        private static void UpdateOrganisations(CmsContext entities)
+        private void UpdateOrganisations(CmsContext entities)
         {
-            var missingInfoOrgs = GetMissingInfoOrgsToUpdate(entities);
+            var missingInfoOrgs = _queryManager.GetMissingInfoOrgsToUpdate();
 
             foreach (var missingInfoOrg in missingInfoOrgs)
             {
@@ -160,22 +160,22 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             }
         }
 
-        private static IEnumerable<Org> GetMissingInfoOrgsToUpdate(CmsContext entities)
-        {
-            var missingInfoOrgs =
-                entities.Orgs
-                    .Where(f =>
-                        f != null
-                        && f.Address != null
-                        && f.Postcode != null
-                        && f.AddressTypeId == 1
-                        && f.CountyId != null
-                        && f.Tried == null
-                    )
-                    .ToList();
+        //private static IEnumerable<Org> GetMissingInfoOrgsToUpdate(CmsContext entities)
+        //{
+        //    var missingInfoOrgs =
+        //        entities.Orgs
+        //            .Where(f =>
+        //                f != null
+        //                && f.Address != null
+        //                && f.Postcode != null
+        //                && f.AddressTypeId == 1
+        //                && f.CountyId != null
+        //                && f.Tried == null
+        //            )
+        //            .ToList();
 
-            return missingInfoOrgs;
-        }
+        //    return missingInfoOrgs;
+        //}
 
         private static ResultTypeEnum UpdateOrganisation(Org missingInfoOrg, CmsContext entities)
         {
@@ -319,7 +319,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             {
                 JumboTitle = "Haunted pubs in UK by region",
                 Action = "country",
-                Links = regions.Select(x => new LinkModel {Text = x.Name, Title = x.Name}).OrderBy(x => x.Text).ToList(),
+                Links = regions.Select(x => new LinkModel { Text = x.Name, Title = x.Name }).OrderBy(x => x.Text).ToList(),
                 Description = "Ghost pubs in " + regions.Select(x => x.Name).OxbridgeAnd(),
                 Unc = currentRoot,
                 Parent = new KeyValuePair<string, string>("Home page", @"/")
@@ -393,14 +393,14 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void CreatePubFile(ICollection<KeyValuePair<string, LinkModel>> pubTownLinks, string currentTownPath, Org pub)
         {
-            var current = BuildPath(currentTownPath, pub.OrgId.ToString(CultureInfo.InvariantCulture), pub.TradingName);
+            var current = BuildPath(currentTownPath, pub.Id.ToString(CultureInfo.InvariantCulture), pub.TradingName);
 
             var info = new KeyValuePair<String, LinkModel>(pub.Town, new LinkModel
             {
                 Text = pub.TradingName,
                 Title = pub.TradingName + ", " + pub.Postcode,
                 Unc = current,
-                Id = pub.OrgId
+                Id = pub.Id
             });
 
             pubTownLinks.Add(info);
@@ -586,7 +586,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         //    return merged;
         //}
-          
+
         public void WriteLines(OrgModel entities)
         {
             var model = PrepareModel(entities);

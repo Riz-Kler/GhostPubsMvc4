@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Carnotaurus.GhostPubsMvc.Data;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
+using Carnotaurus.GhostPubsMvc.Data.Models;
 using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
 
 namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
@@ -15,7 +17,25 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         {
             _reader = reader;
         }
-         
+
+        public IEnumerable<Org> GetMissingInfoOrgsToUpdate()
+        {
+            var orgs = _reader.Items<Org>();
+
+            var results = orgs
+                    .Where(f =>
+                        f != null
+                        && f.Address != null
+                        && f.Postcode != null
+                        && f.AddressTypeId == 1
+                        && f.CountyId != null
+                        && f.Tried == null
+                    )
+                    .ToList();
+
+            return results;
+        }
+
         //public PaymentInputModel GetPaymentDefaults(PaymentInputModel model, String email)
         //{
         //    var userProfile = FindUser(email);
@@ -65,7 +85,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
         //    return model;
         //}
-         
+
         //public int GetTotalUserProfiles(UserSearchListInputModel model)
         //{
         //    var results = _reader.Items<UserProfile>()
@@ -73,7 +93,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
         //    return results;
         //}
-        
+
         //public PaymentCapture GetLatestPaymentCapture(String username, CartRefModel model)
         //{
         //    // look it up and get last payment save success date
@@ -93,7 +113,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
         //    return payment;
         //}
-         
+
         //public int GetTotalPayments(PaymentSearchListInputModel model)
         //{
         //    var results = _reader.Items<PaymentCapture>()
@@ -157,7 +177,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
         //    return results;
         //}
-        
+
         //public PaymentCapture FindLatestPaymentByCartRef(CartRefModel model)
         //{
         //    var results = _reader.Items<PaymentCapture>();

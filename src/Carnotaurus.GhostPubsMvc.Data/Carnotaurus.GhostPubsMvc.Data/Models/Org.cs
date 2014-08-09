@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models
 {
-    public class Org
+    public class Org : IEntity
     {
         public Org()
         {
@@ -31,7 +32,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
             }
         }
 
-        public int OrgId { get; set; }
+        public int Id { get; set; }
         public DateTime Created { get; set; }
         public DateTime Modified { get; set; }
         public DateTime? Deleted { get; set; }

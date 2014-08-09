@@ -8,7 +8,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions.InjectionExtensions
     public static class DependencyInjectionScanner
     {
         public static void Scan(this Container container, Assembly repositoryAssembly,
-            string namespacePrefix = "ClientPortal")
+            string namespacePrefix = "Carnotaurus")
         {
             var registrations =
                 from type in repositoryAssembly.GetExportedTypes()
