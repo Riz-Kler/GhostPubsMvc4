@@ -8,6 +8,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
     {
         IEnumerable<Org> GetMissingInfoOrgsToUpdate();
 
+        County GetCounty(string outer);
+
         // Read commands
 
         //List<Role> GetAllRoles();

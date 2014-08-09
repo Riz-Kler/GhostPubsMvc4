@@ -30,6 +30,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             }
         }
 
+
         //public CommandResult SavePayment(PaymentInputModel model)
         //{
         //    var result = model.ValidateModel();

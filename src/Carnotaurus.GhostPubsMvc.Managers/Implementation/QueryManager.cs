@@ -35,6 +35,15 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             return results;
         }
+         
+        public County GetCounty( string outer)
+        {
+            var orgs = _reader.Items<County>();
+            
+            var results = orgs.FirstOrDefault(x => x.Name == outer);
+            
+            return results;
+        }
 
         //public PaymentInputModel GetPaymentDefaults(PaymentInputModel model, String email)
         //{

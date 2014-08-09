@@ -147,6 +147,11 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         {
             var missingInfoOrgs = _queryManager.GetMissingInfoOrgsToUpdate();
 
+            UpdateOrgs(entities, missingInfoOrgs);
+        }
+
+        private void UpdateOrgs(CmsContext entities, IEnumerable<Org> missingInfoOrgs)
+        {
             foreach (var missingInfoOrg in missingInfoOrgs)
             {
                 var isSuccess = UpdateOrganisation(missingInfoOrg, entities);
@@ -177,7 +182,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         //    return missingInfoOrgs;
         //}
 
-        private static ResultTypeEnum UpdateOrganisation(Org missingInfoOrg, CmsContext entities)
+        private ResultTypeEnum UpdateOrganisation(Org missingInfoOrg, CmsContext entities)
         {
             // source correct address, using google maps api or similar
 
@@ -234,7 +239,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             return isSuccess;
         }
 
-        private static void UpdateCounty(XContainer result, CmsContext entities, Org org)
+        private void UpdateCounty(XContainer result, CmsContext entities, Org org)
         {
             if (result == null) throw new ArgumentNullException("result");
 
@@ -252,11 +257,11 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             org.AdministrativeAreaLevel2 = outer;
 
-            var match = entities.Counties.FirstOrDefault(x => x.Name == outer);
+            var match = _queryManager.GetCounty(outer);
 
             if (match == null) return;
 
-            org.CountyId = match.CountyId;
+            org.CountyId = match.Id;
         }
 
         private static void UpdateTown(XContainer result, Org org)
