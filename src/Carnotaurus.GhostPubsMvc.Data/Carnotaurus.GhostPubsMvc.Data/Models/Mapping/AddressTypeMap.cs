@@ -7,7 +7,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
         public AddressTypeMap()
         {
             // Primary Key
-            this.HasKey(t => t.AddressTypeId);
+            this.HasKey(t => t. Id);
 
             // Properties
             this.Property(t => t.Name)
@@ -19,7 +19,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
 
             // Table & Column Mappings
             this.ToTable("AddressType", "Category");
-            this.Property(t => t.AddressTypeId).HasColumnName("AddressTypeID");
+            this.Property(t => t. Id).HasColumnName("AddressTypeID");
             this.Property(t => t.LastModified).HasColumnName("LastModified");
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.Description).HasColumnName("Description");

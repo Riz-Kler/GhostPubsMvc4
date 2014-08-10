@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
+using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models
 {
-    public class FeatureType
+    public class FeatureType : IEntity
     {
         public FeatureType()
         {
             this.Features = new List<Feature>();
         }
 
-        public int FeatureTypeId { get; set; }
+        public int  Id { get; set; }
         public int? ParentFeatureTypeId { get; set; }
         public DateTime LastModified { get; set; }
         public string Name { get; set; }

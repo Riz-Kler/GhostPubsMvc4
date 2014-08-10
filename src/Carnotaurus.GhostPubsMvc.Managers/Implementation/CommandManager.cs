@@ -1,8 +1,32 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Net.Mail;
 using System.Security.Principal;
+using System.Xml.Linq;
+using Carnotaurus.GhostPubsMvc.Common.Bespoke;
+using Carnotaurus.GhostPubsMvc.Common.Extensions;
+using Carnotaurus.GhostPubsMvc.Common.Helpers;
 using Carnotaurus.GhostPubsMvc.Common.Result;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
+using Carnotaurus.GhostPubsMvc.Data.Models;
+using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
+using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Web.Mvc;
+using System.Xml.Linq;
+using Carnotaurus.GhostPubsMvc.Common.Bespoke;
+using Carnotaurus.GhostPubsMvc.Common.Extensions;
+using Carnotaurus.GhostPubsMvc.Common.Helpers;
+using Carnotaurus.GhostPubsMvc.Data;
+using Carnotaurus.GhostPubsMvc.Data.Models;
+using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
 
 namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
@@ -29,6 +53,177 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 return i != null ? i.Name : String.Empty;
             }
         }
+         
+        public void UpdateOrgs(IEnumerable<Org> missingInfoOrgs)
+        {
+            foreach (var missingInfoOrg in missingInfoOrgs)
+            {
+                var isSuccess =  UpdateOrganisation(missingInfoOrg);
+
+                if (isSuccess == ResultTypeEnum.Fail)
+                {
+                    break;
+                }
+
+                 _writer.SaveChanges();
+            }
+        }
+
+
+        private ResultTypeEnum UpdateOrganisation(Org missingInfoOrg)
+        {
+            // source correct address, using google maps api or similar
+
+            // E.G., https://maps.googleapis.com/maps/api/geocode/xml?address=26%20Smithfield,%20London,%20Greater%20London,%20EC1A%209LB,%20uk&sensor=true&key=AIzaSyC2DCdkPGBtsooyft7sX3P9h2f4uQvLQj0
+
+            var key = ConfigurationHelper.GetValueAsString("GoogleMapsApiKey");
+            // "AIzaSyC2DCdkPGBtsooyft7sX3P9h2f4uQvLQj0";
+
+            var requestUri = ("https://maps.google.com/maps/api/geocode/xml?address="
+                              + missingInfoOrg.TradingName
+                              + ", "
+                              + missingInfoOrg.Address
+                              + ", "
+                              + missingInfoOrg.Postcode
+                              + ", UK&sensor=false&key=" + key);
+
+            var xdoc = XDocument.Load(requestUri);
+
+            var xElement = xdoc.Element("GeocodeResponse");
+
+            var isSuccess = ResultTypeEnum.Fail;
+
+            if (xElement == null || xElement.Value.Contains("OVER_QUERY_LIMIT"))
+            {
+                return isSuccess;
+            }
+
+            missingInfoOrg.GoogleMapData = xElement.ToString();
+
+            missingInfoOrg.Modified = DateTime.Now;
+
+            missingInfoOrg.Tried = 1;
+
+            if (xElement.Value.Contains("ZERO_RESULTS"))
+            {
+                isSuccess = ResultTypeEnum.NoResults;
+
+                return isSuccess;
+            }
+
+            var result = xElement.Element("result");
+
+            if (result == null) return isSuccess;
+
+            isSuccess = ResultTypeEnum.Success;
+
+            UpdateGeocodes(result, missingInfoOrg);
+
+            UpdateLocality(result, missingInfoOrg);
+
+            UpdateTown(result, missingInfoOrg);
+
+            UpdateCounty(result, missingInfoOrg);
+
+            return isSuccess;
+        }
+
+        private void UpdateCounty(XContainer result, Org org)
+        {
+            if (result == null) throw new ArgumentNullException("result");
+
+            var countyResult =
+                result.Elements("address_component")
+                    .FirstOrDefault(x => x.Value.EndsWith("administrative_area_level_2political"));
+
+            if (countyResult == null || countyResult.FirstNode == null) return;
+
+            var inner = countyResult.FirstNode as XElement;
+
+            if (inner == null) return;
+
+            var outer = inner.Value;
+
+            org.AdministrativeAreaLevel2 = outer;
+
+            // todo - come back
+
+            // var match = _queryManager.GetCounty(outer);
+
+            // if (match == null) return;
+
+            // org.CountyId = match.Id;
+        }
+
+        private static void UpdateTown(XContainer result, Org org)
+        {
+            if (result == null) throw new ArgumentNullException("result");
+
+            var townResult =
+                result.Elements("address_component").FirstOrDefault(x => x.Value.EndsWith("postal_town"));
+
+            if (townResult == null || townResult.FirstNode == null) return;
+
+            var firstResult = townResult.FirstNode as XElement;
+
+            if (firstResult != null) org.Town = firstResult.Value;
+        }
+
+        private static void UpdateLocality(XContainer result, Org org)
+        {
+            if (result == null) throw new ArgumentNullException("result");
+
+            var match =
+                result.Elements("address_component").FirstOrDefault(x => x.Value.EndsWith("localitypolitical"));
+
+            if (match == null || match.FirstNode == null) return;
+
+            var firstResult = match.FirstNode as XElement;
+
+            if (firstResult == null) return;
+
+            org.Locality = firstResult.Value;
+        }
+
+        private static void UpdateGeocodes(XContainer result, Org org)
+        {
+            if (result == null) throw new ArgumentNullException("result");
+
+            var element = result.Element("geometry");
+
+            if (element == null) return;
+
+            var locationElement = element.Element("location");
+
+            if (locationElement == null) return;
+
+            var lat = locationElement.Element("lat");
+            if (lat != null)
+                org.Lat = Convert.ToDouble(lat.Value);
+
+            var lng = locationElement.Element("lng");
+            if (lng != null)
+                org.Lon = Convert.ToDouble(lng.Value);
+        }
+
+
+        //protected String PrepareModel(OrgModel data)
+        //{
+        //    var output = this.PrepareView(data, data.Action);
+
+        //    return output;
+        //}
+ 
+        //public void WriteLines(OrgModel entities)
+        //{
+        //    var model = PrepareModel(entities);
+
+        //    // write region file
+        //    System.IO.File.WriteAllText(entities.Unc + @"\" + "detail.html", model);
+        //}
+  
+
+
 
 
         //public CommandResult SavePayment(PaymentInputModel model)

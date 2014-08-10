@@ -7,7 +7,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
         public BookItemMap()
         {
             // Primary Key
-            this.HasKey(t => t.BookItemId);
+            this.HasKey(t => t. Id);
 
             // Properties
             this.Property(t => t.Postcode)
@@ -15,7 +15,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
 
             // Table & Column Mappings
             this.ToTable("BookItem");
-            this.Property(t => t.BookItemId).HasColumnName("BookItemID");
+            this.Property(t => t. Id).HasColumnName("BookItemID");
             this.Property(t => t.Created).HasColumnName("Created");
             this.Property(t => t.Modified).HasColumnName("Modified");
             this.Property(t => t.Deleted).HasColumnName("Deleted");

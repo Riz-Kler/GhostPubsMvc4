@@ -1,6 +1,8 @@
+using Carnotaurus.GhostPubsMvc.Data.Interfaces;
+
 namespace Carnotaurus.GhostPubsMvc.Data.Models
 {
-    public class LocalAuthority
+    public class LocalAuthority : IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

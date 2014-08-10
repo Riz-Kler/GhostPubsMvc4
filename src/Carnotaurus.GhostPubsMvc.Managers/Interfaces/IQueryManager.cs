@@ -10,6 +10,10 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         County GetCounty(string outer);
 
+        IEnumerable<County> GetHauntedCountiesInRegion(Int32 regionId);
+
+        IEnumerable<Region> GetRegions();
+
         // Read commands
 
         //List<Role> GetAllRoles();

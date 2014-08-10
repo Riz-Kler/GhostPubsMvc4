@@ -1,10 +1,11 @@
 using System;
+using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models
 {
-    public class Tag
+    public class Tag : IEntity
     {
-        public int TagId { get; set; }
+        public int  Id { get; set; }
         public DateTime LastModified { get; set; }
         public int? OrgId { get; set; }
         public int FeatureId { get; set; }

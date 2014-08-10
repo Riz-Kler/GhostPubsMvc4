@@ -1,10 +1,11 @@
 using System;
+using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models
 {
-    public class ContentPage
+    public class ContentPage : IEntity
     {
-        public int PageId { get; set; }
+        public int  Id { get; set; }
         public int? CategoryId { get; set; }
         public int? OrderId { get; set; }
         public int? PageTemplateId { get; set; }

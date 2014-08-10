@@ -20,10 +20,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
         public IEnumerable<Org> GetMissingInfoOrgsToUpdate()
         {
-            var orgs = _reader.Items<Org>();
-
-            var results = orgs
-                    .Where(f =>
+            var results = _reader.Items<Org>().Where(f =>
                         f != null
                         && f.Address != null
                         && f.Postcode != null
@@ -35,13 +32,30 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             return results;
         }
-         
-        public County GetCounty( string outer)
+
+        public County GetCounty(string outer)
         {
-            var orgs = _reader.Items<County>();
-            
-            var results = orgs.FirstOrDefault(x => x.Name == outer);
-            
+            var results = _reader.Items<County>().First(x => x.Name == outer);
+
+            return results;
+        }
+
+        public IEnumerable<Region> GetRegions()
+        {
+            var results = _reader.Items<Region>();
+
+            return results;
+        }
+
+        public IEnumerable<County> GetHauntedCountiesInRegion(Int32 regionId)
+        {
+            var regions = _reader.Items<Region>();
+
+            var region = regions.First(x => x.Id == regionId);
+
+            var results =
+                region.Counties.Where(x => x.Orgs.Any(y => y.HauntedStatus == 1));
+
             return results;
         }
 

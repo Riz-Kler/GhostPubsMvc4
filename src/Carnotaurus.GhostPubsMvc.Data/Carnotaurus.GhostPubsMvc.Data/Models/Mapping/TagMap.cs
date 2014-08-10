@@ -7,12 +7,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
         public TagMap()
         {
             // Primary Key
-            this.HasKey(t => t.TagId);
+            this.HasKey(t => t.Id);
 
             // Properties
             // Table & Column Mappings
             this.ToTable("Tag", "Organisation");
-            this.Property(t => t.TagId).HasColumnName("TagID");
+            this.Property(t => t.Id).HasColumnName("TagID");
             this.Property(t => t.LastModified).HasColumnName("LastModified");
             this.Property(t => t.OrgId).HasColumnName("OrgID");
             this.Property(t => t.FeatureId).HasColumnName("FeatureID");
