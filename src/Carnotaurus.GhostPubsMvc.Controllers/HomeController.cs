@@ -4,11 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
-using System.Xml.Linq;
-using Carnotaurus.GhostPubsMvc.Common.Bespoke;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
-using Carnotaurus.GhostPubsMvc.Common.Helpers;
-using Carnotaurus.GhostPubsMvc.Data;
 using Carnotaurus.GhostPubsMvc.Data.Models;
 using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
@@ -21,11 +17,17 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private readonly IQueryManager _queryManager;
 
+        private List<String> _sitemapUrls;
+
+        private String _currentRoot = String.Empty;
+
         public HomeController(IQueryManager queryManager, ICommandManager commandManager)
         {
             _commandManager = commandManager;
 
             _queryManager = queryManager;
+
+            _sitemapUrls = new List<String>();
         }
 
         public static void DeleteDirectory(string targetDir)
@@ -53,9 +55,13 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             GenerateHtmlPages();
 
-            //var model = PrepareModel("Generated pages", "generate");
+            // todo - come back - generate the Google webmaster tools xml url sitemap
+            //<?xml version="1.0" encoding="UTF-8"?>
+            //<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+            //</urlset> 
 
-            // this.PrepareView(model);
+            //var model = PrepareModel("Generated pages", "generate");
+            //this.PrepareView(model);
 
             return View();
         }
@@ -132,19 +138,19 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             //               && x.Tags.Any(y => y.Feature.FeatureID == 39)
             //            ).ToList();
 
-            var currentRoot = String.Format(@"C:\Carnotaurus\{0}\haunted_pub", Guid.NewGuid());
+            _currentRoot = String.Format(@"C:\Carnotaurus\{0}\haunted_pub", Guid.NewGuid()).ToLower();
 
-            Directory.CreateDirectory(currentRoot);
+            Directory.CreateDirectory(_currentRoot);
 
-            DeleteDirectory(currentRoot);
+            DeleteDirectory(_currentRoot);
 
-            Directory.CreateDirectory(currentRoot);
+            Directory.CreateDirectory(_currentRoot);
 
-            var regions = CreateRegionsFile(currentRoot);
+            var regions = CreateRegionsFile(_currentRoot);
 
             foreach (var currentRegion in regions)
             {
-                var currentRegionPath = BuildPath(currentRoot, currentRegion.Name);
+                var currentRegionPath = BuildPath(_currentRoot, currentRegion.Name);
 
                 var orgsInRegionCount = currentRegion.Counties.Sum(x => x.Orgs.Count(y => y.HauntedStatus == 1));
 
@@ -316,7 +322,6 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         }
 
 
-
         protected String PrepareModel(OrgModel data)
         {
             var output = this.PrepareView(data, data.Action);
@@ -336,12 +341,29 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             System.IO.File.WriteAllText(fullFilePath, contents);
 
             // todo - come back - add to webmaster tools sitemap
-
+            AddUrl(fullFilePath);
         }
 
+        private void AddUrl(string fullFilePath)
+        {
+            //<url>
+            //<loc>http://www.mypubguide.com/dne/app10/pages/pub/pub-95584.aspx</loc>
+            //<lastmod>2012-01-12T22:06:02+00:00</lastmod>
+            //<changefreq>daily</changefreq>
+            //<priority>0.9</priority>
+            //</url>
 
+            const string pattern =
+                "<url><loc>{0}</loc><lastmod>{1}</lastmod><changefreq>{2}</changefreq><priority>{3}</priority></url>";
+
+            var output = String.Format(pattern,
+                String.Format("http://www.ghostpubs.com/haunted_pub{0}", fullFilePath.Replace(_currentRoot, String.Empty).Replace("\\", "/")),
+                DateTime.UtcNow.ToUniversalTime().ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'+00:00'"),
+                "daily",
+                "0.8"
+                );
+
+            _sitemapUrls.Add(output);
+        }
     }
-
-
 }
-

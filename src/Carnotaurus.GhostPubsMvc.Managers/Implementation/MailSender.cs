@@ -1,10 +1,10 @@
 ﻿using System.Data.SqlClient;
 using System.Linq;
 using System.Net.Mail;
+using Carnotaurus.GhostPubsMvc.Common.Bespoke;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Common.Helpers;
 using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
-using Carnotaurus.GhostPubsMvc.Common.Bespoke;
 
 namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 {

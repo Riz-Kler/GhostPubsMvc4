@@ -7,7 +7,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
         public ContentPageMap()
         {
             // Primary Key
-            this.HasKey(t => t. Id);
+            this.HasKey(t => t.Id);
 
             // Properties
             this.Property(t => t.Name)
@@ -28,7 +28,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
 
             // Table & Column Mappings
             this.ToTable("ContentPage");
-            this.Property(t => t. Id).HasColumnName("PageID");
+            this.Property(t => t.Id).HasColumnName("PageID");
             this.Property(t => t.CategoryId).HasColumnName("CategoryID");
             this.Property(t => t.OrderId).HasColumnName("OrderID");
             this.Property(t => t.PageTemplateId).HasColumnName("PageTemplateID");

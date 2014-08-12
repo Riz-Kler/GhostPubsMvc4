@@ -11,12 +11,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
             this.Features = new List<Feature>();
         }
 
-        public int  Id { get; set; }
         public int? ParentFeatureTypeId { get; set; }
         public DateTime LastModified { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime? Deleted { get; set; }
         public virtual ICollection<Feature> Features { get; set; }
+        public int Id { get; set; }
     }
 }

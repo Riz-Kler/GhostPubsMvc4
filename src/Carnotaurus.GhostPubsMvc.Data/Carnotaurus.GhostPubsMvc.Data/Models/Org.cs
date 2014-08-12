@@ -32,7 +32,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
             }
         }
 
-        public int Id { get; set; }
         public DateTime Created { get; set; }
         public DateTime Modified { get; set; }
         public DateTime? Deleted { get; set; }
@@ -66,5 +65,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
         public virtual County County { get; set; }
         public virtual ICollection<Note> Notes { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
+        public int Id { get; set; }
     }
 }

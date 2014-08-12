@@ -5,7 +5,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
 {
     public class BookItem : IEntity
     {
-        public int  Id { get; set; }
         public DateTime Created { get; set; }
         public DateTime Modified { get; set; }
         public DateTime? Deleted { get; set; }
@@ -19,5 +18,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
         public string Postcode { get; set; }
         public virtual Book Book { get; set; }
         public virtual Org Org { get; set; }
+        public int Id { get; set; }
     }
 }

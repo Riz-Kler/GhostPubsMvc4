@@ -1,32 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Net.Mail;
 using System.Security.Principal;
 using System.Xml.Linq;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke;
-using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Common.Helpers;
-using Carnotaurus.GhostPubsMvc.Common.Result;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 using Carnotaurus.GhostPubsMvc.Data.Models;
-using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
-using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Web.Mvc;
-using System.Xml.Linq;
-using Carnotaurus.GhostPubsMvc.Common.Bespoke;
-using Carnotaurus.GhostPubsMvc.Common.Extensions;
-using Carnotaurus.GhostPubsMvc.Common.Helpers;
-using Carnotaurus.GhostPubsMvc.Data;
-using Carnotaurus.GhostPubsMvc.Data.Models;
-using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
 
 namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
@@ -53,19 +33,19 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 return i != null ? i.Name : String.Empty;
             }
         }
-         
+
         public void UpdateOrgs(IEnumerable<Org> missingInfoOrgs)
         {
             foreach (var missingInfoOrg in missingInfoOrgs)
             {
-                var isSuccess =  UpdateOrganisation(missingInfoOrg);
+                var isSuccess = UpdateOrganisation(missingInfoOrg);
 
                 if (isSuccess == ResultTypeEnum.Fail)
                 {
                     break;
                 }
 
-                 _writer.SaveChanges();
+                _writer.SaveChanges();
             }
         }
 
@@ -213,7 +193,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
         //    return output;
         //}
- 
+
         //public void WriteLines(OrgModel entities)
         //{
         //    var model = PrepareModel(entities);
@@ -221,9 +201,6 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         //    // write region file
         //    System.IO.File.WriteAllText(entities.Unc + @"\" + "detail.html", model);
         //}
-  
-
-
 
 
         //public CommandResult SavePayment(PaymentInputModel model)

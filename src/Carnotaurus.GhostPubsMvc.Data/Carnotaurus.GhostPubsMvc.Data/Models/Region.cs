@@ -11,10 +11,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
             this.Counties = new List<County>();
         }
 
-        public int  Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime? Deleted { get; set; }
         public virtual ICollection<County> Counties { get; set; }
+        public int Id { get; set; }
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Carnotaurus.GhostPubsMvc.Common.Bespoke
+﻿namespace Carnotaurus.GhostPubsMvc.Common.Bespoke
 {
     public enum ResultTypeEnum
     {
@@ -12,5 +6,4 @@ namespace Carnotaurus.GhostPubsMvc.Common.Bespoke
         NoResults,
         Success
     }
-
 }

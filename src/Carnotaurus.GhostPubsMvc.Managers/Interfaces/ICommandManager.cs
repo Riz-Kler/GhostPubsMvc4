@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Carnotaurus.GhostPubsMvc.Common.Result;
 using Carnotaurus.GhostPubsMvc.Data.Models;
 
 namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces

@@ -7,7 +7,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
         public FeatureMap()
         {
             // Primary Key
-            this.HasKey(t => t. Id);
+            this.HasKey(t => t.Id);
 
             // Properties
             this.Property(t => t.Name)
@@ -15,7 +15,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
 
             // Table & Column Mappings
             this.ToTable("Feature", "Organisation");
-            this.Property(t => t. Id).HasColumnName("FeatureID");
+            this.Property(t => t.Id).HasColumnName("FeatureID");
             this.Property(t => t.LastModified).HasColumnName("LastModified");
             this.Property(t => t.FeatureTypeId).HasColumnName("FeatureTypeID");
             this.Property(t => t.Name).HasColumnName("Name");

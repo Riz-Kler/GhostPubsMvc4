@@ -7,7 +7,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
         public CountyMap()
         {
             // Primary Key
-            this.HasKey(t => t. Id);
+            this.HasKey(t => t.Id);
 
             // Properties
             this.Property(t => t.Name)

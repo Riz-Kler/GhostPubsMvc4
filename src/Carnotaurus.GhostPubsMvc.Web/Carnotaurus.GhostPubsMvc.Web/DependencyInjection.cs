@@ -4,7 +4,6 @@ using Carnotaurus.GhostPubsMvc.Common.Extensions.InjectionExtensions;
 using Carnotaurus.GhostPubsMvc.Data;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 using Carnotaurus.GhostPubsMvc.Managers.Implementation;
-using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
 using SimpleInjector;
 using SimpleInjector.Integration.Web.Mvc;
 
@@ -24,9 +23,9 @@ namespace Carnotaurus.GhostPubsMvc.Web
 
             // container.RegisterPerWebRequest<IMailSender, MailSender>();
 
-            container.Scan(typeof(CommandManager).Assembly);
+            container.Scan(typeof (CommandManager).Assembly);
 
-       //     container.Scan(typeof(QueryManager).Assembly);
+            //     container.Scan(typeof(QueryManager).Assembly);
 
             container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
 

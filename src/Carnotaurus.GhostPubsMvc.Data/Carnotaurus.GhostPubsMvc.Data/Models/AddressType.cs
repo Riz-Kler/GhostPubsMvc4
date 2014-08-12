@@ -11,11 +11,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
             this.Orgs = new List<Org>();
         }
 
-        public int  Id { get; set; }
         public DateTime LastModified { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime? Deleted { get; set; }
         public virtual ICollection<Org> Orgs { get; set; }
+        public int Id { get; set; }
     }
 }

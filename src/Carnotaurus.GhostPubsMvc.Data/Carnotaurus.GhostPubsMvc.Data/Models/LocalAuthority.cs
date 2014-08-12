@@ -4,7 +4,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
 {
     public class LocalAuthority : IEntity
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Region { get; set; }
         public double? NumberOfBreweries { get; set; }
@@ -45,5 +44,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
         public decimal? F38 { get; set; }
         public decimal? F39 { get; set; }
         public decimal? F40 { get; set; }
+        public int Id { get; set; }
     }
 }

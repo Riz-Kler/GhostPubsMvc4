@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using Carnotaurus.GhostPubsMvc.Data;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 using Carnotaurus.GhostPubsMvc.Data.Models;
 using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
@@ -21,14 +19,14 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         public IEnumerable<Org> GetMissingInfoOrgsToUpdate()
         {
             var results = _reader.Items<Org>().Where(f =>
-                        f != null
-                        && f.Address != null
-                        && f.Postcode != null
-                        && f.AddressTypeId == 1
-                        && f.CountyId != null
-                        && f.Tried == null
-                    )
-                    .ToList();
+                f != null
+                && f.Address != null
+                && f.Postcode != null
+                && f.AddressTypeId == 1
+                && f.CountyId != null
+                && f.Tried == null
+                )
+                .ToList();
 
             return results;
         }

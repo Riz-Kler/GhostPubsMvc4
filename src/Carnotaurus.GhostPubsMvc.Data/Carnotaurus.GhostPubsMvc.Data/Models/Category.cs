@@ -10,10 +10,9 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
             this.ContentPages = new List<ContentPage>();
         }
 
-        public int  Id { get; set; }
-
         public string Name { get; set; }
 
         public virtual ICollection<ContentPage> ContentPages { get; set; }
+        public int Id { get; set; }
     }
 }

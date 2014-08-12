@@ -11,11 +11,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
             this.Tags = new List<Tag>();
         }
 
-        public int  Id { get; set; }
         public DateTime LastModified { get; set; }
         public int FeatureTypeId { get; set; }
         public string Name { get; set; }
         public virtual FeatureType FeatureType { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
+        public int Id { get; set; }
     }
 }
