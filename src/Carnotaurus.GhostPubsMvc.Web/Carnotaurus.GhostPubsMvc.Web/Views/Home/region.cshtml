@@ -31,36 +31,35 @@
                 <div class="btn-group btn-group-vertical">
                     @foreach (var link in Model.Links)
                     {
-                        <a class="btn btn-large btn-primary" style="min-width: 200px" title='@link.Title' href='@link.Url/detail.html'>@link.Text</a>
+                    <a class="btn btn-large btn-primary" style="min-width: 200px" title='@link.Title' href='@link.Url/detail.html'>@link.Text</a>
                     }
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="span8">
+        <div class="span8">
 
-        <!-- Carousel
-            ================================================== -->
-        <section id="carousel">
-            <div class="page-header">
-                <h1>@Model.JumboTitle <span class="label label-info">@Model.Total haunted pubs</span></h1>
-            </div>
+            <!-- Carousel
+                ================================================== -->
+            <section id="carousel">
+                <div class="page-header">
+                    <h1>@Model.JumboTitle <span class="label label-info">@Model.Total haunted pubs</span></h1>
+                </div>
 
-            <h2>Let's journey through our haunted locations</h2>
-            <p>Please select from a haunted county from the following list:</p>
-            <ul>
-                @foreach (var link in @Model.Links)
+                <h2>Let's journey through our haunted locations</h2>
+                <p>Please select from a haunted county from the following list:</p>
+                <ul>
+                    @foreach (var link in @Model.Links)
                 {
-                    <li>
-                        <a title='@link.Title' href='@link.Url/detail.html'>@link.Text</a>
-                    </li>
+                <li>
+                    <a title='@link.Title' href='@link.Url/detail.html'>@link.Text</a>
+                </li>
                 }
-            </ul>
-            <p><a href='../detail.html' title="Back to regions">Back to regions</a></p>
-          
-            <hr class="bs-docs-separator">
-        </section>
+                </ul>
+                <p><a href='../detail.html' title="Back to regions">Back to regions</a></p>
+
+                <hr class="bs-docs-separator">
+            </section>
+        </div>
     </div>
-</div>
 </div>

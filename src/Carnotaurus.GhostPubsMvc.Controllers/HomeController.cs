@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web.Mvc;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Data.Models;
@@ -55,15 +56,37 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             GenerateHtmlPages();
 
-            // todo - come back - generate the Google webmaster tools xml url sitemap
-            //<?xml version="1.0" encoding="UTF-8"?>
-            //<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+            GenerateWebmasterToolsXmlSitemap();
+
+            return View();
+        }
+
+        private void GenerateWebmasterToolsXmlSitemap()
+        {
             //</urlset> 
 
             //var model = PrepareModel("Generated pages", "generate");
             //this.PrepareView(model);
 
-            return View();
+            // Generate Seo Sitemap
+            // generate the Google webmaster tools xml url sitemap
+            var sb = new StringBuilder();
+
+            sb.AppendLine(@"<?xml version=""1.0"" encoding=""UTF-8""?>");
+
+            sb.AppendLine(
+                @"<urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xsi:schemaLocation=""http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"">");
+
+            foreach (var url in _sitemapUrls)
+            {
+                sb.AppendLine(url);
+            }
+
+            sb.AppendLine("</urlset>");
+
+            var fullFilePath = String.Format("{0}/sitemap.xml", _currentRoot);
+
+            WriteFile(fullFilePath, sb.ToString());
         }
 
         private void UpdateOrganisations()
@@ -337,11 +360,16 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             var fullFilePath = String.Concat(entities.Unc, @"\", "detail.html");
 
-            // write region file
-            System.IO.File.WriteAllText(fullFilePath, contents);
+            WriteFile(fullFilePath, contents);
 
-            // todo - come back - add to webmaster tools sitemap
+            // add to webmaster tools sitemap
             AddUrl(fullFilePath);
+        }
+
+        public void WriteFile(string fullFilePath, string contents)
+        {
+            // write file
+            System.IO.File.WriteAllText(fullFilePath, contents);
         }
 
         private void AddUrl(string fullFilePath)

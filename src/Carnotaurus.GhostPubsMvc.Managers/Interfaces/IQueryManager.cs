@@ -8,7 +8,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
     {
         IEnumerable<Org> GetMissingInfoOrgsToUpdate();
 
-        County GetCounty(string outer);
+        County GetCounty(string name);
 
         IEnumerable<County> GetHauntedCountiesInRegion(Int32 regionId);
 

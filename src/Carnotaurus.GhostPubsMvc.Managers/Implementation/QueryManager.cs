@@ -31,9 +31,9 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             return results;
         }
 
-        public County GetCounty(string outer)
+        public County GetCounty(string name)
         {
-            var results = _reader.Items<County>().First(x => x.Name == outer);
+            var results = _reader.Items<County>().First(x => x.Name == name);
 
             return results;
         }
