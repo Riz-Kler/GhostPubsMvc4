@@ -2,7 +2,7 @@
 
 namespace Carnotaurus.GhostPubsMvc.Data.Interfaces
 {
-    public interface IOrgOutputModel
+    public interface IOutputViewModel
     {
         String JumboTitle { get; set; }
 
