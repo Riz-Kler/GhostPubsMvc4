@@ -187,14 +187,14 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         }
 
 
-        //protected String PrepareModel(OrgModel data)
+        //protected String PrepareModel(OrgOutputModel data)
         //{
         //    var output = this.PrepareView(data, data.Action);
 
         //    return output;
         //}
 
-        //public void WriteLines(OrgModel entities)
+        //public void WriteLines(OrgOutputModel entities)
         //{
         //    var model = PrepareModel(entities);
 

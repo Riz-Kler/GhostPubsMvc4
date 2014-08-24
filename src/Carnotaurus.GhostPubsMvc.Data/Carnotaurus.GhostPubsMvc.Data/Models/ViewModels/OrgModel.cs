@@ -4,9 +4,9 @@ using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
-    public class OrgModel : IOrgModel
+    public class OrgOutputModel : IOrgOutputModel
     {
-        public OrgModel()
+        public OrgOutputModel()
         {
             this.Links = new List<LinkModel>();
             this.Tags = new List<String>();
@@ -30,5 +30,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public String JumboTitle { get; set; }
 
         public String Action { get; set; }
+
+        public String Priority { get; set; }
+
     }
 }

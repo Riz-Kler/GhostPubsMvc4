@@ -101,14 +101,15 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         {
             var regions = _queryManager.GetRegions().ToList();
 
-            var regionsModel = new OrgModel
+            var regionsModel = new OrgOutputModel
             {
                 JumboTitle = "Haunted pubs in UK by region",
                 Action = "country",
                 Links = regions.Select(x => new LinkModel { Text = x.Name, Title = x.Name }).OrderBy(x => x.Text).ToList(),
-                Description = "Ghost pubs in " + regions.Select(x => x.Name).OxbridgeAnd(),
+                Description = string.Format("Ghost pubs in {0}", regions.Select(x => x.Name).OxbridgeAnd()),
                 Unc = currentRoot,
-                Parent = new KeyValuePair<string, string>("Home page", @"/")
+                Parent = new KeyValuePair<string, string>("Home page", @"/"),
+                Priority = "0.2"
             };
 
             WriteLines(regionsModel);
@@ -135,7 +136,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Title = x.Description
             }).ToList();
 
-            var regionModel = new OrgModel
+            var regionModel = new OrgOutputModel
             {
                 JumboTitle = currentRegion.Name,
                 Action = "region",
@@ -144,7 +145,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Unc = currentRegionPath,
                 Parent =
                     new KeyValuePair<string, string>(currentRegion.Name, currentRegion.Name.Replace(" ", "_").ToLower()),
-                Total = orgsInRegionCount
+                Total = orgsInRegionCount,
+                Priority = "0.4"
             };
 
             WriteLines(regionModel);
@@ -240,7 +242,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Title = x
             }).ToList();
 
-            var countyModel = new OrgModel
+            var countyModel = new OrgOutputModel
             {
                 JumboTitle = currentCounty.Name,
                 Action = "county",
@@ -249,7 +251,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Unc = currentCountyPath,
                 Parent = new KeyValuePair<string, string>(currentRegion.Name,
                     currentRegion.Name.Replace(" ", "_").ToLower()),
-                Total = count
+                Total = count,
+                Priority = "0.6"
             };
 
             // towns need to know about
@@ -285,7 +288,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Title = x.Text
             }).ToList();
 
-            var pubModel = new OrgModel
+            var pubModel = new OrgOutputModel
             {
                 JumboTitle = pub.TradingName,
                 Action = "pub",
@@ -293,7 +296,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Description = pub.Address + ", " + pub.PostcodePrimaryPart,
                 Unc = current,
                 Parent = new KeyValuePair<string, string>(pub.Town, pub.Town.Replace(" ", "_").ToLower()),
-                Tags = pub.Tags.Select(x => x.Feature.Name).ToList()
+                Tags = pub.Tags.Select(x => x.Feature.Name).ToList(),
+                Priority = "1.0"
             };
 
             WriteLines(pubModel);
@@ -311,7 +315,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 .Select(x => x.Value)
                 .ToList();
 
-            var townModel = new OrgModel
+            var townModel = new OrgOutputModel
             {
                 JumboTitle = town,
                 Action = "town",
@@ -319,7 +323,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Description = town,
                 Unc = townPath,
                 Parent = new KeyValuePair<string, string>(currentCounty.Description, String.Empty),
-                Total = pubLinks.Count
+                Total = pubLinks.Count,
+                Priority = "0.8"
             };
 
             WriteLines(townModel);
@@ -345,14 +350,14 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         }
 
 
-        protected String PrepareModel(OrgModel data)
+        protected String PrepareModel(OrgOutputModel data)
         {
             var output = this.PrepareView(data, data.Action);
 
             return output;
         }
 
-        public void WriteLines(OrgModel entities)
+        public void WriteLines(OrgOutputModel entities)
         {
             var contents = PrepareModel(entities);
 
@@ -363,7 +368,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             WriteFile(fullFilePath, contents);
 
             // add to webmaster tools sitemap
-            AddUrl(fullFilePath);
+            AddUrl(fullFilePath, entities.Priority);
         }
 
         public void WriteFile(string fullFilePath, string contents)
@@ -372,7 +377,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             System.IO.File.WriteAllText(fullFilePath, contents);
         }
 
-        private void AddUrl(string fullFilePath)
+        private void AddUrl(string fullFilePath, string priority)
         {
             //<url>
             //<loc>http://www.mypubguide.com/dne/app10/pages/pub/pub-95584.aspx</loc>
@@ -388,7 +393,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 String.Format("http://www.ghostpubs.com/haunted_pub{0}", fullFilePath.Replace(_currentRoot, String.Empty).Replace("\\", "/")),
                 DateTime.UtcNow.ToUniversalTime().ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'+00:00'"),
                 "daily",
-                "0.8"
+                priority
                 );
 
             _sitemapUrls.Add(output);
