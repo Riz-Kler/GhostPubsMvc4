@@ -38,30 +38,30 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="span8">
+        <div class="span8">
 
-        <!-- Carousel
-            ================================================== -->
-        <section id="carousel">
-            <div class="page-header">
-                <h1>@Model.JumboTitle</h1>
-            </div>
-            <h2>Let's journey through our haunted locations</h2>
-            <p>Please select from a haunted region from the following list:</p>
-            <ul>
-                @foreach (var link in @Model.Links)
+            <!-- Carousel
+                ================================================== -->
+            <section id="carousel">
+                <div class="page-header">
+                    <h1>@Model.JumboTitle</h1>
+                </div>
+                <h2>Let's journey through our haunted locations</h2>
+                <p>Please select from a haunted region from the following list:</p>
+                <ul>
+                    @foreach (var link in @Model.Links)
                 {
-                    <li>
-                        <a title='@link.Title' href='@link.Url/detail.html'>@link.Text</a>
-                    </li>
+                        <li>
+                            <a title='@link.Title' href='@link.Url/detail.html'>@link.Text</a>
+                        </li>
                 }
-            </ul>
-            <p><a href='/' title="Back to @Model.Parent.Key">Back to @Model.Parent.Key</a></p>
-             
+                </ul>
+                <p><a href='/' title="Back to @Model.Parent.Key">Back to @Model.Parent.Key</a></p>
 
-            <hr class="bs-docs-separator">
-        </section>
+
+                <hr class="bs-docs-separator">
+            </section>
+        </div>
     </div>
 
 
