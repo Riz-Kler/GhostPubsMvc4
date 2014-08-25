@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels

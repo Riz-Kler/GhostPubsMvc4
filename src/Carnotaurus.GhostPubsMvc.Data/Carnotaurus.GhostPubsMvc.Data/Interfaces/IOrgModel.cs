@@ -1,4 +1,5 @@
 ﻿using System;
+using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Interfaces
 {

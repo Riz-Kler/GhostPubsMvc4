@@ -5,13 +5,16 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Data.Models;
 using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
+using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Controllers
 {
+    
     public class HomeController : Controller
     {
         private readonly ICommandManager _commandManager;
@@ -104,12 +107,12 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             var regionsModel = new OutputViewModel(_currentRoot)
             {
                 JumboTitle = "Haunted pubs in UK by region",
-                Action = "country",
-                Links = regions.Select(x => new LinkModel { Text = x.Name, Title = x.Name }).OrderBy(x => x.Text).ToList(),
+                Action = GeoLevelEnum.Country.ToString(),
+                Links = regions.Select(x => x.Name != null ? new LinkModel { Text = x.Name, Title = x.Name } : null).OrderBy(x => x.Text).ToList(),
                 Description = string.Format("Ghost pubs in {0}", regions.Select(x => x.Name).OxbridgeAnd()),
                 Unc = currentRoot,
                 Parent = new KeyValuePair<string, string>("Home page", @"/"),
-                Priority = "0.2"
+                Priority = "0.2",
             };
              
             WriteLines(regionsModel);
@@ -139,14 +142,16 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             var regionModel = new OutputViewModel(_currentRoot)
             {
                 JumboTitle = currentRegion.Name,
-                Action = "region",
+                Action = GeoLevelEnum.Region.ToString() ,
                 Links = countyLinks.OrderBy(x => x.Text).ToList(),
-                Description = "Ghost pubs in " + countyLinks.Select(x => x.Text).OxbridgeAnd(),
+                Description = string.Format("Ghost pubs in {0}", countyLinks.Select(x => x.Text).OxbridgeAnd()),
                 Unc = currentRegionPath,
                 Parent =
-                    new KeyValuePair<string, string>(currentRegion.Name, currentRegion.Name.Replace(" ", "_").ToLower()),
+                    new KeyValuePair<string, string>(currentRegion.Name, currentRegion.Name.Underscore().ToLower()),
                 Total = orgsInRegionCount,
-                Priority = "0.4"
+                Priority = "0.4",
+                Previous = _results.LastOrDefault(x => x.Action == GeoLevelEnum.Region.ToString()) 
+
             };
              
             WriteLines(regionModel);
@@ -245,14 +250,16 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             var countyModel = new OutputViewModel(_currentRoot)
             {
                 JumboTitle = currentCounty.Name,
-                Action = "county",
+                Action = GeoLevelEnum.County.ToString(),
                 Links = townLinks.OrderBy(x => x.Text).ToList(),
                 Description = "Ghost pubs in " + townLinks.Select(x => x.Text).OxbridgeAnd(),
                 Unc = currentCountyPath,
                 Parent = new KeyValuePair<string, string>(currentRegion.Name,
-                    currentRegion.Name.Replace(" ", "_").ToLower()),
+                    currentRegion.Name.Underscore().ToLower()),
                 Total = count,
-                Priority = "0.6"
+                Priority = "0.6",
+                Previous = _results.LastOrDefault(x => x.Action == GeoLevelEnum.County.ToString()) 
+
             };
              
             // towns need to know about
@@ -289,17 +296,19 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Title = x.Text
             }).ToList();
 
+             var action = GeoLevelEnum.Pub ;
+
             var pubModel = new OutputViewModel(_currentRoot)
             {
                 JumboTitle = pub.TradingName,
-                Action = "pub",
+                Action = action.ToString(),
                 Links = notes,
-                Description = pub.Address + ", " + pub.PostcodePrimaryPart,
+                Description = string.Format("{0}, {1}", pub.Address, pub.PostcodePrimaryPart),
                 Unc = current,
-                Parent = new KeyValuePair<string, string>(pub.Town, pub.Town.Replace(" ", "_").ToLower()),
+                Parent = new KeyValuePair<string, string>(pub.Town, pub.Town.Underscore().ToLower()),
                 Tags = pub.Tags.Select(x => x.Feature.Name).ToList(),
                 Priority = "1.0",
-                Previous = _results.LastOrDefault(x => x.Action == "pub") 
+                Previous = _results.LastOrDefault(x => x.Action == action.ToString()) 
             };
              
             WriteLines(pubModel);
@@ -320,13 +329,15 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             var townModel = new OutputViewModel(_currentRoot)
             {
                 JumboTitle = town,
-                Action = "town",
+                Action = GeoLevelEnum.Town.ToString(),
                 Links = pubLinks,
                 Description = town,
                 Unc = townPath,
                 Parent = new KeyValuePair<string, string>(currentCounty.Description, String.Empty),
                 Total = pubLinks.Count,
-                Priority = "0.8"
+                Priority = "0.8",
+                Previous = _results.LastOrDefault(x => x.Action == GeoLevelEnum.Town.ToString()) 
+
             };
              
             WriteLines(townModel);
@@ -340,11 +351,11 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             {
                 if (output == String.Empty)
                 {
-                    output = b.ToLower().Replace(" ", "_");
+                    output = b.ToLower().Underscore();
                 }
                 else
                 {
-                    output = output + @"\" + b.ToLower().Replace(" ", "_");
+                    output = string.Format("{0}\\{1}", output, b.ToLower().Underscore());
                 }
             }
 

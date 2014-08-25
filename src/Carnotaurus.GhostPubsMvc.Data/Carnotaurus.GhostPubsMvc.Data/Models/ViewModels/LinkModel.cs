@@ -1,5 +1,6 @@
 ﻿using System;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
+using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
@@ -11,7 +12,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             {
                 if (!Text.IsNullOrEmpty())
                 {
-                    return Text.Replace(" ", "_");
+                    return Text.Underscore();
                 }
                 return String.Empty;
             }
