@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
+using Carnotaurus.GhostPubsMvc.Common.Bespoke;
 using Carnotaurus.GhostPubsMvc.Data.Models;
 
 namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
@@ -8,7 +10,15 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
     {
         String CurrentUserName { get; }
 
-        void UpdateOrgs(IEnumerable<Org> missingInfoOrgs);
+        string UpdateAdministrativeAreaLevels(XContainer result, Org org);
+
+        ResultTypeEnum UpdateOrganisation(Org missingInfoOrg, XElement xElement);
+
+        XElement ReadXElement(Org missingInfoOrg);
+
+        void Save();
+
+        void UpdateCounty(Org org, County match);
 
         //CommandResult SavePayment(PaymentCapture command);
 

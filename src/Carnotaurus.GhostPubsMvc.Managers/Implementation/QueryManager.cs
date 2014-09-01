@@ -23,7 +23,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 && f.Address != null
                 && f.Postcode != null
                 && f.AddressTypeId == 1
-                && f.CountyId != null
+                && f.CountyId == null
                 && f.Tried == null
                 )
                 .ToList();

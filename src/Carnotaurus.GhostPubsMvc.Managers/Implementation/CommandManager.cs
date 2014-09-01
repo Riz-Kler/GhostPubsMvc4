@@ -34,43 +34,20 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             }
         }
 
-        public void UpdateOrgs(IEnumerable<Org> missingInfoOrgs)
+        public void UpdateCounty(Org org, County  match)
         {
-            foreach (var missingInfoOrg in missingInfoOrgs)
-            {
-                var isSuccess = UpdateOrganisation(missingInfoOrg);
 
-                if (isSuccess == ResultTypeEnum.Fail)
-                {
-                    break;
-                }
+            org.CountyId = match.Id;
 
-                _writer.SaveChanges();
-            }
         }
 
-
-        private ResultTypeEnum UpdateOrganisation(Org missingInfoOrg)
+        public void Save()
         {
-            // source correct address, using google maps api or similar
+            _writer.SaveChanges();
+        }
 
-            // E.G., https://maps.googleapis.com/maps/api/geocode/xml?address=26%20Smithfield,%20London,%20Greater%20London,%20EC1A%209LB,%20uk&sensor=true&key=AIzaSyC2DCdkPGBtsooyft7sX3P9h2f4uQvLQj0
-
-            var key = ConfigurationHelper.GetValueAsString("GoogleMapsApiKey");
-            // "AIzaSyC2DCdkPGBtsooyft7sX3P9h2f4uQvLQj0";
-
-            var requestUri = ("https://maps.google.com/maps/api/geocode/xml?address="
-                              + missingInfoOrg.TradingName
-                              + ", "
-                              + missingInfoOrg.Address
-                              + ", "
-                              + missingInfoOrg.Postcode
-                              + ", UK&sensor=false&key=" + key);
-
-            var xdoc = XDocument.Load(requestUri);
-
-            var xElement = xdoc.Element("GeocodeResponse");
-
+        public ResultTypeEnum UpdateOrganisation(Org missingInfoOrg, XElement xElement)
+        {
             var isSuccess = ResultTypeEnum.Fail;
 
             if (xElement == null || xElement.Value.Contains("OVER_QUERY_LIMIT"))
@@ -103,12 +80,34 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             UpdateTown(result, missingInfoOrg);
 
-            UpdateCounty(result, missingInfoOrg);
-
             return isSuccess;
         }
 
-        private void UpdateCounty(XContainer result, Org org)
+        public XElement ReadXElement(Org missingInfoOrg)
+        {
+            // source correct address, using google maps api or similar
+
+            // E.G., https://maps.googleapis.com/maps/api/geocode/xml?address=26%20Smithfield,%20London,%20Greater%20London,%20EC1A%209LB,%20uk&sensor=true&key=AIzaSyC2DCdkPGBtsooyft7sX3P9h2f4uQvLQj0
+
+            var key = ConfigurationHelper.GetValueAsString("GoogleMapsApiKey");
+            // "AIzaSyC2DCdkPGBtsooyft7sX3P9h2f4uQvLQj0";
+
+            var requestUri = ("https://maps.google.com/maps/api/geocode/xml?address="
+                              + missingInfoOrg.TradingName
+                              + ", "
+                              + missingInfoOrg.Address
+                              + ", "
+                              + missingInfoOrg.Postcode
+                              + ", UK&sensor=false&key=" + key);
+
+            var xdoc = XDocument.Load(requestUri);
+
+            var xElement = xdoc.Element("GeocodeResponse");
+
+            return xElement;
+        }
+
+        public string UpdateAdministrativeAreaLevels(XContainer result, Org org)
         {
             if (result == null) throw new ArgumentNullException("result");
 
@@ -116,23 +115,17 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 result.Elements("address_component")
                     .FirstOrDefault(x => x.Value.EndsWith("administrative_area_level_2political"));
 
-            if (countyResult == null || countyResult.FirstNode == null) return;
+            if (countyResult == null || countyResult.FirstNode == null) return null;
 
             var inner = countyResult.FirstNode as XElement;
 
-            if (inner == null) return;
+            if (inner == null) return null;
 
             var outer = inner.Value;
 
             org.AdministrativeAreaLevel2 = outer;
 
-            // todo - come back
-
-            // var match = _queryManager.GetCounty(outer);
-
-            // if (match == null) return;
-
-            // org.CountyId = match.Id;
+            return outer;
         }
 
         private static void UpdateTown(XContainer result, Org org)

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using Carnotaurus.GhostPubsMvc.Common.Bespoke;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Data.Migrations;
@@ -97,7 +98,42 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         {
             var missingInfoOrgs = _queryManager.GetMissingInfoOrgsToUpdate();
 
-            _commandManager.UpdateOrgs(missingInfoOrgs);
+            var isSuccess = ResultTypeEnum.Fail;
+
+            foreach (var missingInfoOrg in missingInfoOrgs)
+            {
+
+                var xElement = _commandManager.ReadXElement(missingInfoOrg);
+
+                isSuccess = _commandManager.UpdateOrganisation(missingInfoOrg, xElement);
+
+                if (isSuccess == ResultTypeEnum.Success)
+                {
+                    var result = xElement.Element("result");
+
+                    var outer = _commandManager.UpdateAdministrativeAreaLevels(result, missingInfoOrg);
+
+                    var match = _queryManager.GetCounty(outer);
+
+                    if (match != null)
+                    {
+                        _commandManager.UpdateCounty(missingInfoOrg, match);
+                    }
+                    
+                }
+
+                if (isSuccess == ResultTypeEnum.Fail)
+                {
+                    break;
+                }
+
+            }
+
+            if (isSuccess != ResultTypeEnum.Fail)
+            {
+                _commandManager.Save();
+            }
+
         }
 
 
@@ -315,10 +351,11 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                       Region = pub.County.Region.Name,
                       County = pub.County.Name,
                       Town = pub.Town,
+                      Pub = pub.TradingName
                   }
 
             };
-             
+
             WriteLines(pubModel);
         }
 
