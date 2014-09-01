@@ -22,6 +22,40 @@
     <!-- Docs nav
         ================================================== -->
     <div class="row">
+        @if (Model.Lineage.Region != null)
+        {
+            <span>&gt;</span>
+            @Model.Lineage.Region
+
+            
+        }
+
+        @if (Model.Lineage.County != null)
+        {
+            <span>&gt;</span>
+            @Model.Lineage.County
+
+            
+        }
+         
+        @if (Model.Lineage.Town != null)
+        {
+            <span>&gt;</span>
+            @Model.Lineage.Town
+
+            
+        }
+        
+        @if (Model.Lineage.Pub != null)
+        {
+            <span>&gt;</span>
+            @Model.Lineage.Pub
+
+            
+        }
+
+    </div>
+    <div class="row">
         <div class="span4">
             <div>
                 <div>

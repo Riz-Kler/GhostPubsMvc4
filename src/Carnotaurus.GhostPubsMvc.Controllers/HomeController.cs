@@ -7,6 +7,7 @@ using System.Text;
 using System.Web.Mvc;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
+using Carnotaurus.GhostPubsMvc.Data.Migrations;
 using Carnotaurus.GhostPubsMvc.Data.Models;
 using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
@@ -14,14 +15,14 @@ using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Controllers
 {
-    
+
     public class HomeController : Controller
     {
         private readonly ICommandManager _commandManager;
 
         private readonly IQueryManager _queryManager;
 
-        private List<OutputViewModel> _results;
+        private List<OutputViewModel> _history;
 
         private String _currentRoot = String.Empty;
 
@@ -31,7 +32,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             _queryManager = queryManager;
 
-            _results = new List<OutputViewModel>();
+            _history = new List<OutputViewModel>();
         }
 
         public static void DeleteDirectory(string targetDir)
@@ -80,7 +81,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             sb.AppendLine(
                 @"<urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xsi:schemaLocation=""http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"">");
 
-            foreach (var item in _results)
+            foreach (var item in _history)
             {
                 sb.AppendLine(item.SitemapItem);
             }
@@ -114,7 +115,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Parent = new KeyValuePair<string, string>("Home page", @"/"),
                 Priority = "0.2",
             };
-             
+
             WriteLines(regionsModel);
 
             return regions;
@@ -142,7 +143,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             var regionModel = new OutputViewModel(_currentRoot)
             {
                 JumboTitle = currentRegion.Name,
-                Action = GeoLevelEnum.Region.ToString() ,
+                Action = GeoLevelEnum.Region.ToString(),
                 Links = countyLinks.OrderBy(x => x.Text).ToList(),
                 Description = string.Format("Ghost pubs in {0}", countyLinks.Select(x => x.Text).OxbridgeAnd()),
                 Unc = currentRegionPath,
@@ -150,10 +151,10 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                     new KeyValuePair<string, string>(currentRegion.Name, currentRegion.Name.Underscore().ToLower()),
                 Total = orgsInRegionCount,
                 Priority = "0.4",
-                Previous = _results.LastOrDefault(x => x.Action == GeoLevelEnum.Region.ToString()) 
+                Previous = _history.LastOrDefault(x => x.Action == GeoLevelEnum.Region.ToString())
 
             };
-             
+
             WriteLines(regionModel);
 
             return hauntedCountiesInRegion;
@@ -168,7 +169,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             //               && x.Tags.Any(y => y.Feature.FeatureID == 39)
             //            ).ToList();
 
-            _currentRoot = String.Format(@"C:\Carnotaurus\{0}\haunted_pub", Guid.NewGuid()).ToLower();
+            _currentRoot = String.Format(@"C:\Carnotaurus\{0}\haunted_pub", Guid.NewGuid()).ToLower().Underscore();
 
             Directory.CreateDirectory(_currentRoot);
 
@@ -258,10 +259,10 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                     currentRegion.Name.Underscore().ToLower()),
                 Total = count,
                 Priority = "0.6",
-                Previous = _results.LastOrDefault(x => x.Action == GeoLevelEnum.County.ToString()) 
+                Previous = _history.LastOrDefault(x => x.Action == GeoLevelEnum.County.ToString())
 
             };
-             
+
             // towns need to know about
             WriteLines(countyModel);
         }
@@ -296,7 +297,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Title = x.Text
             }).ToList();
 
-             var action = GeoLevelEnum.Pub ;
+            const GeoLevelEnum action = GeoLevelEnum.Pub;
 
             var pubModel = new OutputViewModel(_currentRoot)
             {
@@ -308,7 +309,14 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Parent = new KeyValuePair<string, string>(pub.Town, pub.Town.Underscore().ToLower()),
                 Tags = pub.Tags.Select(x => x.Feature.Name).ToList(),
                 Priority = "1.0",
-                Previous = _results.LastOrDefault(x => x.Action == action.ToString()) 
+                Previous = _history.LastOrDefault(x => x.Action == action.ToString()),
+                Lineage = new Breadcrumb
+                  {
+                      Region = pub.County.Region.Name,
+                      County = pub.County.Name,
+                      Town = pub.Town,
+                  }
+
             };
              
             WriteLines(pubModel);
@@ -336,10 +344,10 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Parent = new KeyValuePair<string, string>(currentCounty.Description, String.Empty),
                 Total = pubLinks.Count,
                 Priority = "0.8",
-                Previous = _results.LastOrDefault(x => x.Action == GeoLevelEnum.Town.ToString()) 
+                Previous = _history.LastOrDefault(x => x.Action == GeoLevelEnum.Town.ToString())
 
             };
-             
+
             WriteLines(townModel);
         }
 
@@ -372,7 +380,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         public void WriteLines(OutputViewModel model)
         {
-            _results.Add(model);
+            _history.Add(model);
 
             var contents = PrepareModel(model);
 

@@ -8,6 +8,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
     public class OutputViewModel : IOutputViewModel
     {
+        
         private readonly String _currentRoot = String.Empty;
 
         public OutputViewModel(String currentRoot)
@@ -16,6 +17,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             Tags = new List<String>();
             _currentRoot = currentRoot;
         }
+
+        public Breadcrumb Lineage { get; set; }
 
         public String Description { get; set; }
 

@@ -5,9 +5,23 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Carnotaurus.GhostPubsMvc.Common.Extensions
-{
+{ 
     public static class PrimativeExtensions
     {
+        public static string SubstringAfter(this string s, string searchString)
+        {
+            if (String.IsNullOrEmpty(searchString)) return s;
+            var idx = s.IndexOf(searchString);
+            return (idx < 0 ? "" : s.Substring(idx + searchString.Length));
+        }
+
+        public static string SubstringBefore(this string s, string searchString)
+        {
+            if (String.IsNullOrEmpty(searchString)) return s;
+            var idx = s.IndexOf(searchString);
+            return (idx < 0 ? "" : s.Substring(0, idx));
+        }
+
         public static String DoubleApostrophes(this String value)
         {
             var isNullOrEmpty = value.Replace("'", "''");
