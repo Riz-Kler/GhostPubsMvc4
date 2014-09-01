@@ -21,13 +21,14 @@
 
     <!-- Docs nav
         ================================================== -->
-    <div class="row">
+    <div class="row" style="min-height:30px; display: none">
+
         @if (Model.Lineage.Region != null)
         {
             <span>&gt;</span>
             @Model.Lineage.Region
 
-            
+
         }
 
         @if (Model.Lineage.County != null)
@@ -35,23 +36,23 @@
             <span>&gt;</span>
             @Model.Lineage.County
 
-            
+
         }
-         
+
         @if (Model.Lineage.Town != null)
         {
             <span>&gt;</span>
             @Model.Lineage.Town
 
-            
+
         }
-        
+
         @if (Model.Lineage.Pub != null)
         {
             <span>&gt;</span>
             @Model.Lineage.Pub
 
-            
+
         }
 
     </div>
@@ -59,17 +60,10 @@
         <div class="span4">
             <div>
                 <div>
-                    @*<a href="/haunted_pub/detail.html">*@
                     <img onclick=" window.open('http://www.ghostpubs.com/haunted_pub/detail.html', '_self'); " class="img-circle face-relative" src="~/Content/bootstrap/231/img/ghostpubs/padded-logo-125x125.png" alt="Ghost Pubs" title="Ghost Pubs" />
-                    @*</a>*@
+
                 </div>
 
-                @*                <div class="btn-group btn-group-vertical">
-                        <button class="btn btn-large btn-primary" style="min-width: 200px">Chester</button>
-                        <button class="btn btn-large disabled" style="min-width: 200px">Adlington</button>
-                        <button class="btn btn-large disabled" style="min-width: 200px">Knutsford</button>
-                        <button class="btn btn-large disabled" style="min-width: 200px">Macclesfield</button>
-                    </div>*@
             </div>
         </div>
 
