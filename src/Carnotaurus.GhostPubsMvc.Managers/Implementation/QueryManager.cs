@@ -33,7 +33,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
         public County GetCounty(string name)
         {
-            var results = _reader.Items<County>().First(x => x.Name == name);
+            var results = _reader.Items<County>().FirstOrDefault(x => x.Name == name);
 
             return results;
         }
