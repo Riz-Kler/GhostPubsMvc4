@@ -8,17 +8,31 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 { 
     public static class PrimativeExtensions
     {
-        public static string SubstringAfter(this string s, string searchString)
+        public static string After(this string s, string searchString)
         {
             if (String.IsNullOrEmpty(searchString)) return s;
-            var idx = s.IndexOf(searchString);
+            var idx = s.IndexOf(searchString, StringComparison.Ordinal);
             return (idx < 0 ? "" : s.Substring(idx + searchString.Length));
         }
 
-        public static string SubstringBefore(this string s, string searchString)
+        public static string Before(this string s, string searchString)
         {
             if (String.IsNullOrEmpty(searchString)) return s;
-            var idx = s.IndexOf(searchString);
+            var idx = s.IndexOf(searchString, StringComparison.Ordinal);
+            return (idx < 0 ? "" : s.Substring(0, idx));
+        }
+
+        public static string AfterLast(this string s, string searchString)
+        {
+            if (String.IsNullOrEmpty(searchString)) return s;
+            var idx = s.LastIndexOf(searchString, StringComparison.Ordinal);
+            return (idx < 0 ? "" : s.Substring(idx + searchString.Length));
+        }
+
+        public static string BeforeLast(this string s, string searchString)
+        {
+            if (String.IsNullOrEmpty(searchString)) return s;
+            var idx = s.LastIndexOf(searchString, StringComparison.Ordinal);
             return (idx < 0 ? "" : s.Substring(0, idx));
         }
 

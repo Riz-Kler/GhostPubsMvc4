@@ -14,8 +14,6 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         ResultTypeEnum UpdateOrganisation(Org missingInfoOrg, XElement xElement);
 
-        XElement ReadXElement(Org missingInfoOrg);
-
         void Save();
 
         void UpdateCounty(Org org, County match);

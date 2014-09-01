@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using Carnotaurus.GhostPubsMvc.Data.Models;
 
 namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
@@ -13,6 +14,9 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
         IEnumerable<County> GetHauntedCountiesInRegion(Int32 regionId);
 
         IEnumerable<Region> GetRegions();
+
+
+        XElement ReadXElement(Org missingInfoOrg);
 
         // Read commands
 

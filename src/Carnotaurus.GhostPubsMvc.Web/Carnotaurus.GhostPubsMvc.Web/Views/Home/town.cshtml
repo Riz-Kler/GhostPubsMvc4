@@ -21,6 +21,38 @@
 
     <!-- Docs nav
         ================================================== -->
+    <div class="row" style="min-height:30px;">
+
+        <a href="http://www.ghostpubs.com" title="Home">Home</a>
+
+        <span>&gt;</span>
+        <a href="http://www.ghostpubs.com/haunted_pub/detail.html" title="Regions">Regions</a>
+
+        @if (Model.Lineage.Region != null)
+        {
+            <span>&gt;</span>
+            <a href="@Model.Lineage.Region.Url" title="@Model.Lineage.Region.Title">@Model.Lineage.Region.Text</a>
+        }
+
+        @if (Model.Lineage.County != null)
+        {
+            <span>&gt;</span>
+            <a href="@Model.Lineage.County.Url" title="@Model.Lineage.County.Title">@Model.Lineage.County.Text</a>
+        }
+
+        @if (Model.Lineage.Town != null)
+        {
+            <span>&gt;</span>
+            <a href="@Model.Lineage.Town.Url" title="@Model.Lineage.Town.Title">@Model.Lineage.Town.Text</a>
+        }
+
+        @if (Model.Lineage.Pub != null)
+        {
+            <span>&gt;</span>
+            <a href="@Model.Lineage.Pub.Url" title="@Model.Lineage.Pub.Title">@Model.Lineage.Pub.Text</a>
+        }
+
+    </div>
     <div class="row">
         <div class="span4 bs-docs-sidebar">
             <div>

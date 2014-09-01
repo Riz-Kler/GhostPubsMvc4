@@ -25,6 +25,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public String Link { get; set; }
 
         public String Tag { get; set; }
+ 
+        public List<LinkModel> AlsoListed { get; set; }
 
         public List<LinkModel> Links { get; set; }
 

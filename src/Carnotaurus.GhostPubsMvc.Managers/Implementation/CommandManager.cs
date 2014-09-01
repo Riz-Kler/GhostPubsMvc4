@@ -83,30 +83,6 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             return isSuccess;
         }
 
-        public XElement ReadXElement(Org missingInfoOrg)
-        {
-            // source correct address, using google maps api or similar
-
-            // E.G., https://maps.googleapis.com/maps/api/geocode/xml?address=26%20Smithfield,%20London,%20Greater%20London,%20EC1A%209LB,%20uk&sensor=true&key=AIzaSyC2DCdkPGBtsooyft7sX3P9h2f4uQvLQj0
-
-            var key = ConfigurationHelper.GetValueAsString("GoogleMapsApiKey");
-            // "AIzaSyC2DCdkPGBtsooyft7sX3P9h2f4uQvLQj0";
-
-            var requestUri = ("https://maps.google.com/maps/api/geocode/xml?address="
-                              + missingInfoOrg.TradingName
-                              + ", "
-                              + missingInfoOrg.Address
-                              + ", "
-                              + missingInfoOrg.Postcode
-                              + ", UK&sensor=false&key=" + key);
-
-            var xdoc = XDocument.Load(requestUri);
-
-            var xElement = xdoc.Element("GeocodeResponse");
-
-            return xElement;
-        }
-
         public string UpdateAdministrativeAreaLevels(XContainer result, Org org)
         {
             if (result == null) throw new ArgumentNullException("result");

@@ -103,7 +103,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             foreach (var missingInfoOrg in missingInfoOrgs)
             {
 
-                var xElement = _commandManager.ReadXElement(missingInfoOrg);
+                var xElement = _queryManager.ReadXElement(missingInfoOrg);
 
                 isSuccess = _commandManager.UpdateOrganisation(missingInfoOrg, xElement);
 
@@ -119,7 +119,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                     {
                         _commandManager.UpdateCounty(missingInfoOrg, match);
                     }
-                    
+
                 }
 
                 if (isSuccess == ResultTypeEnum.Fail)
@@ -145,11 +145,12 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             {
                 JumboTitle = "Haunted pubs in UK by region",
                 Action = GeoLevelEnum.Country.ToString(),
-                Links = regions.Select(x => x.Name != null ? new LinkModel { Text = x.Name, Title = x.Name } : null).OrderBy(x => x.Text).ToList(),
+                Links = regions.Select(x => x.Name != null ? new LinkModel(_currentRoot) { Text = x.Name, Title = x.Name } : null).OrderBy(x => x.Text).ToList(),
                 Description = string.Format("Ghost pubs in {0}", regions.Select(x => x.Name).OxbridgeAnd()),
                 Unc = currentRoot,
                 Parent = new KeyValuePair<string, string>("Home page", @"/"),
                 Priority = "0.2",
+
             };
 
             WriteLines(regionsModel);
@@ -170,7 +171,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             var hauntedCountiesInRegion = _queryManager.GetHauntedCountiesInRegion(currentRegion.Id).ToList();
 
-            var countyLinks = hauntedCountiesInRegion.Select(x => new LinkModel
+            var countyLinks = hauntedCountiesInRegion.Select(x => new LinkModel(_currentRoot)
             {
                 Text = x.Description,
                 Title = x.Description
@@ -187,7 +188,21 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                     new KeyValuePair<string, string>(currentRegion.Name, currentRegion.Name.Underscore().ToLower()),
                 Total = orgsInRegionCount,
                 Priority = "0.4",
-                Previous = _history.LastOrDefault(x => x.Action == GeoLevelEnum.Region.ToString())
+                Previous = _history.LastOrDefault(x => x.Action == GeoLevelEnum.Region.ToString()),
+                Lineage = new Breadcrumb
+                {
+                    Region = new LinkModel(_currentRoot)
+                    {
+                        Unc = currentRegionPath,
+                        Id = currentRegion.Id,
+                        Text = currentRegion.Name,
+                        Title = currentRegion.Name,
+
+                    },
+
+
+                }
+
 
             };
 
@@ -248,7 +263,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
                     var townsInCounty = orgsInCounty.Select(x => x.Town).Distinct().ToList();
 
-                    CreateCountyFile(currentCounty, currentCountyPath, townsInCounty, currentRegion, orgsInCounty.Count);
+                    CreateCountyFile(currentCounty, currentCountyPath, townsInCounty, currentRegion, orgsInCounty.Count, currentRegionPath);
 
                     var pubTownLinks = new List<KeyValuePair<String, LinkModel>>();
 
@@ -268,7 +283,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                     // create the town pages
                     foreach (var town in townsInCounty)
                     {
-                        CreateTownFile(currentCountyPath, pubTownLinks, town, currentCounty);
+                        CreateTownFile(currentCountyPath, pubTownLinks, town, currentCounty, currentRegion, currentRegionPath);
                     }
                 }
             }
@@ -276,9 +291,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
 
         private void CreateCountyFile(County currentCounty, string currentCountyPath, IEnumerable<string> towns,
-            Region currentRegion, Int32 count)
+            Region currentRegion, Int32 count, string currentRegionPath)
         {
-            var townLinks = towns.Select(x => new LinkModel
+            var townLinks = towns.Select(x => new LinkModel(_currentRoot)
             {
                 Text = x,
                 Title = x
@@ -295,7 +310,24 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                     currentRegion.Name.Underscore().ToLower()),
                 Total = count,
                 Priority = "0.6",
-                Previous = _history.LastOrDefault(x => x.Action == GeoLevelEnum.County.ToString())
+                Previous = _history.LastOrDefault(x => x.Action == GeoLevelEnum.County.ToString()),
+                Lineage = new Breadcrumb
+                {
+                    Region = new LinkModel(_currentRoot)
+                    {
+                        Unc = currentRegionPath,
+                        Id =  currentRegion.Id,
+                        Text = currentRegion.Name,
+                        Title = currentRegion.Name
+                    },
+                    County = new LinkModel(_currentRoot)
+                    {
+                        Unc = currentCountyPath,
+                        Id = currentCounty.Id,
+                        Text = currentCounty.Name,
+                        Title = currentCounty.Name
+                    }
+                }
 
             };
 
@@ -306,27 +338,13 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         private void CreatePubFile(ICollection<KeyValuePair<string, LinkModel>> pubTownLinks, string currentTownPath,
             Org pub)
         {
-            var current = BuildPath(currentTownPath, pub.Id.ToString(CultureInfo.InvariantCulture), pub.TradingName);
+            pub.TownPath = currentTownPath;
 
-            var info = new KeyValuePair<String, LinkModel>(pub.Town, new LinkModel
-            {
-                Text = pub.TradingName,
-                Title = pub.TradingName + ", " + pub.Postcode,
-                Unc = current,
-                Id = pub.Id,
+            pubTownLinks.Add(new KeyValuePair<string, LinkModel>(pub.Town, pub.ExtractLink(_currentRoot)));
 
-            });
+            Directory.CreateDirectory(pub.Path);
 
-            pubTownLinks.Add(info);
-
-            Directory.CreateDirectory(current);
-
-            //var many = pubs
-            //    .Where(x => x.OrgID.Equals(pub.OrgID))
-            //    .Select(x => x.TradingName + " " + x.OrgID)
-            //    .ToList();
-
-            var notes = pub.Notes.Select(x => new LinkModel
+            var notes = pub.Notes.Select(x => new LinkModel(_currentRoot)
             {
                 Id = x.Id,
                 Text = x.Text,
@@ -341,17 +359,42 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Action = action.ToString(),
                 Links = notes,
                 Description = string.Format("{0}, {1}", pub.Address, pub.PostcodePrimaryPart),
-                Unc = current,
+                Unc = pub.Path,
                 Parent = new KeyValuePair<string, string>(pub.Town, pub.Town.Underscore().ToLower()),
                 Tags = pub.Tags.Select(x => x.Feature.Name).ToList(),
                 Priority = "1.0",
                 Previous = _history.LastOrDefault(x => x.Action == action.ToString()),
                 Lineage = new Breadcrumb
                   {
-                      Region = pub.County.Region.Name,
-                      County = pub.County.Name,
-                      Town = pub.Town,
-                      Pub = pub.TradingName
+                      Region = new LinkModel(_currentRoot)
+                      {
+                          Unc = pub.RegionPath,
+                          Id = pub.Id,
+                          Text = pub.County.Region.Name,
+                          Title = pub.County.Region.Name
+                      },
+                      County = new LinkModel(_currentRoot)
+                      {
+                          Unc = pub.CountyPath,
+                          Id = pub.Id,
+                          Text = pub.County.Name,
+                          Title = pub.County.Name
+                      },
+                      Town = new LinkModel(_currentRoot)
+                      {
+                          Unc = pub.TownPath,
+                          Id = pub.Id,
+                          Text = pub.Town,
+                          Title = pub.Town
+                      },
+                      Pub = new LinkModel(_currentRoot)
+                      {
+                          Unc = pub.Path,
+                          Id = pub.Id,
+                          Text = pub.TradingName,
+                          Title = pub.TradingName
+                      }
+
                   }
 
             };
@@ -359,10 +402,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             WriteLines(pubModel);
         }
 
-
         private void CreateTownFile(string currentCountyPath, IEnumerable<KeyValuePair<string, LinkModel>> pubTownLinks,
             string town,
-            County currentCounty)
+            County currentCounty, Region currentRegion, string currentRegionPath)
         {
             var townPath = BuildPath(currentCountyPath, town);
 
@@ -381,7 +423,32 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Parent = new KeyValuePair<string, string>(currentCounty.Description, String.Empty),
                 Total = pubLinks.Count,
                 Priority = "0.8",
-                Previous = _history.LastOrDefault(x => x.Action == GeoLevelEnum.Town.ToString())
+                Previous = _history.LastOrDefault(x => x.Action == GeoLevelEnum.Town.ToString()),
+                Lineage = new Breadcrumb
+                {
+                    Region = new LinkModel(_currentRoot)
+                    {
+                        Unc = currentRegionPath,
+                        Id = currentRegion.Id,
+                        Text = currentRegion.Name,
+                        Title = currentRegion.Name
+                    },
+                    County = new LinkModel(_currentRoot)
+                    {
+                        Unc = currentCountyPath,
+                        Id = currentCounty.Id,
+                        Text = currentCounty.Name,
+                        Title = currentCounty.Name
+                    },
+                    Town = new LinkModel(_currentRoot)
+                    {
+                        Unc = townPath,
+                        Id = currentCounty.Id,
+                        Text = town,
+                        Title = town
+                    }
+                }
+
 
             };
 

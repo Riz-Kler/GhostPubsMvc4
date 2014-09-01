@@ -1,6 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
+using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
+using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
+using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models
 {
@@ -8,11 +13,78 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
     {
         public Org()
         {
-            this.BookItems = new List<BookItem>();
-            this.Notes = new List<Note>();
-            this.Tags = new List<Tag>();
+            BookItems = new List<BookItem>();
+            Notes = new List<Note>();
+            Tags = new List<Tag>();
         }
 
+
+        public String BuildPath(params String[] builder)
+        {
+            var output = String.Empty;
+
+            foreach (var b in builder)
+            {
+                if (output == String.Empty)
+                {
+                    output = b.ToLower().Underscore();
+                }
+                else
+                {
+                    output = string.Format("{0}\\{1}", output, b.ToLower().Underscore());
+                }
+            }
+
+            return output;
+        }
+
+
+        [NotMapped]
+        public string CountyPath
+        {
+            get { return TownPath.BeforeLast(@"\"); }
+        }
+
+
+
+        [NotMapped]
+        public string RegionPath
+        {
+            get { return CountyPath.BeforeLast(@"\"); }
+        }
+
+
+
+        [NotMapped]
+        public string TownPath { get; set; }
+
+        [NotMapped]
+        public string Path
+        {
+            get
+            {
+                var current = BuildPath(TownPath, Id.ToString(CultureInfo.InvariantCulture), TradingName);
+
+                return current;
+            }
+        }
+
+        public LinkModel ExtractLink(String currentRoot)
+        {
+
+            var info = new LinkModel(currentRoot)
+            {
+                Text = TradingName,
+                Title = string.Format("{0}, {1}", TradingName, Postcode),
+                Unc = Path,
+                Id = Id,
+
+            };
+
+            return info;
+        }
+
+        [NotMapped]
         public string PostcodePrimaryPart
         {
             get

@@ -8,10 +8,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
     public class Breadcrumb
     {
-        public String Region { get; set; }
-        public String County { get; set; }
-        public String Town { get; set; }
-        public String Pub { get; set; }
+        public LinkModel Region { get; set; }
+        public LinkModel County { get; set; }
+        public LinkModel Town { get; set; }
+        public LinkModel Pub { get; set; }
 
     }
 
