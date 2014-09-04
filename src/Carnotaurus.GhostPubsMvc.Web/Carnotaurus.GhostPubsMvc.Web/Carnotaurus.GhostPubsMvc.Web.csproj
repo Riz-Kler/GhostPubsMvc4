@@ -509,7 +509,10 @@
     <Content Include="teaser-ghostpubs\partners-featured.html" />
     <Content Include="teaser-ghostpubs\news-start.html" />
     <Content Include="teaser-ghostpubs\news-promotions.html" />
+    <Content Include="teaser-ghostpubs\partners-merchandise.html" />
     <Content Include="teaser-ghostpubs\partners-start.html" />
+    <Content Include="teaser-ghostpubs\partners.html" />
+    <Content Include="teaser-ghostpubs\services.html" />
     <Content Include="teaser-ghostpubs\stories-start.html" />
     <Content Include="teaser-ghostpubs\stories-submissions.html" />
     <Content Include="teaser-ghostpubs\news-competitions.html" />

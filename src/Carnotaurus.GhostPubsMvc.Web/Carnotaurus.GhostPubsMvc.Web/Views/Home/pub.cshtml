@@ -18,11 +18,10 @@
 </header>
 
 <div class="container">
-
     <!-- Docs nav
-        ================================================== -->
+       ================================================== -->
     <div class="row" style="min-height:30px;">
-        
+
         <a href="http://www.ghostpubs.com" title="Home">Home</a>
 
         <span>&gt;</span>
@@ -76,7 +75,7 @@
                 <div class="well well-large">
                     <p>@Model.Description</p>
                     <ul>
-                        @foreach (var link in @Model.Links)
+                        @foreach (var link in @Model.Notes)
                         {
                             <li>
                                 @link.Text
@@ -90,13 +89,54 @@
                 </div>
                 <h2>More to follow ...</h2>
                 <div class="well well-large">
-                    <p>Please provide us with more detail.</p>
+                    @if (Model.OtherNames.Count > 0)
+                    {
+                        <p>Other names for this pub:</p>
+                        foreach (var linkModel in @Model.OtherNames)
+                        {
+                            <a class="label label-info" href="@linkModel.Url" title="@linkModel.Title">@linkModel.Text</a>
+                        }
+                        <p>&nbsp;</p>
+                    }
+
+                    <div id="map" style="width: 600px; height: 400px"></div>
+
+                    <script>
+
+                        var map = L.map('map').setView([@Model.Lat, @Model.Lon], 13);
+
+                        L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+                            maxZoom: 18,
+                            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+                                '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                                'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+                            id: 'examples.map-i86knfo3'
+                        }).addTo(map);
+
+
+                        L.marker([@Model.Lat, @Model.Lon]).addTo(map)
+                            .bindPopup("<b>@Model.JumboTitle</b>").openPopup();
+
+                        var popup = L.popup();
+
+                        function onMapClick(e) {
+                            popup
+                                .setLatLng(e.latlng)
+                                .setContent("You clicked the map at " + e.latlng.toString())
+                                .openOn(map);
+                        }
+
+                        map.on('click', onMapClick);
+
+                    </script>
+
                     @if (Model.Previous != null)
                     {
-                        <p><a href='@Model.Previous.Url' title="Next to @Model.Previous.JumboTitle">Next to @Model.Previous.JumboTitle</a></p>
+
+                        <p>&nbsp;</p>
+                        <p>Want to read about&nbsp;<a href='@Model.Previous.Url' title="Next to @Model.Previous.JumboTitle">@Model.Previous.JumboTitle?</a></p>
                     }
                     <p><a href='../../../@Model.Parent.Value/detail.html' title="Back to @Model.Parent.Key">Back to @Model.Parent.Key</a></p>
-                    @*      <iframe src="https://www.google.com/maps/embed?q=sk1+3jt" width="600" height="450" frameborder="0" style="border:0"></iframe>*@
                 </div>
                 <hr>
             </section>

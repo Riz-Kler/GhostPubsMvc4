@@ -63,7 +63,7 @@
                 </div>
 
                 <div class="btn-group btn-group-vertical">
-                    @foreach (var link in Model.Links)
+                    @foreach (var link in Model.Notes)
                     {
                         <a class="btn btn-large btn-primary" style="min-width: 200px" title='@link.Title' href='@link.Url'>@link.Text</a>
                     }
@@ -83,7 +83,7 @@
                 <h2>Let's journey through our haunted locations</h2>
                 <p>Please select from a haunted pub from the following list:</p>
                 <ul>
-                    @foreach (var link in @Model.Links)
+                    @foreach (var link in @Model.Notes)
                     {
                         <li>
                             <a title='@link.Title' href='@link.Url'>@link.Text</a>

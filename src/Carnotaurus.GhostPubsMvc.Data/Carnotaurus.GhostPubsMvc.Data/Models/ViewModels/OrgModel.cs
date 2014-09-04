@@ -13,10 +13,14 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public OutputViewModel(String currentRoot)
         {
-            Links = new List<LinkModel>();
+            Notes = new List<LinkModel>();
             Tags = new List<String>();
             _currentRoot = currentRoot;
         }
+         
+        public String Lat { get; set; }
+
+        public String Lon { get; set; }
 
         public Breadcrumb Lineage { get; set; }
 
@@ -26,9 +30,9 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public String Tag { get; set; }
  
-        public List<LinkModel> AlsoListed { get; set; }
+        public List<LinkModel> OtherNames { get; set; }
 
-        public List<LinkModel> Links { get; set; }
+        public List<LinkModel> Notes { get; set; }
 
         public String Unc { get; set; }
 
@@ -53,7 +57,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public String JumboTitle { get; set; }
 
-        public String Action { get; set; }
+        public GeoLevelEnum Action { get; set; }
 
         public String Priority { get; set; }
 

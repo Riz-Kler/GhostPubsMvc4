@@ -7,6 +7,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Interfaces
     {
         String JumboTitle { get; set; }
 
-        String Action { get; set; }
+        GeoLevelEnum Action { get; set; }
     }
 }
