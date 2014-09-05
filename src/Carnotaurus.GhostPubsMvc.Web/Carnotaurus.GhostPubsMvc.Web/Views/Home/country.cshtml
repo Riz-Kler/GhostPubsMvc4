@@ -2,6 +2,10 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = Model.JumboTitle;
+    ViewBag.Link = "http://www.ghostpubs.com/haunted_pub/detail.html";
+    ViewBag.Description = Model.Description;
+    ViewBag.Tag = Model.Tag;
+    ViewBag.Tags = Model.Tags;
 }
 
 <!-- Subhead
@@ -27,18 +31,18 @@
 
         <span>&gt;</span>
         <a href="http://www.ghostpubs.com/haunted_pub/detail.html" title="Regions">Regions</a>
-         
+
         <script>
-    (function () {
-        var cx = '011800392060597881327:fu4heiztlci';
-        var gcse = document.createElement('script');
-        gcse.type = 'text/javascript';
-        gcse.async = true;
-        gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-            '//www.google.com/cse/cse.js?cx=' + cx;
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(gcse, s);
-    })();
+            (function () {
+                var cx = '011800392060597881327:fu4heiztlci';
+                var gcse = document.createElement('script');
+                gcse.type = 'text/javascript';
+                gcse.async = true;
+                gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                    '//www.google.com/cse/cse.js?cx=' + cx;
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(gcse, s);
+            })();
         </script>
         <gcse:search></gcse:search>
     </div>
@@ -71,12 +75,18 @@
                 <p>Please select from a haunted region from the following list:</p>
                 <ul>
                     @foreach (var link in @Model.Notes)
-                {
+                    {
                         <li>
                             <a title='@link.Title' href='@link.Url'>@link.Text</a>
                         </li>
-                }
+                    }
                 </ul>
+                
+
+                <div id="fb-root"></div>
+
+                <div class="fb-comments" data-href="@ViewBag.Link" data-numposts="5" data-colorscheme="dark"></div>
+
                 <p><a href='/' title="Back to @Model.Parent.Key">Back to @Model.Parent.Key</a></p>
 
 

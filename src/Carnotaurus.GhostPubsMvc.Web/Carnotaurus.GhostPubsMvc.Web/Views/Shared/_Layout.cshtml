@@ -1,63 +1,93 @@
 ﻿<!DOCTYPE html>
-<html lang="en-gb">
-    <head>
-        <title>@ViewBag.Title | GhostPubs.com</title>
-        <link href="../favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
-        <meta property="og:locale" content="en_GB" />
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content="@ViewBag.Title | GhostPubs.com" />
-        <meta property="og:description" content="@ViewBag.Description" />
-        <meta property="og:url" content="http://www.ghostpubs.com/@ViewBag.Link" />
-        <meta property="og:site_name" content="Ghost Pubs" />
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-gb" xmlns:og="http://ogp.me/ns#"
+      xmlns:fb="http://www.facebook.com/2008/fbml">
+<head>
+    <title>@ViewBag.Title | GhostPubs.com</title>
+
+
+    <meta name="revisit-after" content="2 days" />
+    <meta id="keywords" name="keywords" content="@ViewBag.Title" />
+    <meta id="description" name="description" content="@ViewBag.Description" />
+    <meta name="AUTHOR" content="Phil Carney" />
+    <meta name="Content-Language" content="en-GB" />
+    <meta name="COPYRIGHT" content="2014 Ghost Pubs" />
+    <meta name="ROBOTS" content="INDEX,FOLLOW" />
+
+    <meta property="fb:admins" content="100001874427547" />
+    <meta property="fb:app_id" content="303827419746289" />
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:type" content="html" />
+    <meta property="og:title" content="@ViewBag.Title | GhostPubs.com" />
+    <meta property="og:image" content="http://www.ghostpubs.com/dne/app08/favicon.ico" />
+    <meta property="og:description" content="@ViewBag.Description" />
+    <meta property="og:url" content="@ViewBag.Link" />
+    <meta property="og:site_name" content="Ghost Pubs" />
+    @if (@ViewBag.Tag != null)
+    {
         <meta property="article:tag" content="@ViewBag.Tag" />
-        @*    @foreach (string tag in ViewBag.Tags)
+    }
+    @if (ViewBag.Tags != null)
+    {
+        foreach (string tag in ViewBag.Tags)
         {
             <meta property="article:section" content="@tag" />
-        }*@
-        <meta property="article:published_time" content="@DateTime.Now.ToLongDateString()" />
-        <meta property="article:modified_time" content="@DateTime.Now.ToLongDateString()" />
-        @*    <meta name="twitter:card" content="summary" />
+        }
+    }
+    <meta property="article:published_time" content="@DateTime.Now.ToLongDateString()" />
+    <meta property="article:modified_time" content="@DateTime.Now.ToLongDateString()" />
+    @*    <meta name="twitter:card" content="summary" />
         <meta name="twitter:site" content="@@ghost_pubs"/>
         <meta name="twitter:domain" content="GhostPubs.com" />
         <meta name="twitter:creator" content="@@ghost_pubs"/>*@
-        @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
-        <!-- styles -->
-        <link href="@Url.Content("~/content/bootstrap/231/css/bootstrap.css")" rel="stylesheet">
-        <link href="@Url.Content("~/content/bootstrap/231/css/bootstrap-responsive.css")" rel="stylesheet">
-        <link href="@Url.Content("~/content/bootstrap/231/css/docs.css")" rel="stylesheet">
-        <link href="@Url.Content("~/content/bootstrap/231/css/ghostpubs/docs2.css")" rel="stylesheet">
-        <link href="@Url.Content("~/content/bootstrap/231/css/prettify.css")" rel="stylesheet">
-        <link href="@Url.Content("~/content/bootstrap/231/font-awesome/css/font-awesome.css")" rel="stylesheet">
-        <link href="@Url.Content("~/content/bootstrap/231/css/bootswatch.css")" rel="stylesheet">
-        
-        <meta charset="utf-8" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <!-- styles -->
+    <link href="@Url.Content("~/content/bootstrap/231/css/bootstrap.css")" rel="stylesheet">
+    <link href="@Url.Content("~/content/bootstrap/231/css/bootstrap-responsive.css")" rel="stylesheet">
+    <link href="@Url.Content("~/content/bootstrap/231/css/docs.css")" rel="stylesheet">
+    <link href="@Url.Content("~/content/bootstrap/231/css/ghostpubs/docs2.css")" rel="stylesheet">
+    <link href="@Url.Content("~/content/bootstrap/231/css/prettify.css")" rel="stylesheet">
+    <link href="@Url.Content("~/content/bootstrap/231/font-awesome/css/font-awesome.css")" rel="stylesheet">
+    <link href="@Url.Content("~/content/bootstrap/231/css/bootswatch.css")" rel="stylesheet">
+    <link href="http://www.ghostpubs.com/dne/app08/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-        <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-    </head>
-    <body data-spy="scroll" data-target=".bs-docs-sidebar">
+    <div id="fb-root"></div>
+    <div id="fb-root"></div>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&appId=303827419746289&version=v2.0";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
 
-        <!-- Navbar
-            ================================================== -->
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="brand" href="/home/index">GhostPubs.com</a>
-                    <div class="nav-collapse collapse">
-                        <ul class="nav">
-                            <li>
-                                <a href="http://www.ghostpubs.com">Home</a>
-                            </li>
-                            @*   <li>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+</head>
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+
+    <!-- Navbar
+        ================================================== -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="brand" href="/home/index">GhostPubs.com</a>
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        <li>
+                            <a href="http://www.ghostpubs.com">Home</a>
+                        </li>
+                        @*   <li>
                                 <a href="/home/index">News</a>
                             </li>
                             <li>
@@ -78,48 +108,48 @@
                             <li>
                                 <a href="/bootstrap/javascript" style="display: none">Bootstrap example- JavaScript</a>
                             </li>*@
-                        </ul>
-                    </div>
+                    </ul>
                 </div>
             </div>
         </div>
+    </div>
 
-        @RenderBody()
+    @RenderBody()
 
-        <!-- Footer
-            ================================================== -->
-        <footer class="footer">
-            <div class="container">
-                <span class="label label-info">Designed and developed by <a href="http://www.carnotaurus.co.uk/" target="_blank" title="Carnotaurus Solutions website">Carnotaurus Solutions</a> </span>
-            </div>
-        </footer>
+    <!-- Footer
+        ================================================== -->
+    <footer class="footer">
+        <div class="container">
+            <span class="label label-info">Designed and developed by <a href="http://www.carnotaurus.co.uk/" target="_blank" title="Carnotaurus Solutions website">Carnotaurus Solutions</a> </span>
+        </div>
+    </footer>
 
-        @Scripts.Render("~/bundles/jquery")
-        @RenderSection("scripts", false)
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", false)
 
-        <!-- Le javascript
-            ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap.js")"></script>
-        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-        <script src="@Url.Content("~/content/bootstrap/231/js/jquery.js")"></script>
-        <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-transition.js")"></script>
-        <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-alert.js")"></script>
-        <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-modal.js")"></script>
-        <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-dropdown.js")"></script>
-        <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-scrollspy.js")"></script>
-        <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-tab.js")"></script>
-        <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-tooltip.js")"></script>
-        <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-popover.js")"></script>
-        <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-button.js")"></script>
-        <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-collapse.js")"></script>
-        <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-carousel.js")"></script>
-        <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-typeahead.js")"></script>
-        <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-affix.js")"></script>
+    <!-- Le javascript
+        ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap.js")"></script>
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <script src="@Url.Content("~/content/bootstrap/231/js/jquery.js")"></script>
+    <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-transition.js")"></script>
+    <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-alert.js")"></script>
+    <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-modal.js")"></script>
+    <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-dropdown.js")"></script>
+    <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-scrollspy.js")"></script>
+    <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-tab.js")"></script>
+    <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-tooltip.js")"></script>
+    <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-popover.js")"></script>
+    <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-button.js")"></script>
+    <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-collapse.js")"></script>
+    <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-carousel.js")"></script>
+    <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-typeahead.js")"></script>
+    <script src="@Url.Content("~/content/bootstrap/231/js/bootstrap-affix.js")"></script>
 
-        <script src="@Url.Content("~/content/bootstrap/231/js/holder.js")"></script>
-        <script src="@Url.Content("~/content/bootstrap/231/js/prettify.js")"></script>
+    <script src="@Url.Content("~/content/bootstrap/231/js/holder.js")"></script>
+    <script src="@Url.Content("~/content/bootstrap/231/js/prettify.js")"></script>
 
-        <script src="@Url.Content("~/content/bootstrap/231/js/application.js")"></script>
-    </body>
+    <script src="@Url.Content("~/content/bootstrap/231/js/application.js")"></script>
+</body>
 </html>

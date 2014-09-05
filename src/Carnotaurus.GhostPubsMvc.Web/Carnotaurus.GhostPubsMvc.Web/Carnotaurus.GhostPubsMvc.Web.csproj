@@ -506,6 +506,7 @@
     <Content Include="Scripts\knockout-3.0.0.debug.js" />
     <Content Include="teaser-carnotaurus\favicon.ico" />
     <Content Include="teaser-ghostpubs\about-start.html" />
+    <Content Include="teaser-ghostpubs\HtmlPage1.html" />
     <Content Include="teaser-ghostpubs\partners-featured.html" />
     <Content Include="teaser-ghostpubs\news-start.html" />
     <Content Include="teaser-ghostpubs\news-promotions.html" />
