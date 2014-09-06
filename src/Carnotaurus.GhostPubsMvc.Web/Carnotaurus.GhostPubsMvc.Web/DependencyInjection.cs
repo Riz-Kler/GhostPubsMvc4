@@ -23,7 +23,7 @@ namespace Carnotaurus.GhostPubsMvc.Web
 
             // container.RegisterPerWebRequest<IMailSender, MailSender>();
 
-            container.Scan(typeof (CommandManager).Assembly);
+            container.Scan(typeof(CommandManager).Assembly);
 
             //     container.Scan(typeof(QueryManager).Assembly);
 

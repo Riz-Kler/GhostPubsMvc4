@@ -28,13 +28,14 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             var key = ConfigurationHelper.GetValueAsString("GoogleMapsApiKey");
             // "AIzaSyC2DCdkPGBtsooyft7sX3P9h2f4uQvLQj0";
 
-            var requestUri = ("https://maps.google.com/maps/api/geocode/xml?address="
-                              + missingInfoOrg.TradingName
-                              + ", "
-                              + missingInfoOrg.Address
-                              + ", "
-                              + missingInfoOrg.Postcode
-                              + ", UK&sensor=false&key=" + key);
+            var format = string.Format("https://maps.google.com/maps/api/geocode/xml?address={0}, {1}, {2}, UK&sensor=false&key={3}",
+                missingInfoOrg.TradingName,
+                missingInfoOrg.Address,
+                missingInfoOrg.Postcode,
+                key
+            );
+
+            var requestUri = (format);
 
             var xdoc = XDocument.Load(requestUri);
 
@@ -60,7 +61,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
         public County GetCounty(string name)
         {
-            var results = _reader.Items<County>().FirstOrDefault(x => x.Name == name);
+            var results = _reader.Items<County>()
+                .FirstOrDefault(x => x.Name == name);
 
             return results;
         }
@@ -84,182 +86,5 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             return results;
         }
 
-        //public PaymentInputModel GetPaymentDefaults(PaymentInputModel model, String email)
-        //{
-        //    var userProfile = FindUser(email);
-
-        //    if (userProfile != null)
-        //    {
-        //        model.Postcode = userProfile.Postcode;
-
-        //        model.Surname = userProfile.Surname;
-
-        //        model.ClientBranch = (ClientBranchEnum) userProfile.ClientBranch;
-
-        //        model.Postcode = userProfile.Postcode;
-
-        //        model.ClientReference = userProfile.ClientReference;
-
-        //        model.PaymentAmount = userProfile.PaymentAmount;
-
-        //        model.PaymentFrequency = (PaymentFrequencyEnum) userProfile.PaymentFrequency;
-
-        //        model.Address1 = userProfile.Address1;
-        //        model.Address2 = userProfile.Address2;
-        //        model.Address3 = userProfile.Address3;
-        //        model.Town = userProfile.Town;
-
-        //        model.CartUnique = Guid.NewGuid();
-
-        //        model.CartRef = string.Format("{0}-{1}-{2}{3}{4}{5}{6}{7}",
-        //            userProfile.Id.ToString(CultureInfo.InvariantCulture),
-        //            model.CartUnique.Value.RemoveSpecialCharacters(),
-        //            DateTime.Now.Year,
-        //            DateTime.Now.Month,
-        //            DateTime.Now.Day,
-        //            DateTime.Now.Hour,
-        //            DateTime.Now.Minute,
-        //            DateTime.Now.Second
-        //            );
-
-        //        model.AdvisorName = userProfile.AdvisorName;
-
-        //        model.AdvisorTel = userProfile.AdvisorTel;
-
-        //        model.UserRef = userProfile.Id.ToString(CultureInfo.InvariantCulture);
-        //    }
-
-        //    model.PaymentFrequency = PaymentFrequencyEnum.Once;
-
-        //    return model;
-        //}
-
-        //public int GetTotalUserProfiles(UserSearchListInputModel model)
-        //{
-        //    var results = _reader.Items<UserProfile>()
-        //        .Total(model.Search, model.ApprovalStatusEnum);
-
-        //    return results;
-        //}
-
-        //public PaymentCapture GetLatestPaymentCapture(String username, CartRefModel model)
-        //{
-        //    // look it up and get last payment save success date
-
-        //    var user = FindUser(username);
-
-        //    if (model == null) return null;
-
-        //    if (!model.UserRef.HasValue || user.Id != model.UserRef.Value) return null;
-
-        //    if (!model.CartUnique.HasValue) return null;
-
-        //    if (model.DateTimeString.IsNullOrEmpty()) return null;
-
-        //    // find the payment
-        //    var payment = FindLatestPaymentByCartRef(model);
-
-        //    return payment;
-        //}
-
-        //public int GetTotalPayments(PaymentSearchListInputModel model)
-        //{
-        //    var results = _reader.Items<PaymentCapture>()
-        //        .Total(model.Search);
-
-        //    return results;
-        //}
-
-        //public UserProfile FindUserByClientRefAndClientBranch(int clientRef, ClientBranchEnum clientBranch)
-        //{
-        //    // , ClientBranchEnum clientBranch
-        //    return FindUserByClientRefAndClientBranch(clientRef, (Int32) clientBranch);
-        //}
-
-        //public UserProfile FindUser(Int32 id)
-        //{
-        //    var profiles = _reader.Items<UserProfile>();
-
-        //    var selected = profiles.FirstOrDefault(x => x.Id == id);
-
-        //    return selected;
-        //}
-
-        //public UserProfile FindUser(string username)
-        //{
-        //    var profiles = _reader.Items<UserProfile>();
-
-        //    var selected = profiles.FirstOrDefault(x => x.UserName == username);
-
-        //    return selected;
-        //}
-
-        //public Role FindRole(string rolename)
-        //{
-        //    var results = GetAllRoles();
-
-        //    var result = results.FirstOrDefault(x => x.RoleName == rolename);
-
-        //    return result;
-        //}
-
-        //public List<Role> GetAllRoles()
-        //{
-        //    var results = _reader.Items<Role>().ToList();
-
-        //    return results;
-        //}
-
-        //public List<UserProfile> GetAllUserProfiles()
-        //{
-        //    var results = _reader.Items<UserProfile>().ToList();
-
-        //    return results;
-        //}
-
-        //public List<UserProfile> GetPagedUserProfiles(UserSearchListInputModel model)
-        //{
-        //    var results = _reader.Items<UserProfile>()
-        //        .Page(model.CurrentPage, model.PageSize, model.Search, model.ApprovalStatusEnum)
-        //        .ToList();
-
-        //    return results;
-        //}
-
-        //public PaymentCapture FindLatestPaymentByCartRef(CartRefModel model)
-        //{
-        //    var results = _reader.Items<PaymentCapture>();
-
-        //    var selected =
-        //        results.Where(x =>
-        //            x.UserId == model.UserRef
-        //            && x.CartRef != null
-        //            && x.CartUnique.HasValue
-        //            && x.CartUnique.Value == model.CartUnique.Value
-        //            )
-        //            .OrderByDescending(x => x.CreatedDate)
-        //            .FirstOrDefault();
-
-        //    return selected;
-        //}
-
-        //public List<PaymentCapture> GetPagedPayments(PaymentSearchListInputModel model)
-        //{
-        //    var results = _reader.Items<PaymentCapture>()
-        //        .OrderByDescending(x => x.CreatedDate)
-        //        .Page(model.CurrentPage, model.PageSize, model.Search)
-        //        .ToList();
-
-        //    return results;
-        //}
-
-        //public UserProfile FindUserByClientRefAndClientBranch(int clientRef, int clientBranch)
-        //{
-        //    var profiles = _reader.Items<UserProfile>();
-
-        //    var selected = profiles.FirstOrDefault(x => x.ClientReference == clientRef && x.ClientBranch == clientBranch);
-
-        //    return selected;
-        //}
     }
 }

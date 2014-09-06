@@ -173,7 +173,7 @@
     <Compile Include="Models\Mapping\TagMap.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\Org.cs" />
-    <Compile Include="Models\ViewModels\OrgModel.cs" />
+    <Compile Include="Models\ViewModels\OutputViewModel.cs" />
     <Compile Include="Models\ViewModels\PageModel.cs" />
     <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Tag.cs" />

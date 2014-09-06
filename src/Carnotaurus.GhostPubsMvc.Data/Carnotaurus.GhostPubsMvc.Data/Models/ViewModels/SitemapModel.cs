@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Xml.Serialization;
 
-namespace Carnotaurus.GhostPubsMvc.Data.Models
+namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
     [XmlRoot("urlset", Namespace = "http://www.sitemaps.org/schemas/sitemap/0.9")]
     public class Sitemap

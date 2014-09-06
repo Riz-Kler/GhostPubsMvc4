@@ -2,6 +2,8 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
 {
+    // Todo - get rid of the mappings - use proper code first
+
     public class AddressTypeMap : EntityTypeConfiguration<AddressType>
     {
         public AddressTypeMap()
