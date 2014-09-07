@@ -233,7 +233,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             //            ).ToList();
 
             _currentRoot = String.Format(@"C:\Carnotaurus\{0}\haunted_pub", Guid.NewGuid()).ToLower().Underscore();
-             
+
+            Directory.CreateDirectory(_currentRoot);
+
             DeleteDirectory(_currentRoot);
 
             Directory.CreateDirectory(_currentRoot);

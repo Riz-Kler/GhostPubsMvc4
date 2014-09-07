@@ -1360,3 +1360,8 @@ form.bs-docs-example
     -webkit-box-shadow: 0px 0px 0px 5px #e8e6e6; /* Safari, Chrome */
     box-shadow: 0px 0px 0px 5px #e8e6e6; /* CSS3 */
 }
+
+.masthead-links-override {
+
+    color: #3a87ad;
+}
