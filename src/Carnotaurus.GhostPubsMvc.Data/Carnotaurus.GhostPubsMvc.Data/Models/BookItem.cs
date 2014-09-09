@@ -19,5 +19,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
         public virtual Book Book { get; set; }
         public virtual Org Org { get; set; }
         public int Id { get; set; }
+        public Boolean? IsUsed { get; set; }
     }
 }

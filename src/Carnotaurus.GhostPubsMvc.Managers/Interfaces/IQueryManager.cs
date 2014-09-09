@@ -18,5 +18,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
         IEnumerable<Region> GetRegions();
 
         XElement ReadXElement(Org missingInfoOrg);
+
+        List<KeyValuePair<string, Int32>> GetLeaderboardData();
+
     }
 }

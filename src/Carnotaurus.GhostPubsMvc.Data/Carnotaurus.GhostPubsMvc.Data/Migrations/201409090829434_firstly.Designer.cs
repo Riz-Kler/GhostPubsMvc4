@@ -7,13 +7,13 @@ namespace Carnotaurus.GhostPubsMvc.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class codeFirst : IMigrationMetadata
+    public sealed partial class firstly : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(codeFirst));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(firstly));
         
         string IMigrationMetadata.Id
         {
-            get { return "201407251302086_codeFirst"; }
+            get { return "201409090829434_firstly"; }
         }
         
         string IMigrationMetadata.Source

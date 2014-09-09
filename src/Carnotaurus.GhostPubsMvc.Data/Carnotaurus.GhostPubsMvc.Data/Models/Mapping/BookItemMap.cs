@@ -27,6 +27,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             this.Property(t => t.TradingName).HasColumnName("TradingName");
             this.Property(t => t.Text).HasColumnName("Text");
             this.Property(t => t.Postcode).HasColumnName("Postcode");
+            this.Property(t => t.IsUsed).HasColumnName("IsUsed");
 
             // Relationships
             this.HasOptional(t => t.Book)

@@ -86,5 +86,20 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             return results;
         }
 
+        public List<KeyValuePair<string, Int32>> GetLeaderboardData()
+        {
+            var data = _reader.Items<Org>();
+
+            var queryable = data
+                .Where(x => x.HauntedStatus == 1)
+                .ToList()
+                .GroupBy(x => x.Town)
+                .Select(x => new KeyValuePair<string, Int32>(x.Key, x.Count()));
+
+            var results = queryable.OrderByDescending(x => x.Value).ToList();
+
+            // Key and Group
+            return results;
+        }
     }
 }

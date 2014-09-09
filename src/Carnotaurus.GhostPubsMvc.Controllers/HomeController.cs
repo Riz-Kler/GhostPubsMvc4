@@ -60,6 +60,12 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         {
             UpdateOrganisations();
 
+            _currentRoot = String.Format(@"C:\Carnotaurus\{0}\haunted_pub", Guid.NewGuid()).ToLower().Underscore();
+
+            var data = GetLeaderboardData();
+
+            CreateLeaderboardFile(data);
+
             GenerateHtmlPages();
 
             GenerateWebmasterToolsXmlSitemap();
@@ -433,6 +439,51 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             WriteLines(pubModel);
         }
+
+
+        public List<KeyValuePair<string, Int32>> GetLeaderboardData()
+        {
+
+            var results = _queryManager.GetLeaderboardData();
+
+
+
+            return results;
+        }
+
+        public void CreateLeaderboardFile(List<KeyValuePair<string, int>> links)
+        {
+
+            var q = _currentRoot + @"\leaderboard\";
+
+            Directory.CreateDirectory(q);
+
+            var model = new OutputViewModel(_currentRoot)
+            {
+                JumboTitle = "Leaderboard",
+                Action = GeoLevelEnum.Leaderboard,
+                Notes = links.Select(x => x.Key != null
+                    ? new LinkModel(_currentRoot)
+                    {
+                        Text = string.Format("{0} ({1} pubs in this area)", x.Key, x.Value),
+                        Title = string.Format("{0} ({1} pubs in this area)", x.Key, x.Value),
+                        Unc = String.Empty
+
+                    }
+                    : null).OrderBy(x => x.Text).ToList(),
+
+                Description = "Leaderboard of most haunted pubs in UK",
+                Unc = q,
+                Parent = new KeyValuePair<string, string>(String.Empty, String.Empty),
+                Total = links.Count(),
+                Priority = "0.9",
+                Previous = null,
+                Lineage = null
+            };
+
+            WriteLines(model);
+        }
+
 
         private void CreateTownFile(string currentCountyPath, IEnumerable<KeyValuePair<string, LinkModel>> pubTownLinks,
             string town,

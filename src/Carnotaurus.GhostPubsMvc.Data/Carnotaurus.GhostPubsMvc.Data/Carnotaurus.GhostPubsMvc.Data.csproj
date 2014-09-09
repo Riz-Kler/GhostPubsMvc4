@@ -141,9 +141,9 @@
     <Compile Include="Interfaces\IOrgModel.cs" />
     <Compile Include="Interfaces\IReadStore.cs" />
     <Compile Include="Interfaces\IWriteStore.cs" />
-    <Compile Include="Migrations\201407251302086_codeFirst.cs" />
-    <Compile Include="Migrations\201407251302086_codeFirst.Designer.cs">
-      <DependentUpon>201407251302086_codeFirst.cs</DependentUpon>
+    <Compile Include="Migrations\201409090829434_firstly.cs" />
+    <Compile Include="Migrations\201409090829434_firstly.Designer.cs">
+      <DependentUpon>201409090829434_firstly.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AddressType.cs" />
@@ -200,8 +200,8 @@
     <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201407251302086_codeFirst.resx">
-      <DependentUpon>201407251302086_codeFirst.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201409090829434_firstly.resx">
+      <DependentUpon>201409090829434_firstly.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
