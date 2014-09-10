@@ -504,17 +504,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-3.0.0.debug.js" />
     <Content Include="teaser-carnotaurus\favicon.ico" />
-    <Content Include="teaser-ghostpubs\about-start.html" />
-    <Content Include="teaser-ghostpubs\partners-featured.html" />
-    <Content Include="teaser-ghostpubs\news-start.html" />
-    <Content Include="teaser-ghostpubs\news-promotions.html" />
     <Content Include="teaser-ghostpubs\partners-merchandise.html" />
-    <Content Include="teaser-ghostpubs\partners-start.html" />
-    <Content Include="teaser-ghostpubs\partners.html" />
-    <Content Include="teaser-ghostpubs\services.html" />
     <Content Include="teaser-ghostpubs\stories-start.html" />
-    <Content Include="teaser-ghostpubs\news-competitions.html" />
-    <Content Include="teaser-ghostpubs\about-contributors.html" />
     <Content Include="teaser-ghostpubs\images\map-e-mo.gif" />
     <Content Include="teaser-ghostpubs\images\map-em-mo.gif" />
     <Content Include="teaser-ghostpubs\images\map-ne-mo.gif" />
@@ -531,8 +522,6 @@
     <Content Include="teaser-ghostpubs\stories-map.html" />
     <Content Include="teaser-ghostpubs\map.js" />
     <Content Include="teaser-ghostpubs\map.css" />
-    <Content Include="teaser-ghostpubs\partners-become.html" />
-    <Content Include="teaser-ghostpubs\unknown-services.html" />
     <Content Include="teaser-philipcarney\favicon.ico" />
     <Content Include="teaser-philipcarney\home.html" />
     <Content Include="teaser-carnotaurus\home.html" />
@@ -608,8 +597,6 @@
     <Content Include="Content\bootstrap\2.3.1\font-awesome\README.md" />
     <Content Include="Content\bootstrap\2.3.1\font-awesome\sass\font-awesome.sass" />
     <Content Include="Content\bootstrap\2.3.1\font-awesome\sass\font-awesome.scss" />
-    <Content Include="teaser-ghostpubs\about-us.html" />
-    <Content Include="teaser-ghostpubs\home.html" />
     <Content Include="Content\bootstrap\3.0.0\.editorconfig" />
     <Content Include="Content\bootstrap\3.0.0\.gitignore" />
     <Content Include="Content\bootstrap\3.0.0\.travis.yml" />
@@ -718,6 +705,13 @@
     <Content Include="Views\Home\sitemap.cshtml" />
     <Content Include="Views\Home\submissions.cshtml" />
     <Content Include="Views\Home\promotions.cshtml" />
+    <Content Include="Views\Home\competitions.cshtml" />
+    <Content Include="Views\Home\partnerships.cshtml" />
+    <Content Include="Views\Home\partners.cshtml" />
+    <Content Include="Views\Home\featuredpartner.cshtml" />
+    <Content Include="Views\Home\contributors.cshtml" />
+    <Content Include="Views\Home\about.cshtml" />
+    <Content Include="Views\Home\home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\images\" />

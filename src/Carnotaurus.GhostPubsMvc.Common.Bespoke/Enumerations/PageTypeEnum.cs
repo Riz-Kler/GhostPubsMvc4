@@ -9,6 +9,13 @@
         Pub,
         Sitemap,
         Submissions,
-        Promotions
+        Promotions,
+        Competitions,
+        Partnerships,
+        Partners,
+        FeaturedPartner,
+        Contributors,
+        About,
+        Home
     }
 }

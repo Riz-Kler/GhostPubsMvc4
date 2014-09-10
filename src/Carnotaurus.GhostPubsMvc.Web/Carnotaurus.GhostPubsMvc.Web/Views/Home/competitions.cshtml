@@ -1,0 +1,108 @@
+﻿@model Carnotaurus.GhostPubsMvc.Data.Models.ViewModels.OutputViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Model.JumboTitle;
+    ViewBag.Description = Model.Description;
+}
+
+<!-- Subhead
+    ================================================== -->
+<header class="jumbotron subhead">
+    <div class="container">
+        <div>
+            <h1>@Model.JumboTitle</h1>
+            <p class="lead">
+                @Model.Description
+            </p>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <!-- Docs nav
+       ================================================== -->
+    <div class="row" style="min-height:30px;">
+
+        <a href="http://www.ghostpubs.com" title="Home">Home</a>
+
+        <span>&gt;</span>
+        <a href="http://www.ghostpubs.com/haunted_pubs/@Model.JumboTitle.ToLower()/detail.html" title="@Model.JumboTitle">@Model.JumboTitle</a>
+
+    </div>
+    <div class="row">
+        <div class="span4">
+            <div>
+                <div>
+                    <img onclick=" window.open('http://www.ghostpubs.com/haunted_pub/detail.html', '_self'); " class="img-circle face-relative" src="~/Content/bootstrap/231/img/ghostpubs/padded-logo-125x125.png" alt="Ghost Pubs" title="Ghost Pubs" />
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="span8">
+
+            <!-- Well
+            ================================================== -->
+            <section id="well">
+                <div class="page-header">
+                    <h1>Credits</h1>
+                </div>
+                <h2>Who does what?</h2>
+
+                <div class="well well-large">
+                    <h3>
+                        Here are the contributors:
+                    </h3>
+
+                    <p>
+                        <b><a href="http://www.philipcarney.com">Phil Carney</a></b>: What is there to say? Programmer from childhood; Phil started his professional career as a university economics lecturer. Commercially, he has been a systems developer since 2001... To memory, he has always been interested in strange phenomena.
+                    </p>
+                    <p>
+                        <b>Brian Hedley</b>: Brian's career relates largely to IT, retail, and quality customer service. He brings a high level of creation, communication, and a feel for user experience to the Ghost Pubs Team. His editorial skills are particularly valuable to us. His experience keeps our communications clear and our concepts appealing.
+                    </p>
+                    <p>
+                        <b>Alex Bennett-Carney</b>: He uses HTML and writes stories and blog entries for Ghost Pubs.
+                    </p>
+                    <p>
+                        <b>Sandra Carney</b>: Former religion and history student with BA Hons. Having an interest in classical history,library supervisor and admin assistant.
+                    </p>
+                    <p>
+                        <b>Riz Kler</b>: He is a pragmatic developer who is always eager to assist and take an active part in any role and he's learning some new skills of his own. He knows lots of technical information and will apply it without problems. He's been around the machinery (a few times now) so he will understand most things. He has great ideas, even if some are a bit challenging. He can set a pace as well as keep up.
+                    </p>
+                    <!--<p>&nbsp;</p>
+                    <h3>
+                        Here are the credits:
+                    </h3>
+
+                    <p>
+                        <b>Concept:</b> Phil Carney
+                    </p>
+                    <p>
+                        <b>Graphics design:</b> Phil Carney &amp; Brian Hedley
+                    </p>
+                    <p>
+                        <b>Web development:</b> Phil Carney
+                    </p>
+                    <p>
+                        <b>Stories:</b> Phil Carney
+                    </p>-->
+
+                    <p>&nbsp;</p>
+                    <p>
+                        Kindest regards,
+                    </p>
+                    <p>
+                        <b>The Ghost Pubs Team</b>
+                    </p>
+                    <p>
+                        <a href="http://www.GhostPubs.com" title="www.GhostPubs.com">www.GhostPubs.com</a>
+                    </p>
+                </div>
+
+                <hr>
+            </section>
+        </div>
+
+    </div>
+</div>

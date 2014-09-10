@@ -74,6 +74,21 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             CreatePageTypeFile(PageTypeEnum.Promotions, "Who is promoting us this month?");
 
+            CreatePageTypeFile(PageTypeEnum.Competitions, "Competition - Name Our Ghost");
+
+            CreatePageTypeFile(PageTypeEnum.Partners, "Want to partner with us?");
+
+            CreatePageTypeFile(PageTypeEnum.Partnerships, "Partnering with GhostPubs.com");
+
+            CreatePageTypeFile(PageTypeEnum.FeaturedPartner, "Who are our partners?");
+
+            CreatePageTypeFile(PageTypeEnum.Contributors, "Credits to our contributors");
+
+            CreatePageTypeFile(PageTypeEnum.About, "About ghost pubs.com");
+
+            CreatePageTypeFile(PageTypeEnum.Home, "Pubs with a ghostly difference");
+
+            // 
             GenerateHtmlPages();
 
             GenerateWebmasterToolsXmlSitemap();
@@ -460,7 +475,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             var model = new OutputViewModel(_currentRoot)
             {
-                JumboTitle = pageType.ToString(),
+                JumboTitle = pageType.ToString().CamelCaseToWords(),
                 Action = pageType,
                 Description = description,
                 Unc = path,
