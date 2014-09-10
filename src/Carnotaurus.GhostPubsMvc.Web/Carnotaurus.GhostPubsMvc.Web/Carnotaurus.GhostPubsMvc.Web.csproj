@@ -513,7 +513,6 @@
     <Content Include="teaser-ghostpubs\partners.html" />
     <Content Include="teaser-ghostpubs\services.html" />
     <Content Include="teaser-ghostpubs\stories-start.html" />
-    <Content Include="teaser-ghostpubs\stories-submissions.html" />
     <Content Include="teaser-ghostpubs\news-competitions.html" />
     <Content Include="teaser-ghostpubs\about-contributors.html" />
     <Content Include="teaser-ghostpubs\images\map-e-mo.gif" />
@@ -718,6 +717,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\sitemap.cshtml" />
     <Content Include="Views\Home\submissions.cshtml" />
+    <Content Include="Views\Home\promotions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\images\" />

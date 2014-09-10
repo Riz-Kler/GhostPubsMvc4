@@ -70,7 +70,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             GenerateLeaderboardSitemap();
 
-            CreateSubmissionsdFile();
+            CreatePageTypeFile(  PageTypeEnum.Submissions, "Call for submissions");
+
+            CreatePageTypeFile(PageTypeEnum.Promotions, "Who is promoting us this month?");
 
             GenerateHtmlPages();
 
@@ -85,7 +87,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             CreateLeaderboardFile(data);
         }
-         
+
         private void GenerateWebmasterToolsXmlSitemap()
         {
             //</urlset> 
@@ -449,25 +451,25 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         }
 
 
-        public void CreateSubmissionsdFile()
+        public void CreatePageTypeFile(PageTypeEnum pageType, string description)
         {
 
-            var path = string.Format("{0}\\{1}\\", _currentRoot, PageTypeEnum.Submissions);
+            var path = string.Format("{0}\\{1}\\", _currentRoot, pageType);
 
             Directory.CreateDirectory(path);
 
             var model = new OutputViewModel(_currentRoot)
             {
-                JumboTitle = PageTypeEnum.Submissions.ToString(),
-                Action = PageTypeEnum.Submissions,
-                Description = "Call for submissions",
+                JumboTitle = pageType.ToString(),
+                Action = pageType,
+                Description = description,
                 Unc = path,
                 Priority = "0.9",
             };
 
             WriteLines(model);
         }
-
+         
         public void CreateLeaderboardFile(List<PageLinkModel> links)
         {
 

@@ -8,6 +8,7 @@
         Town,
         Pub,
         Sitemap,
-        Submissions
+        Submissions,
+        Promotions
     }
 }
