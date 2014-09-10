@@ -62,6 +62,12 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             _currentRoot = String.Format(@"C:\Carnotaurus\{0}\haunted_pub", Guid.NewGuid()).ToLower().Underscore();
 
+            Directory.CreateDirectory(_currentRoot);
+
+            DeleteDirectory(_currentRoot);
+
+            Directory.CreateDirectory(_currentRoot);
+
             var data = GetLeaderboardData();
 
             CreateLeaderboardFile(data);
@@ -231,20 +237,6 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void GenerateHtmlPages()
         {
-            //var entities = entities2.Orgs. Where(
-            //             x => x.Address != null
-            //               && x.AddressType != null
-            //               && x.AddressType.AddressTypeID == 1
-            //               && x.Tags.Any(y => y.Feature.FeatureID == 39)
-            //            ).ToList();
-
-            _currentRoot = String.Format(@"C:\Carnotaurus\{0}\haunted_pub", Guid.NewGuid()).ToLower().Underscore();
-
-            Directory.CreateDirectory(_currentRoot);
-
-            DeleteDirectory(_currentRoot);
-
-            Directory.CreateDirectory(_currentRoot);
 
             var regions = CreateRegionsFile(_currentRoot);
 
@@ -441,39 +433,30 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         }
 
 
-        public List<KeyValuePair<string, Int32>> GetLeaderboardData()
+        public List<LinkModel> GetLeaderboardData()
         {
 
-            var results = _queryManager.GetLeaderboardData();
+            var results = _queryManager.GetSitemapData(_currentRoot);
 
 
 
             return results;
         }
 
-        public void CreateLeaderboardFile(List<KeyValuePair<string, int>> links)
+        public void CreateLeaderboardFile(List<LinkModel> links)
         {
 
-            var q = _currentRoot + @"\leaderboard\";
+            var path = string.Format("{0}\\{1}\\", _currentRoot, GeoLevelEnum.Sitemap);
 
-            Directory.CreateDirectory(q);
+            Directory.CreateDirectory(path);
 
             var model = new OutputViewModel(_currentRoot)
             {
-                JumboTitle = "Leaderboard",
-                Action = GeoLevelEnum.Leaderboard,
-                Notes = links.Select(x => x.Key != null
-                    ? new LinkModel(_currentRoot)
-                    {
-                        Text = string.Format("{0} ({1} pubs in this area)", x.Key, x.Value),
-                        Title = string.Format("{0} ({1} pubs in this area)", x.Key, x.Value),
-                        Unc = String.Empty
-
-                    }
-                    : null).OrderBy(x => x.Text).ToList(),
-
-                Description = "Leaderboard of most haunted pubs in UK",
-                Unc = q,
+                JumboTitle = GeoLevelEnum.Sitemap.ToString(),
+                Action = GeoLevelEnum.Sitemap,
+                Notes = links,
+                Description = "Sitemap: Pub leaderboard of most haunted areas in UK",
+                Unc = path,
                 Parent = new KeyValuePair<string, string>(String.Empty, String.Empty),
                 Total = links.Count(),
                 Priority = "0.9",
@@ -581,7 +564,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             if (model.Unc == null) return;
 
-            var fullFilePath = String.Concat(model.Unc, @"\", "detail.html");
+            var fullFilePath = String.Concat(model.Unc.ToLower(), @"\", "detail.html");
 
             WriteFile(fullFilePath, contents);
         }

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Common.Helpers;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 using Carnotaurus.GhostPubsMvc.Data.Models;
+using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
 
 namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
@@ -86,20 +88,37 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             return results;
         }
 
-        public List<KeyValuePair<string, Int32>> GetLeaderboardData()
+        public class LeaderTown
+        {
+            public String Town { get; set; }
+            public County County { get; set; }
+
+        }
+
+        public List<LinkModel> GetSitemapData(string currentRoot)
         {
             var data = _reader.Items<Org>();
 
             var queryable = data
                 .Where(x => x.HauntedStatus == 1)
                 .ToList()
-                .GroupBy(x => x.Town)
-                .Select(x => new KeyValuePair<string, Int32>(x.Key, x.Count()));
+                .GroupBy(x => x.Crab)
+                .Select(x => new KeyValuePair<String, Int32>(x.Key, x.Count())).ToList();
 
             var results = queryable.OrderByDescending(x => x.Value).ToList();
 
+            var index = 1;
+            var q = results.Select(x => new LinkModel(currentRoot)
+               {
+                   Text = string.Format("{0}. {1}", index++, x.Key.SplitOnSlash().JoinWithCommaReserve()),
+                   Title = string.Format("{0} ({1} pubs in this area)", x.Key.SplitOnSlash().JoinWithCommaReserve(), x.Value),
+                   Unc = currentRoot + @"\" + x.Key,
+                   Id = index-1
+               }).ToList();
+
             // Key and Group
-            return results;
+            return q;
         }
+
     }
 }

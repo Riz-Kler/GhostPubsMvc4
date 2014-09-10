@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Xml.Linq;
 using Carnotaurus.GhostPubsMvc.Data.Models;
+using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 
 namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 {
@@ -19,7 +20,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         XElement ReadXElement(Org missingInfoOrg);
 
-        List<KeyValuePair<string, Int32>> GetLeaderboardData();
+        List<LinkModel> GetSitemapData(String root);
 
     }
 }

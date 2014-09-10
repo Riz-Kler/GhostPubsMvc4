@@ -54,19 +54,7 @@
     <link href="@Url.Content("~/content/bootstrap/231/font-awesome/css/font-awesome.css")" rel="stylesheet">
     <link href="@Url.Content("~/content/bootstrap/231/css/bootswatch.css")" rel="stylesheet">
     <link href="http://www.ghostpubs.com/dne/app08/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-     
-    <div id="fb-root"></div>
-    <script>
-        (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&appId=303827419746289&version=v2.0";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script>
-
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 
@@ -80,39 +68,24 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="brand" href="/home/index">GhostPubs.com</a>
+                <a class="brand" href="/">GhostPubs.com</a>
                 <div class="nav-collapse collapse">
                     <ul class="nav">
                         <li>
                             <a href="http://www.ghostpubs.com">Home</a>
                         </li>
-                        @*   <li>
-                                <a href="/home/index">News</a>
-                            </li>
-                            <li>
-                                <a href="/home/index">Search</a>
-                            </li>
-                            <li>
-                                <a href="/home/about">About us</a>
-                            </li>
-                               <li>
-                                <a href="/home/generate">Generate</a>
-                            </li>
-                            <li class="">
-                                <a href="#" style="display: none">Not wired-up</a>
-                            </li>
-                            <li>
-                                <a href="/bootstrap/index" style="display: none">Bootstrap example - Home</a>
-                            </li>
-                            <li>
-                                <a href="/bootstrap/javascript" style="display: none">Bootstrap example- JavaScript</a>
-                            </li>*@
+                        <li>
+                            <a href="/haunted_pub/detail.html">Search</a>
+                        </li>
+                        <li>
+                            <a href="/haunted_pub/sitemap/detail.html">Sitemap</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="fb-like" data-href="@ViewBag.Link" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 
     @RenderBody()
@@ -136,6 +109,7 @@
     </footer>
 
     @Scripts.Render("~/bundles/jquery")
+
     @RenderSection("scripts", false)
 
     <!-- Le javascript
@@ -162,5 +136,16 @@
     <script src="@Url.Content("~/content/bootstrap/231/js/prettify.js")"></script>
 
     <script src="@Url.Content("~/content/bootstrap/231/js/application.js")"></script>
+
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&appId=303827419746289&version=v2.0";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
 </body>
 </html>

@@ -128,6 +128,13 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             return output;
         }
 
+
+        public static List<string> SplitOnSlash(this string commaSeparatedString)
+        {
+            var output = commaSeparatedString.Split('\\').ToList();
+            return output;
+        }
+
         public static string FirstCharToUpper(this string input)
         {
             if (String.IsNullOrEmpty(input))

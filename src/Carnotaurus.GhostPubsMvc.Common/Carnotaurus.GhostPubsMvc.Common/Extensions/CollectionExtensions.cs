@@ -42,6 +42,13 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             return collection.Join(", ");
         }
 
+        public static string JoinWithCommaReserve(this IEnumerable<string> collection)
+        {
+          collection=  collection.Reverse();
+
+            return collection.Join(", ");
+        }
+
         public static string OxbridgeAnd(this IEnumerable<string> collection)
         {
             var output = String.Empty;

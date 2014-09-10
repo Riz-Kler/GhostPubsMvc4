@@ -13,7 +13,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations
         County,
         Town,
         Pub,
-        Leaderboard
+        Sitemap
     }
 
 }

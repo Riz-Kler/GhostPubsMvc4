@@ -138,5 +138,16 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
         public virtual ICollection<Note> Notes { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
         public int Id { get; set; }
+         
+        [NotMapped]
+        public virtual String Crab 
+        {
+            get
+            {
+                return County.Region.Name + @"\" + County.Name + @"\" + Town;
+                
+            }
+        }
+
     }
 }
