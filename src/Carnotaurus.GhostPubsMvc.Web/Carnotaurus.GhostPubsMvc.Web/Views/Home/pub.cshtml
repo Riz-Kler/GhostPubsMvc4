@@ -79,17 +79,19 @@
                 <div class="well well-large">
                     <p>@Model.Description</p>
                     <ul>
-                        @foreach (var link in @Model.Notes)
+                        @foreach (var link in @Model.PageLinks)
                         {
                             <li>
                                 @link.Text
                             </li>
                         }
                     </ul>
-                    @foreach (var tag in @Model.Tags)
-                    {
-                        <span class="label label-info">@tag</span>
-                    }
+                    <p>
+                        @foreach (var tag in @Model.Tags)
+                        {
+                            <span class="label label-info">@tag</span>
+                        }
+                    </p>
 
                     @if (Model.OtherNames.Count > 0)
                     {

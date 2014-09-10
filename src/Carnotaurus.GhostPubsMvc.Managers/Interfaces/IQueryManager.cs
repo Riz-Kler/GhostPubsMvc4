@@ -20,7 +20,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         XElement ReadXElement(Org missingInfoOrg);
 
-        List<LinkModel> GetSitemapData(String root);
+        List<PageLinkModel> GetSitemapData(String root);
 
     }
 }

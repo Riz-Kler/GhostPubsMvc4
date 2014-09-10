@@ -69,10 +69,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
             }
         }
 
-        public LinkModel ExtractLink(String currentRoot)
+        public PageLinkModel ExtractLink(String currentRoot)
         {
 
-            var info = new LinkModel(currentRoot)
+            var info = new PageLinkModel(currentRoot)
             {
                 Text = TradingName,
                 Title = string.Format("{0}, {1}", TradingName, Postcode),
@@ -140,7 +140,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
         public int Id { get; set; }
          
         [NotMapped]
-        public virtual String Crab 
+        public virtual String RelPath 
         {
             get
             {

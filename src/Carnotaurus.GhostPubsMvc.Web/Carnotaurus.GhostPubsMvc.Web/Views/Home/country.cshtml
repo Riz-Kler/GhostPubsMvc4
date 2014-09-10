@@ -46,23 +46,25 @@
         </script>
         <gcse:search></gcse:search>
     </div>
+    <div class="row"><p>&nbsp;</p></div>
     <div class="row">
-        <div class="span4 bs-docs-sidebar">
-            <div>
-                <div>
-                    @*<a href="/haunted_pub/detail.html">*@
-                    <img onclick=" window.open('http://www.ghostpubs.com/haunted_pub/detail.html', '_self'); " class="img-circle face-relative" src="~/Content/bootstrap/231/img/ghostpubs/padded-logo-125x125.png" alt="Ghost Pubs" title="Ghost Pubs" />
-                    @*</a>*@
-                </div>
-
-                <div class="btn-group btn-group-vertical">
-                    @foreach (var link in Model.Notes)
-                    {
-                        <a class="btn btn-large btn-primary" style="-moz-min-width: 200px; -ms-min-width: 200px; -o-min-width: 200px; -webkit-min-width: 200px; min-width: 200px" title='@link.Title' href='@link.Url'>@link.Text</a>
-                    }
-                </div>
-            </div>
+        <<div class="span4 bs-docs-sidebar text-center">
+    <div>
+        <div>
+            @*<a href="/haunted_pub/detail.html">*@
+            <img onclick=" window.open('http://www.ghostpubs.com/haunted_pub/detail.html', '_self'); " class="img-circle face-relative" src="~/Content/bootstrap/231/img/ghostpubs/padded-logo-125x125.png" alt="Ghost Pubs" title="Ghost Pubs" />
+            @*</a>*@
         </div>
+
+        <div class="btn-group btn-group-vertical">
+            @foreach (var link in Model.PageLinks)
+            {
+                <a class="btn btn-large btn-primary" style="-moz-min-width: 200px; -ms-min-width: 200px; -o-min-width: 200px; -webkit-min-width: 200px; min-width: 200px" title='@link.Title' href='@link.Url'>@link.Text</a>
+            }
+        </div>
+    </div>
+</div>
+
         <div class="span8">
 
             <!-- Carousel
@@ -74,7 +76,7 @@
                 <h2>Let's journey through our haunted locations</h2>
                 <p>Please select from a haunted region from the following list:</p>
                 <ul>
-                    @foreach (var link in @Model.Notes)
+                    @foreach (var link in @Model.PageLinks)
                     {
                         <li>
                             <a title='@link.Title' href='@link.Url'>@link.Text</a>

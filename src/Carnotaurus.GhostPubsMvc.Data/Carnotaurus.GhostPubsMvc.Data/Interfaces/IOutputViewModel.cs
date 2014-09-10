@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Interfaces
@@ -7,6 +7,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Interfaces
     {
         String JumboTitle { get; set; }
 
-        GeoLevelEnum Action { get; set; }
+        PageTypeEnum Action { get; set; }
     }
 }

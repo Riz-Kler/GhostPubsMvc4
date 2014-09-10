@@ -95,29 +95,28 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
         }
 
-        public List<LinkModel> GetSitemapData(string currentRoot)
+        public List<PageLinkModel> GetSitemapData(string currentRoot)
         {
             var data = _reader.Items<Org>();
 
             var queryable = data
                 .Where(x => x.HauntedStatus == 1)
                 .ToList()
-                .GroupBy(x => x.Crab)
-                .Select(x => new KeyValuePair<String, Int32>(x.Key, x.Count())).ToList();
-
-            var results = queryable.OrderByDescending(x => x.Value).ToList();
+                .GroupBy(x => x.RelPath)
+                .Select(x => new KeyValuePair<String, Int32>(x.Key, x.Count()))
+                .OrderByDescending(x => x.Value).ToList();
 
             var index = 1;
-            var q = results.Select(x => new LinkModel(currentRoot)
+            var results = queryable.Select(x => new PageLinkModel(currentRoot)
                {
                    Text = string.Format("{0}. {1}", index++, x.Key.SplitOnSlash().JoinWithCommaReserve()),
                    Title = string.Format("{0} ({1} pubs in this area)", x.Key.SplitOnSlash().JoinWithCommaReserve(), x.Value),
-                   Unc = currentRoot + @"\" + x.Key,
-                   Id = index-1
+                   Unc = string.Format("{0}\\{1}", currentRoot, x.Key),
+                   Id = index - 1
                }).ToList();
 
             // Key and Group
-            return q;
+            return results;
         }
 
     }

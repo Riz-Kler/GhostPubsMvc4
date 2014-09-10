@@ -5,12 +5,12 @@ using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
-    public class LinkModel
+    public class PageLinkModel
     {
 
         private readonly String _currentRoot = String.Empty;
 
-        public LinkModel(String currentRoot)
+        public PageLinkModel(String currentRoot)
         {
             _currentRoot = currentRoot;
         }
