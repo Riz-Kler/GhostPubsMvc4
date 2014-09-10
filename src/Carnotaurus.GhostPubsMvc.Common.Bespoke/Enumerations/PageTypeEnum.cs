@@ -7,6 +7,7 @@
         County,
         Town,
         Pub,
-        Sitemap
+        Sitemap,
+        Submissions
     }
 }

@@ -717,6 +717,7 @@
     <Content Include="Views\Home\country.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\sitemap.cshtml" />
+    <Content Include="Views\Home\submissions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\images\" />

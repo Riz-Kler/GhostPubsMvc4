@@ -68,15 +68,61 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="brand" href="/">GhostPubs.com</a>
+                <a class="brand" href="./home.html">GhostPubs.com</a>
                 <div class="nav-collapse collapse">
                     <ul class="nav">
                         <li>
-                            <a href="http://www.ghostpubs.com">Home</a>
+                            <a href="home.html">Home</a>
                         </li>
-                        <li>
-                            <a href="/haunted_pub/detail.html">Search</a>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ghost stories <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/haunted_pub/detail.html">Stories by area</a></li>
+                                <li><a href="/haunted_pub/submissions/detail.html">Submit a story</a></li>
+                            </ul>
                         </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">News <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="http://blog.ghostpubs.com/" target="blog">Recent news</a>
+                                </li>
+                                <li>
+                                    <a href="news-promotions.html">Promotions</a>
+                                </li>
+                                <li>
+                                    <a href="news-competitions.html">Competitions</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Partners <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="partners-start.html" title="Partners?">Partners</a></li>
+                                <li>
+                                    <a href="partners-become.html">Partner with us</a>
+                                </li>
+                                <li>
+                                    <a href="partners-featured.html">Featured partners</a>
+                                </li>
+                                <li>
+                                    <a href="partners-merchandise.html">Merchandise</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">About us<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="about-contributors.html" title="Credits and contributions ...">Contributors</a>
+                                </li>
+                                <li>
+                                    <a href="about-us.html">About us</a>
+                                </li>
+                            </ul>
+                        </li>
+
                         <li>
                             <a href="/haunted_pub/sitemap/detail.html">Sitemap</a>
                         </li>
@@ -85,6 +131,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="fb-like" data-href="@ViewBag.Link" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 
