@@ -24,7 +24,7 @@
 
     <!-- Docs nav
         ================================================== -->
-    <div class="row" style="min-height:30px;">
+    <div class="row" style="min-height: 30px;">
 
         <a href="http://www.ghostpubs.com" title="Home">Home</a>
 
@@ -59,19 +59,19 @@
     <div class="row"><p>&nbsp;</p></div>
     <div class="row">
         <div class="span4 bs-docs-sidebar text-center">
-    <div>
-        <div>
-            <img onclick=" window.open('http://www.ghostpubs.com/haunted_pub/detail.html', '_self'); " class="img-circle face-relative" src="~/Content/bootstrap/231/img/ghostpubs/padded-logo-125x125.png" alt="Ghost Pubs" title="Ghost Pubs" />
-        </div>
+            <div>
+                <div>
+                    <img onclick=" window.open('http://www.ghostpubs.com/haunted_pub/detail.html', '_self'); " class="img-circle face-relative" src="~/Content/bootstrap/231/img/ghostpubs/padded-logo-125x125.png" alt="Ghost Pubs" title="Ghost Pubs" />
+                </div>
 
-        <div class="btn-group btn-group-vertical">
-            @foreach (var link in Model.PageLinks)
-            {
-                <a class="btn btn-large btn-primary" style="min-width: 200px" title='@link.Title' href='@link.Url'>@link.Text</a>
-            }
+                <div class="btn-group btn-group-vertical">
+                    @foreach (var link in Model.PageLinks)
+                    {
+                        <a class="btn btn-large btn-primary" style="min-width: 200px" title='@link.Title' href='@link.Url'>@link.Text</a>
+                    }
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
 
 
@@ -97,7 +97,7 @@
                 {
                     <p><a href='@Model.Previous.Url' title="Next to @Model.Previous.JumboTitle">Next to @Model.Previous.JumboTitle</a></p>
                 }
-                
+
 
                 <div id="fb-root"></div>
 

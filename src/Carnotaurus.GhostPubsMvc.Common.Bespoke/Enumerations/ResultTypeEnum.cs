@@ -1,4 +1,4 @@
-﻿namespace Carnotaurus.GhostPubsMvc.Common.Bespoke
+﻿namespace Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations
 {
     public enum ResultTypeEnum
     {

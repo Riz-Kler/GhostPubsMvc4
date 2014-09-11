@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Xml.Linq;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke;
-using Carnotaurus.GhostPubsMvc.Common.Helpers;
+using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 using Carnotaurus.GhostPubsMvc.Data.Models;
 using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
@@ -36,9 +35,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
         public void UpdateCounty(Org org, County match)
         {
-
             org.CountyId = match.Id;
-
         }
 
         public void Save()
@@ -154,6 +151,5 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             if (lng != null)
                 org.Lon = Convert.ToDouble(lng.Value);
         }
-
     }
 }

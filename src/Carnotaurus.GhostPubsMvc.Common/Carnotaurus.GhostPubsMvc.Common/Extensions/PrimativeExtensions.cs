@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Carnotaurus.GhostPubsMvc.Common.Extensions
-{ 
+{
     public static class PrimativeExtensions
     {
         public static string After(this string s, string searchString)

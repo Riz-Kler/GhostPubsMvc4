@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 
@@ -8,7 +7,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
     public class OutputViewModel : IOutputViewModel
     {
-        
         private readonly String _currentRoot = String.Empty;
 
         public OutputViewModel(String currentRoot)
@@ -17,7 +15,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             Tags = new List<String>();
             _currentRoot = currentRoot;
         }
-         
+
         public String Lat { get; set; }
 
         public String Lon { get; set; }
@@ -29,7 +27,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public String Link { get; set; }
 
         public String Tag { get; set; }
- 
+
         public List<PageLinkModel> OtherNames { get; set; }
 
         public List<PageLinkModel> PageLinks { get; set; }
@@ -55,14 +53,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public Int32? Total { get; set; }
 
-        public String JumboTitle { get; set; }
-
-        public PageTypeEnum Action { get; set; }
-
         public String Priority { get; set; }
 
         public OutputViewModel Previous { get; set; }
-         
+
         public String SitemapItem
         {
             get
@@ -78,14 +72,18 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     "<url><loc>{0}</loc><lastmod>{1}</lastmod><changefreq>{2}</changefreq><priority>{3}</priority></url>";
 
                 var output = String.Format(pattern,
-                     Url,
+                    Url,
                     DateTime.UtcNow.ToUniversalTime().ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'+00:00'"),
                     "daily",
-                      Priority
-                );
+                    Priority
+                    );
 
                 return output;
             }
         }
+
+        public String JumboTitle { get; set; }
+
+        public PageTypeEnum Action { get; set; }
     }
 }

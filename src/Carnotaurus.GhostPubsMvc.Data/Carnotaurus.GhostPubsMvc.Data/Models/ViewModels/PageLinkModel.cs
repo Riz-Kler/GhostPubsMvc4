@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Humanizer;
 
@@ -7,7 +6,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
     public class PageLinkModel
     {
-
         private readonly String _currentRoot = String.Empty;
 
         public PageLinkModel(String currentRoot)
@@ -23,7 +21,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
                 if (!_currentRoot.IsNullOrEmpty())
                 {
-
                     var url = String.Format("http://www.ghostpubs.com/haunted_pub{0}",
                         fullFilePath.Replace(_currentRoot, String.Empty).Replace("\\", "/"));
 
@@ -32,7 +29,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
                 return String.Empty;
             }
-
         }
 
         public String Unc { get; set; }
@@ -42,6 +38,5 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public String Text { get; set; }
 
         public Int32 Id { get; set; }
-
     }
 }

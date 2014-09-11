@@ -44,7 +44,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
         public static string JoinWithCommaReserve(this IEnumerable<string> collection)
         {
-          collection=  collection.Reverse();
+            collection = collection.Reverse();
 
             return collection.Join(", ");
         }

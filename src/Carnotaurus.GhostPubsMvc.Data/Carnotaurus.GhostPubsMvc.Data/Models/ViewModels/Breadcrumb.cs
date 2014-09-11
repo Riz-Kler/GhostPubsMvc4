@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
+﻿namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
     public class Breadcrumb
     {
@@ -12,7 +6,5 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public PageLinkModel County { get; set; }
         public PageLinkModel Town { get; set; }
         public PageLinkModel Pub { get; set; }
-
     }
-
 }

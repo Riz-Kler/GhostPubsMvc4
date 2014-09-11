@@ -30,12 +30,14 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             var key = ConfigurationHelper.GetValueAsString("GoogleMapsApiKey");
             // "AIzaSyC2DCdkPGBtsooyft7sX3P9h2f4uQvLQj0";
 
-            var format = string.Format("https://maps.google.com/maps/api/geocode/xml?address={0}, {1}, {2}, UK&sensor=false&key={3}",
-                missingInfoOrg.TradingName,
-                missingInfoOrg.Address,
-                missingInfoOrg.Postcode,
-                key
-            );
+            var format =
+                string.Format(
+                    "https://maps.google.com/maps/api/geocode/xml?address={0}, {1}, {2}, UK&sensor=false&key={3}",
+                    missingInfoOrg.TradingName,
+                    missingInfoOrg.Address,
+                    missingInfoOrg.Postcode,
+                    key
+                    );
 
             var requestUri = (format);
 
@@ -88,13 +90,6 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             return results;
         }
 
-        public class LeaderTown
-        {
-            public String Town { get; set; }
-            public County County { get; set; }
-
-        }
-
         public List<PageLinkModel> GetSitemapData(string currentRoot)
         {
             var data = _reader.Items<Org>();
@@ -102,22 +97,28 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             var queryable = data
                 .Where(x => x.HauntedStatus == 1)
                 .ToList()
-                .GroupBy(x => x.RelPath)
+                .GroupBy(x => x.UncRelTownPath)
                 .Select(x => new KeyValuePair<String, Int32>(x.Key, x.Count()))
                 .OrderByDescending(x => x.Value).ToList();
 
             var index = 1;
             var results = queryable.Select(x => new PageLinkModel(currentRoot)
-               {
-                   Text = string.Format("{0}. {1}", index++, x.Key.SplitOnSlash().JoinWithCommaReserve()),
-                   Title = string.Format("{0} ({1} pubs in this area)", x.Key.SplitOnSlash().JoinWithCommaReserve(), x.Value),
-                   Unc = string.Format("{0}\\{1}", currentRoot, x.Key),
-                   Id = index - 1
-               }).ToList();
+            {
+                Text = string.Format("{0}. {1}", index++, x.Key.SplitOnSlash().JoinWithCommaReserve()),
+                Title =
+                    string.Format("{0} ({1} pubs in this area)", x.Key.SplitOnSlash().JoinWithCommaReserve(), x.Value),
+                Unc = string.Format("{0}\\{1}", currentRoot, x.Key),
+                Id = index - 1
+            }).ToList();
 
             // Key and Group
             return results;
         }
 
+        public class LeaderTown
+        {
+            public String Town { get; set; }
+            public County County { get; set; }
+        }
     }
 }

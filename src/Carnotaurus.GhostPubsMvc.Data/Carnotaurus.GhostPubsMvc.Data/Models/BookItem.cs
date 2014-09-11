@@ -18,7 +18,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
         public string Postcode { get; set; }
         public virtual Book Book { get; set; }
         public virtual Org Org { get; set; }
-        public int Id { get; set; }
         public Boolean? IsUsed { get; set; }
+        public int Id { get; set; }
     }
 }

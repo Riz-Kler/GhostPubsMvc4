@@ -1,8 +1,8 @@
 ﻿@model Carnotaurus.GhostPubsMvc.Data.Models.ViewModels.OutputViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = Model.JumboTitle + ", " + Model.Lineage.County.Text;
-    ViewBag.Link = Model.Lineage.Town.Url;
+    ViewBag.Title = Model.JumboTitle;
+    ViewBag.Link = "http://www.ghostpubs.com/haunted_pub/detail.html";
     ViewBag.Description = Model.Description;
     ViewBag.Tag = Model.Tag;
     ViewBag.Tags = Model.Tags;
@@ -13,7 +13,7 @@
 <header class="jumbotron subhead">
     <div class="container">
         <div>
-            <h1>Ghost pubs in the town of @Model.JumboTitle</h1>
+            <h1>@Model.JumboTitle</h1>
             <p class="lead">
                 @Model.Description
             </p>
@@ -25,37 +25,26 @@
 
     <!-- Docs nav
         ================================================== -->
-    <div class="row" style="min-height:30px;">
+    <div class="row" style="min-height: 30px;">
 
         <a href="http://www.ghostpubs.com" title="Home">Home</a>
 
         <span>&gt;</span>
         <a href="http://www.ghostpubs.com/haunted_pub/detail.html" title="Regions">Regions</a>
 
-        @if (Model.Lineage.Region != null)
-        {
-            <span>&gt;</span>
-            <a href="@Model.Lineage.Region.Url" title="@Model.Lineage.Region.Title">@Model.Lineage.Region.Text</a>
-        }
-
-        @if (Model.Lineage.County != null)
-        {
-            <span>&gt;</span>
-            <a href="@Model.Lineage.County.Url" title="@Model.Lineage.County.Title">@Model.Lineage.County.Text</a>
-        }
-
-        @if (Model.Lineage.Town != null)
-        {
-            <span>&gt;</span>
-            <a href="@Model.Lineage.Town.Url" title="@Model.Lineage.Town.Title">@Model.Lineage.Town.Text</a>
-        }
-
-        @if (Model.Lineage.Pub != null)
-        {
-            <span>&gt;</span>
-            <a href="@Model.Lineage.Pub.Url" title="@Model.Lineage.Pub.Title">@Model.Lineage.Pub.Text</a>
-        }
-
+        <script>
+            (function () {
+                var cx = '011800392060597881327:fu4heiztlci';
+                var gcse = document.createElement('script');
+                gcse.type = 'text/javascript';
+                gcse.async = true;
+                gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                    '//www.google.com/cse/cse.js?cx=' + cx;
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(gcse, s);
+            })();
+        </script>
+        <gcse:search></gcse:search>
     </div>
     <div class="row"><p>&nbsp;</p></div>
     <div class="row">
@@ -70,7 +59,7 @@
                 <div class="btn-group btn-group-vertical">
                     @foreach (var link in Model.PageLinks)
                     {
-                        <a class="btn btn-large btn-primary" style="min-width: 200px" title='@link.Title' href='@link.Url'>@link.Text</a>
+                        <a class="btn btn-large btn-primary" style="-moz-min-width: 200px; -ms-min-width: 200px; -o-min-width: 200px; -webkit-min-width: 200px; min-width: 200px" title='@link.Title' href='@link.Url'>@link.Text</a>
                     }
                 </div>
             </div>
@@ -82,11 +71,10 @@
                 ================================================== -->
             <section id="carousel">
                 <div class="page-header">
-                    <h1>@Model.JumboTitle <span class="label label-info">@Model.Total haunted pubs</span></h1>
-
+                    <h1>@Model.JumboTitle</h1>
                 </div>
                 <h2>Let's journey through our haunted locations</h2>
-                <p>Please select from a haunted pub from the following list:</p>
+                <p>Please select from a haunted region from the following list:</p>
                 <ul>
                     @foreach (var link in @Model.PageLinks)
                     {
@@ -95,19 +83,19 @@
                         </li>
                     }
                 </ul>
-                @if (Model.Previous != null)
-                {
-                    <p><a href='@Model.Previous.Url' title="Next to @Model.Previous.JumboTitle">Next to @Model.Previous.JumboTitle</a></p>
-                }
 
 
                 <div id="fb-root"></div>
 
                 <div class="fb-comments" data-href="@ViewBag.Link" data-numposts="5" data-colorscheme="dark"></div>
 
-                <p><a href='../detail.html' title="Back to @Model.Parent.Key">Back to @Model.Parent.Key</a></p>
+                <p><a href='/' title="Back to @Model.Parent.Key">Back to @Model.Parent.Key</a></p>
+
+
                 <hr class="bs-docs-separator">
             </section>
         </div>
     </div>
+
+
 </div>

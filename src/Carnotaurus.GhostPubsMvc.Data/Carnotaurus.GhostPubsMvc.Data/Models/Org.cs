@@ -19,26 +19,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
         }
 
 
-        public String BuildPath(params String[] builder)
-        {
-            var output = String.Empty;
-
-            foreach (var b in builder)
-            {
-                if (output == String.Empty)
-                {
-                    output = b.ToLower().Underscore();
-                }
-                else
-                {
-                    output = string.Format("{0}\\{1}", output, b.ToLower().Underscore());
-                }
-            }
-
-            return output;
-        }
-
-
         [NotMapped]
         public string CountyPath
         {
@@ -46,13 +26,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
         }
 
 
-
         [NotMapped]
         public string RegionPath
         {
             get { return CountyPath.BeforeLast(@"\"); }
         }
-
 
 
         [NotMapped]
@@ -67,21 +45,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
 
                 return current;
             }
-        }
-
-        public PageLinkModel ExtractLink(String currentRoot)
-        {
-
-            var info = new PageLinkModel(currentRoot)
-            {
-                Text = TradingName,
-                Title = string.Format("{0}, {1}", TradingName, Postcode),
-                Unc = Path,
-                Id = Id,
-
-            };
-
-            return info;
         }
 
         [NotMapped]
@@ -137,17 +100,53 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
         public virtual County County { get; set; }
         public virtual ICollection<Note> Notes { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
-        public int Id { get; set; }
-         
+
         [NotMapped]
-        public virtual String RelPath 
+        public virtual String UncRelTownPath
         {
             get
             {
-                return County.Region.Name + @"\" + County.Name + @"\" + Town;
-                
+                if (County != null && County.Region != null)
+                {
+                    return string.Format("{0}\\{1}\\{2}", County.Region.Name, County.Name, Town);
+                }
+
+                return null;
             }
         }
 
+        public int Id { get; set; }
+
+        public String BuildPath(params String[] builder)
+        {
+            var output = String.Empty;
+
+            foreach (var b in builder)
+            {
+                if (output == String.Empty)
+                {
+                    output = b.ToLower().Underscore();
+                }
+                else
+                {
+                    output = string.Format("{0}\\{1}", output, b.ToLower().Underscore());
+                }
+            }
+
+            return output;
+        }
+
+        public PageLinkModel ExtractLink(String currentRoot)
+        {
+            var info = new PageLinkModel(currentRoot)
+            {
+                Text = TradingName,
+                Title = string.Format("{0}, {1}", TradingName, Postcode),
+                Unc = Path,
+                Id = Id,
+            };
+
+            return info;
+        }
     }
 }
