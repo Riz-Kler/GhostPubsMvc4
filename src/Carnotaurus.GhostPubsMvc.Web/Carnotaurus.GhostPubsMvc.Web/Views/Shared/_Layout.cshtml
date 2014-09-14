@@ -68,7 +68,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+ 
                 <a class="brand" href="/">GhostPubs.com</a>
+              
                 <div class="nav-collapse collapse">
                     <ul class="nav">
                         <li>
@@ -119,7 +121,18 @@
                                 </li>
                             </ul>
                         </li>
-
+                        
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Search<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li  style="width: 300px"> 
+                                    <div class="gcse-container">
+                                        <gcse:search></gcse:search>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                         
                         <li>
                             <a href="/haunted_pub/sitemap/detail.html">Sitemap</a>
                         </li>
@@ -207,6 +220,21 @@
         ga('create', 'UA-40505410-1', 'ghostpubs.com');
         ga('send', 'pageview');
     </script>
+
+
+    <script>
+        (function () {
+            var cx = '011800392060597881327:fu4heiztlci';
+            var gcse = document.createElement('script');
+            gcse.type = 'text/javascript';
+            gcse.async = true;
+            gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+                '//www.google.com/cse/cse.js?cx=' + cx;
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(gcse, s);
+        })();
+    </script>
+
 
 </body>
 </html>
