@@ -51,7 +51,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public List<String> Tags { get; set; }
 
-        public Int32? Total { get; set; }
+        public Int32 Total { get; set; }
 
         public String Priority { get; set; }
 
@@ -72,7 +72,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     "<url><loc>{0}</loc><lastmod>{1}</lastmod><changefreq>{2}</changefreq><priority>{3}</priority></url>";
 
                 var output = String.Format(pattern,
-                    Url,
+                    Url.ToLower(),
                     DateTime.UtcNow.ToUniversalTime().ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'+00:00'"),
                     "daily",
                     Priority

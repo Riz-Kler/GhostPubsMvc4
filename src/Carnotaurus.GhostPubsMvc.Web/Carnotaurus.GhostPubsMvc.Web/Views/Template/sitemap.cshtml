@@ -24,10 +24,10 @@
         ================================================== -->
     <div class="row" style="min-height: 30px;">
 
-        <a href="http://www.ghostpubs.com" title="Home">Home</a>
+        <a href="/" title="Home">Home</a>
 
-        <span>&gt;</span>
-        <a href="http://www.ghostpubs.com/haunted_pub/sitemap/detail.html" title="Sitemap">Sitemap</a>
+        <span>&gt;&nbsp;</span>
+        <span>@Model.JumboTitle</span>
 
     </div>
     <div class="row">
@@ -38,6 +38,10 @@
                 </div>
 
                 <div class="btn-group btn-group-vertical">
+
+
+                    <div class="fb-like" data-href="@ViewBag.Link" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+
                     @foreach (var link in Model.PageLinks)
                     {
                         <a class="btn btn-large btn-primary" style="min-width: 200px" title='@link.Title' href='@link.Url'>@link.Text</a>

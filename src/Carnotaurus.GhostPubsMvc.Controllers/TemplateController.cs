@@ -17,10 +17,10 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
     {
         private readonly ICommandManager _commandManager;
 
-        private readonly List<OutputViewModel> _history;
         private readonly IQueryManager _queryManager;
 
         private String _currentRoot = String.Empty;
+        private List<OutputViewModel> _history;
 
         public TemplateController(IQueryManager queryManager, ICommandManager commandManager)
         {
@@ -62,39 +62,34 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             Directory.CreateDirectory(_currentRoot);
 
-            GenerateLeaderboardSitemap();
+            var data = GetLeaderboardData();
 
-            CreatePageTypeFile(PageTypeEnum.Submissions, "Call for submissions");
+            CreatePageTypeFile(PageTypeEnum.Sitemap, "Sitemap: Pub leaderboard of most haunted areas in UK",
+                PageTypePriority.Sitemap, data);
 
-            CreatePageTypeFile(PageTypeEnum.Promotions, "Who is promoting us this month?");
+            CreatePageTypeFile(PageTypeEnum.Submissions, "Call for submissions", PageTypePriority.Submissions);
 
-            CreatePageTypeFile(PageTypeEnum.Competitions, "Competition - Name Our Ghost");
+            CreatePageTypeFile(PageTypeEnum.Promotions, "Who is promoting us this month?", PageTypePriority.Promotions);
 
-            CreatePageTypeFile(PageTypeEnum.Partners, "Want to partner with us?");
+            CreatePageTypeFile(PageTypeEnum.Competitions, "Competition - Name Our Ghost", PageTypePriority.Competitions);
 
-            CreatePageTypeFile(PageTypeEnum.Partnerships, "Partnering with GhostPubs.com");
+            CreatePageTypeFile(PageTypeEnum.Partners, "Want to partner with us?", PageTypePriority.Partners);
 
-            CreatePageTypeFile(PageTypeEnum.FeaturedPartner, "Who are our partners?");
+            CreatePageTypeFile(PageTypeEnum.Partnerships, "Partnering with GhostPubs.com", PageTypePriority.Partnerships);
 
-            CreatePageTypeFile(PageTypeEnum.Contributors, "Credits to our contributors");
+            CreatePageTypeFile(PageTypeEnum.FeaturedPartner, "Who are our partners?", PageTypePriority.FeaturedPartner);
 
-            CreatePageTypeFile(PageTypeEnum.About, "About ghost pubs.com");
+            CreatePageTypeFile(PageTypeEnum.Contributors, "Credits to our contributors", PageTypePriority.Contributors);
 
-            CreatePageTypeFile(PageTypeEnum.Home, "Pubs with a ghostly difference");
+            CreatePageTypeFile(PageTypeEnum.About, "About ghost pubs.com", PageTypePriority.About);
 
-            // 
+            CreatePageTypeFile(PageTypeEnum.Home, "Pubs with a ghostly difference", PageTypePriority.Home);
+
             GenerateHtmlPages();
 
             GenerateWebmasterToolsXmlSitemap();
 
             return View();
-        }
-
-        private void GenerateLeaderboardSitemap()
-        {
-            var data = GetLeaderboardData();
-
-            CreateLeaderboardFile(data);
         }
 
         private void GenerateWebmasterToolsXmlSitemap()
@@ -113,9 +108,14 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             sb.AppendLine(
                 @"<urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xsi:schemaLocation=""http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"">");
 
-            foreach (var item in _history)
+            if (_history != null)
             {
-                sb.AppendLine(item.SitemapItem);
+                _history = _history.OrderByDescending(x => x.Priority).ToList();
+
+                foreach (var item in _history)
+                {
+                    sb.AppendLine(item.SitemapItem);
+                }
             }
 
             sb.AppendLine("</urlset>");
@@ -183,7 +183,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Description = string.Format("Ghost pubs in {0}", regions.Select(x => x.Name).OxbridgeAnd()),
                 Unc = currentRoot,
                 Parent = new KeyValuePair<string, string>("Home page", @"/"),
-                Priority = "0.2",
+                Priority = PageTypePriority.Country,
             };
 
             WriteLines(regionsModel);
@@ -227,7 +227,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Parent =
                     new KeyValuePair<string, string>(currentRegion.Name, currentRegion.Name.Underscore().ToLower()),
                 Total = orgsInRegionCount,
-                Priority = "0.4",
+                Priority = PageTypePriority.Region,
                 Previous = _history.LastOrDefault(x => x.Action == PageTypeEnum.Region),
                 Lineage = new Breadcrumb
                 {
@@ -288,6 +288,10 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
                     var pubTownLinks = new List<KeyValuePair<String, PageLinkModel>>();
 
+                    // write them out backwards (so alphabetical from previous) and keep towns together (so need pub has a better chance to be in the same town)
+                    orgsInCounty =
+                        orgsInCounty.OrderByDescending(x => x.Town).ThenByDescending(x => x.TradingName).ToList();
+
                     foreach (var currentOrg in orgsInCounty)
                     {
                         var currentTownPath = BuildPath(currentCountyPath, currentOrg.Town);
@@ -340,7 +344,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Parent = new KeyValuePair<string, string>(currentRegion.Name,
                     currentRegion.Name.Underscore().ToLower()),
                 Total = count,
-                Priority = "0.6",
+                Priority = PageTypePriority.County,
                 Previous = _history.LastOrDefault(x => x.Action == PageTypeEnum.County),
                 Lineage = new Breadcrumb
                 {
@@ -388,11 +392,11 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 JumboTitle = pub.TradingName,
                 Action = action,
                 PageLinks = notes,
-                Description = string.Format("{0}, {1}", pub.Address, pub.PostcodePrimaryPart),
+                Description = string.Format("{0}, {1} : {2}", pub.Address, pub.PostcodePrimaryPart, notes.First().Text),
                 Unc = pub.Path,
                 Parent = new KeyValuePair<string, string>(pub.Town, pub.Town.Underscore().ToLower()),
                 Tags = pub.Tags.Select(x => x.Feature.Name).ToList(),
-                Priority = "1.0",
+                Priority = PageTypePriority.Pub,
                 Previous = _history.LastOrDefault(x => x.Action == action),
                 Lat = pub.Lat.ToString(),
                 Lon = pub.Lon.ToString(),
@@ -404,7 +408,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                             Id = z.Id,
                             Text = z.TradingName,
                             Title = z.TradingName,
-                            Unc = pub.TownPath.Underscore() + @"/" + z.Id + @"/" + z.TradingName.Underscore()
+                            Unc =
+                                string.Format("{0}/{1}/{2}", pub.TownPath.Underscore(), z.Id, z.TradingName.Underscore())
                         }
                     ).ToList(),
                 Lineage = new Breadcrumb
@@ -452,9 +457,10 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         }
 
 
-        public void CreatePageTypeFile(PageTypeEnum pageType, string description)
+        public void CreatePageTypeFile(PageTypeEnum pageType, string description, string priority,
+            List<PageLinkModel> links = null)
         {
-            var path = string.Format("{0}\\{1}\\", _currentRoot, pageType);
+            var path = string.Format("{0}\\{1}", _currentRoot, pageType);
 
             Directory.CreateDirectory(path);
 
@@ -464,35 +470,13 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Action = pageType,
                 Description = description,
                 Unc = path,
-                Priority = "0.9",
-            };
-
-            WriteLines(model);
-        }
-
-        public void CreateLeaderboardFile(List<PageLinkModel> links)
-        {
-            var path = string.Format("{0}\\{1}\\", _currentRoot, PageTypeEnum.Sitemap);
-
-            Directory.CreateDirectory(path);
-
-            var model = new OutputViewModel(_currentRoot)
-            {
-                JumboTitle = PageTypeEnum.Sitemap.ToString(),
-                Action = PageTypeEnum.Sitemap,
+                Priority = priority,
                 PageLinks = links,
-                Description = "Sitemap: Pub leaderboard of most haunted areas in UK",
-                Unc = path,
-                Parent = new KeyValuePair<string, string>(String.Empty, String.Empty),
-                Total = links.Count(),
-                Priority = "0.9",
-                Previous = null,
-                Lineage = null
+                Total = links != null ? links.Count() : 0
             };
 
             WriteLines(model);
         }
-
 
         private void CreateTownFile(string currentCountyPath,
             IEnumerable<KeyValuePair<string, PageLinkModel>> pubTownLinks,
@@ -514,18 +498,18 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                     ? new PageLinkModel(_currentRoot)
                     {
                         Text = x.Text,
-                        Title = x.Text,
+                        Title = x.Title,
                         Unc =
                             string.Format(@"\{0}\{1}\{2}\{3}\{4}", currentRegion.Name.Underscore(),
                                 currentCounty.Name.Underscore(),
                                 town.Underscore(), x.Id, x.Text.Underscore())
                     }
                     : null).OrderBy(x => x.Text).ToList(),
-                Description = town,
+                Description = string.Format("{0}, {1}, {2}", town, currentCounty.Name, currentRegion.Name),
                 Unc = townPath,
                 Parent = new KeyValuePair<string, string>(currentCounty.Description, String.Empty),
                 Total = pubLinks.Count,
-                Priority = "0.8",
+                Priority = PageTypePriority.Town,
                 Previous = _history.LastOrDefault(x => x.Action == PageTypeEnum.Town),
                 Lineage = new Breadcrumb
                 {

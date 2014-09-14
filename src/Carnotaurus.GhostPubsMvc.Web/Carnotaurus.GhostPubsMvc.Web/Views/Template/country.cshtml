@@ -27,10 +27,10 @@
         ================================================== -->
     <div class="row" style="min-height: 30px;">
 
-        <a href="http://www.ghostpubs.com" title="Home">Home</a>
+        <a href="/" title="Home">Home</a>
 
-        <span>&gt;</span>
-        <a href="http://www.ghostpubs.com/haunted_pub/detail.html" title="Regions">Regions</a>
+        <span>&gt;&nbsp;</span>
+        <span>@Model.JumboTitle</span>
 
         <script>
             (function () {
@@ -79,7 +79,7 @@
                     @foreach (var link in @Model.PageLinks)
                     {
                         <li>
-                            <a title='@link.Title' href='@link.Url'>@link.Text</a>
+                            <a rel="nofollow" title='@link.Title' href='@link.Url'>@link.Text</a>
                         </li>
                     }
                 </ul>
@@ -89,8 +89,11 @@
 
                 <div class="fb-comments" data-href="@ViewBag.Link" data-numposts="5" data-colorscheme="dark"></div>
 
-                <p><a href='/' title="Back to @Model.Parent.Key">Back to @Model.Parent.Key</a></p>
 
+
+                <div class="fb-like" data-href="@ViewBag.Link" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+
+                <p><a href='/' title="Back to @Model.Parent.Key">Back to @Model.Parent.Key</a></p>
 
                 <hr class="bs-docs-separator">
             </section>

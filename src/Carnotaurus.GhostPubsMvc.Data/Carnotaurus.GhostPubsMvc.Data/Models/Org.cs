@@ -140,7 +140,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models
         {
             var info = new PageLinkModel(currentRoot)
             {
-                Text = TradingName,
+                Text = string.Format("{0}, {1}", TradingName, Postcode),
                 Title = string.Format("{0}, {1}", TradingName, Postcode),
                 Unc = Path,
                 Id = Id,
