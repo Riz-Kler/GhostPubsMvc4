@@ -70,7 +70,7 @@
                 <div class="btn-group btn-group-vertical">
                     @foreach (var link in Model.PageLinks)
                     {
-                        <a class="btn btn-large btn-primary" style="min-width: 200px" title='@link.Title' href='@link.Url'>@link.Text</a>
+                        <a class="btn btn-large btn-primary" style="min-width: 200px" title='@link.Title' href='@link.Url'>@link.Title</a>
                     }
                 </div>
             </div>
@@ -91,7 +91,7 @@
                     @foreach (var link in @Model.PageLinks)
                     {
                         <li>
-                            <a rel="nofollow" title='@link.Title' href='@link.Url'>@link.Text</a>
+                            <a rel="nofollow" title='@link.Title' href='@link.Url'>@link.Title</a>
                         </li>
                     }
                 </ul>
