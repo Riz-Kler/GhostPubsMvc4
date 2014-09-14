@@ -40,21 +40,9 @@
         @if (Model.Lineage.County != null)
         {
             <span>&gt;</span>
-            <a href="@Model.Lineage.County.Url" title="@Model.Lineage.County.Title">@Model.Lineage.County.Text</a>
+            <span>@Model.Lineage.County.Text</span>
         }
-
-        @if (Model.Lineage.Town != null)
-        {
-            <span>&gt;</span>
-            <a href="@Model.Lineage.Town.Url" title="@Model.Lineage.Town.Title">@Model.Lineage.Town.Text</a>
-        }
-
-        @if (Model.Lineage.Pub != null)
-        {
-            <span>&gt;&nbsp;</span>
-            <span>@Model.Lineage.Pub.Text</span>
-        }
-
+         
     </div>
     <div class="row"><p>&nbsp;</p></div>
     <div class="row">

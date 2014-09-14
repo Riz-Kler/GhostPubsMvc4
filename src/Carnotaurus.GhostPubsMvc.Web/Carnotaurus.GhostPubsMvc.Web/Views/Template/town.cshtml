@@ -46,16 +46,10 @@
 
         @if (Model.Lineage.Town != null)
         {
-            <span>&gt;</span>
-            <a href="@Model.Lineage.Town.Url" title="@Model.Lineage.Town.Title">@Model.Lineage.Town.Text</a>
-        }
-
-        @if (Model.Lineage.Pub != null)
-        {
             <span>&gt;&nbsp;</span>
-            <span>@Model.Lineage.Pub.Text</span>
+            <span>@Model.Lineage.Town.Text</span>
         }
-
+         
     </div>
     <div class="row"><p>&nbsp;</p></div>
     <div class="row">
@@ -70,7 +64,7 @@
                 <div class="btn-group btn-group-vertical">
                     @foreach (var link in Model.PageLinks)
                     {
-                        <a class="btn btn-large btn-primary" style="min-width: 200px" title='@link.Title' href='@link.Url'>@link.Title</a>
+                        <a class="btn btn-large btn-primary" style="min-width: 200px" title='@link.Title' href='@link.Url'>@link.Text</a>
                     }
                 </div>
             </div>
