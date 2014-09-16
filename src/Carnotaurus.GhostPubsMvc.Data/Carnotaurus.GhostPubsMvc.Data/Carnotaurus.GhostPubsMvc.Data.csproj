@@ -146,18 +146,18 @@
       <DependentUpon>201409090829434_firstly.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AddressType.cs" />
-    <Compile Include="Models\Book.cs" />
-    <Compile Include="Models\BookItem.cs" />
-    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Entities\AddressType.cs" />
+    <Compile Include="Models\Entities\Book.cs" />
+    <Compile Include="Models\Entities\BookItem.cs" />
+    <Compile Include="Models\Entities\Category.cs" />
     <Compile Include="CmsContext.cs" />
-    <Compile Include="Models\ContentPage.cs" />
-    <Compile Include="Models\County.cs" />
-    <Compile Include="Models\Feature.cs" />
-    <Compile Include="Models\FeatureType.cs" />
+    <Compile Include="Models\Entities\ContentPage.cs" />
+    <Compile Include="Models\Entities\County.cs" />
+    <Compile Include="Models\Entities\Feature.cs" />
+    <Compile Include="Models\Entities\FeatureType.cs" />
     <Compile Include="Models\ViewModels\Breadcrumb.cs" />
     <Compile Include="Models\ViewModels\PageLinkModel.cs" />
-    <Compile Include="Models\LocalAuthority.cs" />
+    <Compile Include="Models\Entities\LocalAuthority.cs" />
     <Compile Include="Models\Mapping\AddressTypeMap.cs" />
     <Compile Include="Models\Mapping\BookItemMap.cs" />
     <Compile Include="Models\Mapping\BookMap.cs" />
@@ -171,11 +171,11 @@
     <Compile Include="Models\Mapping\OrgMap.cs" />
     <Compile Include="Models\Mapping\RegionMap.cs" />
     <Compile Include="Models\Mapping\TagMap.cs" />
-    <Compile Include="Models\Note.cs" />
-    <Compile Include="Models\Org.cs" />
+    <Compile Include="Models\Entities\Note.cs" />
+    <Compile Include="Models\Entities\Org.cs" />
     <Compile Include="Models\ViewModels\OutputViewModel.cs" />
-    <Compile Include="Models\Region.cs" />
-    <Compile Include="Models\Tag.cs" />
+    <Compile Include="Models\Entities\Region.cs" />
+    <Compile Include="Models\Entities\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadStore.cs" />
     <Compile Include="WriteStore.cs" />

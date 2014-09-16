@@ -6,6 +6,7 @@ using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Common.Helpers;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 using Carnotaurus.GhostPubsMvc.Data.Models;
+using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
 using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
 

@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Data.Models;
+using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
 using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
 using Humanizer;

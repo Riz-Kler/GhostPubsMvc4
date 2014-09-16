@@ -7,7 +7,7 @@ using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 using Humanizer;
 
-namespace Carnotaurus.GhostPubsMvc.Data.Models
+namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 {
     public class Org : IEntity
     {

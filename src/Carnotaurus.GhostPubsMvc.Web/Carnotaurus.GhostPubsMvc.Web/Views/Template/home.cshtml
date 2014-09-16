@@ -22,7 +22,7 @@
                 <p>&nbsp;</p>
                 <h2>Pubs with a ghostly difference</h2>
                 <p>
-                    <a href="http://www.ghostpubs.com/haunted_pub/detail.html" class="btn btn-danger btn-large">Click to search!</a>
+                    <a href="/haunted_pub/detail.html" class="btn btn-danger btn-large">Click to search!</a>
                 </p>
                 <ul class="masthead-links">
                     <li><a rel="nofollow" href="http://www.facebook.com/groups/ghostpubs"><i class="icon-facebook"></i>fan page</a></li>
@@ -46,7 +46,7 @@
                                 clear: left;
                                 font: 14px Helvetica, Arial, sans-serif;
                             }
-                            /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+                        /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
                                 We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
                         </style>
                         <div id="mc_embed_signup">
@@ -97,7 +97,7 @@
                                 script.src = '//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js';
                                 head.appendChild(script);
                                 if (script.readyState && script.onload !== null) {
-                                    script.onreadystatechange = function () {
+                                    script.onreadystatechange = function() {
                                         if (this.readyState == 'complete') mce_preload_check();
                                     }
                                 }
@@ -145,8 +145,8 @@
                             }
 
                             function mce_init_form() {
-                                jQuery(document).ready(function ($) {
-                                    var options = { errorClass: 'mce_inline_error', errorElement: 'div', onkeyup: function () { }, onfocusout: function () { }, onblur: function () { } };
+                                jQuery(document).ready(function($) {
+                                    var options = { errorClass: 'mce_inline_error', errorElement: 'div', onkeyup: function() {}, onfocusout: function() {}, onblur: function() {} };
                                     var mce_validator = $("#mc-embedded-subscribe-form").validate(options);
                                     $("#mc-embedded-subscribe-form").unbind('submit'); //remove the validator so we can get into beforeSubmit on the ajaxform, which then calls the validator
                                     options = {
@@ -154,20 +154,20 @@
                                         type: 'GET',
                                         dataType: 'json',
                                         contentType: "application/json; charset=utf-8",
-                                        beforeSubmit: function () {
+                                        beforeSubmit: function() {
                                             $('#mce_tmp_error_msg').remove();
                                             $('.datefield', '#mc_embed_signup').each(
-                                                function () {
+                                                function() {
                                                     var txt = 'filled';
                                                     var fields = new Array();
                                                     var i = 0;
                                                     $(':text', this).each(
-                                                        function () {
+                                                        function() {
                                                             fields[i] = this;
                                                             i++;
                                                         });
                                                     $(':hidden', this).each(
-                                                        function () {
+                                                        function() {
                                                             var bday = false;
                                                             if (fields.length == 2) {
                                                                 bday = true;
@@ -187,16 +187,16 @@
                                                         });
                                                 });
                                             $('.phonefield-us', '#mc_embed_signup').each(
-                                                function () {
+                                                function() {
                                                     var fields = new Array();
                                                     var i = 0;
                                                     $(':text', this).each(
-                                                        function () {
+                                                        function() {
                                                             fields[i] = this;
                                                             i++;
                                                         });
                                                     $(':hidden', this).each(
-                                                        function () {
+                                                        function() {
                                                             if (fields[0].value.length != 3 || fields[1].value.length != 3 || fields[2].value.length != 4) {
                                                                 this.value = '';
                                                             } else {
@@ -220,7 +220,7 @@
                                 if (resp.result == "success") {
                                     $('#mce-' + resp.result + '-response').show();
                                     $('#mce-' + resp.result + '-response').html(resp.msg);
-                                    $('#mc-embedded-subscribe-form').each(function () {
+                                    $('#mc-embedded-subscribe-form').each(function() {
                                         this.reset();
                                     });
                                 } else {

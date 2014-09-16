@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity.ModelConfiguration;
+using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
 {

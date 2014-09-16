@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 
-namespace Carnotaurus.GhostPubsMvc.Data.Models
+namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 {
     public class Book : IEntity
     {
