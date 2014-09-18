@@ -76,7 +76,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             CreatePageTypeFile(PageTypeEnum.Partners, "Want to partner with us?", PageTypePriority.Partners);
 
-            CreatePageTypeFile(PageTypeEnum.Partnerships, "Partnering with GhostPubs.com", PageTypePriority.Partnerships);
+            CreatePageTypeFile(PageTypeEnum.Partnerships, "Partnering with Ghost Pubs", PageTypePriority.Partnerships);
 
             CreatePageTypeFile(PageTypeEnum.FeaturedPartner, "Who are our partners?", PageTypePriority.FeaturedPartner);
 
