@@ -3,7 +3,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = Model.JumboTitle;
     ViewBag.Link = "http://www.ghostpubs.com/haunted_pub/detail.html";
-    ViewBag.Description = Model.Description;
+    ViewBag.MetaDescription = Model.MetaDescription;
+    
     ViewBag.Tag = Model.Tag;
     ViewBag.Tags = Model.Tags;
 }
@@ -15,7 +16,7 @@
         <div>
             <h1>@Model.JumboTitle</h1>
             <p class="lead">
-                @Model.Description
+                @Model.ArticleDescription
             </p>
         </div>
     </div>

@@ -124,14 +124,24 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
         public static List<string> SplitOnComma(this string commaSeparatedString)
         {
-            var output = commaSeparatedString.Split(',').ToList();
+            var c = ',';
+
+            var output = commaSeparatedString.SplitOn(c);
+
             return output;
         }
 
 
+        public static List<string> SplitOn(this string commaSeparatedString, char splitOn)
+        {
+            var output = commaSeparatedString.Split(splitOn).ToList();
+
+            return output;
+        }
+
         public static List<string> SplitOnSlash(this string commaSeparatedString)
         {
-            var output = commaSeparatedString.Split('\\').ToList();
+            var output = commaSeparatedString.SplitOn('\\');
             return output;
         }
 

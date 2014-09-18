@@ -3,7 +3,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = Model.JumboTitle + ", " + Model.Lineage.County.Text;
     ViewBag.Link = Model.Lineage.Town.Url;
-    ViewBag.Description = Model.Description;
+    ViewBag.MetaDescription = Model.MetaDescription;
+    
     ViewBag.Tag = Model.Tag;
     ViewBag.Tags = Model.Tags;
 }
@@ -15,7 +16,7 @@
         <div>
             <h1>Ghost pubs in the town of @Model.JumboTitle</h1>
             <p class="lead">
-                @Model.Description
+                @Model.MetaDescription
             </p>
         </div>
     </div>
@@ -49,7 +50,7 @@
             <span>&gt;&nbsp;</span>
             <span>@Model.Lineage.Town.Text</span>
         }
-         
+
     </div>
     <div class="row"><p>&nbsp;</p></div>
     <div class="row">

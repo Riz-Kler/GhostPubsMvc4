@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
+using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
 using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
@@ -38,5 +40,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public String Text { get; set; }
 
         public Int32 Id { get; set; }
+
+        public IEnumerable<Org> Links { get; set; }
     }
 }

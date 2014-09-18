@@ -22,7 +22,9 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public Breadcrumb Lineage { get; set; }
 
-        public String Description { get; set; }
+        public String MetaDescription { get; set; }
+ 
+        public String ArticleDescription { get; set; }
 
         public String Link { get; set; }
 

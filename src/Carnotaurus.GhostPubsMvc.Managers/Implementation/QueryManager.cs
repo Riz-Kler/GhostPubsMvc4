@@ -103,23 +103,28 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .OrderByDescending(x => x.Value).ToList();
 
             var index = 1;
+
             var results = queryable.Select(x => new PageLinkModel(currentRoot)
             {
                 Text = string.Format("{0}. {1}", index++, x.Key.SplitOnSlash().JoinWithCommaReserve()),
                 Title =
                     string.Format("{0} ({1} pubs in this area)", x.Key.SplitOnSlash().JoinWithCommaReserve(), x.Value),
                 Unc = string.Format("{0}\\{1}", currentRoot, x.Key),
-                Id = index - 1
+                Id = index - 1,
+                // todo - come back - card #185 - need to attach the orgs 
+                // Links = data. ToList().Where(q => q.UncRelTownPath == x.Key),
+                //.Select(r => new PageLinkModel(currentRoot)
+                //    {
+                //        Id = r.Id,
+                //        Text = r.TradingName,
+                //        Title = r.TradingName,
+                //        Unc = r.ExtractLink(currentRoot).Unc,
+                //        Links = null
+                //    }).ToList() 
             }).ToList();
 
             // Key and Group
             return results;
-        }
-
-        public class LeaderTown
-        {
-            public String Town { get; set; }
-            public County County { get; set; }
         }
     }
 }

@@ -181,7 +181,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                         Unc = @"\" + x.Name.Underscore()
                     }
                     : null).OrderBy(x => x.Text).ToList(),
-                Description = string.Format("Ghost pubs in {0}", regions.Select(x => x.Name).OxbridgeAnd()),
+                MetaDescription = string.Format("Ghost pubs in {0}", regions.Select(x => x.Name).OxbridgeAnd()),
+                ArticleDescription = string.Format("Ghost pubs in {0}", regions.Select(x => x.Name).OxbridgeAnd()),
                 Unc = currentRoot,
                 Parent = new KeyValuePair<string, string>("Home page", @"/"),
                 Priority = PageTypePriority.Country,
@@ -223,7 +224,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                         Unc = string.Format(@"\{0}\{1}", currentRegion.Name.Underscore(), x.Text.Underscore())
                     }
                     : null).OrderBy(x => x.Text).ToList(),
-                Description = string.Format("Ghost pubs in {0}", countyLinks.Select(x => x.Text).OxbridgeAnd()),
+                MetaDescription = string.Format("Ghost pubs in {0}", countyLinks.Select(x => x.Text).OxbridgeAnd()),
+                ArticleDescription = string.Format("Ghost pubs in {0}", countyLinks.Select(x => x.Text).OxbridgeAnd()),
                 Unc = currentRegionPath,
                 Parent =
                     new KeyValuePair<string, string>(currentRegion.Name, currentRegion.Name.Underscore().ToLower()),
@@ -340,7 +342,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                             x.Text.Underscore()
                     }
                     : null).OrderBy(x => x.Text).ToList(),
-                Description = "Ghost pubs in " + townLinks.Select(x => x.Text).OxbridgeAnd(),
+                MetaDescription = "Ghost pubs in " + townLinks.Select(x => x.Text).OxbridgeAnd(),
+                ArticleDescription = "Ghost pubs in " + townLinks.Select(x => x.Text).OxbridgeAnd(),
                 Unc = currentCountyPath,
                 Parent = new KeyValuePair<string, string>(currentRegion.Name,
                     currentRegion.Name.Underscore().ToLower()),
@@ -393,7 +396,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 JumboTitle = pub.TradingName,
                 Action = action,
                 PageLinks = notes,
-                Description = string.Format("{0}, {1} : {2}", pub.Address, pub.PostcodePrimaryPart, notes.First().Text),
+                MetaDescription = string.Format("{0}, {1} : {2}", pub.Address, pub.PostcodePrimaryPart, notes.First().Text),
+                ArticleDescription = string.Format("{0}, {1}", pub.Address, pub.PostcodePrimaryPart),
                 Unc = pub.Path,
                 Parent = new KeyValuePair<string, string>(pub.Town, pub.Town.Underscore().ToLower()),
                 Tags = pub.Tags.Select(x => x.Feature.Name).ToList(),
@@ -469,7 +473,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             {
                 JumboTitle = pageType.ToString().CamelCaseToWords(),
                 Action = pageType,
-                Description = description,
+                MetaDescription = description,
+                ArticleDescription = description,
                 Unc = path,
                 Priority = priority,
                 PageLinks = links,
@@ -506,7 +511,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                                 town.Underscore(), x.Id, x.Text.Underscore())
                     }
                     : null).OrderBy(x => x.Text).ToList(),
-                Description = string.Format("{0}, {1}, {2}", town, currentCounty.Name, currentRegion.Name),
+                MetaDescription = string.Format("{0}, {1}, {2}", town, currentCounty.Name, currentRegion.Name),
+                ArticleDescription = string.Format("{0}, {1}, {2}", town, currentCounty.Name, currentRegion.Name),
                 Unc = townPath,
                 Parent = new KeyValuePair<string, string>(currentCounty.Description, String.Empty),
                 Total = pubLinks.Count,

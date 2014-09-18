@@ -3,7 +3,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = Model.JumboTitle + ", " + Model.Lineage.Town.Text;
     ViewBag.Link = Model.Lineage.Pub.Url;
-    ViewBag.Description = Model.Description;
+    ViewBag.MetaDescription = Model.MetaDescription;
+    
     ViewBag.Tag = Model.Tag;
     ViewBag.Tags = Model.Tags;
 }
@@ -77,7 +78,7 @@
                 </div>
                 <h2>@Model.JumboTitle</h2>
                 <div class="well well-large">
-                    <p>@Model.Description</p>
+                    <p>@Model.ArticleDescription</p>
                     <ul>
                         @foreach (var link in @Model.PageLinks)
                         {

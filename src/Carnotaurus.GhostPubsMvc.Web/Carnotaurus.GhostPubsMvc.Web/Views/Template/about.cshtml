@@ -2,7 +2,8 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = Model.JumboTitle;
-    ViewBag.Description = Model.Description;
+    ViewBag.MetaDescription = Model.MetaDescription;
+
 }
 
 <!-- Subhead
@@ -12,7 +13,7 @@
         <div>
             <h1>@Model.JumboTitle</h1>
             <p class="lead">
-                @Model.Description
+                @Model.ArticleDescription
             </p>
         </div>
     </div>
