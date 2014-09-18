@@ -5,7 +5,7 @@
     <title>@ViewBag.Title | Ghost Pubs</title>
 
     <meta name="revisit-after" content="2 days" />
-    <meta id="keywords" name="keywords" content="haunted pub, haunted pubs, @ViewBag.Title, @ViewBag.MetaDescription, ghost pubs" />
+    <meta id="keywords" name="keywords" content="haunted pub, haunted pubs, @ViewBag.Title, @ViewBag.ArticleDescription, ghost pubs" />
     <meta id="description" name="description" content="@ViewBag.Title, @ViewBag.MetaDescription" />
     <meta name="AUTHOR" content="Phil Carney" />
     <meta name="Content-Language" content="en-GB" />
@@ -25,7 +25,7 @@
     <meta property="og:description" content="@ViewBag.MetaDescription" />
     <meta property="og:url" content="@ViewBag.Link" />
     <meta property="og:site_name" content="Ghost Pubs" />
-    @if (@ViewBag.Tag != null)
+    @if (ViewBag.Tag != null)
     {
         <meta property="article:tag" content="@ViewBag.Tag" />
     }
