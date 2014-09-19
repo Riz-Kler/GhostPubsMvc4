@@ -41,6 +41,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public Int32 Id { get; set; }
 
-        public IEnumerable<Org> Links { get; set; }
+        public List<PageLinkModel> Links { get; set; }
     }
 }

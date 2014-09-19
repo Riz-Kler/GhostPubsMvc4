@@ -41,6 +41,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
+                if (TownPath == null)
+                {
+                    TownPath = string.Empty;
+                }
+
                 var current = BuildPath(TownPath, Id.ToString(CultureInfo.InvariantCulture), TradingName);
 
                 return current;
@@ -122,8 +127,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             var output = String.Empty;
 
             foreach (var b in builder)
-            {
-                if (output == String.Empty)
+            { 
+                if (output == String.Empty )
                 {
                     output = b.ToLower().Underscore();
                 }
@@ -140,10 +145,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             var info = new PageLinkModel(currentRoot)
             {
+                Id = Id,
                 Text = TradingName,
                 Title = string.Format("{0}, {1}", TradingName, Postcode),
                 Unc = Path,
-                Id = Id,
+               
             };
 
             return info;

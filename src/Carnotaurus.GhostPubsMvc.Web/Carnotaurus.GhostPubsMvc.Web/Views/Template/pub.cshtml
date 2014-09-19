@@ -3,7 +3,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = Model.JumboTitle + ", " + Model.Lineage.Town.Text;
     ViewBag.Link = Model.Lineage.Pub.Url;
-    ViewBag.MetaDescription = Model.MetaDescription; ViewBag.ArticleDescription = Model.ArticleDescription;
+    ViewBag.MetaDescription = Model.MetaDescription; 
+    ViewBag.ArticleDescription = Model.ArticleDescription;
     
     ViewBag.Tag = Model.Tag;
     ViewBag.Tags = Model.Tags;
@@ -104,34 +105,30 @@
                         <p>&nbsp;</p>
                     }
 
-                    <div id="map" style="width: 600px; height: 400px"></div>
+                    <div id="map" style="width: 720px; height: 400px"></div>
 
                     <script>
 
                         var map = L.map('map').setView([@Model.Lat, @Model.Lon], 13);
-
-                        L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
-                            maxZoom: 18,
-                            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-                                '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-                                'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-                            id: 'examples.map-i86knfo3'
+                         
+                        // add an OpenStreetMap tile layer
+                        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                         }).addTo(map);
-
 
                         L.marker([@Model.Lat, @Model.Lon]).addTo(map)
                             .bindPopup("<b>@Model.JumboTitle</b>").openPopup();
 
                         var popup = L.popup();
 
-                        function onMapClick(e) {
-                            popup
-                                .setLatLng(e.latlng)
-                                .setContent("You clicked the map at " + e.latlng.toString())
-                                .openOn(map);
-                        }
+                        //function onMapClick(e) {
+                        //    popup
+                        //        .setLatLng(e.latlng)
+                        //        .setContent("You clicked the map at " + e.latlng.toString())
+                        //        .openOn(map);
+                        //}
 
-                        map.on('click', onMapClick);
+                        //map.on('click', onMapClick);
 
                     </script>
 
@@ -140,16 +137,14 @@
                         <p>&nbsp;</p>
                         <p>Want to read about&nbsp;<a href='@Model.Previous.Url' title="Next to @Model.Previous.JumboTitle">@Model.Previous.JumboTitle?</a></p>
                     }
-
+                     
+                    <div class="fb-like" data-href="@ViewBag.Link" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 
                     <div id="fb-root"></div>
 
                     <div class="fb-comments" data-href="@ViewBag.Link" data-numposts="5" data-colorscheme="dark"></div>
-
-
-                    <div class="fb-like" data-href="@ViewBag.Link" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
-
-                    <p><a href='../../../@Model.Parent.Value/detail.html' title="Back to @Model.Parent.Key">Back to @Model.Parent.Key</a></p>
+                     
+                    <div><a href='../../../@Model.Parent.Value/detail.html' title="Back to @Model.Parent.Key">Back to @Model.Parent.Key</a></div>
                 </div>
                 <hr>
             </section>

@@ -123,6 +123,12 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 //    }).ToList() 
             }).ToList();
 
+            foreach (var result in results)
+            {
+                var r = data.FirstOrDefault(q => q.Id == result.Id);
+            
+            }
+
             // Key and Group
             return results;
         }
