@@ -82,9 +82,11 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             CreatePageTypeFile(PageTypeEnum.Contributors, "Credits to our contributors", PageTypePriority.Contributors);
 
-            CreatePageTypeFile(PageTypeEnum.About, "About ghost pubs.com", PageTypePriority.About);
+            CreatePageTypeFile(PageTypeEnum.About, "About Ghost Pubs", PageTypePriority.About);
 
             CreatePageTypeFile(PageTypeEnum.Home, "Pubs with a ghostly difference", PageTypePriority.Home);
+ 
+            CreatePageTypeFile(PageTypeEnum.Faq, "FAQs about Ghost Pubs", PageTypePriority.Faq);
 
             GenerateHtmlPages();
 

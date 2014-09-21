@@ -16,6 +16,7 @@
         FeaturedPartner,
         Contributors,
         About,
-        Home
+        Home,
+        Faq
     }
 }
