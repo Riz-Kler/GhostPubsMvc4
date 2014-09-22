@@ -104,7 +104,24 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             var index = 1;
 
-            var results = queryable.Select(x => new PageLinkModel(currentRoot)
+            var results = queryable.Select(x => 
+                CreatePageLinkModel(currentRoot, x, ref index)
+            )
+            .ToList();
+
+            foreach (var result in results)
+            {
+                var r = data.FirstOrDefault(q => q.Id == result.Id);
+            
+            }
+
+            // Key and Group
+            return results;
+        }
+
+        private static PageLinkModel CreatePageLinkModel(string currentRoot, KeyValuePair<string, int> x, ref int index)
+        {
+            return new PageLinkModel(currentRoot)
             {
                 Text = string.Format("{0}. {1}", index++, x.Key.SplitOnSlash().JoinWithCommaReserve()),
                 Title =
@@ -121,16 +138,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 //        Unc = r.ExtractLink(currentRoot).Unc,
                 //        Links = null
                 //    }).ToList() 
-            }).ToList();
-
-            foreach (var result in results)
-            {
-                var r = data.FirstOrDefault(q => q.Id == result.Id);
-            
-            }
-
-            // Key and Group
-            return results;
+            };
         }
     }
 }
