@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Web.Mvc;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
@@ -84,9 +85,17 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             CreatePageTypeFile(PageTypeEnum.About, "About Ghost Pubs", PageTypePriority.About);
 
-            CreatePageTypeFile(PageTypeEnum.Home, "Pubs with a ghostly difference", PageTypePriority.Home);
- 
+            CreatePageTypeFile(
+                PageTypeEnum.Home,
+                "Welcome to Ghost Pubs, pubs with a ghostly difference! We have the largest haunted pub directory. Please make your selection below!",
+                PageTypePriority.Home,
+                title: "Ghost Pubs"
+            );
+
             CreatePageTypeFile(PageTypeEnum.Faq, "FAQs about Ghost Pubs", PageTypePriority.Faq);
+
+            CreatePageTypeFile(PageTypeEnum.Newsletter, "Sign up for our newsletter here for goodies!", PageTypePriority.Newsletter);
+
 
             GenerateHtmlPages();
 
@@ -465,15 +474,20 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
 
         public void CreatePageTypeFile(PageTypeEnum pageType, string description, string priority,
-            List<PageLinkModel> links = null)
+            List<PageLinkModel> links = null, String title = null)
         {
             var path = string.Format("{0}\\{1}", _currentRoot, pageType);
 
             Directory.CreateDirectory(path);
 
+            if (title == null)
+            {
+                title = pageType.ToString().CamelCaseToWords();
+            }
+
             var model = new OutputViewModel(_currentRoot)
             {
-                JumboTitle = pageType.ToString().CamelCaseToWords(),
+                JumboTitle = title,
                 Action = pageType,
                 MetaDescription = description,
                 ArticleDescription = description,

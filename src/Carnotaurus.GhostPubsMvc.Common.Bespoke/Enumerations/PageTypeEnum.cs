@@ -17,6 +17,7 @@
         Contributors,
         About,
         Home,
-        Faq
+        Faq,
+        Newsletter
     }
 }

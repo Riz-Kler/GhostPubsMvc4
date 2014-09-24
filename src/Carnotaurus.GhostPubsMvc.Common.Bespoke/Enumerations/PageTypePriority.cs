@@ -20,5 +20,6 @@
         public const string Partnerships = "0.1";
         public const string Partners = "0.1";
         public const string FeaturedPartner = "0.1";
+        public const string Newsletter = "0.1";
     }
 }

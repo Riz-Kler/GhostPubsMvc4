@@ -2,47 +2,37 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = Model.JumboTitle;
-    ViewBag.MetaDescription = Model.MetaDescription; ViewBag.ArticleDescription = Model.ArticleDescription;
-
+    ViewBag.MetaDescription = Model.MetaDescription;
+    ViewBag.ArticleDescription = Model.ArticleDescription;
 }
 
 <!-- Subhead
     ================================================== -->
 <header class="jumbotron subhead">
     <div class="container">
-        <div>
-            <h1>@Model.JumboTitle</h1>
-            <p class="lead">
-                @Model.ArticleDescription
-            </p>
+        <div class="span4 pull-left">
+            <img onclick=" window.open('http://www.ghostpubs.com/haunted_pub/detail.html', '_self'); " class="img-circle face-relative" src="~/Content/bootstrap/231/img/ghostpubs/padded-logo-125x125.png" alt="Ghost Pubs" title="Ghost Pubs" />
         </div>
-    </div>
+        <div class="pull-left">
+            <div>
+                <h1>@Model.JumboTitle</h1>
+                <p class="lead">
+                    @Model.ArticleDescription
+                </p>
+            </div>
+        </div>
 </header>
 
 <div class="container">
-    <!-- Docs nav
-        ================================================== -->
-    <div class="row" style="min-height: 30px;">
-
-        <a href="/" title="Home">Home</a>
-
-        <span>&gt;&nbsp;</span>
-        <span>@Model.JumboTitle</span>
-
-    </div>
-
-
     <div class="container theme-showcase">
 
-        <!-- Main jumbotron for a primary marketing message or call to action -->
-        <div class="jumbotron">
-            <h1>Welcome to myPUBGUIDE</h1>
-            <p>Our pub guide is unique. It is intended for Brewers, Supermarketers, Wholesalers, Licensees, and people who fancy a drink. It employs the latest Microsoft web technologies which make it fast and robust. It also uses unique data and has a comprehensive set of public houses, inns, and hotels. This makes our website different to other online pub guide projects.</p>
+        <div class="">
 
             <div class="pull-left">
-                <a rel="nofollow" href="https://twitter.com/mypubguide" class="btn btn-primary btn-lg" target="_blank">Twitter</a>
-                <a rel="nofollow" href="http://www.facebook.com/pages/myPUBGUIDE/93956633216" class="btn btn-primary btn-lg" target="_blank">Facebook</a>
-                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx" class="btn btn-primary btn-lg">Search for a pub</a>
+                <a href="/haunted_pub/newsletter/detail.html" class="btn btn-primary btn-lg">Sign up for our newsletter</a>
+                <a href="/haunted_pub/detail.html" class="btn btn-primary btn-lg">Search for a haunted pub</a>
+                <a rel="nofollow" href="https://twitter.com/ghost_pubs" class="btn btn-primary btn-lg" target="_blank">Twitter</a>
+                <a rel="nofollow" href="http://www.facebook.com/groups/ghostpubs" class="btn btn-primary btn-lg" target="_blank">Facebook</a>
             </div>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
@@ -59,33 +49,33 @@
             </ol>
             <div class="carousel-inner">
                 <div class="item active">
-                    <img src="/haunted_pub/home/01.jpg" alt="First slide">
+                    <img src="/haunted_pub/home/01.jpg" alt="First slide" style="width: 1200px">
                     <div class="container">
                         <div class="carousel-caption">
-                            <h1>Ghost Pubs launched last Halloween</h1>
+                            <h2>Ghost Pubs 1st Anniversary this Halloween 2014</h2>
                             <p>You'll like it if you're interested in haunted pubs.</p>
-                            <p><a href="http://www.ghostpubs.com" class="btn btn-primary btn-lg" target="_ghostpubs">Click to visit &raquo;</a></p>
+                            <p><a href="/haunted_pub/detail.html" class="btn btn-primary btn-lg">Click for FAQs&raquo;</a></p>
                             <p>&nbsp;</p>
                         </div>
                     </div>
                 </div>
                 <div class="item">
-                    <img src="/haunted_pub/home/02.jpg" alt="Second slide">
+                    <img src="/haunted_pub/home/02.jpg" alt="Second slide" style="width: 1200px">
                     <div class="container">
                         <div class="carousel-caption">
-                            <h1>Enjoy food and drink</h1>
-                            <p>We have some twenty thousand open public houses listed.</p>
-                            <p><a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx" class="btn btn-primary btn-lg">Search for a pub</a></p>
+                            <h2>Enjoy food and drink</h2>
+                            <p>We have around one thousand haunted public houses listed.</p>
+                            <p><a href="/haunted_pub/detail.html" class="btn btn-primary btn-lg">Search for a pub</a></p>
                         </div>
                     </div>
                 </div>
                 <div class="item">
-                    <img src="/haunted_pub/home/03.jpg" alt="Third slide">
+                    <img src="/haunted_pub/home/03.jpg" alt="Third slide" style="width: 1200px">
                     <div class="container">
                         <div class="carousel-caption">
-                            <h1>Latest news on beer festivals</h1>
-                            <p>We can also tell you which beer festivals are on</p>
-                            <p><a class="btn btn-large btn-primary" href="http://www.mypubguide.com/dne/app10/pages/news/festivals.aspx">View news</a></p>
+                            <h2>Latest figures on the most haunted towns</h2>
+                            <p>At a glance at our leaderboard, you can see the most haunted locations</p>
+                            <p><a class="btn btn-large btn-primary" href="/haunted_pub/sitemap/detail.html">View leaderboard</a></p>
                         </div>
                     </div>
                 </div>
@@ -94,17 +84,104 @@
             <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
         </div>
         <!-- /.carousel -->
-
-        <div class="page-header">
-            <h1>Click to search your city</h1>
-        </div>
-        <p>
-            <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=aberdeen" style="font-size: 1.2em;" class="btn btn-lg btn-info">aberdeen </a>
-            <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=armagh" style="font-size: 1.2em;" class="btn btn-lg btn-info">armagh </a>
-            <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=bangor" style="font-size: 1.4em;" class="btn btn-lg btn-info">bangor </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=bath" style="font-size: 1.5em;" class="btn btn-lg btn-info">bath </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=belfast" style="font-size: 0.8em;" class="btn btn-lg btn-info">belfast </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=birmingham" style="font-size: 1.2em;" class="btn btn-lg btn-info">birmingham </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=blackburn" style="font-size: 1.3em;" class="btn btn-lg btn-info">blackburn </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=blackpool" style="font-size: 0.8em;" class="btn btn-lg btn-info">blackpool </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=bolton" style="font-size: 1em;" class="btn btn-lg btn-info">bolton </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=bournemouth" style="font-size: 1.4em;" class="btn btn-lg btn-info">bournemouth </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=bradford" style="font-size: 1.1em;" class="btn btn-lg btn-info">bradford </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=brighton" style="font-size: 0.8em;" class="btn btn-lg btn-info">brighton </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=bristol" style="font-size: 1.5em;" class="btn btn-lg btn-info">bristol </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=cambridge" style="font-size: 1.3em;" class="btn btn-lg btn-info">cambridge </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=canterbury" style="font-size: 0.8em;" class="btn btn-lg btn-info">canterbury </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=cardiff" style="font-size: 1.5em;" class="btn btn-lg btn-info">cardiff </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=carlisle" style="font-size: 1.2em;" class="btn btn-lg btn-info">carlisle </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=chester" style="font-size: 1.2em;" class="btn btn-lg btn-info">chester </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=chichester" style="font-size: 0.9em;" class="btn btn-lg btn-info">chichester </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=colchester" style="font-size: 1.5em;" class="btn btn-lg btn-info">colchester </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=coventry" style="font-size: 1.1em;" class="btn btn-lg btn-info">coventry </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=craigavon" style="font-size: 1.1em;" class="btn btn-lg btn-info">craigavon </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=crawley" style="font-size: 0.8em;" class="btn btn-lg btn-info">crawley </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=derby" style="font-size: 1.4em;" class="btn btn-lg btn-info">derby </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=dudley" style="font-size: 0.9em;" class="btn btn-lg btn-info">dudley </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=dundee" style="font-size: 1.3em;" class="btn btn-lg btn-info">dundee </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=durham" style="font-size: 1em;" class="btn btn-lg btn-info">durham </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=edinburgh" style="font-size: 1.1em;" class="btn btn-lg btn-info">edinburgh </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=ely" style="font-size: 1.5em;" class="btn btn-lg btn-info">ely </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=exeter" style="font-size: 0.9em;" class="btn btn-lg btn-info">exeter </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=glasgow" style="font-size: 1.4em;" class="btn btn-lg btn-info">glasgow </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=gloucester" style="font-size: 1.5em;" class="btn btn-lg btn-info">gloucester </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=hereford" style="font-size: 1.2em;" class="btn btn-lg btn-info">hereford </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=huddersfield" style="font-size: 1.4em;" class="btn btn-lg btn-info">huddersfield </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=hull" style="font-size: 0.8em;" class="btn btn-lg btn-info">hull </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=inverness" style="font-size: 1.2em;" class="btn btn-lg btn-info">inverness </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=ipswich" style="font-size: 1.2em;" class="btn btn-lg btn-info">ipswich </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=lancaster" style="font-size: 1.4em;" class="btn btn-lg btn-info">lancaster </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=leeds" style="font-size: 1.4em;" class="btn btn-lg btn-info">leeds </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=leicester" style="font-size: 1em;" class="btn btn-lg btn-info">leicester </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=lichfield" style="font-size: 1.4em;" class="btn btn-lg btn-info">lichfield </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=lincoln" style="font-size: 0.8em;" class="btn btn-lg btn-info">lincoln </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=lisburn" style="font-size: 1.3em;" class="btn btn-lg btn-info">lisburn </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=liverpool" style="font-size: 1.4em;" class="btn btn-lg btn-info">liverpool </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=london" style="font-size: 1.5em;" class="btn btn-lg btn-info">london </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=londonderry" style="font-size: 0.8em;" class="btn btn-lg btn-info">londonderry </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=luton" style="font-size: 1.3em;" class="btn btn-lg btn-info">luton </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=manchester" style="font-size: 1em;" class="btn btn-lg btn-info">manchester </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=middlesbrough" style="font-size: 1.4em;" class="btn btn-lg btn-info">middlesbrough </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=milton keynes" style="font-size: 1.5em;" class="btn btn-lg btn-info">milton keynes </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=newcastle upon tyne" style="font-size: 1.1em;" class="btn btn-lg btn-info">newcastle upon tyne </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=newport" style="font-size: 1.2em;" class="btn btn-lg btn-info">newport </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=newry" style="font-size: 1.1em;" class="btn btn-lg btn-info">newry </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=northampton" style="font-size: 1.3em;" class="btn btn-lg btn-info">northampton </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=norwich" style="font-size: 0.9em;" class="btn btn-lg btn-info">norwich </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=nottingham" style="font-size: 0.8em;" class="btn btn-lg btn-info">nottingham </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=oldham" style="font-size: 1.2em;" class="btn btn-lg btn-info">oldham </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=oxford" style="font-size: 1.5em;" class="btn btn-lg btn-info">oxford </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=peterborough" style="font-size: 1.3em;" class="btn btn-lg btn-info">peterborough </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=plymouth" style="font-size: 1.1em;" class="btn btn-lg btn-info">plymouth </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=poole" style="font-size: 0.9em;" class="btn btn-lg btn-info">poole </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=portsmouth" style="font-size: 0.9em;" class="btn btn-lg btn-info">portsmouth </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=preston" style="font-size: 0.9em;" class="btn btn-lg btn-info">preston </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=reading" style="font-size: 0.8em;" class="btn btn-lg btn-info">reading </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=ripon" style="font-size: 0.8em;" class="btn btn-lg btn-info">ripon </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=rotherham" style="font-size: 1.2em;" class="btn btn-lg btn-info">rotherham </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=salford" style="font-size: 1.2em;" class="btn btn-lg btn-info">salford </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=salisbury" style="font-size: 0.8em;" class="btn btn-lg btn-info">salisbury </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=sheffield" style="font-size: 1.3em;" class="btn btn-lg btn-info">sheffield </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=slough" style="font-size: 1.1em;" class="btn btn-lg btn-info">slough </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=southampton" style="font-size: 1.1em;" class="btn btn-lg btn-info">southampton </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=southend" style="font-size: 1.4em;" class="btn btn-lg btn-info">southend </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=st albans" style="font-size: 1.3em;" class="btn btn-lg btn-info">st albans </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=st davids" style="font-size: 1.5em;" class="btn btn-lg btn-info">st davids </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=st helens" style="font-size: 0.8em;" class="btn btn-lg btn-info">st helens </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=stirling" style="font-size: 1em;" class="btn btn-lg btn-info">stirling </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=stockport" style="font-size: 1.4em;" class="btn btn-lg btn-info">stockport </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=stoke" style="font-size: 0.9em;" class="btn btn-lg btn-info">stoke </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=sunderland" style="font-size: 1.5em;" class="btn btn-lg btn-info">sunderland </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=sutton coldfield" style="font-size: 0.9em;" class="btn btn-lg btn-info">sutton coldfield </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=swansea" style="font-size: 1.5em;" class="btn btn-lg btn-info">swansea </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=swindon" style="font-size: 0.8em;" class="btn btn-lg btn-info">swindon </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=telford" style="font-size: 1.3em;" class="btn btn-lg btn-info">telford </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=truro" style="font-size: 1.5em;" class="btn btn-lg btn-info">truro </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=wakefield" style="font-size: 1.3em;" class="btn btn-lg btn-info">wakefield </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=walsall" style="font-size: 0.9em;" class="btn btn-lg btn-info">walsall </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=watford" style="font-size: 1.1em;" class="btn btn-lg btn-info">watford </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=wells" style="font-size: 1.4em;" class="btn btn-lg btn-info">wells </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=west bromwich" style="font-size: 1.2em;" class="btn btn-lg btn-info">west bromwich </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=westminster" style="font-size: 1.5em;" class="btn btn-lg btn-info">westminster </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=winchester" style="font-size: 0.8em;" class="btn btn-lg btn-info">winchester </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=wolverhampton" style="font-size: 1.3em;" class="btn btn-lg btn-info">wolverhampton </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=worcester" style="font-size: 0.8em;" class="btn btn-lg btn-info">worcester </a>&nbsp;<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=york" style="font-size: 1.1em;" class="btn btn-lg btn-info">york </a>&nbsp;
-        </p>
+        @*<div class="page-header">
+                <h2>Click to search your city</h2>
+            </div>
+            <p>
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=aberdeen" style="font-size: 1.2em;" class="btn btn-lg btn-info">aberdeen </a>
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=armagh" style="font-size: 1.2em;" class="btn btn-lg btn-info">armagh </a>
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=bangor" style="font-size: 1.4em;" class="btn btn-lg btn-info">bangor </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=bath" style="font-size: 1.5em;" class="btn btn-lg btn-info">bath </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=belfast" style="font-size: 0.8em;" class="btn btn-lg btn-info">belfast </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=birmingham" style="font-size: 1.2em;" class="btn btn-lg btn-info">birmingham </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=blackburn" style="font-size: 1.3em;" class="btn btn-lg btn-info">blackburn </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=blackpool" style="font-size: 0.8em;" class="btn btn-lg btn-info">blackpool </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=bolton" style="font-size: 1em;" class="btn btn-lg btn-info">bolton </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=bournemouth" style="font-size: 1.4em;" class="btn btn-lg btn-info">bournemouth </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=bradford" style="font-size: 1.1em;" class="btn btn-lg btn-info">bradford </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=brighton" style="font-size: 0.8em;" class="btn btn-lg btn-info">brighton </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=bristol" style="font-size: 1.5em;" class="btn btn-lg btn-info">bristol </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=cambridge" style="font-size: 1.3em;" class="btn btn-lg btn-info">cambridge </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=canterbury" style="font-size: 0.8em;" class="btn btn-lg btn-info">canterbury </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=cardiff" style="font-size: 1.5em;" class="btn btn-lg btn-info">cardiff </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=carlisle" style="font-size: 1.2em;" class="btn btn-lg btn-info">carlisle </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=chester" style="font-size: 1.2em;" class="btn btn-lg btn-info">chester </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=chichester" style="font-size: 0.9em;" class="btn btn-lg btn-info">chichester </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=colchester" style="font-size: 1.5em;" class="btn btn-lg btn-info">colchester </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=coventry" style="font-size: 1.1em;" class="btn btn-lg btn-info">coventry </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=craigavon" style="font-size: 1.1em;" class="btn btn-lg btn-info">craigavon </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=crawley" style="font-size: 0.8em;" class="btn btn-lg btn-info">crawley </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=derby" style="font-size: 1.4em;" class="btn btn-lg btn-info">derby </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=dudley" style="font-size: 0.9em;" class="btn btn-lg btn-info">dudley </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=dundee" style="font-size: 1.3em;" class="btn btn-lg btn-info">dundee </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=durham" style="font-size: 1em;" class="btn btn-lg btn-info">durham </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=edinburgh" style="font-size: 1.1em;" class="btn btn-lg btn-info">edinburgh </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=ely" style="font-size: 1.5em;" class="btn btn-lg btn-info">ely </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=exeter" style="font-size: 0.9em;" class="btn btn-lg btn-info">exeter </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=glasgow" style="font-size: 1.4em;" class="btn btn-lg btn-info">glasgow </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=gloucester" style="font-size: 1.5em;" class="btn btn-lg btn-info">gloucester </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=hereford" style="font-size: 1.2em;" class="btn btn-lg btn-info">hereford </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=huddersfield" style="font-size: 1.4em;" class="btn btn-lg btn-info">huddersfield </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=hull" style="font-size: 0.8em;" class="btn btn-lg btn-info">hull </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=inverness" style="font-size: 1.2em;" class="btn btn-lg btn-info">inverness </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=ipswich" style="font-size: 1.2em;" class="btn btn-lg btn-info">ipswich </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=lancaster" style="font-size: 1.4em;" class="btn btn-lg btn-info">lancaster </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=leeds" style="font-size: 1.4em;" class="btn btn-lg btn-info">leeds </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=leicester" style="font-size: 1em;" class="btn btn-lg btn-info">leicester </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=lichfield" style="font-size: 1.4em;" class="btn btn-lg btn-info">lichfield </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=lincoln" style="font-size: 0.8em;" class="btn btn-lg btn-info">lincoln </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=lisburn" style="font-size: 1.3em;" class="btn btn-lg btn-info">lisburn </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=liverpool" style="font-size: 1.4em;" class="btn btn-lg btn-info">liverpool </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=london" style="font-size: 1.5em;" class="btn btn-lg btn-info">london </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=londonderry" style="font-size: 0.8em;" class="btn btn-lg btn-info">londonderry </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=luton" style="font-size: 1.3em;" class="btn btn-lg btn-info">luton </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=manchester" style="font-size: 1em;" class="btn btn-lg btn-info">manchester </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=middlesbrough" style="font-size: 1.4em;" class="btn btn-lg btn-info">middlesbrough </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=milton keynes" style="font-size: 1.5em;" class="btn btn-lg btn-info">milton keynes </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=newcastle upon tyne" style="font-size: 1.1em;" class="btn btn-lg btn-info">newcastle upon tyne </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=newport" style="font-size: 1.2em;" class="btn btn-lg btn-info">newport </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=newry" style="font-size: 1.1em;" class="btn btn-lg btn-info">newry </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=northampton" style="font-size: 1.3em;" class="btn btn-lg btn-info">northampton </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=norwich" style="font-size: 0.9em;" class="btn btn-lg btn-info">norwich </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=nottingham" style="font-size: 0.8em;" class="btn btn-lg btn-info">nottingham </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=oldham" style="font-size: 1.2em;" class="btn btn-lg btn-info">oldham </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=oxford" style="font-size: 1.5em;" class="btn btn-lg btn-info">oxford </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=peterborough" style="font-size: 1.3em;" class="btn btn-lg btn-info">peterborough </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=plymouth" style="font-size: 1.1em;" class="btn btn-lg btn-info">plymouth </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=poole" style="font-size: 0.9em;" class="btn btn-lg btn-info">poole </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=portsmouth" style="font-size: 0.9em;" class="btn btn-lg btn-info">portsmouth </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=preston" style="font-size: 0.9em;" class="btn btn-lg btn-info">preston </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=reading" style="font-size: 0.8em;" class="btn btn-lg btn-info">reading </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=ripon" style="font-size: 0.8em;" class="btn btn-lg btn-info">ripon </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=rotherham" style="font-size: 1.2em;" class="btn btn-lg btn-info">rotherham </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=salford" style="font-size: 1.2em;" class="btn btn-lg btn-info">salford </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=salisbury" style="font-size: 0.8em;" class="btn btn-lg btn-info">salisbury </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=sheffield" style="font-size: 1.3em;" class="btn btn-lg btn-info">sheffield </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=slough" style="font-size: 1.1em;" class="btn btn-lg btn-info">slough </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=southampton" style="font-size: 1.1em;" class="btn btn-lg btn-info">southampton </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=southend" style="font-size: 1.4em;" class="btn btn-lg btn-info">southend </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=st albans" style="font-size: 1.3em;" class="btn btn-lg btn-info">st albans </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=st davids" style="font-size: 1.5em;" class="btn btn-lg btn-info">st davids </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=st helens" style="font-size: 0.8em;" class="btn btn-lg btn-info">st helens </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=stirling" style="font-size: 1em;" class="btn btn-lg btn-info">stirling </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=stockport" style="font-size: 1.4em;" class="btn btn-lg btn-info">stockport </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=stoke" style="font-size: 0.9em;" class="btn btn-lg btn-info">stoke </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=sunderland" style="font-size: 1.5em;" class="btn btn-lg btn-info">sunderland </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=sutton coldfield" style="font-size: 0.9em;" class="btn btn-lg btn-info">sutton coldfield </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=swansea" style="font-size: 1.5em;" class="btn btn-lg btn-info">swansea </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=swindon" style="font-size: 0.8em;" class="btn btn-lg btn-info">swindon </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=telford" style="font-size: 1.3em;" class="btn btn-lg btn-info">telford </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=truro" style="font-size: 1.5em;" class="btn btn-lg btn-info">truro </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=wakefield" style="font-size: 1.3em;" class="btn btn-lg btn-info">wakefield </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=walsall" style="font-size: 0.9em;" class="btn btn-lg btn-info">walsall </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=watford" style="font-size: 1.1em;" class="btn btn-lg btn-info">watford </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=wells" style="font-size: 1.4em;" class="btn btn-lg btn-info">wells </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=west bromwich" style="font-size: 1.2em;" class="btn btn-lg btn-info">west bromwich </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=westminster" style="font-size: 1.5em;" class="btn btn-lg btn-info">westminster </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=winchester" style="font-size: 0.8em;" class="btn btn-lg btn-info">winchester </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=wolverhampton" style="font-size: 1.3em;" class="btn btn-lg btn-info">wolverhampton </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=worcester" style="font-size: 0.8em;" class="btn btn-lg btn-info">worcester </a>&nbsp;
+                <a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=york" style="font-size: 1.1em;" class="btn btn-lg btn-info">york </a>&nbsp;
+            </p>*@
     </div>
-
-
 </div>
-
