@@ -20,6 +20,8 @@
         Faq,
         Newsletter,
         Accessibility,
-        Terms
+        Terms,
+        ContactUs,
+        Privacy
     }
 }
