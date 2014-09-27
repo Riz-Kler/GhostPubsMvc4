@@ -1,0 +1,83 @@
+﻿@model Carnotaurus.GhostPubsMvc.Data.Models.ViewModels.OutputViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Model.JumboTitle;
+    ViewBag.MetaDescription = Model.MetaDescription; ViewBag.ArticleDescription = Model.ArticleDescription;
+
+}
+
+<!-- Subhead
+    ================================================== -->
+<header class="jumbotron subhead">
+    <div class="container">
+        <div>
+            <h1>@Model.JumboTitle</h1>
+            <p class="lead">
+                @Model.ArticleDescription
+            </p>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <!-- Docs nav
+        ================================================== -->
+    <div class="row" style="min-height: 30px;">
+
+        <a href="/" title="Home">Home</a>
+
+        <span>&gt;&nbsp;</span>
+        <span>@Model.JumboTitle</span>
+
+    </div>
+    <div class="row">
+        <div class="span4">
+            <div>
+                <div>
+                    <img onclick=" window.open('http://www.ghostpubs.com/haunted_pub/detail.html', '_self'); " class="img-circle face-relative" src="~/Content/bootstrap/231/img/ghostpubs/padded-logo-125x125.png" alt="Ghost Pubs" title="Ghost Pubs" />
+
+                </div>
+
+            </div>
+        </div>
+        <div class="span8">
+
+            <!-- Well
+                ================================================== -->
+            <section id="well">
+                <div class="page-header">
+                    <h1>Accessibility</h1>
+                </div>
+                <h2>What's our policy?</h2>
+                <div class="well well-large">
+                    <p>
+                        Hello there,
+                    </p>
+                    <p>
+                        This site plans to fit in with level AA of the W3c web content openness rules, including all necessity 1 checkpoints characterized in the rules. Conformance to these rules will help make the Web more open to clients with incapacities and will profit all clients.
+                    </p>
+                    <p>
+                        We would welcome your remarks on how we can enhance the site. Kindly send your input to accessibility@ghostpubs.com
+                    </p>
+                    <p>
+                        We can't promise continuous access to this site, or the destinations to which it interfaces. We acknowledge no obligation regarding any harms emerging from the loss of utilization of this data.
+                    </p>
+                    <p>
+                        Kindest regards,
+                    </p>
+                    <p>
+                        <strong>The Ghost Pubs Team</strong>
+                    </p>
+                    <p>
+                        <a href="/" title="The Ghost Pubs website">www.GhostPubs.com</a>
+                    </p>
+                </div>
+
+
+                <div class="fb-like" data-href="@ViewBag.Link" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+
+                <hr>
+            </section>
+        </div>
+    </div>
+</div>

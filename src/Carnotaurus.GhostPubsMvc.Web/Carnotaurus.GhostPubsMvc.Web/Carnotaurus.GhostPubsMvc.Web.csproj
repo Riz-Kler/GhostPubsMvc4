@@ -713,6 +713,7 @@
     <Content Include="Views\Template\about.cshtml" />
     <Content Include="Views\Template\home.cshtml" />
     <Content Include="Views\Template\faq.cshtml" />
+    <Content Include="Views\Template\accessibility.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\images\" />

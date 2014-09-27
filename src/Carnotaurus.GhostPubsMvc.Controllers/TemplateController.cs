@@ -96,6 +96,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             CreatePageTypeFile(PageTypeEnum.Newsletter, "Sign up for our newsletter here for goodies!", PageTypePriority.Newsletter);
 
+            CreatePageTypeFile(PageTypeEnum.Accessibility, "What is our Accessibility Policy?", PageTypePriority.Accessibility);
 
             GenerateHtmlPages();
 
