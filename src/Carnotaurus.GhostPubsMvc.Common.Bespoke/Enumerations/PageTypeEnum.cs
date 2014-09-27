@@ -19,6 +19,7 @@
         Home,
         Faq,
         Newsletter,
-        Accessibility
+        Accessibility,
+        Terms
     }
 }

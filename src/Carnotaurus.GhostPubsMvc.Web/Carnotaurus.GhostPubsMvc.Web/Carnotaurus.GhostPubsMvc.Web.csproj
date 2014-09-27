@@ -714,6 +714,7 @@
     <Content Include="Views\Template\home.cshtml" />
     <Content Include="Views\Template\faq.cshtml" />
     <Content Include="Views\Template\accessibility.cshtml" />
+    <Content Include="Views\Template\terms.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\images\" />
