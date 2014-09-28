@@ -4,6 +4,7 @@
     ViewBag.Title = Model.JumboTitle;
     ViewBag.MetaDescription = Model.MetaDescription;
     ViewBag.ArticleDescription = Model.ArticleDescription;
+    ViewBag.Link = "http://www.ghostpubs.com/haunted_pub/home/detail.html";
 }
 
 <!-- Subhead
@@ -11,7 +12,7 @@
 <header class="jumbotron subhead">
     <div class="container">
         <div class="span4 pull-left">
-            <img onclick=" window.open('http://www.ghostpubs.com/haunted_pub/detail.html', '_self'); " class="img-circle face-relative" src="~/Content/bootstrap/231/img/ghostpubs/padded-logo-125x125.png" alt="Ghost Pubs" title="Ghost Pubs" />
+            <img width='200' height='200' onclick=" window.open('http://www.ghostpubs.com/haunted_pub/detail.html', '_self'); " src="~/Content/bootstrap/231/img/ghostpubs/padded-logo-125x125.png" alt="Ghost Pubs" title="Ghost Pubs" />
         </div>
         <div class="pull-left">
             <div>
@@ -21,6 +22,7 @@
                 </p>
             </div>
         </div>
+    </div>
 </header>
 
 <div class="container">
@@ -29,10 +31,10 @@
         <div class="">
 
             <div class="pull-left">
-                <a href="/haunted_pub/newsletter/detail.html" class="btn btn-primary btn-lg">Sign up for our newsletter</a>
-                <a href="/haunted_pub/detail.html" class="btn btn-primary btn-lg">Search for a haunted pub</a>
-                <a rel="nofollow" href="https://twitter.com/ghost_pubs" class="btn btn-primary btn-lg" target="_blank">Twitter</a>
-                <a rel="nofollow" href="http://www.facebook.com/groups/ghostpubs" class="btn btn-primary btn-lg" target="_blank">Facebook</a>
+                <a href="/haunted_pub/newsletter/detail.html" class="btn btn-primary btn-lg" title="newsletter">Sign up for our newsletter</a>
+                <a href="/haunted_pub/detail.html" class="btn btn-primary btn-lg" title="Find">Find for a haunted pub</a>
+                <a rel="nofollow" href="https://twitter.com/ghost_pubs" class="btn btn-primary btn-lg" target="_blank" title="twitter">twitter</a>
+                <a rel="nofollow" href="http://www.facebook.com/groups/ghostpubs" class="btn btn-primary btn-lg" target="_blank" title="fb">Facebook</a>
             </div>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
@@ -49,41 +51,41 @@
             </ol>
             <div class="carousel-inner">
                 <div class="item active">
-                    <img src="/haunted_pub/home/01.jpg" alt="First slide" style="width: 1200px">
+                    <img width="1200" height="500" src="/haunted_pub/home/01.jpg" alt="Ghost Pubs 1st Anniversary this Halloween 2014">
                     <div class="container">
                         <div class="carousel-caption">
                             <h2>Ghost Pubs 1st Anniversary this Halloween 2014</h2>
                             <p>You'll like it if you're interested in haunted pubs.</p>
                             <p>&nbsp;</p>
-                            <p><a href="/haunted_pub/detail.html" class="btn btn-primary btn-lg">Click for FAQs&raquo;</a></p>
+                            <p><a href="/haunted_pub/detail.html" title="faq" class="btn btn-primary btn-lg">Click for FAQs&raquo;</a></p>
                         </div>
                     </div>
                 </div>
                 <div class="item">
-                    <img src="/haunted_pub/home/02.jpg" alt="Second slide" style="width: 1200px">
+                    <img width="1200" height="500" src="/haunted_pub/home/02.jpg" alt="We have around one thousand haunted public houses listed">
                     <div class="container">
                         <div class="carousel-caption">
                             <h2>Enjoy food and drink</h2>
                             <p>We have around one thousand haunted public houses listed.</p>
                             <p>&nbsp;</p>
-                            <p><a href="/haunted_pub/detail.html" class="btn btn-primary btn-lg">Search for a pub</a></p>
+                            <p><a href="/haunted_pub/detail.html" title="search" class="btn btn-primary btn-lg">Find a haunted pub</a></p>
                         </div>
                     </div>
                 </div>
                 <div class="item">
-                    <img src="/haunted_pub/home/03.jpg" alt="Third slide" style="width: 1200px">
+                    <img width="1200" height="500" src="/haunted_pub/home/03.jpg" alt="Latest figures on the most haunted towns">
                     <div class="container">
                         <div class="carousel-caption">
                             <h2>Latest figures on the most haunted towns</h2>
                             <p>At a glance at our leaderboard, you can see the most haunted locations</p>
                             <p>&nbsp;</p>
-                            <p><a class="btn btn-large btn-primary" href="/haunted_pub/sitemap/detail.html">View leaderboard</a></p>
+                            <p><a class="btn btn-large btn-primary" title="leaderboard" href="/haunted_pub/sitemap/detail.html">View leaderboard</a></p>
                         </div>
                     </div>
                 </div>
             </div>
-            <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-            <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+            <a class="left carousel-control" href="#myCarousel" title="previous" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+            <a class="right carousel-control" href="#myCarousel" title="next" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
         </div>
         <!-- /.carousel -->
         <hr />
@@ -91,101 +93,105 @@
             <h2>Click to search your city</h2>
         </div>
         <p>
-            <a href="/haunted_pub/Scotland/Aberdeenshire/Aberdeen/detail.html" class="btn btn-lg btn-danger">aberdeen </a>
+            <a href="/haunted_pub/Scotland/Aberdeenshire/Aberdeen/detail.html" class="btn btn-lg btn-danger" title="view this town">aberdeen </a>
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=armagh"  class="btn btn-lg btn-danger">armagh </a>*@
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=bangor"  class="btn btn-lg btn-danger">bangor </a>&nbsp;*@
-            <a href="/haunted_pub/West_and_South_West/Avon/Bath/detail.html" class="btn btn-lg btn-danger">bath </a>&nbsp;
+            <a href="/haunted_pub/West_and_South_West/Avon/Bath/detail.html" class="btn btn-lg btn-danger" title="view this location">bath </a>&nbsp;
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=belfast"  class="btn btn-lg btn-danger">belfast </a>&nbsp;*@
-            <a href="/haunted_pub/West_and_South_West/West_Midlands/Birmingham/detail.html" class="btn btn-lg btn-danger">birmingham </a>&nbsp;
+            <a href="/haunted_pub/West_and_South_West/West_Midlands/Birmingham/detail.html" class="btn btn-lg btn-danger" title="view this location">birmingham </a>&nbsp;
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=blackburn"  class="btn btn-lg btn-danger">blackburn </a>&nbsp;*@
-            <a href="/haunted_pub/North_West_England/Lancashire/Blackpool/detail.html" class="btn btn-lg btn-danger">blackpool </a>&nbsp;
-            <a href="/haunted_pub/north_west_england/greater_manchester/bolton/detail.html" class="btn btn-lg btn-danger">bolton </a>&nbsp;
-            <a href="/haunted_pub/West_and_South_West/Dorset/Bournemouth/detail.html" class="btn btn-lg btn-danger">bournemouth </a>&nbsp;
-            <a href="/haunted_pub/Yorkshire_and_Lincolnshire/West_Yorkshire/Bradford/detail.html" class="btn btn-lg btn-danger">bradford </a>&nbsp;
-            <a href="/haunted_pub/London_and_South_East/West_Sussex/Brighton/detail.html" class="btn btn-lg btn-danger">brighton </a>&nbsp;
-            <a href="/haunted_pub/west_and_south_west/avon/bristol/detail.html" class="btn btn-lg btn-danger">bristol </a>&nbsp;
-            <a href="/haunted_pub/East/Cambridgeshire/Cambridge/detail.html" class="btn btn-lg btn-danger">cambridge </a>&nbsp;
-            <a href="/haunted_pub/London_and_South_East/Kent/Canterbury/detail.html" class="btn btn-lg btn-danger">canterbury </a>&nbsp;
-            <a href="/haunted_pub/wales/glamorgan/cardiff/detail.html" class="btn btn-lg btn-danger">cardiff </a>&nbsp;
-            <a href="/haunted_pub/North_West_England/Cumbria/Carlisle/detail.html" class="btn btn-lg btn-danger">carlisle </a>&nbsp;
-            <a href="/haunted_pub/North_West_England/Cheshire/Chester/detail.html" class="btn btn-lg btn-danger">chester </a>&nbsp;
-            <a href="/haunted_pub/London_and_South_East/West_Sussex/Chichester/detail.html" class="btn btn-lg btn-danger">chichester </a>&nbsp;
-            <a href="/haunted_pub/East/Essex/Colchester/detail.html" class="btn btn-lg btn-danger">colchester </a>&nbsp;
-            <a href="/haunted_pub/west_and_south_west/west_midlands/coventry/detail.html" class="btn btn-lg btn-danger">coventry </a>&nbsp;
+            <a href="/haunted_pub/North_West_England/Lancashire/Blackpool/detail.html" class="btn btn-lg btn-danger" title="view this location">blackpool </a>&nbsp;
+            <a href="/haunted_pub/north_west_england/greater_manchester/bolton/detail.html" class="btn btn-lg btn-danger" title="view this location">bolton </a>&nbsp;
+            <a href="/haunted_pub/West_and_South_West/Dorset/Bournemouth/detail.html" class="btn btn-lg btn-danger" title="view this location">bournemouth </a>&nbsp;
+            <a href="/haunted_pub/Yorkshire_and_Lincolnshire/West_Yorkshire/Bradford/detail.html" class="btn btn-lg btn-danger" title="view this location">bradford </a>&nbsp;
+            <a href="/haunted_pub/London_and_South_East/West_Sussex/Brighton/detail.html" class="btn btn-lg btn-danger" title="view this location">brighton </a>&nbsp;
+            <a href="/haunted_pub/west_and_south_west/avon/bristol/detail.html" class="btn btn-lg btn-danger" title="view this location">bristol </a>&nbsp;
+            <a href="/haunted_pub/East/Cambridgeshire/Cambridge/detail.html" class="btn btn-lg btn-danger" title="view this location">cambridge </a>&nbsp;
+            <a href="/haunted_pub/London_and_South_East/Kent/Canterbury/detail.html" class="btn btn-lg btn-danger" title="view this location">canterbury </a>&nbsp;
+            <a href="/haunted_pub/wales/glamorgan/cardiff/detail.html" class="btn btn-lg btn-danger" title="view this location">cardiff </a>&nbsp;
+            <a href="/haunted_pub/North_West_England/Cumbria/Carlisle/detail.html" class="btn btn-lg btn-danger" title="view this location">carlisle </a>&nbsp;
+            <a href="/haunted_pub/North_West_England/Cheshire/Chester/detail.html" class="btn btn-lg btn-danger" title="view this location">chester </a>&nbsp;
+            <a href="/haunted_pub/London_and_South_East/West_Sussex/Chichester/detail.html" class="btn btn-lg btn-danger" title="view this location">chichester </a>&nbsp;
+            <a href="/haunted_pub/East/Essex/Colchester/detail.html" class="btn btn-lg btn-danger" title="view this location">colchester </a>&nbsp;
+            <a href="/haunted_pub/west_and_south_west/west_midlands/coventry/detail.html" class="btn btn-lg btn-danger" title="view this location">coventry </a>&nbsp;
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=craigavon"  class="btn btn-lg btn-danger">craigavon </a>&nbsp;*@
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=crawley"  class="btn btn-lg btn-danger">crawley </a>&nbsp;*@
-            <a href="/haunted_pub/East_Midlands/Derbyshire/Derby/detail.html" class="btn btn-lg btn-danger">derby </a>&nbsp;
-            <a href="/haunted_pub/West_and_South_West/West_Midlands/Dudley/detail.html" class="btn btn-lg btn-danger">dudley </a>&nbsp;
+            <a href="/haunted_pub/East_Midlands/Derbyshire/Derby/detail.html" class="btn btn-lg btn-danger" title="view this location">derby </a>&nbsp;
+            <a href="/haunted_pub/West_and_South_West/West_Midlands/Dudley/detail.html" class="btn btn-lg btn-danger" title="view this location">dudley </a>&nbsp;
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=dundee"  class="btn btn-lg btn-danger">dundee </a>&nbsp;*@
-            <a href="/haunted_pub/north_east_england/county_durham/durham/detail.html" class="btn btn-lg btn-danger">durham </a>&nbsp;
-            <a href="/haunted_pub/Scotland/Midlothian/Edinburgh/detail.html" class="btn btn-lg btn-danger">edinburgh </a>&nbsp;
-            <a href="/haunted_pub/east/cambridgeshire/ely/detail.html" class="btn btn-lg btn-danger">ely </a>&nbsp;
-            <a href="/haunted_pub/west_and_south_west/devon/exeter/detail.html" class="btn btn-lg btn-danger">exeter </a>&nbsp;
-            <a href="/haunted_pub/scotland/glasgow_and_clyde_valley/glasgow/detail.html" class="btn btn-lg btn-danger">glasgow </a>&nbsp;
-            <a href="/haunted_pub/West_and_South_West/Gloucestershire/Gloucester/detail.html" class="btn btn-lg btn-danger">gloucester </a>&nbsp;
-            <a href="/haunted_pub/west_midlands/herefordshire/hereford/detail.html" class="btn btn-lg btn-danger">hereford </a>&nbsp;
-            <a href="/haunted_pub/Yorkshire_and_Lincolnshire/West_Yorkshire/Huddersfield/detail.html" class="btn btn-lg btn-danger">huddersfield </a>&nbsp;
-            <a href="/haunted_pub/Yorkshire_and_Lincolnshire/Yorkshire_and_the_Humber/Hull/detail.html" class="btn btn-lg btn-danger">hull </a>&nbsp;
+            <a href="/haunted_pub/north_east_england/county_durham/durham/detail.html" class="btn btn-lg btn-danger" title="view this location">durham </a>&nbsp;
+            <a href="/haunted_pub/Scotland/Midlothian/Edinburgh/detail.html" class="btn btn-lg btn-danger" title="view this location">edinburgh </a>&nbsp;
+            <a href="/haunted_pub/east/cambridgeshire/ely/detail.html" class="btn btn-lg btn-danger" title="view this location">ely </a>&nbsp;
+            <a href="/haunted_pub/west_and_south_west/devon/exeter/detail.html" class="btn btn-lg btn-danger" title="view this location">exeter </a>&nbsp;
+            <a href="/haunted_pub/scotland/glasgow_and_clyde_valley/glasgow/detail.html" class="btn btn-lg btn-danger" title="view this location">glasgow </a>&nbsp;
+            <a href="/haunted_pub/West_and_South_West/Gloucestershire/Gloucester/detail.html" class="btn btn-lg btn-danger" title="view this location">gloucester </a>&nbsp;
+            <a href="/haunted_pub/west_midlands/herefordshire/hereford/detail.html" class="btn btn-lg btn-danger" title="view this location">hereford </a>&nbsp;
+            <a href="/haunted_pub/Yorkshire_and_Lincolnshire/West_Yorkshire/Huddersfield/detail.html" class="btn btn-lg btn-danger" title="view this location">huddersfield </a>&nbsp;
+            <a href="/haunted_pub/Yorkshire_and_Lincolnshire/Yorkshire_and_the_Humber/Hull/detail.html" class="btn btn-lg btn-danger" title="view this location">hull </a>&nbsp;
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=inverness"   class="btn btn-lg btn-danger">inverness </a>&nbsp;*@
-            <a href="/haunted_pub/East/Suffolk/Ipswich/detail.html" class="btn btn-lg btn-danger">ipswich </a>&nbsp;
+            <a href="/haunted_pub/East/Suffolk/Ipswich/detail.html" class="btn btn-lg btn-danger" title="view this location">ipswich </a>&nbsp;
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=lancaster"  class="btn btn-lg btn-danger">lancaster </a>&nbsp;*@
-            <a href="/haunted_pub/Yorkshire_and_Lincolnshire/West_Yorkshire/Leeds/detail.html" class="btn btn-lg btn-danger">leeds </a>&nbsp;
-            <a href="/haunted_pub/east_midlands/leicestershire/Leicester/detail.html" class="btn btn-lg btn-danger">leicester </a>&nbsp;
+            <a href="/haunted_pub/Yorkshire_and_Lincolnshire/West_Yorkshire/Leeds/detail.html" class="btn btn-lg btn-danger" title="view this location">leeds </a>&nbsp;
+            <a href="/haunted_pub/east_midlands/leicestershire/Leicester/detail.html" class="btn btn-lg btn-danger" title="view this location">leicester </a>&nbsp;
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=lichfield"   class="btn btn-lg btn-danger">lichfield </a>&nbsp;*@
-            <a href="/haunted_pub/East_Midlands/Lincolnshire/Lincoln/detail.html" class="btn btn-lg btn-danger">lincoln </a>&nbsp;
+            <a href="/haunted_pub/East_Midlands/Lincolnshire/Lincoln/detail.html" class="btn btn-lg btn-danger" title="view this location">lincoln </a>&nbsp;
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=lisburn"  class="btn btn-lg btn-danger">lisburn </a>&nbsp;*@
-            <a href="/haunted_pub/North_West_England/Merseyside/Liverpool/detail.html" class="btn btn-lg btn-danger">liverpool </a>&nbsp;
-            <a href="/haunted_pub/London_and_South_East/Greater_London/London/detail.html" class="btn btn-lg btn-danger">london </a>&nbsp;
+            <a href="/haunted_pub/North_West_England/Merseyside/Liverpool/detail.html" class="btn btn-lg btn-danger" title="view this location">liverpool </a>&nbsp;
+            <a href="/haunted_pub/London_and_South_East/Greater_London/London/detail.html" class="btn btn-lg btn-danger" title="view this location">london </a>&nbsp;
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=londonderry"   class="btn btn-lg btn-danger">londonderry </a>&nbsp;*@
-            <a href="/haunted_pub/East/Bedfordshire/Luton/detail.html" class="btn btn-lg btn-danger">luton </a>&nbsp;
-            <a href="/haunted_pub/North_West_England/Greater_Manchester/Manchester/detail.html" class="btn btn-lg btn-danger">manchester </a>&nbsp;
-            <a href="/haunted_pub/North_East_England/Tees_Valley/Middlesbrough/detail.html" class="btn btn-lg btn-danger">middlesbrough </a>&nbsp;
-            <a href="/haunted_pub/London_and_South_East/Buckinghamshire/Milton_Keynes/detail.html" class="btn btn-lg btn-danger">milton keynes </a>&nbsp;
-            <a href="/haunted_pub/north_east_england/tyne_and_wear/newcastle_upon_tyne/detail.html" class="btn btn-lg btn-danger">newcastle upon tyne </a>&nbsp;
+            <a href="/haunted_pub/East/Bedfordshire/Luton/detail.html" class="btn btn-lg btn-danger" title="view this location">luton </a>&nbsp;
+            <a href="/haunted_pub/North_West_England/Greater_Manchester/Manchester/detail.html" class="btn btn-lg btn-danger" title="view this location">manchester </a>&nbsp;
+            <a href="/haunted_pub/North_East_England/Tees_Valley/Middlesbrough/detail.html" class="btn btn-lg btn-danger" title="view this location">middlesbrough </a>&nbsp;
+            <a href="/haunted_pub/London_and_South_East/Buckinghamshire/Milton_Keynes/detail.html" class="btn btn-lg btn-danger" title="view this location">milton keynes </a>&nbsp;
+            <a href="/haunted_pub/north_east_england/tyne_and_wear/newcastle_upon_tyne/detail.html" class="btn btn-lg btn-danger" title="view this location">newcastle upon tyne </a>&nbsp;
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=newport"  class="btn btn-lg btn-danger">newport </a>&nbsp;*@
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=newry"  class="btn btn-lg btn-danger">newry </a>&nbsp;*@
-            <a href="/haunted_pub/East_Midlands/Northamptonshire/Northampton/detail.html" class="btn btn-lg btn-danger">northampton </a>&nbsp;
-            <a href="/haunted_pub/East/Norfolk/Norwich/detail.html" class="btn btn-lg btn-danger">norwich </a>&nbsp;
-            <a href="/haunted_pub/East_Midlands/Nottinghamshire/nottingham/detail.html" class="btn btn-lg btn-danger">nottingham </a>&nbsp;
-            <a href="/haunted_pub/north_west_england/greater_manchester/oldham/detail.html" class="btn btn-lg btn-danger">oldham </a>&nbsp;
-            <a href="/haunted_pub/South/Oxfordshire/Oxford/detail.html" class="btn btn-lg btn-danger">oxford </a>&nbsp;
-
-            <a href="/haunted_pub/East_Midlands/Lincolnshire/Peterborough/detail.html" class="btn btn-lg btn-danger">peterborough </a>&nbsp;
+            <a href="/haunted_pub/East_Midlands/Northamptonshire/Northampton/detail.html" class="btn btn-lg btn-danger" title="view this location">northampton </a>&nbsp;
+            <a href="/haunted_pub/East/Norfolk/Norwich/detail.html" class="btn btn-lg btn-danger" title="view this location">norwich </a>&nbsp;
+            <a href="/haunted_pub/East_Midlands/Nottinghamshire/nottingham/detail.html" class="btn btn-lg btn-danger" title="view this location">nottingham </a>&nbsp;
+            <a href="/haunted_pub/north_west_england/greater_manchester/oldham/detail.html" class="btn btn-lg btn-danger" title="view this location">oldham </a>&nbsp;
+            <a href="/haunted_pub/South/Oxfordshire/Oxford/detail.html" class="btn btn-lg btn-danger" title="view this location">oxford </a>&nbsp;
+            <a href="/haunted_pub/East_Midlands/Lincolnshire/Peterborough/detail.html" class="btn btn-lg btn-danger" title="view this location">peterborough </a>&nbsp;
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=plymouth"  class="btn btn-lg btn-danger">plymouth </a>&nbsp;*@
-            <a href="/haunted_pub/West_and_South_West/Dorset/Poole/detail.html" class="btn btn-lg btn-danger">poole </a>&nbsp;
-            <a href="/haunted_pub/South/Hampshire/Portsmouth/detail.html" class="btn btn-lg btn-danger">portsmouth </a>&nbsp;
-            <a href="/haunted_pub/north_west_england/lancashire/preston/detail.html" class="btn btn-lg btn-danger">preston </a>&nbsp;
-            <a href="/haunted_pub/South/Oxfordshire/Reading/detail.html" class="btn btn-lg btn-danger">reading </a>&nbsp;
-            <a href="/haunted_pub/yorkshire_and_lincolnshire/north_yorkshire/Ripon/detail.html" class="btn btn-lg btn-danger">ripon </a>&nbsp;
-            <a href="/haunted_pub/Yorkshire_and_Lincolnshire/South_Yorkshire/Rotherham/detail.html" class="btn btn-lg btn-danger">rotherham </a>&nbsp;
+            <a href="/haunted_pub/West_and_South_West/Dorset/Poole/detail.html" class="btn btn-lg btn-danger" title="view this location">poole </a>&nbsp;
+            <a href="/haunted_pub/South/Hampshire/Portsmouth/detail.html" class="btn btn-lg btn-danger" title="view this location">portsmouth </a>&nbsp;
+            <a href="/haunted_pub/north_west_england/lancashire/preston/detail.html" class="btn btn-lg btn-danger" title="view this location">preston </a>&nbsp;
+            <a href="/haunted_pub/South/Oxfordshire/Reading/detail.html" class="btn btn-lg btn-danger" title="view this location">reading </a>&nbsp;
+            <a href="/haunted_pub/yorkshire_and_lincolnshire/north_yorkshire/Ripon/detail.html" class="btn btn-lg btn-danger" title="view this location">ripon </a>&nbsp;
+            <a href="/haunted_pub/Yorkshire_and_Lincolnshire/South_Yorkshire/Rotherham/detail.html" class="btn btn-lg btn-danger" title="view this location">rotherham </a>&nbsp;
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=salford"   class="btn btn-lg btn-danger">salford </a>&nbsp;*@
-            <a href="/haunted_pub/west_and_south_west/wiltshire/salisbury/detail.html" class="btn btn-lg btn-danger">salisbury </a>&nbsp;
-            <a href="/haunted_pub/Yorkshire_and_Lincolnshire/South_Yorkshire/Sheffield/detail.html" class="btn btn-lg btn-danger">sheffield </a>&nbsp;
-            <a href="/haunted_pub/south/berkshire/Slough/detail.html" class="btn btn-lg btn-danger">slough </a>&nbsp;
-            <a href="/haunted_pub/South/Hampshire/Southampton/detail.html" class="btn btn-lg btn-danger">southampton </a>&nbsp;
+            <a href="/haunted_pub/west_and_south_west/wiltshire/salisbury/detail.html" class="btn btn-lg btn-danger" title="view this location">salisbury </a>&nbsp;
+            <a href="/haunted_pub/Yorkshire_and_Lincolnshire/South_Yorkshire/Sheffield/detail.html" class="btn btn-lg btn-danger" title="view this location">sheffield </a>&nbsp;
+            <a href="/haunted_pub/south/berkshire/Slough/detail.html" class="btn btn-lg btn-danger" title="view this location">slough </a>&nbsp;
+            <a href="/haunted_pub/South/Hampshire/Southampton/detail.html" class="btn btn-lg btn-danger" title="view this location">southampton </a>&nbsp;
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=southend"   class="btn btn-lg btn-danger">southend </a>&nbsp;*@
-            <a href="/haunted_pub/East/Hertfordshire/St_Albans/detail.html" class="btn btn-lg btn-danger">st albans </a>&nbsp;
+            <a href="/haunted_pub/East/Hertfordshire/St_Albans/detail.html" class="btn btn-lg btn-danger" title="view this location">st albans </a>&nbsp;
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=st davids"  class="btn btn-lg btn-danger">st davids </a>&nbsp;*@
-            <a href="/haunted_pub/north_west_england/merseyside/saint_helens/detail.html" class="btn btn-lg btn-danger">st helens </a>&nbsp;
+            <a href="/haunted_pub/north_west_england/merseyside/saint_helens/detail.html" class="btn btn-lg btn-danger" title="view this location">st helens </a>&nbsp;
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=stirling"   class="btn btn-lg btn-danger">stirling </a>&nbsp;*@
-            <a href="/haunted_pub/North_West_England/Greater_Manchester/stockport/detail.html" class="btn btn-lg btn-danger">stockport </a>&nbsp;
-            <a href="/haunted_pub/west_midlands/staffordshire/stoke_on_trent/detail.html" class="btn btn-lg btn-danger">stoke </a>&nbsp;
-            <a href="/haunted_pub/north_east_england/tyne_and_wear/sunderland/detail.html" class="btn btn-lg btn-danger">sunderland </a>&nbsp;
+            <a href="/haunted_pub/North_West_England/Greater_Manchester/stockport/detail.html" class="btn btn-lg btn-danger" title="view this location">stockport </a>&nbsp;
+            <a href="/haunted_pub/west_midlands/staffordshire/stoke_on_trent/detail.html" class="btn btn-lg btn-danger" title="view this location">stoke </a>&nbsp;
+            <a href="/haunted_pub/north_east_england/tyne_and_wear/sunderland/detail.html" class="btn btn-lg btn-danger" title="view this location">sunderland </a>&nbsp;
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=sutton coldfield" class="btn btn-lg btn-danger">sutton coldfield </a>&nbsp;*@
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=swansea"  class="btn btn-lg btn-danger">swansea </a>&nbsp;*@
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=swindon" class="btn btn-lg btn-danger">swindon </a>&nbsp;*@
-            <a href="/haunted_pub/West_Midlands/Shropshire/Telford/detail.html" class="btn btn-lg btn-danger">telford </a>&nbsp;
+            <a href="/haunted_pub/West_Midlands/Shropshire/Telford/detail.html" class="btn btn-lg btn-danger" title="view this location">telford </a>&nbsp;
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=truro"   class="btn btn-lg btn-danger">truro </a>&nbsp;*@
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=wakefield"  class="btn btn-lg btn-danger">wakefield </a>&nbsp;*@
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=walsall"  class="btn btn-lg btn-danger">walsall </a>&nbsp;*@
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=watford"   class="btn btn-lg btn-danger">watford </a>&nbsp;*@
-            <a href="/haunted_pub/west_and_south_west/somerset/wells/detail.html" class="btn btn-lg btn-danger">wells </a>&nbsp;
+            <a href="/haunted_pub/west_and_south_west/somerset/wells/detail.html" class="btn btn-lg btn-danger" title="view this location">wells </a>&nbsp;
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=west bromwich"  class="btn btn-lg btn-danger">west bromwich </a>&nbsp;*@
             @*<a href="http://www.mypubguide.com/dne/app10/pages/pubs/search.aspx?city=westminster"  class="btn btn-lg btn-danger">westminster </a>&nbsp;*@
-            <a href="/haunted_pub/South/Hampshire/Winchester/detail.html" class="btn btn-lg btn-danger">winchester </a>&nbsp;
-            <a href="/haunted_pub/West_and_South_West/West_Midlands/Wolverhampton/detail.html" class="btn btn-lg btn-danger">wolverhampton </a>&nbsp;
-            <a href="/haunted_pub/West_Midlands/Worcestershire/Worcester/detail.html" class="btn btn-lg btn-danger">worcester </a>&nbsp;
-            <a href="/haunted_pub/Yorkshire_and_Lincolnshire/North_Yorkshire/York/detail.html" class="btn btn-lg btn-danger">york </a>&nbsp;
+            <a href="/haunted_pub/South/Hampshire/Winchester/detail.html" class="btn btn-lg btn-danger" title="view this location">winchester </a>&nbsp;
+            <a href="/haunted_pub/West_and_South_West/West_Midlands/Wolverhampton/detail.html" class="btn btn-lg btn-danger" title="view this location">wolverhampton </a>&nbsp;
+            <a href="/haunted_pub/West_Midlands/Worcestershire/Worcester/detail.html" class="btn btn-lg btn-danger" title="view this location">worcester </a>&nbsp;
+            <a href="/haunted_pub/Yorkshire_and_Lincolnshire/North_Yorkshire/York/detail.html" class="btn btn-lg btn-danger" title="view this location">york </a>&nbsp;
+        </p>
+        <p>
+
+            <div class="fb-like" data-href="@ViewBag.Link" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+
         </p>
     </div>
 </div>

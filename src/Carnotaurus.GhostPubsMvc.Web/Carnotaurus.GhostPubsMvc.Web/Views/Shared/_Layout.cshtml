@@ -4,8 +4,7 @@
 <head>
     <title>@ViewBag.Title | Ghost Pubs</title>
 
-    <meta name="revisit-after" content="2 days" />
-    <meta id="keywords" name="keywords" content="haunted pub, haunted pubs, @ViewBag.Title, @ViewBag.ArticleDescription, ghost pubs" />
+    <meta name="revisit-after" content="1 day" /> 
     <meta id="description" name="description" content="@ViewBag.Title, @ViewBag.MetaDescription" />
     <meta name="AUTHOR" content="Phil Carney" />
     <meta name="Content-Language" content="en-GB" />
@@ -17,6 +16,9 @@
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="canonical" href="@ViewBag.Link" />
+    <link rel="publisher" href="https://plus.google.com/112746078414329366542/" />
 
     <meta property="og:locale" content="en_GB" />
     <meta property="og:type" content="article" />
@@ -25,6 +27,7 @@
     <meta property="og:description" content="@ViewBag.MetaDescription" />
     <meta property="og:url" content="@ViewBag.Link" />
     <meta property="og:site_name" content="Ghost Pubs" />
+
     @if (ViewBag.Tag != null)
     {
         <meta property="article:tag" content="@ViewBag.Tag" />
@@ -36,6 +39,7 @@
             <meta property="article:section" content="@tag" />
         }
     }
+
     <meta property="article:published_time" content="@DateTime.Now.ToLongDateString()" />
     <meta property="article:modified_time" content="@DateTime.Now.ToLongDateString()" />
     <meta property="article:publisher" content="http://www.facebook.com/ghostpubspage" />
@@ -68,49 +72,49 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                <a class="brand" href="/">GhostPubs.com</a>
+                <a class="brand" href="/" title="home">GhostPubs.com</a>
 
                 <div class="nav-collapse collapse">
                     <ul class="nav">
                         <li>
-                            <a href="/">Home</a>
+                            <a href="/" title="home">Home</a>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ghost stories <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="ghosties!">Ghost stories <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="/haunted_pub/detail.html">Stories by area</a></li>
-                                <li><a href="/haunted_pub/submissions/detail.html">Submit a story</a></li>
+                                <li><a href="/haunted_pub/detail.html" title="stories">Stories by area</a></li>
+                                <li><a href="/haunted_pub/submissions/detail.html" title="submit">Submit a story</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">News <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="news">News <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="http://blog.ghostpubs.com/" target="blog">Recent news</a>
+                                    <a href="http://blog.ghostpubs.com/" target="blog" title="blog">Recent news</a>
                                 </li>
                                 <li>
-                                    <a href="/haunted_pub/promotions/detail.html">Promotions</a>
+                                    <a href="/haunted_pub/promotions/detail.html" title="promotions">Promotions</a>
                                 </li>
                                 <li>
-                                    <a href="/haunted_pub/competitions/detail.html">Competitions</a>
+                                    <a href="/haunted_pub/competitions/detail.html" title="competitions">Competitions</a>
                                 </li>
                             </ul>
                         </li>
 
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Partners <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="partners">Partners <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="/haunted_pub/partners/detail.html" title="Partners?">Partners</a></li>
                                 <li>
-                                    <a href="/haunted_pub/partnerships/detail.html">Partner with us</a>
+                                    <a href="/haunted_pub/partnerships/detail.html" title="partner with us">Partner with us</a>
                                 </li>
                                 <li>
-                                    <a href="/haunted_pub/featuredpartner/detail.html">Featured partners</a>
+                                    <a href="/haunted_pub/featuredpartner/detail.html" title="featured partners">Featured partners</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Search <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="search">Search <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li style="width: 300px">
                                     <div class="gcse-container">
@@ -120,18 +124,18 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">About us <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="about">About us <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="/haunted_pub/contributors/detail.html" title="Credits and contributions ...">Contributors</a>
+                                    <a href="/haunted_pub/contributors/detail.html" title="credits and contributions ...">Contributors</a>
                                 </li>
                                 <li>
-                                    <a href="/haunted_pub/about/detail.html">About us</a>
+                                    <a href="/haunted_pub/about/detail.html" title="about us">About us</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a href="/haunted_pub/sitemap/detail.html">Town rankings</a>
+                            <a href="/haunted_pub/sitemap/detail.html" title="leaderboard">Most haunted town rankings</a>
                         </li>
                     </ul>
                 </div>
@@ -150,21 +154,43 @@
         </div>
         <p>&nbsp;</p>
         <ul class="masthead-links">
-            <li><a class="masthead-links-override" rel="nofollow" href="http://www.facebook.com/groups/ghostpubs"><i class="icon-facebook masthead-links-override"></i>fan page</a> </li>
-            <li><a class="masthead-links-override" rel="nofollow" href="https://twitter.com/ghost_pubs"><i class="icon-twitter-sign masthead-links-override"></i>twitter</a></li>
-            <li><a class="masthead-links-override" rel="nofollow" href="http://www.linkedin.com/groups/Ghost-Pubs-4935170"><i class="icon-linkedin-sign masthead-links-override"></i>linkedin</a></li>
-            <li><a class="masthead-links-override" rel="nofollow" href="http://pinterest.com/ghostpubs/ghostpubscom"><i class="icon-pinterest-sign masthead-links-override"></i>our board</a></li>
-            <li><a class="masthead-links-override" rel="nofollow" href="http://www.facebook.com/ghostpubspage"><i class="icon-facebook-sign masthead-links-override"></i>page</a></li>
+            <li><a class="masthead-links-override" title="fb group page" rel="nofollow" href="http://www.facebook.com/groups/ghostpubs"><i class="icon-facebook masthead-links-override"></i>fan page</a> </li>
+            <li><a class="masthead-links-override" title="twitter" rel="nofollow" href="https://twitter.com/ghost_pubs"><i class="icon-twitter-sign masthead-links-override"></i>twitter</a></li>
+            <li><a class="masthead-links-override" title="linkedin" rel="nofollow" href="http://www.linkedin.com/groups/Ghost-Pubs-4935170"><i class="icon-linkedin-sign masthead-links-override"></i>linkedin</a></li>
+            <li><a class="masthead-links-override" title="pinterest" rel="nofollow" href="http://pinterest.com/ghostpubs/ghostpubscom"><i class="icon-pinterest-sign masthead-links-override"></i>our board</a></li>
+            <li><a class="masthead-links-override" title="fb page" rel="nofollow" href="http://www.facebook.com/ghostpubspage"><i class="icon-facebook-sign masthead-links-override"></i>page</a></li>
         </ul>
         <p>&nbsp;</p>
         <p>
-            <a class="masthead-links-override" rel="nofollow" href="http://www.facebook.com/groups/ghostpubs">suggest your pub</a>&nbsp;|&nbsp;
-            <a class="masthead-links-override" href="/haunted_pub/contactus/detail.html">contact us</a>&nbsp;|&nbsp;
-            <a class="masthead-links-override" href="/haunted_pub/accessibility/detail.html">accessibility</a>&nbsp;|&nbsp;
-            <a class="masthead-links-override" href="/haunted_pub/terms/detail.html">terms and conditions</a>&nbsp;|&nbsp;
-            <a class="masthead-links-override" href="/haunted_pub/privacy/detail.html">privacy</a>&nbsp;|&nbsp;
-            <a class="masthead-links-override" rel="nofollow" href="http://www.facebook.com/groups/ghostpubs">report this page</a>
+            <a class="masthead-links-override" title="suggest" rel="nofollow" href="http://www.facebook.com/groups/ghostpubs">suggest your pub</a>&nbsp;|&nbsp;
+            <a class="masthead-links-override" title="contact" href="/haunted_pub/contactus/detail.html">contact us</a>&nbsp;|&nbsp;
+            <a class="masthead-links-override" title="accessibility" href="/haunted_pub/accessibility/detail.html">accessibility</a>&nbsp;|&nbsp;
+            <a class="masthead-links-override" title="terms" href="/haunted_pub/terms/detail.html">terms and conditions</a>&nbsp;|&nbsp;
+            <a class="masthead-links-override" title="privacy" href="/haunted_pub/privacy/detail.html">privacy</a>&nbsp;|&nbsp;
+            <a class="masthead-links-override" title="report" rel="nofollow" href="http://www.facebook.com/groups/ghostpubs">report this page</a>
         </p>
+
+        <div class="bs-docs-social">
+            <div class="container">
+                <ul class="bs-docs-social-buttons">
+
+                    <li class="follow-btn">
+                        <a rel="nofollow" title="tweet" href="https://twitter.com/ghost_pubs" class="twitter-follow-button" data-link-color="#0069D6" data-show-count="true">Follow ghost_pubs</a>
+                    </li>
+                    <li class="follow-btn">
+                        <span class="label label-info">
+                            <!-- Lockerz Share BEGIN -->
+                            <div class="a2a_kit a2a_default_style">
+
+                                <a class="a2a_dd" rel="nofollow" title="share" href="http://www.addtoany.com/share_save"><i class="icon-share-alt"></i>share if you dare?</a>
+                            </div>
+                            <script type="text/javascript" src="http://static.addtoany.com/menu/page.js"></script>
+                            <!-- Lockerz Share END -->
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
     </footer>
 
