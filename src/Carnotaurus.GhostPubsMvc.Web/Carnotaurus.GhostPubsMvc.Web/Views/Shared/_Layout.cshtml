@@ -4,22 +4,19 @@
 <head>
     <title>@ViewBag.Title | Ghost Pubs</title>
 
-    <meta name="revisit-after" content="1 day" /> 
+    <meta name="revisit-after" content="2 days" />
     <meta id="description" name="description" content="@ViewBag.Title, @ViewBag.MetaDescription" />
     <meta name="AUTHOR" content="Phil Carney" />
     <meta name="Content-Language" content="en-GB" />
     <meta name="COPYRIGHT" content="Ghost Pubs 2014" />
     <meta name="ROBOTS" content="INDEX,FOLLOW" />
 
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <meta property="fb:admins" content="100001874427547" />
     <meta property="fb:app_id" content="303827419746289" />
-
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link rel="canonical" href="@ViewBag.Link" />
-    <link rel="publisher" href="https://plus.google.com/112746078414329366542/" />
-
     <meta property="og:locale" content="en_GB" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="@ViewBag.Title | GhostPubs.com" />
@@ -46,6 +43,9 @@
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="canonical" href="@ViewBag.Link" />
+    <link rel="publisher" href="https://plus.google.com/112746078414329366542/" />
 
     <!-- styles -->
     <link href="@Url.Content("~/content/bootstrap/231/css/bootstrap.css")" rel="stylesheet">

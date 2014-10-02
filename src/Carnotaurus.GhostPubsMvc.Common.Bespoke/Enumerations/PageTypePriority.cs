@@ -4,7 +4,8 @@
     {
         public const string Home = "1.0";
         public const string Sitemap = "1.0";
-        public const string Faq = "1.0";
+        public const string FaqBrewery = "1.0";
+        public const string FaqPub = "1.0";
 
         public const string Pub = "0.9";
         public const string Town = "0.8";

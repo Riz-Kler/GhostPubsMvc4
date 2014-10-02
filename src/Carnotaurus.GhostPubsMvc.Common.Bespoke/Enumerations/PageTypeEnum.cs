@@ -17,11 +17,14 @@
         Contributors,
         About,
         Home,
-        Faq,
         Newsletter,
         Accessibility,
         Terms,
         ContactUs,
-        Privacy
+        Privacy,
+        FaqBrewery,
+        FaqPub,
+        FaqParanormalServiceConsumers,
+        FaqParanormalServiceProviders,
     }
 }

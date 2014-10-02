@@ -92,7 +92,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 title: "Ghost Pubs"
             );
 
-            CreatePageTypeFile(PageTypeEnum.Faq, "FAQs about Ghost Pubs", PageTypePriority.Faq);
+            CreatePageTypeFile(PageTypeEnum.FaqBrewery, "FAQs that Breweries ask about Ghost Pubs", PageTypePriority.FaqBrewery);
+
+            CreatePageTypeFile(PageTypeEnum.FaqPub, "FAQs that Publicans ask about Ghost Pubs", PageTypePriority.FaqPub);
 
             CreatePageTypeFile(PageTypeEnum.Newsletter, "Sign up for our newsletter here for goodies!", PageTypePriority.Newsletter);
 
@@ -101,7 +103,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             CreatePageTypeFile(PageTypeEnum.Terms, "Terms and conditions", PageTypePriority.Terms);
 
             CreatePageTypeFile(PageTypeEnum.ContactUs, "Contact Us", PageTypePriority.ContactUs);
- 
+
             CreatePageTypeFile(PageTypeEnum.Privacy, "Privacy policy", PageTypePriority.Privacy);
 
             GenerateHtmlPages();
