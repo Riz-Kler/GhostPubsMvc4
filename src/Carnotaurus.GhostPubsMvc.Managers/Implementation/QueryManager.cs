@@ -100,45 +100,54 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .ToList()
                 .GroupBy(x => x.UncRelTownPath)
                 .Select(x => new KeyValuePair<String, Int32>(x.Key, x.Count()))
-                .OrderByDescending(x => x.Value).ToList();
+                .OrderByDescending(x => x.Value)
+                .ToList();
 
             var index = 1;
 
-            var results = queryable.Select(x => 
+            var results = queryable.Select(x =>
                 CreatePageLinkModel(currentRoot, x, ref index)
             )
             .ToList();
 
+            // todo - dpc - find out what this code was supposed to do
             foreach (var result in results)
             {
                 var r = data.FirstOrDefault(q => q.Id == result.Id);
-            
+
             }
 
             // Key and Group
             return results;
         }
 
-        private static PageLinkModel CreatePageLinkModel(string currentRoot, KeyValuePair<string, int> x, ref int index)
+        private static PageLinkModel CreatePageLinkModel(string currentRoot, KeyValuePair<string, int> pathKeyValuePair, ref int index)
         {
-            return new PageLinkModel(currentRoot)
+            if (pathKeyValuePair.Key.IsNullOrEmpty())
             {
-                Text = string.Format("{0}. {1}", index++, x.Key.SplitOnSlash().JoinWithCommaReserve()),
-                Title =
-                    string.Format("{0} ({1} pubs in this area)", x.Key.SplitOnSlash().JoinWithCommaReserve(), x.Value),
-                Unc = string.Format("{0}\\{1}", currentRoot, x.Key),
-                Id = index - 1,
-                // todo - come back - card #185 - need to attach the orgs 
-                // Links = data. ToList().Where(q => q.UncRelTownPath == x.Key),
-                //.Select(r => new PageLinkModel(currentRoot)
-                //    {
-                //        Id = r.Id,
-                //        Text = r.TradingName,
-                //        Title = r.TradingName,
-                //        Unc = r.ExtractLink(currentRoot).Unc,
-                //        Links = null
-                //    }).ToList() 
-            };
+                throw new Exception("The key is null or empty; this is usually because the CountryID or AddressTypeID is null or [HauntedOrgs_Fix] has not been run.");
+            }
+
+            var result = new PageLinkModel(currentRoot)
+               {
+                   Text = string.Format("{0}. {1}", index++, pathKeyValuePair.Key.SplitOnSlash().JoinWithCommaReserve()),
+                   Title =
+                       string.Format("{0} ({1} pubs in this area)", pathKeyValuePair.Key.SplitOnSlash().JoinWithCommaReserve(), pathKeyValuePair.Value),
+                   Unc = string.Format("{0}\\{1}", currentRoot, pathKeyValuePair.Key),
+                   Id = index - 1,
+                   // todo - come back - card #185 - need to attach the orgs 
+                   // Links = data. ToList().Where(q => q.UncRelTownPath == x.Key),
+                   //.Select(r => new PageLinkModel(currentRoot)
+                   //    {
+                   //        Id = r.Id,
+                   //        Text = r.TradingName,
+                   //        Title = r.TradingName,
+                   //        Unc = r.ExtractLink(currentRoot).Unc,
+                   //        Links = null
+                   //    }).ToList() 
+               };
+
+            return result;
         }
     }
 }
