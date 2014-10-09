@@ -308,9 +308,14 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                     // county file needs knowledge of its addresses for Town
                     if (currentCounty == null) continue;
 
-                    var orgsInCounty =
-                        currentCounty.Orgs.Where(x => x.Town != null && x.HauntedStatus == 1).ToList();
 
+                    // write them out backwards (so alphabetical from previous) and keep towns together (so need pub has a better chance to be in the same town) 
+                    var orgsInCounty =
+                        currentCounty.Orgs.Where(x => x.Town != null && x.HauntedStatus == 1) 
+                        .OrderByDescending(org => org.Town)
+                        .ThenByDescending(org => org.TradingName)
+                        .ToList();
+ 
                     if (currentRegionPath == null) continue;
 
                     var currentCountyPath = BuildPath(currentRegionPath, currentCounty.Name);
@@ -325,34 +330,41 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                         currentRegionPath);
 
                     var pubTownLinks = new List<KeyValuePair<String, PageLinkModel>>();
+                     
+                    CreatePubsFiles(orgsInCounty, currentCountyPath, pubTownLinks);
 
-                    // write them out backwards (so alphabetical from previous) and keep towns together (so need pub has a better chance to be in the same town)
-                    orgsInCounty =
-                        orgsInCounty.OrderByDescending(org => org.Town).ThenByDescending(org => org.TradingName).ToList();
-
-                    foreach (var currentOrg in orgsInCounty)
-                    {
-                        var currentTownPath = BuildPath(currentCountyPath, currentOrg.Town);
-
-                        if (currentTownPath == null) continue;
-
-                        CreateFolders(currentTownPath);
-
-                        //town file needs knowledge of its pubs, e.g., trading name
-                        // var pubs = currentAddress .Entities.OrderBy(x => x.TradingName).ToList();
-                        CreatePubFile(pubTownLinks, currentTownPath, currentOrg);
-                    }
-
-                    // create the town pages
-                    foreach (var town in townsInCounty)
-                    {
-                        CreateTownFile(currentCountyPath, pubTownLinks, town, currentCounty, currentRegion,
-                            currentRegionPath);
-                    }
+                    CreateTownFiles(townsInCounty, currentCountyPath, pubTownLinks, currentCounty, currentRegion, currentRegionPath);
                 }
             }
         }
-         
+
+        private void CreatePubsFiles(IEnumerable<Org> orgsInCounty, string currentCountyPath, List<KeyValuePair<string, PageLinkModel>> pubTownLinks)
+        {
+            foreach (var currentOrg in orgsInCounty)
+            {
+                var currentTownPath = BuildPath(currentCountyPath, currentOrg.Town);
+
+                if (currentTownPath == null) continue;
+
+                CreateFolders(currentTownPath);
+
+                //town file needs knowledge of its pubs, e.g., trading name
+                // var pubs = currentAddress .Entities.OrderBy(x => x.TradingName).ToList();
+                CreatePubFile(pubTownLinks, currentTownPath, currentOrg);
+            }
+        }
+
+        private void CreateTownFiles(List<string> townsInCounty, string currentCountyPath, List<KeyValuePair<string, PageLinkModel>> pubTownLinks, County currentCounty,
+            Region currentRegion, string currentRegionPath)
+        {
+// create the town pages
+            foreach (var town in townsInCounty)
+            {
+                CreateTownFile(currentCountyPath, pubTownLinks, town, currentCounty, currentRegion,
+                    currentRegionPath);
+            }
+        }
+
         private void CreateCountyFile(County currentCounty, string currentCountyPath, IEnumerable<string> towns,
             Region currentRegion, Int32 count, string currentRegionPath)
         {
