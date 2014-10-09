@@ -130,11 +130,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             { 
                 if (output == String.Empty )
                 {
-                    output = b.ToLower().Underscore();
+                    output = b.ToLower().Underscore().Hyphenate();
                 }
                 else
                 {
-                    output = string.Format("{0}\\{1}", output, b.ToLower().Underscore());
+                    output = string.Format("{0}\\{1}", output, b.ToLower().Underscore().Hyphenate());
                 }
             }
 

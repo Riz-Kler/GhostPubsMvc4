@@ -5,7 +5,6 @@ using System.Xml.Linq;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Common.Helpers;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
-using Carnotaurus.GhostPubsMvc.Data.Models;
 using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
 using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
@@ -51,13 +50,13 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
         public IEnumerable<Org> GetMissingInfoOrgsToUpdate()
         {
-            var results = _reader.Items<Org>().Where(f =>
-                f != null
-                && f.Address != null
-                && f.Postcode != null
-                && f.AddressTypeId == 1
-                && f.CountyId == null
-                && f.Tried == null
+            var results = _reader.Items<Org>().Where(org =>
+                org != null
+                && org.Address != null
+                && org.Postcode != null
+                && org.AddressTypeId == 1
+                && org.CountyId == null
+                && org.Tried == null
                 )
                 .ToList();
 
@@ -83,22 +82,24 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         {
             var regions = _reader.Items<Region>();
 
-            var region = regions.First(x => x.Id == regionId);
+            var region = regions.First(r => r.Id == regionId);
 
             var results =
-                region.Counties.Where(x => x.Orgs.Any(y => y.HauntedStatus == 1));
+                region.Counties.Where(county => county.Orgs.Any(org => org.HauntedStatus == 1));
 
             return results;
         }
 
         public List<PageLinkModel> GetSitemapData(string currentRoot)
         {
+            // todo - do redirect sitemap and generation too?
+
             var data = _reader.Items<Org>();
 
             var queryable = data
-                .Where(x => x.HauntedStatus == 1)
+                .Where(org => org.HauntedStatus == 1)
                 .ToList()
-                .GroupBy(x => x.UncRelTownPath)
+                .GroupBy(org => org.UncRelTownPath)
                 .Select(x => new KeyValuePair<String, Int32>(x.Key, x.Count()))
                 .OrderByDescending(x => x.Value)
                 .ToList();
@@ -107,45 +108,47 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             var results = queryable.Select(x =>
                 CreatePageLinkModel(currentRoot, x, ref index)
-            )
-            .ToList();
+                )
+                .ToList();
 
             // todo - dpc - find out what this code was supposed to do
             foreach (var result in results)
             {
                 var r = data.FirstOrDefault(q => q.Id == result.Id);
-
             }
 
             // Key and Group
             return results;
         }
 
-        private static PageLinkModel CreatePageLinkModel(string currentRoot, KeyValuePair<string, int> pathKeyValuePair, ref int index)
+        private static PageLinkModel CreatePageLinkModel(string currentRoot, KeyValuePair<string, int> pathKeyValuePair,
+            ref int index)
         {
             if (pathKeyValuePair.Key.IsNullOrEmpty())
             {
-                throw new Exception("The key is null or empty; this is usually because the CountryID or AddressTypeID is null or [HauntedOrgs_Fix] has not been run.");
+                throw new Exception(
+                    "The key is null or empty; this is usually because the CountryID or AddressTypeID is null or [HauntedOrgs_Fix] has not been run.");
             }
 
             var result = new PageLinkModel(currentRoot)
-               {
-                   Text = string.Format("{0}. {1}", index++, pathKeyValuePair.Key.SplitOnSlash().JoinWithCommaReserve()),
-                   Title =
-                       string.Format("{0} ({1} pubs in this area)", pathKeyValuePair.Key.SplitOnSlash().JoinWithCommaReserve(), pathKeyValuePair.Value),
-                   Unc = string.Format("{0}\\{1}", currentRoot, pathKeyValuePair.Key),
-                   Id = index - 1,
-                   // todo - come back - card #185 - need to attach the orgs 
-                   // Links = data. ToList().Where(q => q.UncRelTownPath == x.Key),
-                   //.Select(r => new PageLinkModel(currentRoot)
-                   //    {
-                   //        Id = r.Id,
-                   //        Text = r.TradingName,
-                   //        Title = r.TradingName,
-                   //        Unc = r.ExtractLink(currentRoot).Unc,
-                   //        Links = null
-                   //    }).ToList() 
-               };
+            {
+                Text = string.Format("{0}. {1}", index++, pathKeyValuePair.Key.SplitOnSlash().JoinWithCommaReserve()),
+                Title =
+                    string.Format("{0} ({1} pubs in this area)",
+                        pathKeyValuePair.Key.SplitOnSlash().JoinWithCommaReserve(), pathKeyValuePair.Value),
+                Unc = string.Format("{0}\\{1}", currentRoot, pathKeyValuePair.Key),
+                Id = index - 1,
+                // todo - come back - card #185 - need to attach the orgs 
+                // Links = data. ToList().Where(q => q.UncRelTownPath == x.Key),
+                //.Select(r => new PageLinkModel(currentRoot)
+                //    {
+                //        Id = r.Id,
+                //        Text = r.TradingName,
+                //        Title = r.TradingName,
+                //        Unc = r.ExtractLink(currentRoot).Unc,
+                //        Links = null
+                //    }).ToList() 
+            };
 
             return result;
         }
