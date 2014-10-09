@@ -58,12 +58,15 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             _currentRoot = String.Format(@"C:\Carnotaurus\{0}\haunted_pub", Guid.NewGuid()).ToLower().Underscore();
 
-            Directory.CreateDirectory(_currentRoot);
+            if (_currentRoot != null)
+            {
+                Directory.CreateDirectory(_currentRoot);
 
-            DeleteDirectory(_currentRoot);
+                DeleteDirectory(_currentRoot);
 
-            Directory.CreateDirectory(_currentRoot);
-
+                Directory.CreateDirectory(_currentRoot);
+            }
+             
             var data = GetLeaderboardData();
 
             CreatePageTypeFile(PageTypeEnum.Sitemap, "Sitemap: Pub leaderboard of most haunted areas in UK",
