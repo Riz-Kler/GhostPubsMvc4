@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = Model.JumboTitle;
     ViewBag.MetaDescription = Model.MetaDescription; ViewBag.ArticleDescription = Model.ArticleDescription;
-    
+
 }
 
 <!-- Subhead
@@ -40,16 +40,34 @@
 
                 <div class="btn-group btn-group-vertical">
 
-
                     <div class="fb-like" data-href="@ViewBag.Link" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 
-                    @foreach (var link in Model.PageLinks)
-                    {
-                        <a class="btn btn-large btn-primary pagelink" title='@link.Title' href='@link.Url'>@link.Text</a>
-                    }
+                    <p>&nbsp;</p>
+
+                    <div class="accordion" id="accordion2">
+                        @foreach (var link in Model.PageLinks)
+                        {
+                            <div class="accordion-group">
+
+                                <div class="accordion-heading">
+
+                                    <a class="accordion-toggle collapse" data-toggle="collapse" data-parent="#accordion2" title='@link.Title' href='#@link.ControlId'>@link.Text</a>
+
+                                </div>
+                                <div id="@link.ControlId" class="accordion-body collapse">
+                                    <div class="accordion-inner">
+                                        @foreach (var page in link.Links)
+                                        {
+                                            <a class="btn btn-small btn-info pagelink" title='@page.Title' href='@page.Url'>@page.Text</a>
+                                        }
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
 using Humanizer;
@@ -46,6 +47,13 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public String Text { get; set; }
 
         public Int32 Id { get; set; }
+ 
+        public string ControlId {
+            get
+            {
+                return string.Concat("collapse", Id.ToString(CultureInfo.InvariantCulture));
+            }
+        }
 
         public List<PageLinkModel> Links { get; set; }
     }
