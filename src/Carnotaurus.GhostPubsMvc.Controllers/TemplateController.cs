@@ -196,12 +196,6 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void GenerateWebmasterToolsXmlSitemap()
         {
-            //</urlset> 
-
-            //var model = PrepareModel("Generated pages", "generate");
-            //this.PrepareView(model);
-
-            // Generate Seo Sitemap
             // generate the Google webmaster tools xml url sitemap
             var sb = new StringBuilder();
 
@@ -212,9 +206,6 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             if (_historySitemap != null)
             {
-                // todo - dpc - come back
-                // _historySitemap = _historySitemap.OrderByDescending(model => model.Priority).ToList();
-
                 foreach (var item in _historySitemap)
                 {
                     sb.AppendLine(item);
@@ -381,8 +372,6 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             foreach (var currentCounty in countiesInRegion)
             {
-                // county file needs knowledge of its addresses for Town
-                // todo - dies on east sussex
                 if (currentCounty == null) continue;
 
                 if (currentRegionPath == null) continue;
@@ -726,7 +715,6 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             {
                 _historySitemap.Add(model.SitemapItem);
 
-                // todo - it still dies around 1500
                 _history.Add(model);
 
                 if (_history.Count > 600)

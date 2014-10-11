@@ -92,9 +92,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
 
         public List<PageLinkModel> GetSitemapData(string currentRoot)
-        {
-            // todo - do redirect sitemap and generation too?
-
+        { 
             var data = _reader.Items<Org>();
 
             var queryable = data
@@ -104,26 +102,24 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .Select(x => new KeyValuePair<String, Int32>(x.Key, x.Count()))
                 .ToList();
 
-            var q = queryable.RankByDescending(i => i.Value,
+            var ranked = queryable.RankByDescending(i => i.Value,
                (i, r) => new { Rank = r, Item = i })
                .ToList();
 
-            var s = q.ToList();
-
             var index = 1;
 
-            var results = queryable.Select(pair =>
-                CreatePageLinkModel(currentRoot, pair, ref index)
+            var results = ranked.Select(pair =>
+                CreatePageLinkModel(currentRoot, pair.Item, ref index, pair.Rank)
                 )
                 .ToList();
-             
+
             // Key and Group
             return results;
         }
 
 
         private PageLinkModel CreatePageLinkModel(string currentRoot, KeyValuePair<string, int> pathKeyValuePair,
-            ref int index)
+            ref int index, int rank)
         {
             if (pathKeyValuePair.Key.IsNullOrEmpty())
             {
@@ -146,13 +142,12 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             var result = new PageLinkModel(currentRoot)
             {
-                Text = string.Format("{0}. {1}", index++, townLineage.FriendlyDescription),
+                Text = string.Format("{0}. {1}", rank, townLineage.FriendlyDescription),
                 Title =
                     string.Format("{0} ({1} pubs in this area)",
                         townLineage.FriendlyDescription, pathKeyValuePair.Value),
                 Unc = string.Format("{0}\\{1}", currentRoot, pathKeyValuePair.Key),
                 Id = index - 1,
-                // todo - come back - card #185 - need to attach the orgs 
                 Links = queryable
             };
 
