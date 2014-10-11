@@ -108,14 +108,14 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             GenerateLeaderboard();
 
-            //GenerateSimpleHtmlPages();
+            GenerateSimpleHtmlPages();
 
-            //GenerateGeographicHtmlPages();
+            GenerateGeographicHtmlPages();
 
-            //if (!_isDummy)
-            //{
-            //    GenerateWebmasterToolsXmlSitemap();
-            //}
+            if (!_isDummy)
+            {
+                GenerateWebmasterToolsXmlSitemap();
+            }
         }
 
         private void GenerateSimpleHtmlPages()
