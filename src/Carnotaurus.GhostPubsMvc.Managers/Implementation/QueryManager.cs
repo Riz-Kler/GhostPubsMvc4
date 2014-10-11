@@ -90,6 +90,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             return results;
         }
 
+
         public List<PageLinkModel> GetSitemapData(string currentRoot)
         {
             // todo - do redirect sitemap and generation too?
@@ -101,8 +102,13 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .ToList()
                 .GroupBy(org => org.UncRelTownPath)
                 .Select(x => new KeyValuePair<String, Int32>(x.Key, x.Count()))
-                .OrderByDescending(x => x.Value)
                 .ToList();
+
+            var q = queryable.RankByDescending(i => i.Value,
+               (i, r) => new { Rank = r, Item = i })
+               .ToList();
+
+            var s = q.ToList();
 
             var index = 1;
 
