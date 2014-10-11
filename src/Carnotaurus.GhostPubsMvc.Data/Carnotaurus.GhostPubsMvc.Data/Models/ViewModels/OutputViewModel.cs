@@ -5,6 +5,7 @@ using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
+    [Serializable]
     public class OutputViewModel : IOutputViewModel
     {
         private readonly String _currentRoot = String.Empty;

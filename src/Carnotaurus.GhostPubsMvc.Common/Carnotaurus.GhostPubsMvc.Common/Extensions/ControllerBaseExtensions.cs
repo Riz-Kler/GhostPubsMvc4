@@ -32,9 +32,6 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
         public static string GetViewTemplate(this ControllerBase controller, string viewName = null)
         {
-            // http://stackoverflow.com/questions/10128684/asp-net-mvc3-physical-location-of-view-from-controller/10129852#10129852
-            // string viewPath = @"C:\test\GhostPubsMvc4\Carnotaurus.GhostPubsMvc.Web\Carnotaurus.GhostPubsMvc.Web\Views\Home\about.cshtml"; //"Hello @Model.Name! Welcome to Razor!";
-
             var viewPath = GetPhysicalViewPath(controller, viewName);
 
             var template = File.ReadAllText(viewPath);

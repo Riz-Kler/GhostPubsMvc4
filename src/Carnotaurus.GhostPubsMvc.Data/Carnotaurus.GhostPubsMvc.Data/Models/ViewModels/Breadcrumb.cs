@@ -1,5 +1,8 @@
-﻿namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
+﻿using System;
+
+namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
+    [Serializable]
     public class Breadcrumb
     {
         public PageLinkModel Region { get; set; }

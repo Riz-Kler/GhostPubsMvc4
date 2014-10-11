@@ -6,6 +6,7 @@ using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
+        [Serializable]
     public class PageLinkModel
     {
         private readonly String _currentRoot = String.Empty;
