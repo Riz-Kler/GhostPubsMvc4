@@ -11,6 +11,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
     {
         private readonly String _currentRoot = String.Empty;
 
+        public PageLinkModel()
+        {
+            
+        }
+
         public PageLinkModel(String currentRoot)
         {
             _currentRoot = currentRoot;
@@ -30,10 +35,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     return url.Underscore().Hyphenate().ToLower();
                 }
 
-                return String.Empty;
+                return fullFilePath.Replace("\\", "/").Underscore().Hyphenate().ToLower();  
             }
         }
-
+  
         public String Unc { get; set; }
 
         public String Title { get; set; }

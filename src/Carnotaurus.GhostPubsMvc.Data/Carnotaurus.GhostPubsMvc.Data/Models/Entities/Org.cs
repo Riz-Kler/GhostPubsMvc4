@@ -127,8 +127,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             var output = String.Empty;
 
             foreach (var b in builder)
-            { 
-                if (output == String.Empty )
+            {
+                if (output == String.Empty)
                 {
                     output = b.ToLower().Underscore().Hyphenate();
                 }
@@ -149,7 +149,24 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 Text = TradingName,
                 Title = string.Format("{0}, {1}", TradingName, Postcode),
                 Unc = Path,
-               
+
+            };
+
+            return info;
+        }
+
+        public PageLinkModel ExtractFullLink()
+        {
+
+            var result = string.Format(@"http://www.ghostpubs.com/haunted-pub/{0}/{1}/{2}/{3}/{4}", County.Region.Name, County.Name, Town, Id, TradingName);
+
+            var info = new PageLinkModel()
+            {
+                Id = Id,
+                Text = TradingName,
+                Title = string.Format("{0}, {1}", TradingName, Postcode),
+                Unc = result
+
             };
 
             return info;

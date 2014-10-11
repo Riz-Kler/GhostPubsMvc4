@@ -106,22 +106,17 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             var index = 1;
 
-            var results = queryable.Select(x =>
-                CreatePageLinkModel(currentRoot, x, ref index)
+            var results = queryable.Select(pair =>
+                CreatePageLinkModel(currentRoot, pair, ref index)
                 )
                 .ToList();
-
-            // todo - dpc - find out what this code was supposed to do
-            foreach (var result in results)
-            {
-                var r = data.FirstOrDefault(q => q.Id == result.Id);
-            }
-
+             
             // Key and Group
             return results;
         }
 
-        private static PageLinkModel CreatePageLinkModel(string currentRoot, KeyValuePair<string, int> pathKeyValuePair,
+
+        private PageLinkModel CreatePageLinkModel(string currentRoot, KeyValuePair<string, int> pathKeyValuePair,
             ref int index)
         {
             if (pathKeyValuePair.Key.IsNullOrEmpty())
@@ -130,24 +125,29 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                     "The key is null or empty; this is usually because the CountryID or AddressTypeID is null or [HauntedOrgs_Fix] has not been run.");
             }
 
+            var townLineage = new TownModel(pathKeyValuePair.Key);
+
+            var data = _reader.Items<Org>();
+
+            var queryable = data
+                .Where(org => org.HauntedStatus == 1
+                              && org.County.Region.Name == townLineage.Region
+                              && org.County.Name == townLineage.County
+                              && org.Town == townLineage.Town)
+                .ToList()
+                .Select(x => x.ExtractFullLink())
+                .ToList();
+
             var result = new PageLinkModel(currentRoot)
             {
-                Text = string.Format("{0}. {1}", index++, pathKeyValuePair.Key.SplitOnSlash().JoinWithCommaReserve()),
+                Text = string.Format("{0}. {1}", index++, townLineage.FriendlyDescription),
                 Title =
                     string.Format("{0} ({1} pubs in this area)",
-                        pathKeyValuePair.Key.SplitOnSlash().JoinWithCommaReserve(), pathKeyValuePair.Value),
+                        townLineage.FriendlyDescription, pathKeyValuePair.Value),
                 Unc = string.Format("{0}\\{1}", currentRoot, pathKeyValuePair.Key),
                 Id = index - 1,
                 // todo - come back - card #185 - need to attach the orgs 
-                // Links = data. ToList().Where(q => q.UncRelTownPath == x.Key),
-                //.Select(r => new PageLinkModel(currentRoot)
-                //    {
-                //        Id = r.Id,
-                //        Text = r.TradingName,
-                //        Title = r.TradingName,
-                //        Unc = r.ExtractLink(currentRoot).Unc,
-                //        Links = null
-                //    }).ToList() 
+                Links = queryable
             };
 
             return result;

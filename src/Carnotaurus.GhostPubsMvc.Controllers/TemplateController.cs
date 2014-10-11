@@ -61,7 +61,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         public ActionResult Generate()
         {
             _generationId = Guid.NewGuid();
-             
+
             GenerateContent1();
 
             //var task = new Task(GenerateContent1);
@@ -102,21 +102,24 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 EnsureFolders();
             }
 
-            List<PageLinkModel> data = null;
-
             _history = new List<OutputViewModel>();
 
             _historySitemap = new List<string>();
 
+            GenerateLeaderboard();
+
+            GenerateSimpleHtmlPages();
+
+            GenerateGeographicHtmlPages();
+
             if (!_isDummy)
             {
-                UpdateOrganisations();
-                data = GetLeaderboardData();
+                GenerateWebmasterToolsXmlSitemap();
             }
+        }
 
-            CreatePageTypeFile(PageTypeEnum.Sitemap, "Sitemap: Pub leaderboard of most haunted areas in UK",
-                PageTypePriority.Sitemap, data);
-
+        private void GenerateSimpleHtmlPages()
+        {
             CreatePageTypeFile(PageTypeEnum.Submissions, "Call for submissions", PageTypePriority.Submissions);
 
             CreatePageTypeFile(PageTypeEnum.Promotions, "Who is promoting us this month?", PageTypePriority.Promotions);
@@ -156,13 +159,20 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             CreatePageTypeFile(PageTypeEnum.ContactUs, "Contact Us", PageTypePriority.ContactUs);
 
             CreatePageTypeFile(PageTypeEnum.Privacy, "Privacy policy", PageTypePriority.Privacy);
+        }
 
-            GenerateHtmlPages();
+        private void GenerateLeaderboard()
+        {
+                   List<PageLinkModel> data = null;
 
             if (!_isDummy)
             {
-                GenerateWebmasterToolsXmlSitemap();
+                UpdateOrganisations();
+                data = GetLeaderboardData();
             }
+
+            CreatePageTypeFile(PageTypeEnum.Sitemap, "Sitemap: Pub leaderboard of most haunted areas in UK",
+                PageTypePriority.Sitemap, data);
         }
 
         private void EnsureFolders()
@@ -344,7 +354,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             return hauntedCountiesInRegion;
         }
 
-        private void GenerateHtmlPages()
+        private void GenerateGeographicHtmlPages()
         {
             var regions = CreateRegionsFile(_currentRoot);
 
