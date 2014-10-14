@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 using Castle.Core.Internal;
@@ -42,12 +43,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         {
             get
             {
-                var result = String.Concat(Unc, @"\", "detail.html");
+                var result = String.Concat(Unc, @"\", "detail.html").ToLower();
 
-                if (_currentRoot.IsNullOrEmpty())
+                if (!_currentRoot.IsNullOrEmpty())
                 {
                     result = String.Format("http://www.ghostpubs.com/haunted-pub{0}",
-                        result.Replace(_currentRoot, String.Empty).Replace("\\", "/"));
+                        result.Replace(_currentRoot.ToLower(), String.Empty).Replace("\\", "/"));
                 }
                 
                 return result;

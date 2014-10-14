@@ -18,7 +18,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             this.Property(t => t.AlternateName)
                 .HasMaxLength(300);
 
-            this.Property(t => t.SearchName)
+            this.Property(t => t.SimpleName)
                 .HasMaxLength(300);
 
             this.Property(t => t.Locality)
@@ -64,7 +64,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             this.Property(t => t.HauntedStatus).HasColumnName("HauntedStatus");
             this.Property(t => t.TradingName).HasColumnName("TradingName");
             this.Property(t => t.AlternateName).HasColumnName("AlternateName");
-            this.Property(t => t.SearchName).HasColumnName("SearchName");
+            this.Property(t => t.SimpleName).HasColumnName("SimpleName");
             this.Property(t => t.Locality).HasColumnName("Locality");
             this.Property(t => t.Town).HasColumnName("Town");
             this.Property(t => t.AdministrativeAreaLevel2).HasColumnName("Administrative_area_level_2");
@@ -81,8 +81,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             this.Property(t => t.Lon).HasColumnName("Lon");
             this.Property(t => t.Tried).HasColumnName("Tried");
             this.Property(t => t.GoogleMapData).HasColumnName("GoogleMapData");
-            this.Property(t => t.ManualConfirmDate).HasColumnName("ManualConfirmDate");
-
+            this.Property(t => t.CouncilId).HasColumnName("CouncilId");
+              
             // Relationships
             this.HasOptional(t => t.AddressType)
                 .WithMany(t => t.Orgs)

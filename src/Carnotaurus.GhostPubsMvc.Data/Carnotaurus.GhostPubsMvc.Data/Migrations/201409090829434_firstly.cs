@@ -33,7 +33,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Migrations
                     HauntedStatus = c.Int(),
                     TradingName = c.String(false, 300),
                     AlternateName = c.String(maxLength: 300),
-                    SearchName = c.String(maxLength: 300),
+                    SimpleName = c.String(maxLength: 300),
                     Locality = c.String(maxLength: 300),
                     Town = c.String(maxLength: 300),
                     Administrative_area_level_2 = c.String(maxLength: 300),

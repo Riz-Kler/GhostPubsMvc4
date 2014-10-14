@@ -62,7 +62,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         {
             _generationId = Guid.NewGuid();
 
-            GenerateContent1();
+            GenerateLiveContent();
 
             //var task = new Task(GenerateContent1);
             //task.Start();
@@ -75,7 +75,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             return View();
         }
 
-        private void GenerateContent1()
+        private void GenerateLiveContent()
         {
 
             _isDummy = false;
@@ -84,7 +84,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         }
 
-        private void GenerateContent2()
+        private void GenerateDeadContent()
         {
 
             _isDummy = true;
@@ -106,12 +106,12 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             _historySitemap = new List<string>();
 
-            GenerateLeaderboard();
+          //  GenerateLeaderboard();
 
             GenerateSimpleHtmlPages();
 
             GenerateGeographicHtmlPages();
-
+ 
             if (!_isDummy)
             {
                 GenerateWebmasterToolsXmlSitemap();
@@ -138,9 +138,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             CreatePageTypeFile(
                 PageTypeEnum.Home,
-                "Welcome to Ghost Pubs, pubs with a ghostly difference! We have the largest haunted pub directory. Please make your selection below!",
+                "We have the largest haunted pub directory. Please make your selection below!",
                 PageTypePriority.Home,
-                title: "Ghost Pubs"
+                title: "Haunted pubs with a ghostly difference - Welcome to Ghost Pubs!"
                 );
 
             CreatePageTypeFile(PageTypeEnum.FaqBrewery, "FAQs that Breweries ask about Ghost Pubs",
@@ -275,9 +275,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                         Unc = @"\" + x.Name.Underscore().Hyphenate()
                     }
                     : null).OrderBy(x => x.Text).ToList(),
-                MetaDescription = string.Format("Ghost pubs in {0}",
+                MetaDescription = string.Format("Haunted pubs in {0}",
                     regions.Select(region => region.Name).OxbridgeAnd()),
-                ArticleDescription = string.Format("Ghost pubs in {0}",
+                ArticleDescription = string.Format("Haunted pubs in {0}",
                     regions.Select(region => region.Name).OxbridgeAnd()),
                 Unc = currentRoot,
                 Parent = new KeyValuePair<string, string>("Home page", @"/"),
@@ -320,8 +320,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                         Unc = string.Format(@"\{0}\{1}", currentRegion.Name.Underscore().Hyphenate(), x.Text.Underscore().Hyphenate())
                     }
                     : null).OrderBy(x => x.Text).ToList(),
-                MetaDescription = string.Format("Ghost pubs in {0}", countyLinks.Select(x => x.Text).OxbridgeAnd()),
-                ArticleDescription = string.Format("Ghost pubs in {0}", countyLinks.Select(x => x.Text).OxbridgeAnd()),
+                MetaDescription = string.Format("Haunted pubs in {0}", countyLinks.Select(x => x.Text).OxbridgeAnd()),
+                ArticleDescription = string.Format("Haunted pubs in {0}", countyLinks.Select(x => x.Text).OxbridgeAnd()),
                 Unc = currentRegionPath,
                 Parent =
                     new KeyValuePair<string, string>(currentRegion.Name, currentRegion.Name.Underscore().Hyphenate().ToLower()),
@@ -458,8 +458,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                             x.Text.Underscore().Hyphenate()
                     }
                     : null).OrderBy(x => x.Text).ToList(),
-                MetaDescription = string.Format("Ghost pubs in {0}", townLinks.Select(x => x.Text).OxbridgeAnd()),
-                ArticleDescription = string.Format("Ghost pubs in {0}", townLinks.Select(x => x.Text).OxbridgeAnd()),
+                MetaDescription = string.Format("Haunted pubs in {0}", townLinks.Select(x => x.Text).OxbridgeAnd()),
+                ArticleDescription = string.Format("Haunted pubs in {0}", townLinks.Select(x => x.Text).OxbridgeAnd()),
                 Unc = currentCountyPath,
                 Parent = new KeyValuePair<string, string>(currentRegion.Name,
                     currentRegion.Name.Underscore().Hyphenate().ToLower()),

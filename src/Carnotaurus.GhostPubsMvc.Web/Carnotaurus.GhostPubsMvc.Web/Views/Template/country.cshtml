@@ -1,7 +1,7 @@
 ﻿@model Carnotaurus.GhostPubsMvc.Data.Models.ViewModels.OutputViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = Model.JumboTitle;
+    ViewBag.Title = "Haunted pubs in " + Model.JumboTitle;
     ViewBag.Link = "http://www.ghostpubs.com/haunted-pub/detail.html";
     ViewBag.MetaDescription = Model.MetaDescription; ViewBag.ArticleDescription = Model.ArticleDescription;
 
@@ -75,9 +75,7 @@
                 <div id="fb-root"></div>
 
                 <div class="fb-comments" data-href="@ViewBag.Link" data-numposts="5" data-colorscheme="dark"></div>
-
-
-
+                 
                 <div class="fb-like" data-href="@ViewBag.Link" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 
                 <p><a href='/' title="Back to @Model.Parent.Key">Back to @Model.Parent.Key</a></p>

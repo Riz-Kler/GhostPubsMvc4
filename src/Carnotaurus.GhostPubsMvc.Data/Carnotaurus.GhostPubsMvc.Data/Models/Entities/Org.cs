@@ -77,12 +77,13 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public DateTime? Deleted { get; set; }
         public int? AddressTypeId { get; set; }
         public int? CountyId { get; set; }
+        public int? CouncilId { get; set; }
         public int? ParentId { get; set; }
         public int? TradingStatus { get; set; }
         public int? HauntedStatus { get; set; }
         public string TradingName { get; set; }
         public string AlternateName { get; set; }
-        public string SearchName { get; set; }
+        public string SimpleName { get; set; }
         public string Locality { get; set; }
         public string Town { get; set; }
         public string AdministrativeAreaLevel2 { get; set; }
@@ -99,7 +100,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public double? Lon { get; set; }
         public int? Tried { get; set; }
         public string GoogleMapData { get; set; }
-        public DateTime? ManualConfirmDate { get; set; }
+
         public virtual AddressType AddressType { get; set; }
         public virtual ICollection<BookItem> BookItems { get; set; }
         public virtual County County { get; set; }

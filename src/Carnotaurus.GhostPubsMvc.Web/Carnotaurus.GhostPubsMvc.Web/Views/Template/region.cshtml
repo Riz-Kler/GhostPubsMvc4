@@ -1,7 +1,7 @@
 ﻿@model Carnotaurus.GhostPubsMvc.Data.Models.ViewModels.OutputViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = Model.JumboTitle;
+    ViewBag.Title = "Haunted pubs in " + Model.JumboTitle;
     ViewBag.Link = Model.Lineage.Region.Url;
     ViewBag.MetaDescription = Model.MetaDescription; ViewBag.ArticleDescription = Model.ArticleDescription;
     
@@ -14,7 +14,7 @@
 <header class="jumbotron subhead">
     <div class="container">
         <div>
-            <h1>Ghost pubs in the @Model.JumboTitle region</h1>
+            <h1>Haunted pubs in the @Model.JumboTitle region</h1>
             <p class="lead">
                 @Model.ArticleDescription
             </p>

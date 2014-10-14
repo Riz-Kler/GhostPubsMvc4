@@ -26,12 +26,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         {
             get
             {
-                var fullFilePath = String.Concat(Unc, @"\", "detail.html");
+                var fullFilePath = String.Concat(Unc, @"\", "detail.html").ToLower();
 
                 if (!_currentRoot.IsNullOrEmpty())
                 {
                     var url = String.Format("http://www.ghostpubs.com/haunted-pub{0}",
-                        fullFilePath.Replace(_currentRoot, String.Empty).Replace("\\", "/"));
+                        fullFilePath.Replace(_currentRoot.ToLower(), String.Empty).Replace("\\", "/"));
 
                     return url.Underscore().Hyphenate().ToLower();
                 }
