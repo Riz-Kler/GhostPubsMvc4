@@ -13,7 +13,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
     {
         public Org()
         {
-            BookItems = new List<BookItem>();
+            //BookItems = new List<BookItem>();
             Notes = new List<Note>();
             Tags = new List<Tag>();
         }
@@ -102,7 +102,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public string GoogleMapData { get; set; }
 
         public virtual AddressType AddressType { get; set; }
-        public virtual ICollection<BookItem> BookItems { get; set; }
+     //   public virtual ICollection<BookItem> BookItems { get; set; }
         public virtual County County { get; set; }
         public virtual ICollection<Note> Notes { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }

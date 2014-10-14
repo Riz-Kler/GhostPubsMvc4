@@ -30,13 +30,13 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             this.Property(t => t.Postcode).HasColumnName("Postcode");
             this.Property(t => t.IsUsed).HasColumnName("IsUsed");
 
-            // Relationships
-            this.HasOptional(t => t.Book)
-                .WithMany(t => t.BookItems)
-                .HasForeignKey(d => d.BookId);
-            this.HasOptional(t => t.Org)
-                .WithMany(t => t.BookItems)
-                .HasForeignKey(d => d.OrgId);
+            //// Relationships
+            //this.HasOptional(t => t.Book)
+            //    .WithMany(t => t.BookItems)
+            //    .HasForeignKey(d => d.BookId);
+            //this.HasOptional(t => t.Org)
+            //    .WithMany(t => t.BookItems)
+            //    .HasForeignKey(d => d.OrgId);
         }
     }
 }
