@@ -82,6 +82,7 @@
     <Compile Include="Extensions\InjectionExtensions\DependencyInjectionScanner.cs" />
     <Compile Include="Extensions\InjectionExtensions\ExcludeFromDiRegistrationAttribute.cs" />
     <Compile Include="Extensions\PrimativeExtensions.cs" />
+    <Compile Include="Helpers\FileSystemHelper.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Result\CommandResult.cs" />

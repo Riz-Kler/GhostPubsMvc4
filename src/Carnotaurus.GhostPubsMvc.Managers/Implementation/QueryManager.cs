@@ -92,7 +92,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
 
         public List<PageLinkModel> GetSitemapData(string currentRoot)
-        { 
+        {
             var data = _reader.Items<Org>();
 
             var queryable = data
@@ -103,8 +103,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .ToList();
 
             var ranked = queryable.RankByDescending(i => i.Value,
-               (i, r) => new { Rank = r, Item = i })
-               .ToList();
+                (i, r) => new {Rank = r, Item = i})
+                .ToList();
 
             var index = 1;
 
