@@ -9,7 +9,7 @@
         public override string ToString()
         {
             if (string.IsNullOrWhiteSpace(PropertyName)) return Reason;
-            return PropertyName + " : " + Reason;
+            return string.Format("{0} : {1}", PropertyName, Reason);
         }
     }
 }

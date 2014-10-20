@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.RegularExpressions;
 using Humanizer;
 
@@ -9,6 +11,19 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 {
     public static class PrimativeExtensions
     {
+
+        public static T DeepClone<T>(this T obj)
+        {
+            using (var ms = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(ms, obj);
+                ms.Position = 0;
+
+                return (T)formatter.Deserialize(ms);
+            }
+        }
+
         public static string After(this string s, string searchString)
         {
             if (String.IsNullOrEmpty(searchString)) return s;
@@ -34,7 +49,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
         {
             if (String.IsNullOrEmpty(searchString)) return s;
             var idx = s.LastIndexOf(searchString, StringComparison.Ordinal);
-            return (idx < 0 ? "" : s.Substring(0, idx));
+            return (idx < 0 ? string.Empty : s.Substring(0, idx));
         }
 
         public static String DoubleApostrophes(this String value)
@@ -125,7 +140,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
         public static List<string> SplitOnComma(this string commaSeparatedString)
         {
-            var c = ',';
+            const char c = ',';
 
             var output = commaSeparatedString.SplitOn(c);
 
@@ -151,8 +166,10 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             if (String.IsNullOrEmpty(input))
                 return input;
 
-            return input.First().ToString(CultureInfo.CurrentCulture).ToUpper()
-                   + String.Join(String.Empty, input.Skip(1));
+            return string.Format("{0}{1}", 
+                input.First().ToString(CultureInfo.CurrentCulture).ToUpper(), 
+                String.Join(String.Empty, input.Skip(1))
+            );
         }
 
         public static string CamelCaseToWords(this string input)
@@ -160,11 +177,17 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             return Regex.Replace(input.FirstCharToUpper(), "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ");
         }
 
-        public static string SeoFormat(this string input)
+        public static string RedirectionalFormat(this string input)
         {
-            var replace = input.ToLower().Underscore().Hyphenate().Replace("-", "_");
+            var replace = input.ToLower().SeoFormat().Replace("-", "_");
 
             return replace;
         }
+
+        public static string SeoFormat(this string input)
+        {
+            return input.Underscore().Hyphenate();
+        }
+
     }
 }

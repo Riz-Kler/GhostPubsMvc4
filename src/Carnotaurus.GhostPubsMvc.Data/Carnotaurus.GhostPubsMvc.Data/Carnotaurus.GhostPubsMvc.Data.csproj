@@ -156,6 +156,9 @@
     <Compile Include="Models\Entities\County.cs" />
     <Compile Include="Models\Entities\Feature.cs" />
     <Compile Include="Models\Entities\FeatureType.cs" />
+    <Compile Include="Models\Entities\LaCouncil.cs" />
+    <Compile Include="Models\Entities\LaCounty.cs" />
+    <Compile Include="Models\Entities\LaRegion.cs" />
     <Compile Include="Models\ViewModels\Breadcrumb.cs" />
     <Compile Include="Models\ViewModels\PageLinkModel.cs" />
     <Compile Include="Models\Entities\LocalAuthority.cs" />

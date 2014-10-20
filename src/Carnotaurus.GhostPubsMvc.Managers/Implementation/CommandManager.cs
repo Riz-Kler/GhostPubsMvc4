@@ -42,7 +42,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             _writer.SaveChanges();
         }
 
-        public ResultTypeEnum UpdateOrganisation(Org missingInfoOrg, XElement xElement)
+        public ResultTypeEnum UpdateOrganisationByGoogleMapsApi(Org org, XElement xElement)
         {
             var isSuccess = ResultTypeEnum.Fail;
 
@@ -51,11 +51,13 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 return isSuccess;
             }
 
-            missingInfoOrg.GoogleMapData = xElement.ToString();
+            if (org.Tried == 1) return isSuccess;
 
-            missingInfoOrg.Modified = DateTime.Now;
+            org.GoogleMapData = xElement.ToString();
 
-            missingInfoOrg.Tried = 1;
+            org.Modified = DateTime.Now;
+
+            org.Tried = 1;
 
             if (xElement.Value.Contains("ZERO_RESULTS"))
             {
@@ -70,11 +72,40 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             isSuccess = ResultTypeEnum.Success;
 
-            UpdateGeocodes(result, missingInfoOrg);
+            UpdateGeocodes(result, org);
 
-            UpdateLocality(result, missingInfoOrg);
+            UpdateLocality(result, org);
 
-            UpdateTown(result, missingInfoOrg);
+            UpdateTown(result, org);
+
+            return isSuccess;
+        }
+
+
+        public ResultTypeEnum UpdateOrganisationByLaApi(Org org, XElement xElement)
+        {
+            var isSuccess = ResultTypeEnum.Fail;
+
+            if (xElement == null)
+            {
+                return isSuccess;
+            }
+
+            if (org.TriedLa == 1) return isSuccess;
+
+            org.LaData = xElement.ToString();
+
+            org.Modified = DateTime.Now;
+
+            org.TriedLa = 1;
+
+            var result = xElement.Element("administrative");
+
+            if (result == null) return isSuccess;
+
+            isSuccess = ResultTypeEnum.Success;
+
+            UpdateLaData(result, org);
 
             return isSuccess;
         }
@@ -82,6 +113,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         public string UpdateAdministrativeAreaLevels(XContainer result, Org org)
         {
             if (result == null) throw new ArgumentNullException("result");
+
+            // administrative
 
             var countyResult =
                 result.Elements("address_component")
@@ -98,6 +131,11 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             org.AdministrativeAreaLevel2 = outer;
 
             return outer;
+        }
+
+        public void UpdateCouncil(Org org, int match)
+        {
+            org.CouncilId = match;
         }
 
         private static void UpdateTown(XContainer result, Org org)
@@ -119,7 +157,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             if (result == null) throw new ArgumentNullException("result");
 
             var match =
-                result.Elements("address_component").FirstOrDefault(x => x.Value.EndsWith("localitypolitical"));
+                result.Elements("address_component")
+                .FirstOrDefault(x => x.Value.EndsWith("localitypolitical"));
 
             if (match == null || match.FirstNode == null) return;
 
@@ -128,6 +167,22 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             if (firstResult == null) return;
 
             org.Locality = firstResult.Value;
+        }
+
+
+        private static void UpdateLaData(XContainer result, Org org)
+        {
+            if (result == null) throw new ArgumentNullException("result");
+
+            var locationElement = result.Element("council");
+
+            if (locationElement == null) return;
+
+            var lat = locationElement.Element("code");
+
+            if (lat != null)
+                org.CouncilCode = lat.Value;
+
         }
 
         private static void UpdateGeocodes(XContainer result, Org org)

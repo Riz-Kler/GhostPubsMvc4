@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Xml.Linq;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Common.Helpers;
@@ -21,7 +22,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         }
 
 
-        public XElement ReadXElement(Org missingInfoOrg)
+        public XElement ReadGeocodeResponseElement(Org org)
         {
             // source correct address, using google maps api or similar
 
@@ -30,25 +31,93 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             var key = ConfigurationHelper.GetValueAsString("GoogleMapsApiKey");
             // "AIzaSyC2DCdkPGBtsooyft7sX3P9h2f4uQvLQj0";
 
-            var format =
+            var requestUri =
                 string.Format(
                     "https://maps.google.com/maps/api/geocode/xml?address={0}, {1}, {2}, UK&sensor=false&key={3}",
-                    missingInfoOrg.TradingName,
-                    missingInfoOrg.Address,
-                    missingInfoOrg.Postcode,
+                    org.TradingName,
+                    org.Address,
+                    org.Postcode,
                     key
                     );
 
-            var requestUri = (format);
+            var document = XDocument.Load(requestUri);
 
-            var xdoc = XDocument.Load(requestUri);
+            var element = document.Element("GeocodeResponse");
 
-            var xElement = xdoc.Element("GeocodeResponse");
-
-            return xElement;
+            return element;
         }
 
-        public IEnumerable<Org> GetMissingInfoOrgsToUpdate()
+        public List<XElement> ReadElements(Org org)
+        {
+            var elements = new List<XElement>();
+
+
+            var nso = ReadNsoResponseElement(org);
+            elements.Add(nso);
+
+            var geocode = ReadGeocodeResponseElement(org);
+            elements.Add(geocode);
+
+            return elements;
+        }
+
+
+        public XElement ReadNsoResponseElement(Org org)
+        {
+            /*
+             This XML file does not appear to have any style information associated with it. The document tree is shown below.
+<result>
+<postcode>SK1 3JT</postcode>
+<geo>
+<lat>53.40086635686018</lat>
+<lng>-2.1493842139459183</lng>
+<easting>390164.0</easting>
+<northing>389348.0</northing>
+<geohash>http://geohash.org/gcqrz16fedyz</geohash>
+</geo>
+<administrative>
+<council>
+<title>Stockport</title>
+<uri>
+http://statistics.data.gov.uk/id/statistical-geography/E08000007
+</uri>
+<code>E08000007</code>
+</council>
+<ward>
+<title>Manor</title>
+<uri>
+http://statistics.data.gov.uk/id/statistical-geography/E05000793
+</uri>
+<code>E05000793</code>
+</ward>
+<constituency>
+<title>Stockport</title>
+<uri>
+http://statistics.data.gov.uk/id/statistical-geography/E14000969
+</uri>
+<code>E14000969</code>
+</constituency>
+</administrative>
+</result>
+             */
+
+
+            // http://uk-postcodes.com/postcode/SK13JT.xml
+
+            var requestUri =
+               string.Format(
+                   "http://uk-postcodes.com/postcode/{0}.xml",
+                   org.Postcode.Replace(" ", "")
+                  );
+
+            var document = XDocument.Load(requestUri);
+
+            var element = document.Element("result");
+
+            return element;
+        }
+
+        public IEnumerable<Org> GetOrgsToUpdate()
         {
             var results = _reader.Items<Org>().Where(org =>
                 org != null
@@ -56,8 +125,10 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 && org.Postcode != null
                 && org.AddressTypeId == 1
                 && org.CountyId == null
-                && org.Tried == null
+                && (org.Tried == null || org.TriedLa == null)
+                && org.HauntedStatus == 1
                 )
+                .Take(100)
                 .ToList();
 
             return results;
@@ -103,7 +174,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .ToList();
 
             var ranked = queryable.RankByDescending(i => i.Value,
-                (i, r) => new {Rank = r, Item = i})
+                (i, r) => new { Rank = r, Item = i })
                 .ToList();
 
             var index = 1;
@@ -153,5 +224,49 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             return result;
         }
+         
+        public void WriteWebmasterSitemap(List<string> sitepmap, String currentRoot)
+        {
+
+            // generate the Google webmaster tools xml url sitemap
+            var sb = new StringBuilder();
+
+            sb.AppendLine(@"<?xml version=""1.0"" encoding=""UTF-8""?>");
+
+            sb.AppendLine(
+                @"<urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xsi:schemaLocation=""http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"">");
+
+            if (sitepmap != null)
+            {
+                foreach (var item in sitepmap)
+                {
+                    sb.AppendLine(item);
+                }
+            }
+
+            sb.AppendLine("</urlset>");
+
+            var fullFilePath = String.Format("{0}/ghostpubs-sitemap.xml", currentRoot);
+
+            FileSystemHelper.WriteFile(fullFilePath, sb.ToString());
+
+        }
+
+
+        public String BuildPath(params String[] builder)
+        {
+            var output = String.Empty;
+
+            foreach (var s in builder)
+            {
+                output = output == String.Empty ?
+                    s.ToLower().SeoFormat() :
+                    string.Format("{0}\\{1}", output, s.ToLower().SeoFormat());
+            }
+
+            return output;
+        }
+        
+
     }
 }

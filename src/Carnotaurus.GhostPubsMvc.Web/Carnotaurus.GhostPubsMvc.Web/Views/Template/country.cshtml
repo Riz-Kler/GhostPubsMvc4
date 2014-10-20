@@ -1,7 +1,7 @@
 ﻿@model Carnotaurus.GhostPubsMvc.Data.Models.ViewModels.OutputViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Haunted pubs in " + Model.JumboTitle;
+    ViewBag.Title = string.Format("Haunted pubs in {0}", Model.JumboTitle);
     ViewBag.Link = "http://www.ghostpubs.com/haunted-pub/detail.html";
     ViewBag.MetaDescription = Model.MetaDescription; ViewBag.ArticleDescription = Model.ArticleDescription;
 

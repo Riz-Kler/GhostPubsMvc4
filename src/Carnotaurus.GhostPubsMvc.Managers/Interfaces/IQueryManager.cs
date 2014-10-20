@@ -10,7 +10,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
     {
         // Todo - each of these methods should return a QueryResult class
 
-        IEnumerable<Org> GetMissingInfoOrgsToUpdate();
+        IEnumerable<Org> GetOrgsToUpdate();
 
         County GetCounty(string name);
 
@@ -18,8 +18,14 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         IEnumerable<Region> GetRegions();
 
-        XElement ReadXElement(Org missingInfoOrg);
+        List<XElement> ReadElements(Org org);
 
         List<PageLinkModel> GetSitemapData(String root);
+
+        // no db dependencies
+        void WriteWebmasterSitemap(List<String> items, String currentRoot);
+
+        string BuildPath(params String[] builder);
+
     }
 }

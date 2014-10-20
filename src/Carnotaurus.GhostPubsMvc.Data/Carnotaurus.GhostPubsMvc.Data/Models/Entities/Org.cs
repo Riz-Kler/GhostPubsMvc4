@@ -99,7 +99,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public double? Lat { get; set; }
         public double? Lon { get; set; }
         public int? Tried { get; set; }
+        public int? TriedLa { get; set; }
         public string GoogleMapData { get; set; }
+        public string LaData { get; set; }
+        public string CouncilCode { get; set; }
 
         public virtual AddressType AddressType { get; set; }
      //   public virtual ICollection<BookItem> BookItems { get; set; }
@@ -131,11 +134,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             {
                 if (output == String.Empty)
                 {
-                    output = b.ToLower().Underscore().Hyphenate();
+                    output = b.ToLower().SeoFormat();
                 }
                 else
                 {
-                    output = string.Format("{0}\\{1}", output, b.ToLower().Underscore().Hyphenate());
+                    output = string.Format("{0}\\{1}", output, b.ToLower().SeoFormat());
                 }
             }
 

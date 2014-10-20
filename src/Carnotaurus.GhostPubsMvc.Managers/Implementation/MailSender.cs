@@ -31,7 +31,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 body,
                 message.Subject,
                 attachmentPath
-                );
+            );
 
             var useDatabaseMail = ConfigurationHelper.GetValueAsBoolean("UseDatabaseMail");
 

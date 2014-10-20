@@ -11,12 +11,17 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         String CurrentUserName { get; }
 
-        string UpdateAdministrativeAreaLevels(XContainer result, Org org);
+        string UpdateAdministrativeAreaLevels(XContainer container, Org org);
 
-        ResultTypeEnum UpdateOrganisation(Org missingInfoOrg, XElement xElement);
+        ResultTypeEnum UpdateOrganisationByGoogleMapsApi(Org org, XElement element);
+
+        ResultTypeEnum UpdateOrganisationByLaApi(Org org, XElement element);
 
         void Save();
 
         void UpdateCounty(Org org, County match);
+         
+        void UpdateCouncil(Org org, int match);
+         
     }
 }

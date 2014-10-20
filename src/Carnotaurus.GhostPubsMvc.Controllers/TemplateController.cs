@@ -1,18 +1,17 @@
 ﻿//using System.Web.Mvc;
+
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
 using System.Web.Mvc;
+using System.Xml.Linq;
+using Carnotaurus.GhostPubsMvc.Common.Bespoke;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Common.Helpers;
 using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
 using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
-using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Controllers
 {
@@ -26,7 +25,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         private Guid _generationId;
         private List<OutputViewModel> _history;
         private List<String> _historySitemap;
-        private bool _isDummy;
+        private Boolean _isObsolete;
 
         public TemplateController(IQueryManager queryManager, ICommandManager commandManager)
         {
@@ -58,14 +57,14 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void GenerateLiveContent()
         {
-            _isDummy = false;
+            _isObsolete = false;
 
             GenerateContent();
         }
 
         private void GenerateDeadContent()
         {
-            _isDummy = true;
+            _isObsolete = true;
 
             GenerateContent();
         }
@@ -73,11 +72,11 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         private void GenerateContent()
         {
             _currentRoot = String.Format(@"C:\Carnotaurus\{0}\haunted-pub",
-                _generationId.ToString().ToLower().Underscore().Hyphenate());
+                _generationId.ToString().ToLower().SeoFormat());
 
             if (_currentRoot != null)
             {
-                FileSystemHelper.EnsureFolders(_currentRoot, _isDummy);
+                FileSystemHelper.EnsureFolders(_currentRoot, _isObsolete);
             }
 
             _history = new List<OutputViewModel>();
@@ -90,9 +89,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             GenerateGeographicHtmlPages();
 
-            if (!_isDummy)
+            if (!_isObsolete)
             {
-                GenerateWebmasterToolsXmlSitemap();
+                _queryManager.WriteWebmasterSitemap(_historySitemap, _currentRoot);
             }
         }
 
@@ -142,9 +141,10 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         {
             List<PageLinkModel> data = null;
 
-            if (!_isDummy)
+            if (!_isObsolete)
             {
                 UpdateOrganisations();
+
                 data = GetLeaderboardData();
             }
 
@@ -152,61 +152,15 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 PageTypePriority.Sitemap, "Sitemap: Pub leaderboard of most haunted areas in UK", data);
         }
 
-        private void GenerateWebmasterToolsXmlSitemap()
-        {
-            // generate the Google webmaster tools xml url sitemap
-            var sb = new StringBuilder();
-
-            sb.AppendLine(@"<?xml version=""1.0"" encoding=""UTF-8""?>");
-
-            sb.AppendLine(
-                @"<urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xsi:schemaLocation=""http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"">");
-
-            if (_historySitemap != null)
-            {
-                foreach (var item in _historySitemap)
-                {
-                    sb.AppendLine(item);
-                }
-            }
-
-            sb.AppendLine("</urlset>");
-
-            var fullFilePath = String.Format("{0}/ghostpubs-sitemap.xml", _currentRoot);
-
-            WriteFile(fullFilePath, sb.ToString());
-        }
-
         private void UpdateOrganisations()
         {
-            var missingInfoOrgs = _queryManager.GetMissingInfoOrgsToUpdate();
+            var orgsToUpdate = _queryManager.GetOrgsToUpdate();
 
             var isSuccess = ResultTypeEnum.Fail;
 
-            foreach (var missingInfoOrg in missingInfoOrgs)
+            foreach (var org in orgsToUpdate)
             {
-                var xElement = _queryManager.ReadXElement(missingInfoOrg);
-
-                isSuccess = _commandManager.UpdateOrganisation(missingInfoOrg, xElement);
-
-                if (isSuccess == ResultTypeEnum.Success)
-                {
-                    var result = xElement.Element("result");
-
-                    var outer = _commandManager.UpdateAdministrativeAreaLevels(result, missingInfoOrg);
-
-                    var match = _queryManager.GetCounty(outer);
-
-                    if (match != null)
-                    {
-                        _commandManager.UpdateCounty(missingInfoOrg, match);
-                    }
-                }
-
-                if (isSuccess == ResultTypeEnum.Fail)
-                {
-                    break;
-                }
+                isSuccess = UpdateOrg(org);
             }
 
             if (isSuccess != ResultTypeEnum.Fail)
@@ -215,6 +169,50 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             }
         }
 
+        private ResultTypeEnum UpdateOrg(Org org)
+        {
+            var isSuccess = ResultTypeEnum.Fail;
+
+            var elements = _queryManager.ReadElements(org);
+
+            foreach (var element in elements)
+            {
+                if (element.Element("result") != null)
+                {
+                    isSuccess = _commandManager.UpdateOrganisationByGoogleMapsApi(org, element);
+
+                    if (isSuccess == ResultTypeEnum.Success)
+                    {
+                        UpdateAdministrativeAreaLevels(org, element);
+                    }
+                }
+                else
+                {
+                    isSuccess = _commandManager.UpdateOrganisationByLaApi(org, element);
+                }
+
+                if (isSuccess == ResultTypeEnum.Fail)
+                {
+                    break;
+                }
+            }
+
+            return isSuccess;
+        }
+
+        private void UpdateAdministrativeAreaLevels(Org org, XContainer element)
+        {
+            var result = element.Element("result");
+
+            var outer = _commandManager.UpdateAdministrativeAreaLevels(result, org);
+
+            var match = _queryManager.GetCounty(outer);
+
+            if (match != null)
+            {
+                _commandManager.UpdateCounty(org, match);
+            }
+        }
 
         private IEnumerable<Region> CreateRegionsFile(string currentRoot)
         {
@@ -230,7 +228,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                     {
                         Text = x.Name,
                         Title = x.Name,
-                        Unc = @"\" + x.Name.Underscore().Hyphenate()
+                        Unc = string.Format(@"\{0}", x.Name.SeoFormat())
                     }
                     : null).OrderBy(x => x.Text).ToList(),
                 MetaDescription = string.Format("Haunted pubs in {0}",
@@ -252,7 +250,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             Int32 orgsInRegionCount)
         {
             // write region directory
-            FileSystemHelper.CreateFolders(currentRegionPath, _isDummy);
+            FileSystemHelper.CreateFolders(currentRegionPath, _isObsolete);
 
             // region file needs knowledge of its counties
             // should be list of counties that have ghost pubs?
@@ -276,8 +274,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                         Text = x.Text,
                         Title = x.Text,
                         Unc =
-                            string.Format(@"\{0}\{1}", currentRegion.Name.Underscore().Hyphenate(),
-                                x.Text.Underscore().Hyphenate())
+                            string.Format(@"\{0}\{1}", currentRegion.Name.SeoFormat(),
+                                x.Text.SeoFormat())
                     }
                     : null).OrderBy(x => x.Text).ToList(),
                 MetaDescription = string.Format("Haunted pubs in {0}", countyLinks.Select(x => x.Text).OxbridgeAnd()),
@@ -285,7 +283,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Unc = currentRegionPath,
                 Parent =
                     new KeyValuePair<string, string>(currentRegion.Name,
-                        currentRegion.Name.Underscore().Hyphenate().ToLower()),
+                        currentRegion.Name.SeoFormat().ToLower()),
                 Total = orgsInRegionCount,
                 Priority = PageTypePriority.Region,
                 Previous = _history.LastOrDefault(x => x.Action == PageTypeEnum.Region),
@@ -318,7 +316,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void CreateRegionFiles(Region currentRegion)
         {
-            var currentRegionPath = BuildPath(_currentRoot, currentRegion.Name);
+            var currentRegionPath = _queryManager.BuildPath(_currentRoot, currentRegion.Name);
 
             CreateAllCountyFilesForRegion(currentRegion, currentRegionPath);
         }
@@ -337,7 +335,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
                 if (currentRegionPath == null) continue;
 
-                var currentCountyPath = BuildPath(currentRegionPath, currentCounty.Name);
+                var currentCountyPath = _queryManager.BuildPath(currentRegionPath, currentCounty.Name);
 
                 if (currentCountyPath == null) continue;
 
@@ -349,7 +347,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         private void CreateCountyFiles(Region currentRegion, string currentCountyPath, string currentCountyName,
             string currentRegionPath, string currentCountyDescription, int currentCountyId)
         {
-            FileSystemHelper.CreateFolders(currentCountyPath, _isDummy);
+            FileSystemHelper.CreateFolders(currentCountyPath, _isObsolete);
 
             // write them out backwards (so alphabetical from previous) and keep towns together (so need pub has a better chance to be in the same town) 
             var orgsInCounty =
@@ -378,14 +376,13 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         {
             foreach (var currentOrg in orgsInCounty)
             {
-                var currentTownPath = BuildPath(currentCountyPath, currentOrg.Town);
+                var currentTownPath = _queryManager.BuildPath(currentCountyPath, currentOrg.Town);
 
                 if (currentTownPath == null) continue;
 
-                FileSystemHelper.CreateFolders(currentTownPath, _isDummy);
+                FileSystemHelper.CreateFolders(currentTownPath, _isObsolete);
 
                 //town file needs knowledge of its pubs, e.g., trading name
-                // var pubs = currentAddress .Entities.OrderBy(x => x.TradingName).ToList();
                 CreatePubFile(pubTownLinks, currentTownPath, currentOrg);
             }
         }
@@ -406,32 +403,38 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             IEnumerable<string> towns,
             Region currentRegion, Int32 count, string currentRegionPath)
         {
-            var townLinks = towns.Select(x => new PageLinkModel(_currentRoot)
+            var townLinks = towns.Select(s => new PageLinkModel(_currentRoot)
             {
-                Text = x,
-                Title = x
+                Text = s,
+                Title = s
             }).ToList();
 
             var countyModel = new OutputViewModel(_currentRoot)
             {
                 JumboTitle = currentCountyName,
                 Action = PageTypeEnum.County,
-                PageLinks = townLinks.Select(x => x.Text != null
+                PageLinks = townLinks.Select(linkModel => linkModel.Text != null
                     ? new PageLinkModel(_currentRoot)
                     {
-                        Text = x.Text,
-                        Title = x.Text,
+                        Text = linkModel.Text,
+                        Title = linkModel.Text,
                         Unc =
-                            @"\" + currentRegion.Name.Underscore().Hyphenate() + @"\" +
-                            currentCountyName.Underscore().Hyphenate() + @"\" +
-                            x.Text.Underscore().Hyphenate()
+                            string.Format(@"\{0}\{1}\{2}",
+                                currentRegion.Name.SeoFormat(),
+                                currentCountyName.SeoFormat(),
+                                linkModel.Text.SeoFormat()
+                                )
                     }
                     : null).OrderBy(x => x.Text).ToList(),
-                MetaDescription = string.Format("Haunted pubs in {0}", townLinks.Select(x => x.Text).OxbridgeAnd()),
-                ArticleDescription = string.Format("Haunted pubs in {0}", townLinks.Select(x => x.Text).OxbridgeAnd()),
+                MetaDescription = string.Format(
+                    "Haunted pubs in {0}",
+                    townLinks.Select(x => x.Text).OxbridgeAnd()),
+                ArticleDescription = string.Format(
+                    "Haunted pubs in {0}",
+                    townLinks.Select(x => x.Text).OxbridgeAnd()),
                 Unc = currentCountyPath,
                 Parent = new KeyValuePair<string, string>(currentRegion.Name,
-                    currentRegion.Name.Underscore().Hyphenate().ToLower()),
+                    currentRegion.Name.SeoFormat().ToLower()),
                 Total = count,
                 Priority = PageTypePriority.County,
                 Previous = _history.LastOrDefault(x => x.Action == PageTypeEnum.County),
@@ -465,13 +468,13 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             pubTownLinks.Add(new KeyValuePair<string, PageLinkModel>(pub.Town, pub.ExtractLink(_currentRoot)));
 
-            FileSystemHelper.CreateFolders(pub.Path, _isDummy);
+            FileSystemHelper.CreateFolders(pub.Path, _isObsolete);
 
-            var notes = pub.Notes.Select(x => new PageLinkModel(_currentRoot)
+            var notes = pub.Notes.Select(note => new PageLinkModel(_currentRoot)
             {
-                Id = x.Id,
-                Text = x.Text,
-                Title = x.Text
+                Id = note.Id,
+                Text = note.Text,
+                Title = note.Text
             }).ToList();
 
             const PageTypeEnum action = PageTypeEnum.Pub;
@@ -485,7 +488,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                     string.Format("{0}, {1} : {2}", pub.Address, pub.PostcodePrimaryPart, notes.First().Text),
                 ArticleDescription = string.Format("{0}, {1}", pub.Address, pub.PostcodePrimaryPart),
                 Unc = pub.Path,
-                Parent = new KeyValuePair<string, string>(pub.Town, pub.Town.Underscore().Hyphenate().ToLower()),
+                Parent = new KeyValuePair<string, string>(pub.Town, pub.Town.SeoFormat().ToLower()),
                 Tags = pub.Tags.Select(x => x.Feature.Name).ToList(),
                 Priority = PageTypePriority.Pub,
                 Previous = _history.LastOrDefault(x => x.Action == action),
@@ -494,14 +497,14 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 OtherNames = pub.County.Orgs
                     .Where(x => x.Address == pub.Address && x.Postcode == pub.Postcode && x.Id != pub.Id)
                     .Select(
-                        z => new PageLinkModel(_currentRoot)
+                        org => new PageLinkModel(_currentRoot)
                         {
-                            Id = z.Id,
-                            Text = z.TradingName,
-                            Title = z.TradingName,
+                            Id = org.Id,
+                            Text = org.TradingName,
+                            Title = org.TradingName,
                             Unc =
-                                string.Format("{0}/{1}/{2}", pub.TownPath.Underscore().Hyphenate(), z.Id,
-                                    z.TradingName.Underscore().Hyphenate())
+                                string.Format("{0}/{1}/{2}", pub.TownPath.SeoFormat(), org.Id,
+                                    org.TradingName.SeoFormat())
                         }
                     ).ToList(),
                 Lineage = new Breadcrumb
@@ -554,7 +557,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         {
             var path = string.Format("{0}\\{1}", _currentRoot, pageType);
 
-            FileSystemHelper.CreateFolders(path, _isDummy);
+            FileSystemHelper.CreateFolders(path, _isObsolete);
 
             if (title == null)
             {
@@ -582,7 +585,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             String currentCountyName, Region currentRegion, string currentRegionPath, string currentCountyDescription,
             int currentCountyId)
         {
-            var townPath = BuildPath(currentCountyPath, town);
+            var townPath = _queryManager.BuildPath(currentCountyPath, town);
 
             var pubLinks = pubTownLinks
                 .Where(x => x.Key.Equals(town))
@@ -599,9 +602,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                         Text = x.Text,
                         Title = x.Title,
                         Unc =
-                            string.Format(@"\{0}\{1}\{2}\{3}\{4}", currentRegion.Name.Underscore().Hyphenate(),
-                                currentCountyName.Underscore().Hyphenate(),
-                                town.Underscore().Hyphenate(), x.Id, x.Text.Underscore().Hyphenate())
+                            string.Format(@"\{0}\{1}\{2}\{3}\{4}", currentRegion.Name.SeoFormat(),
+                                currentCountyName.SeoFormat(),
+                                town.SeoFormat(), x.Id, x.Text.SeoFormat())
                     }
                     : null).OrderBy(x => x.Text).ToList(),
                 MetaDescription = string.Format("{0}, {1}, {2}", town, currentCountyName, currentRegion.Name),
@@ -640,26 +643,6 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             WriteLines(townModel);
         }
 
-        public String BuildPath(params String[] builder)
-        {
-            var output = String.Empty;
-
-            foreach (var b in builder)
-            {
-                if (output == String.Empty)
-                {
-                    output = b.ToLower().Underscore().Hyphenate();
-                }
-                else
-                {
-                    output = string.Format("{0}\\{1}", output, b.ToLower().Underscore().Hyphenate());
-                }
-            }
-
-            return output;
-        }
-
-
         protected String PrepareModel(OutputViewModel data)
         {
             var output = this.PrepareView(data, data.Action.ToString());
@@ -667,69 +650,52 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             return output;
         }
 
-        public static T DeepClone<T>(T obj)
-        {
-            using (var ms = new MemoryStream())
-            {
-                var formatter = new BinaryFormatter();
-                formatter.Serialize(ms, obj);
-                ms.Position = 0;
-
-                return (T) formatter.Deserialize(ms);
-            }
-        }
-
         public void WriteLines(OutputViewModel model)
         {
-            if (!_isDummy)
+            var max = Resources.MaxSize.ToInt32();
+
+            if (!_isObsolete)
             {
                 _historySitemap.Add(model.SitemapItem);
 
                 _history.Add(model);
 
-                if (_history.Count > 600)
+                if (_history.Count > max)
                 {
                     _history.RemoveAt(0);
                 }
 
-                WriteFile(model);
+                WritePage(model);
             }
             else
             {
-                WriteMissing(model);
+                WriteMissingPage(model);
             }
         }
 
-        private void WriteFile(OutputViewModel model)
+        private void WritePage(OutputViewModel model)
         {
             var contents = PrepareModel(model);
 
-            if (model.Unc != null)
-            {
-                var fullFilePath = String.Concat(model.Unc.ToLower(), @"\", "detail.html");
+            if (model.Unc == null) return;
 
-                WriteFile(fullFilePath, contents);
-            }
+            var fullFilePath = String.Concat(model.Unc.ToLower(), @"\", "detail.html");
+
+            FileSystemHelper.WriteFile(fullFilePath, contents);
         }
 
-        private void WriteMissing(OutputViewModel model)
+        private void WriteMissingPage(OutputViewModel model)
         {
-            var missing = DeepClone(model);
+            var missing = model.DeepClone();
 
             missing.Action = PageTypeEnum.Missing;
 
             var contents = PrepareModel(missing);
 
-            if (contents.IsNotNullOrEmpty())
-            {
-                WriteFile(String.Concat(model.Unc.ToLower(), @"\", "detail.html").SeoFormat(), contents);
-            }
-        }
+            if (!contents.IsNotNullOrEmpty()) return;
 
-        public void WriteFile(string fullFilePath, string contents)
-        {
-            // write file
-            System.IO.File.WriteAllText(fullFilePath.ToLower(), contents);
+            FileSystemHelper.WriteFile(String.Concat(model.Unc.ToLower(), @"\", "detail.html").RedirectionalFormat(),
+                contents);
         }
     }
 }

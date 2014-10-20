@@ -37,12 +37,18 @@ namespace Carnotaurus.GhostPubsMvc.Common.Helpers
 
         public static void DeleteFolders(String path, Boolean isRedirectional)
         {
-            DeleteDirectory(isRedirectional ? path.SeoFormat() : path.ToLower());
+            DeleteDirectory(isRedirectional ? path.RedirectionalFormat() : path.ToLower());
         }
 
         public static void CreateFolders(String path, Boolean isRedirectional)
         {
-            Directory.CreateDirectory(isRedirectional ? path.SeoFormat() : path.ToLower());
+            Directory.CreateDirectory(isRedirectional ? path.RedirectionalFormat() : path.ToLower());
         }
+
+        public static void WriteFile(string fullFilePath, string contents)
+        {
+            File.WriteAllText(fullFilePath.ToLower(), contents);
+        }
+
     }
 }

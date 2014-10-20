@@ -61,34 +61,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Bespoke {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The user is:.
-        /// </summary>
-        public static string EmailCreatedBody {
-            get {
-                return ResourceManager.GetString("EmailCreatedBody", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Another user has registered for ClearDebt Client Payment Portal.
-        /// </summary>
-        public static string EmailCreatedSubject {
-            get {
-                return ResourceManager.GetString("EmailCreatedSubject", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to created@philipcarney.com.
-        /// </summary>
-        public static string EmailCreatedTo {
-            get {
-                return ResourceManager.GetString("EmailCreatedTo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ClientPortal_Profile.
+        ///   Looks up a localized string similar to CMS_Profile.
         /// </summary>
         public static string EmailDatabaseMailProfile {
             get {
@@ -97,155 +70,11 @@ namespace Carnotaurus.GhostPubsMvc.Common.Bespoke {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dear {0}, &lt;br&gt;&lt;br&gt;Thank you for your interest in using the ClearDebt Payment Portal. Unfortunately your account has not been activated by one of our moderators.&lt;br&gt;&lt;br&gt;The reason for this is: {1}&lt;br&gt;&lt;br&gt;Please call your Supervisor to discuss further.&lt;br&gt;&lt;br&gt;Best regards&lt;br&gt;&lt;br&gt;&lt;br&gt;The ClearDebt Team.
+        ///   Looks up a localized string similar to 600.
         /// </summary>
-        public static string EmailDeclinedBody {
+        public static string MaxSize {
             get {
-                return ResourceManager.GetString("EmailDeclinedBody", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unfortunately {0}, your account has not been activated.
-        /// </summary>
-        public static string EmailDeclinedSubject {
-            get {
-                return ResourceManager.GetString("EmailDeclinedSubject", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ClientPaymentPortal@ClearDebt.co.uk.
-        /// </summary>
-        public static string EmailGeneralFrom {
-            get {
-                return ResourceManager.GetString("EmailGeneralFrom", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Dear {0}, &lt;br&gt;&lt;br&gt;This email was sent automatically by the ClearDebt Payment Portal in response to a request to reset your password. Only you, the recipient of this email, can reset the password.&lt;br&gt;&lt;br&gt;To reset your password and access your account click the link below: &lt;br&gt;&lt;br&gt; {1}&lt;br&gt;&lt;br&gt;Best regards&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;The ClearDebt Team.
-        /// </summary>
-        public static string EmailResetBody {
-            get {
-                return ResourceManager.GetString("EmailResetBody", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reset password request.
-        /// </summary>
-        public static string EmailResetSubject {
-            get {
-                return ResourceManager.GetString("EmailResetSubject", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Dear {0}, &lt;br&gt;&lt;br&gt;Unfortunately you have been declined access to the ClearDebt Payment Portal by one of our moderators. The reason for this is: &lt;b&gt;{1}&lt;/b&gt;&lt;br&gt;&lt;br&gt;Please call your Supervisor to discuss further.&lt;br&gt;&lt;br&gt;Best regards&lt;br&gt;&lt;br&gt;&lt;br&gt;The ClearDebt Team&lt;br&gt;&lt;br&gt;.
-        /// </summary>
-        public static string EmailSuspendedBody {
-            get {
-                return ResourceManager.GetString("EmailSuspendedBody", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unfortunately {0}, you have been declined access to the portal.
-        /// </summary>
-        public static string EmailSuspendedSubject {
-            get {
-                return ResourceManager.GetString("EmailSuspendedSubject", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Dear {0}, &lt;br&gt;&lt;br&gt;Your request to use the ClearDebt Payment Portal has been received and your account is being created. Before you can access your account, we will need to activate it.&lt;br&gt;&lt;br&gt;Once activated you will receive email confirmation with your login link to access the portal. If your account is not activated we will send you an email explaining why.&lt;br&gt;&lt;br&gt;Thank you for registering!&lt;br&gt;&lt;br&gt;Best regards&lt;br&gt;&lt;br&gt;&lt;br&gt;The ClearDebt Team.
-        /// </summary>
-        public static string EmailThankYouBody {
-            get {
-                return ResourceManager.GetString("EmailThankYouBody", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0}, your account is being created.
-        /// </summary>
-        public static string EmailThankYouSubject {
-            get {
-                return ResourceManager.GetString("EmailThankYouSubject", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to There was an error. Your data was not saved. Please try again later..
-        /// </summary>
-        public static string MessageErrorAndDataNotSaved {
-            get {
-                return ResourceManager.GetString("MessageErrorAndDataNotSaved", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Client reference is incorrect. Please recheck and try again..
-        /// </summary>
-        public static string MessageIncorrectClientRef {
-            get {
-                return ResourceManager.GetString("MessageIncorrectClientRef", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The current password is incorrect or the new password is invalid..
-        /// </summary>
-        public static string MessageIncorrectCurrentOrNewPassword {
-            get {
-                return ResourceManager.GetString("MessageIncorrectCurrentOrNewPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Email is incorrect. Please recheck and try again..
-        /// </summary>
-        public static string MessageIncorrectEmail {
-            get {
-                return ResourceManager.GetString("MessageIncorrectEmail", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The email or password provided is incorrect..
-        /// </summary>
-        public static string MessageIncorrectEmailOrPassword {
-            get {
-                return ResourceManager.GetString("MessageIncorrectEmailOrPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Issue sending email: {0}.
-        /// </summary>
-        public static string MessageIssueSendingEmail {
-            get {
-                return ResourceManager.GetString("MessageIssueSendingEmail", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to MessageReasonCannotBeBlank.
-        /// </summary>
-        public static string MessageReasonCannotBeBlank {
-            get {
-                return ResourceManager.GetString("MessageReasonCannotBeBlank", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to User not found.
-        /// </summary>
-        public static string MessageUserNotFound {
-            get {
-                return ResourceManager.GetString("MessageUserNotFound", resourceCulture);
+                return ResourceManager.GetString("MaxSize", resourceCulture);
             }
         }
     }

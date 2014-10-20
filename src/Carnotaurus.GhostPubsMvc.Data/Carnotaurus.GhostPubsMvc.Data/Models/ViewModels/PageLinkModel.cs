@@ -33,10 +33,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     var url = String.Format("http://www.ghostpubs.com/haunted-pub{0}",
                         fullFilePath.Replace(_currentRoot.ToLower(), String.Empty).Replace("\\", "/"));
 
-                    return url.Underscore().Hyphenate().ToLower();
+                    return url.SeoFormat().ToLower();
                 }
 
-                return fullFilePath.Replace("\\", "/").Underscore().Hyphenate().ToLower();  
+                return fullFilePath.Replace("\\", "/").SeoFormat().ToLower();  
             }
         }
   
