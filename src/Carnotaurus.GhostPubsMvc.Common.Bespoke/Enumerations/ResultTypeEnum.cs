@@ -4,6 +4,7 @@
     {
         Fail = 0,
         NoResults,
-        Success
+        Success,
+        AlreadyTried
     }
 }

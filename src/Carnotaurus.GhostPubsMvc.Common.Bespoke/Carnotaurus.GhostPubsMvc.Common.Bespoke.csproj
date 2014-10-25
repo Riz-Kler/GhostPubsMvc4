@@ -42,6 +42,8 @@
   <ItemGroup>
     <Compile Include="Enumerations\PageTypeEnum.cs" />
     <Compile Include="Enumerations\PageTypePriority.cs" />
+    <Compile Include="StringResult.cs" />
+    <Compile Include="XmlResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs" />
     <Compile Include="Resources1.Designer.cs">

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Linq;
-using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
+using Carnotaurus.GhostPubsMvc.Managers.Implementation;
 
 namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 {
@@ -11,17 +11,14 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         String CurrentUserName { get; }
 
-        string UpdateAdministrativeAreaLevels(XContainer container, Org org);
+        void UpdateOrgFromGoogleResponse(Org org, XContainer element, CountyAdminPair countyAdmin);
 
-        ResultTypeEnum UpdateOrganisationByGoogleMapsApi(Org org, XElement element);
-
-        ResultTypeEnum UpdateOrganisationByLaApi(Org org, XElement element);
+        void UpdateOrgFromLaApiResponse(Org org, XContainer result);
 
         void Save();
 
-        void UpdateCounty(Org org, County match);
-         
+        void UpdateCounty(Org org, int id);
+
         void UpdateCouncil(Org org, int match);
-         
     }
 }

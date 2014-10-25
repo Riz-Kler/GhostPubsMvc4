@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Security.Principal;
 using System.Xml.Linq;
-using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
 using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
@@ -32,9 +31,9 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             }
         }
 
-        public void UpdateCounty(Org org, County match)
+        public void UpdateCounty(Org org, int id)
         {
-            org.CountyId = match.Id;
+            org.CountyId = id;
         }
 
         public void Save()
@@ -42,35 +41,40 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             _writer.SaveChanges();
         }
 
-        public ResultTypeEnum UpdateOrganisationByGoogleMapsApi(Org org, XElement xElement)
+        public void UpdateOrgFromGoogleResponse(Org org, XContainer element, CountyAdminPair countyAdmin)
         {
-            var isSuccess = ResultTypeEnum.Fail;
+            var result = element.Element("result");
 
-            if (xElement == null || xElement.Value.Contains("OVER_QUERY_LIMIT"))
-            {
-                return isSuccess;
-            }
+            UpdateOrgFromGoogleResponse(result, org, countyAdmin);
 
-            if (org.Tried == 1) return isSuccess;
+        }
 
-            org.GoogleMapData = xElement.ToString();
+        public void UpdateCouncil(Org org, int match)
+        {
+            // todo - dpc - come back - org.CouncilId = match;
+        }
 
-            org.Modified = DateTime.Now;
+        public void UpdateOrgFromLaApiResponse(Org org, XContainer result)
+        {
+            if (result == null) throw new ArgumentNullException("result");
 
-            org.Tried = 1;
+            var administrative = result.Element("administrative");
 
-            if (xElement.Value.Contains("ZERO_RESULTS"))
-            {
-                isSuccess = ResultTypeEnum.NoResults;
+            if (administrative == null) return;
 
-                return isSuccess;
-            }
+            var council = administrative.Element("council");
 
-            var result = xElement.Element("result");
+            if (council == null) return;
 
-            if (result == null) return isSuccess;
+            var code = council.Element("code");
 
-            isSuccess = ResultTypeEnum.Success;
+            if (code != null)
+                org.LaCode = code.Value;
+        }
+
+        private void UpdateOrgFromGoogleResponse(XContainer result, Org org, CountyAdminPair countyAdmin)
+        {
+            if (result == null) throw new ArgumentNullException("result");
 
             UpdateGeocodes(result, org);
 
@@ -78,64 +82,17 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             UpdateTown(result, org);
 
-            return isSuccess;
-        }
-
-
-        public ResultTypeEnum UpdateOrganisationByLaApi(Org org, XElement xElement)
-        {
-            var isSuccess = ResultTypeEnum.Fail;
-
-            if (xElement == null)
-            {
-                return isSuccess;
-            }
-
-            if (org.TriedLa == 1) return isSuccess;
-
-            org.LaData = xElement.ToString();
-
-            org.Modified = DateTime.Now;
-
-            org.TriedLa = 1;
-
-            var result = xElement.Element("administrative");
-
-            if (result == null) return isSuccess;
-
-            isSuccess = ResultTypeEnum.Success;
-
-            UpdateLaData(result, org);
-
-            return isSuccess;
-        }
-
-        public string UpdateAdministrativeAreaLevels(XContainer result, Org org)
-        {
-            if (result == null) throw new ArgumentNullException("result");
-
             // administrative
 
-            var countyResult =
-                result.Elements("address_component")
-                    .FirstOrDefault(x => x.Value.EndsWith("administrative_area_level_2political"));
-
-            if (countyResult == null || countyResult.FirstNode == null) return null;
-
-            var inner = countyResult.FirstNode as XElement;
-
-            if (inner == null) return null;
-
-            var outer = inner.Value;
-
-            org.AdministrativeAreaLevel2 = outer;
-
-            return outer;
-        }
-
-        public void UpdateCouncil(Org org, int match)
-        {
-            org.CouncilId = match;
+            if (countyAdmin != null)
+            {
+                org.AdministrativeAreaLevel2 = countyAdmin.AdminLevelTwo;
+                
+                if (countyAdmin.CountyId.HasValue)
+                {
+                    UpdateCounty(org, countyAdmin.CountyId.Value);
+                }
+            }
         }
 
         private static void UpdateTown(XContainer result, Org org)
@@ -158,7 +115,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             var match =
                 result.Elements("address_component")
-                .FirstOrDefault(x => x.Value.EndsWith("localitypolitical"));
+                    .FirstOrDefault(x => x.Value.EndsWith("localitypolitical"));
 
             if (match == null || match.FirstNode == null) return;
 
@@ -170,22 +127,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         }
 
 
-        private static void UpdateLaData(XContainer result, Org org)
-        {
-            if (result == null) throw new ArgumentNullException("result");
-
-            var locationElement = result.Element("council");
-
-            if (locationElement == null) return;
-
-            var lat = locationElement.Element("code");
-
-            if (lat != null)
-                org.CouncilCode = lat.Value;
-
-        }
-
-        private static void UpdateGeocodes(XContainer result, Org org)
+        public void UpdateGeocodes(XContainer result, Org org)
         {
             if (result == null) throw new ArgumentNullException("result");
 

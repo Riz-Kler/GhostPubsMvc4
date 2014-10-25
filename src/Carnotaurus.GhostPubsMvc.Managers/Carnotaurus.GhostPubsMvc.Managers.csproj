@@ -42,13 +42,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Implementation\CommandManager.cs" />
+    <Compile Include="Implementation\CountyAdminPair.cs" />
     <Compile Include="Implementation\MailManager.cs" />
     <Compile Include="Implementation\MailSender.cs" />
+    <Compile Include="Implementation\ThirdPartyApiManager.cs" />
     <Compile Include="Implementation\QueryManager.cs" />
     <Compile Include="Interfaces\ICommandManager.cs" />
     <Compile Include="Interfaces\IMailManager.cs" />
     <Compile Include="Interfaces\IMailSender.cs" />
     <Compile Include="Interfaces\IQueryManager.cs" />
+    <Compile Include="Interfaces\IThirdPartyApiManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

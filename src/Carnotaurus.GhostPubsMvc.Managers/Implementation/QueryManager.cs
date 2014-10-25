@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Xml.Linq;
+using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
-using Carnotaurus.GhostPubsMvc.Common.Helpers;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
 using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
@@ -21,114 +20,115 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             _reader = reader;
         }
 
-
-        public XElement ReadGeocodeResponseElement(Org org)
+        public OutputViewModel PrepareTownModel(string currentCountyPath,
+            IEnumerable<KeyValuePair<string, PageLinkModel>> pubTownLinks, string town,
+            string currentCountyName, Region currentRegion, string currentRegionPath, string currentCountyDescription,
+            int currentCountyId,
+            string currentRoot, List<OutputViewModel> history)
         {
-            // source correct address, using google maps api or similar
+            var townPath = BuildPath(currentCountyPath, town);
 
-            // E.G., https://maps.googleapis.com/maps/api/geocode/xml?address=26%20Smithfield,%20London,%20Greater%20London,%20EC1A%209LB,%20uk&sensor=true&key=AIzaSyC2DCdkPGBtsooyft7sX3P9h2f4uQvLQj0
+            var pubLinks = pubTownLinks
+                .Where(x => x.Key.Equals(town))
+                .Select(x => x.Value)
+                .ToList();
 
-            var key = ConfigurationHelper.GetValueAsString("GoogleMapsApiKey");
-            // "AIzaSyC2DCdkPGBtsooyft7sX3P9h2f4uQvLQj0";
+            var townModel = OutputViewModel.CreateTownOutputViewModel(currentCountyPath, town, currentCountyName,
+                currentRegion,
+                currentRegionPath, currentCountyDescription,
+                currentCountyId, pubLinks, townPath, currentRoot, history);
 
-            var requestUri =
-                string.Format(
-                    "https://maps.google.com/maps/api/geocode/xml?address={0}, {1}, {2}, UK&sensor=false&key={3}",
-                    org.TradingName,
-                    org.Address,
-                    org.Postcode,
-                    key
-                    );
-
-            var document = XDocument.Load(requestUri);
-
-            var element = document.Element("GeocodeResponse");
-
-            return element;
-        }
-
-        public List<XElement> ReadElements(Org org)
-        {
-            var elements = new List<XElement>();
-
-
-            var nso = ReadNsoResponseElement(org);
-            elements.Add(nso);
-
-            var geocode = ReadGeocodeResponseElement(org);
-            elements.Add(geocode);
-
-            return elements;
+            return townModel;
         }
 
 
-        public XElement ReadNsoResponseElement(Org org)
+        public OutputViewModel PreparePageTypeModel(PageTypeEnum pageType, string priority, string description,
+            List<PageLinkModel> links,
+            string title, string path, string currentRoot)
         {
-            /*
-             This XML file does not appear to have any style information associated with it. The document tree is shown below.
-<result>
-<postcode>SK1 3JT</postcode>
-<geo>
-<lat>53.40086635686018</lat>
-<lng>-2.1493842139459183</lng>
-<easting>390164.0</easting>
-<northing>389348.0</northing>
-<geohash>http://geohash.org/gcqrz16fedyz</geohash>
-</geo>
-<administrative>
-<council>
-<title>Stockport</title>
-<uri>
-http://statistics.data.gov.uk/id/statistical-geography/E08000007
-</uri>
-<code>E08000007</code>
-</council>
-<ward>
-<title>Manor</title>
-<uri>
-http://statistics.data.gov.uk/id/statistical-geography/E05000793
-</uri>
-<code>E05000793</code>
-</ward>
-<constituency>
-<title>Stockport</title>
-<uri>
-http://statistics.data.gov.uk/id/statistical-geography/E14000969
-</uri>
-<code>E14000969</code>
-</constituency>
-</administrative>
-</result>
-             */
+            if (title == null)
+            {
+                title = pageType.ToString().CamelCaseToWords();
+            }
 
+            var model = OutputViewModel.CreatePageTypeOutputViewModel(pageType, priority, description, links, title,
+                path, currentRoot);
 
-            // http://uk-postcodes.com/postcode/SK13JT.xml
+            return model;
+        }
 
-            var requestUri =
-               string.Format(
-                   "http://uk-postcodes.com/postcode/{0}.xml",
-                   org.Postcode.Replace(" ", "")
-                  );
+        public OutputViewModel PrepareRegionModel(Region currentRegion, string currentRegionPath, int orgsInRegionCount,
+            IEnumerable<County> hauntedCountiesInRegion, string currentRoot,
+            List<OutputViewModel> history)
+        {
+            var countyLinks = hauntedCountiesInRegion.Select(x => new PageLinkModel(currentRoot)
+            {
+                Text = x.Description,
+                Title = x.Description
+            }).ToList();
 
-            var document = XDocument.Load(requestUri);
+            var regionModel = OutputViewModel.CreateRegionOutputViewModel(currentRegion, currentRegionPath,
+                orgsInRegionCount, countyLinks, currentRoot, history);
 
-            var element = document.Element("result");
+            return regionModel;
+        }
 
-            return element;
+        public OutputViewModel PrepareCountyModel(string currentCountyName, int currentCountyId,
+            string currentCountyPath,
+            IEnumerable<string> towns, Region currentRegion, int count, string currentRegionPath, string currentRoot,
+            List<OutputViewModel> history)
+        {
+            var townLinks = towns.Select(s => new PageLinkModel(currentRoot)
+            {
+                Text = s,
+                Title = s
+            }).ToList();
+
+            var countyModel = OutputViewModel.CreateCountyOutputViewModel(currentCountyName, currentCountyId,
+                currentCountyPath, currentRegion, count,
+                currentRegionPath, townLinks, currentRoot, history);
+            return countyModel;
+        }
+
+        public OutputViewModel PreparePubModel(ICollection<KeyValuePair<string, PageLinkModel>> pubTownLinks,
+            string currentTownPath, Org pub, string currentRoot, List<OutputViewModel> history
+            )
+        {
+            pub.TownPath = currentTownPath;
+
+            pubTownLinks.Add(new KeyValuePair<string, PageLinkModel>(pub.Town, pub.ExtractLink(currentRoot)));
+
+            var notes = pub.Notes.Select(note => new PageLinkModel(currentRoot)
+            {
+                Id = note.Id,
+                Text = note.Text,
+                Title = note.Text
+            }).ToList();
+
+            const PageTypeEnum action = PageTypeEnum.Pub;
+
+            var pubModel = OutputViewModel.CreatePubOutputViewModel(pub, action, notes, currentRoot, history);
+
+            return pubModel;
         }
 
         public IEnumerable<Org> GetOrgsToUpdate()
         {
-            var results = _reader.Items<Org>().Where(org =>
+            var results = _reader.Items<Org>()
+                .Where(org =>
                 org != null
+                    // todo - dpc - come back
+               // & org.HauntedStatus == 1
+                                 & org.AddressTypeId == 1
                 && org.Address != null
                 && org.Postcode != null
-                && org.AddressTypeId == 1
-                && org.CountyId == null
-                && (org.Tried == null || org.TriedLa == null)
-                && org.HauntedStatus == 1
-                )
-                .Take(100)
+
+                    // todo - dpc - come back
+                    //   && org.CountyId == null
+                   && ((org.LaTried == 0) || (org.Tried == 0))
+                 
+                 )
+                .Take(1000)
                 .ToList();
 
             return results;
@@ -189,6 +189,44 @@ http://statistics.data.gov.uk/id/statistical-geography/E14000969
         }
 
 
+        public string PrepareWebmasterSitemap(List<string> sitepmap)
+        {
+            // generate the Google webmaster tools xml url sitemap
+            var sb = new StringBuilder();
+
+            sb.AppendLine(@"<?xml version=""1.0"" encoding=""UTF-8""?>");
+
+            sb.AppendLine(
+                @"<urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xsi:schemaLocation=""http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"">");
+
+            if (sitepmap != null)
+            {
+                foreach (var item in sitepmap)
+                {
+                    sb.AppendLine(item);
+                }
+            }
+
+            sb.AppendLine("</urlset>");
+
+            return sb.ToString();
+        }
+
+
+        public String BuildPath(params String[] builder)
+        {
+            var output = String.Empty;
+
+            foreach (var s in builder)
+            {
+                output = output == String.Empty
+                    ? s.ToLower().SeoFormat()
+                    : string.Format("{0}\\{1}", output, s.ToLower().SeoFormat());
+            }
+
+            return output;
+        }
+
         private PageLinkModel CreatePageLinkModel(string currentRoot, KeyValuePair<string, int> pathKeyValuePair,
             ref int index, int rank)
         {
@@ -224,49 +262,5 @@ http://statistics.data.gov.uk/id/statistical-geography/E14000969
 
             return result;
         }
-         
-        public void WriteWebmasterSitemap(List<string> sitepmap, String currentRoot)
-        {
-
-            // generate the Google webmaster tools xml url sitemap
-            var sb = new StringBuilder();
-
-            sb.AppendLine(@"<?xml version=""1.0"" encoding=""UTF-8""?>");
-
-            sb.AppendLine(
-                @"<urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xsi:schemaLocation=""http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"">");
-
-            if (sitepmap != null)
-            {
-                foreach (var item in sitepmap)
-                {
-                    sb.AppendLine(item);
-                }
-            }
-
-            sb.AppendLine("</urlset>");
-
-            var fullFilePath = String.Format("{0}/ghostpubs-sitemap.xml", currentRoot);
-
-            FileSystemHelper.WriteFile(fullFilePath, sb.ToString());
-
-        }
-
-
-        public String BuildPath(params String[] builder)
-        {
-            var output = String.Empty;
-
-            foreach (var s in builder)
-            {
-                output = output == String.Empty ?
-                    s.ToLower().SeoFormat() :
-                    string.Format("{0}\\{1}", output, s.ToLower().SeoFormat());
-            }
-
-            return output;
-        }
-        
-
     }
 }
