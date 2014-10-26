@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke;
@@ -17,12 +16,12 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 {
     public class TemplateController : Controller
     {
-        private readonly IThirdPartyApiManager _thirdPartyApiManager;
         private readonly ICommandManager _commandManager;
-        private readonly IQueryManager _queryManager;
 
         private readonly List<OutputViewModel> _history;
         private readonly List<String> _historySitemap;
+        private readonly IQueryManager _queryManager;
+        private readonly IThirdPartyApiManager _thirdPartyApiManager;
 
         private String _currentRoot = String.Empty;
         private Guid _generationId;
@@ -162,9 +161,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             foreach (var org in orgsToUpdate)
             {
                 UpdateOrg(org);
-            }
 
-            _commandManager.Save();
+                _commandManager.Save();
+            }
         }
 
         private void UpdateOrg(Org org)
@@ -212,7 +211,6 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                         org.Modified = DateTime.Now;
 
                         org.LaTried = 1;
-
                     }
                     else
                     {
@@ -224,9 +222,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                     {
                         _commandManager.UpdateOrgFromLaApiResponse(org, element);
                     }
-
                 }
-
             }
         }
 
@@ -250,7 +246,6 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 CountyId = id,
                 AdminLevelTwo = name.Result
             };
-
         }
 
         private IEnumerable<Region> CreateRegionsFile(string currentRoot)

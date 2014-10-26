@@ -125,10 +125,11 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
                     // todo - dpc - come back
                     //   && org.CountyId == null
-                   && ((org.LaTried == 0) || (org.Tried == 0))
+                   && ((org.LaTried == 0) 
+                 )  // || (org.Tried == 0)
                  
                  )
-                .Take(1000)
+                //.Take(1000)
                 .ToList();
 
             return results;

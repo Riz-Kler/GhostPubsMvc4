@@ -82,6 +82,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             if (countained == null) return result;
 
             result.ResultType = ResultTypeEnum.Success;
+
             result.Result = countained;
 
             return result;
@@ -106,17 +107,30 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                     key
                     );
 
-            var document = XDocument.Load(requestUri);
+            XDocument document = null;
 
-            var element = document.Element("GeocodeResponse");
+            try
+            {
+                document = XDocument.Load(requestUri);
+            }
+            catch (Exception ex)
+            {
+                // throw new Exception(ex.InnerException.Message);
+            }
 
-            return element;
+            if (document != null)
+            {
+                var element = document.Element("GeocodeResponse");
+
+                return element;
+            }
+
+            return null;
         }
 
         public List<XElement> ReadElements(Org org)
         {
             var elements = new List<XElement>();
-
 
             if (org.Postcode.Length >= 6)
             {
@@ -172,7 +186,6 @@ http://statistics.data.gov.uk/id/statistical-geography/E14000969
 </result>
              */
 
-
             // http://uk-postcodes.com/postcode/SK13JT.xml
 
             var requestUri =
@@ -183,20 +196,23 @@ http://statistics.data.gov.uk/id/statistical-geography/E14000969
 
             XDocument document = null;
 
-            XElement element = null;
-
             try
             {
                 document = XDocument.Load(requestUri);
             }
             catch (Exception ex)
             {
-                string message = ex.Message;
+                // throw new Exception(ex.InnerException.Message);
             }
 
-            if (document != null) element = document.Element("result");
+            if (document != null)
+            {
+                var element = document.Element("result");
 
-            return element;
+                return element;
+            }
+
+            return null;
         }
     }
 }
