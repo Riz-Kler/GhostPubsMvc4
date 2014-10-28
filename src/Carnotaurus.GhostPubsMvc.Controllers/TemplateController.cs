@@ -170,7 +170,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         {
             var result = new XmlResult();
 
-            if (org.Tried > 0 & org.LaTried > 0) return;
+            if (org.Tried & org.LaTried) return;
 
             var elements = _thirdPartyApiManager.ReadElements(org);
 
@@ -178,7 +178,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             {
                 if (element.ToString().Contains("GeocodeResponse"))
                 {
-                    if (org.Tried == 0)
+                    if (!org.Tried)
                     {
                         result = _thirdPartyApiManager.RequestGoogleMapsApiResponse(element);
 
@@ -186,7 +186,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
                         org.Modified = DateTime.Now;
 
-                        org.Tried = 1;
+                        org.Tried = true;
                     }
                     else
                     {
@@ -202,7 +202,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 }
                 else
                 {
-                    if (org.LaTried == 0)
+                    if (!org.LaTried)
                     {
                         result = _thirdPartyApiManager.RequestLaApiResponse(element);
 
@@ -210,7 +210,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
                         org.Modified = DateTime.Now;
 
-                        org.LaTried = 1;
+                        org.LaTried = true;
                     }
                     else
                     {
@@ -300,7 +300,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void CreateAllCountyFilesForRegion(Region currentRegion, string currentRegionPath)
         {
-            var orgsInRegionCount = currentRegion.Counties.Sum(x => x.Orgs.Count(y => y.HauntedStatus == 1));
+            var orgsInRegionCount = currentRegion.Counties.Sum(x => x.Orgs.Count(y => y.HauntedStatus == true));
 
             if (orgsInRegionCount == 0) return;
 
@@ -329,7 +329,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             // write them out backwards (so alphabetical from previous) and keep towns together (so need pub has a better chance to be in the same town) 
             var orgsInCounty =
                 currentRegion.Counties.First(c => c.Name == currentCountyName)
-                    .Orgs.Where(x => x.Town != null && x.HauntedStatus == 1)
+                    .Orgs.Where(x => x.Town != null && x.HauntedStatus == true)
                     .OrderByDescending(org => org.Town)
                     .ThenByDescending(org => org.TradingName)
                     .ToList();

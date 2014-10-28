@@ -33,7 +33,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
         public void UpdateCounty(Org org, int id)
         {
-            org.CountyId = id;
+            org.AuthorityId = id;
         }
 
         public void Save()

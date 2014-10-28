@@ -75,10 +75,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public DateTime Modified { get; set; }
         public DateTime? Deleted { get; set; }
         public int? AddressTypeId { get; set; }
-        public int? CountyId { get; set; }
+        public int? AuthorityId { get; set; }
         public int? ParentId { get; set; }
-        public int? TradingStatus { get; set; }
-        public int? HauntedStatus { get; set; }
+        public bool? TradingStatus { get; set; }
+        public bool? HauntedStatus { get; set; }
         public string TradingName { get; set; }
         public string AlternateName { get; set; }
         public string SimpleName { get; set; }
@@ -96,10 +96,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public int? OsY { get; set; }
         public double? Lat { get; set; }
         public double? Lon { get; set; }
-        public int Tried { get; set; }
+        public bool Tried { get; set; }
         public string GoogleMapData { get; set; }
 
-        public int LaTried { get; set; }
+        public bool LaTried { get; set; }
         public string LaData { get; set; }
         public string LaCode { get; set; }
 

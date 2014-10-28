@@ -118,14 +118,14 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .Where(org =>
                     org != null
                         // todo - dpc - come back
-                        // & org.HauntedStatus == 1
-                    & org.AddressTypeId == 1
+                         && org.HauntedStatus.HasValue && org.HauntedStatus.Value
+                    && org.AddressTypeId == 1
                     && org.Address != null
                     && org.Postcode != null
 
                         // todo - dpc - come back
                         //   && org.CountyId == null
-                    && ((org.LaTried == 0)
+                    && ((!org.LaTried)
                         ) // || (org.Tried == 0)
                 )
                 //.Take(1000)
@@ -156,7 +156,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             var region = regions.First(r => r.Id == regionId);
 
             var results =
-                region.Counties.Where(county => county.Orgs.Any(org => org.HauntedStatus == 1));
+                region.Counties.Where(county => county.Orgs.Any(org => org.HauntedStatus == true));
 
             return results;
         }
@@ -167,14 +167,14 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             var data = _reader.Items<Org>();
 
             var queryable = data
-                .Where(org => org.HauntedStatus == 1)
+                .Where(org => org.HauntedStatus == true)
                 .ToList()
                 .GroupBy(org => org.UncRelTownPath)
                 .Select(x => new KeyValuePair<String, Int32>(x.Key, x.Count()))
                 .ToList();
 
             var ranked = queryable.RankByDescending(i => i.Value,
-                (i, r) => new {Rank = r, Item = i})
+                (i, r) => new { Rank = r, Item = i })
                 .ToList();
 
             var index = 1;
@@ -241,7 +241,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             var data = _reader.Items<Org>();
 
             var queryable = data
-                .Where(org => org.HauntedStatus == 1
+                .Where(org => org.HauntedStatus == true
                               && org.County.Region.Name == townLineage.Region
                               && org.County.Name == townLineage.County
                               && org.Town == townLineage.Town)

@@ -58,7 +58,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             this.Property(t => t.Modified).HasColumnName("Modified");
             this.Property(t => t.Deleted).HasColumnName("Deleted");
             this.Property(t => t.AddressTypeId).HasColumnName("AddressTypeID");
-            this.Property(t => t.CountyId).HasColumnName("CountyID");
+            this.Property(t => t.AuthorityId).HasColumnName("AuthorityId");
             this.Property(t => t.ParentId).HasColumnName("ParentID");
             this.Property(t => t.TradingStatus).HasColumnName("TradingStatus");
             this.Property(t => t.HauntedStatus).HasColumnName("HauntedStatus");
@@ -91,7 +91,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
                 .HasForeignKey(d => d.AddressTypeId);
             this.HasOptional(t => t.County)
                 .WithMany(t => t.Orgs)
-                .HasForeignKey(d => d.CountyId);
+                .HasForeignKey(d => d.AuthorityId);
         }
     }
 }
