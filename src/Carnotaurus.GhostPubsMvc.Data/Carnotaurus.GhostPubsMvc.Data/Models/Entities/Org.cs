@@ -5,7 +5,6 @@ using System.Globalization;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
-using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 {
@@ -99,13 +98,13 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public double? Lon { get; set; }
         public int Tried { get; set; }
         public string GoogleMapData { get; set; }
-      
+
         public int LaTried { get; set; }
         public string LaData { get; set; }
         public string LaCode { get; set; }
 
         public virtual AddressType AddressType { get; set; }
-     //   public virtual ICollection<BookItem> BookItems { get; set; }
+        //   public virtual ICollection<BookItem> BookItems { get; set; }
         public virtual County County { get; set; }
         public virtual ICollection<Note> Notes { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
@@ -153,7 +152,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 Text = TradingName,
                 Title = string.Format("{0}, {1}", TradingName, Postcode),
                 Unc = Path,
-
             };
 
             return info;
@@ -161,16 +159,15 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
         public PageLinkModel ExtractFullLink()
         {
+            var result = string.Format(@"http://www.ghostpubs.com/haunted-pub/{0}/{1}/{2}/{3}/{4}", County.Region.Name,
+                County.Name, Town, Id, TradingName);
 
-            var result = string.Format(@"http://www.ghostpubs.com/haunted-pub/{0}/{1}/{2}/{3}/{4}", County.Region.Name, County.Name, Town, Id, TradingName);
-
-            var info = new PageLinkModel()
+            var info = new PageLinkModel
             {
                 Id = Id,
                 Text = TradingName,
                 Title = string.Format("{0}, {1}", TradingName, Postcode),
                 Unc = result
-
             };
 
             return info;

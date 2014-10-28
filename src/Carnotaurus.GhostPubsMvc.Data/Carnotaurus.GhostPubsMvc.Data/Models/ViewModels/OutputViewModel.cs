@@ -12,7 +12,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
     public class OutputViewModel : IOutputViewModel
     {
         #region Statics
-         
+
         public static OutputViewModel CreateRegionsOutputViewModel(string currentRoot, List<Region> regions)
         {
             var regionsModel = new OutputViewModel(currentRoot)
@@ -37,7 +37,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             };
             return regionsModel;
         }
-         
+
         public static OutputViewModel CreateRegionOutputViewModel(Region currentRegion, string currentRegionPath,
             int orgsInRegionCount, IList<PageLinkModel> countyLinks, String currentRoot,
             IEnumerable<OutputViewModel> history)
@@ -190,7 +190,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             };
             return townModel;
         }
-         
+
         public static OutputViewModel CreatePubOutputViewModel(Org pub,
             PageTypeEnum action,
             IList<PageLinkModel> notes,
@@ -259,7 +259,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             };
             return pubModel;
         }
-         
+
         public static OutputViewModel CreatePageTypeOutputViewModel(PageTypeEnum pageType, string priority,
             string description,
             List<PageLinkModel> links, string title, string path, string currentRoot)

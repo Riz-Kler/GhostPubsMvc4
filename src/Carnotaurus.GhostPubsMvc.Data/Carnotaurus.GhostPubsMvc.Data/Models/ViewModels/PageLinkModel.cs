@@ -2,19 +2,16 @@
 using System.Collections.Generic;
 using System.Globalization;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
-using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
-using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
-        [Serializable]
+    [Serializable]
     public class PageLinkModel
     {
         private readonly String _currentRoot = String.Empty;
 
         public PageLinkModel()
         {
-            
         }
 
         public PageLinkModel(String currentRoot)
@@ -36,10 +33,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     return url.SeoFormat().ToLower();
                 }
 
-                return fullFilePath.Replace("\\", "/").SeoFormat().ToLower();  
+                return fullFilePath.Replace("\\", "/").SeoFormat().ToLower();
             }
         }
-  
+
         public String Unc { get; set; }
 
         public String Title { get; set; }
@@ -47,12 +44,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public String Text { get; set; }
 
         public Int32 Id { get; set; }
- 
-        public string ControlId {
-            get
-            {
-                return string.Concat("collapse", Id.ToString(CultureInfo.InvariantCulture));
-            }
+
+        public string ControlId
+        {
+            get { return string.Concat("collapse", Id.ToString(CultureInfo.InvariantCulture)); }
         }
 
         public List<PageLinkModel> Links { get; set; }

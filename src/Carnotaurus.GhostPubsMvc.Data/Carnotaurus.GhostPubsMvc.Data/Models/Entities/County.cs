@@ -17,5 +17,4 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public virtual ICollection<Org> Orgs { get; set; }
         public int Id { get; set; }
     }
-
 }

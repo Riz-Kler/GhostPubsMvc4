@@ -46,7 +46,6 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             var result = element.Element("result");
 
             UpdateOrgFromGoogleResponse(result, org, countyAdmin);
-
         }
 
         public void UpdateCouncil(Org org, int match)
@@ -87,7 +86,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             if (countyAdmin != null)
             {
                 org.AdministrativeAreaLevel2 = countyAdmin.AdminLevelTwo;
-                
+
                 if (countyAdmin.CountyId.HasValue)
                 {
                     UpdateCounty(org, countyAdmin.CountyId.Value);

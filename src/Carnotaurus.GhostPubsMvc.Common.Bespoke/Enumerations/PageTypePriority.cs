@@ -26,6 +26,5 @@
         public const string Terms = "0.1";
         public const string ContactUs = "0.1";
         public const string Privacy = "0.1";
-
     }
 }

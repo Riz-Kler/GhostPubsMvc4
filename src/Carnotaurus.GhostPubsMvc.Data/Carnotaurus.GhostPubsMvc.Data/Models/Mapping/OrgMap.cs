@@ -84,7 +84,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             this.Property(t => t.LaCode).HasColumnName("LaCode");
             this.Property(t => t.LaTried).HasColumnName("LaTried");
             this.Property(t => t.LaData).HasColumnName("LaData");
-                         
+
             // Relationships
             this.HasOptional(t => t.AddressType)
                 .WithMany(t => t.Orgs)

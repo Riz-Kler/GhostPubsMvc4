@@ -49,6 +49,5 @@ namespace Carnotaurus.GhostPubsMvc.Common.Helpers
         {
             File.WriteAllText(fullFilePath.ToLower(), contents);
         }
-
     }
 }

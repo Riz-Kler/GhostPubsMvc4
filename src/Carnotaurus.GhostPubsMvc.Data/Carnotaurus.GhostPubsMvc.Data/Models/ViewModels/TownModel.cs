@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
-
     public class TownModel
     {
         public TownModel(String path)
@@ -32,5 +27,4 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             get { return Path.SplitOnSlash().JoinWithCommaReserve(); }
         }
     }
-  
 }

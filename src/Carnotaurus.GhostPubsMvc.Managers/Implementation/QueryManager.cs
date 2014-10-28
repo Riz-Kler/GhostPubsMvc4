@@ -116,19 +116,18 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         {
             var results = _reader.Items<Org>()
                 .Where(org =>
-                org != null
-                    // todo - dpc - come back
-               // & org.HauntedStatus == 1
-                                 & org.AddressTypeId == 1
-                && org.Address != null
-                && org.Postcode != null
+                    org != null
+                        // todo - dpc - come back
+                        // & org.HauntedStatus == 1
+                    & org.AddressTypeId == 1
+                    && org.Address != null
+                    && org.Postcode != null
 
-                    // todo - dpc - come back
-                    //   && org.CountyId == null
-                   && ((org.LaTried == 0) 
-                 )  // || (org.Tried == 0)
-                 
-                 )
+                        // todo - dpc - come back
+                        //   && org.CountyId == null
+                    && ((org.LaTried == 0)
+                        ) // || (org.Tried == 0)
+                )
                 //.Take(1000)
                 .ToList();
 
@@ -175,7 +174,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .ToList();
 
             var ranked = queryable.RankByDescending(i => i.Value,
-                (i, r) => new { Rank = r, Item = i })
+                (i, r) => new {Rank = r, Item = i})
                 .ToList();
 
             var index = 1;

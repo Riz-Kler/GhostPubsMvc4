@@ -11,7 +11,6 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 {
     public static class PrimativeExtensions
     {
-
         public static T DeepClone<T>(this T obj)
         {
             using (var ms = new MemoryStream())
@@ -20,7 +19,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
                 formatter.Serialize(ms, obj);
                 ms.Position = 0;
 
-                return (T)formatter.Deserialize(ms);
+                return (T) formatter.Deserialize(ms);
             }
         }
 
@@ -166,10 +165,10 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             if (String.IsNullOrEmpty(input))
                 return input;
 
-            return string.Format("{0}{1}", 
-                input.First().ToString(CultureInfo.CurrentCulture).ToUpper(), 
+            return string.Format("{0}{1}",
+                input.First().ToString(CultureInfo.CurrentCulture).ToUpper(),
                 String.Join(String.Empty, input.Skip(1))
-            );
+                );
         }
 
         public static string CamelCaseToWords(this string input)
@@ -188,6 +187,5 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
         {
             return input.Underscore().Hyphenate();
         }
-
     }
 }
