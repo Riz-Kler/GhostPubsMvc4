@@ -17,6 +17,15 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             Tags = new List<Tag>();
         }
 
+        [NotMapped]
+        public Boolean HasTriedAllApis
+        {
+            get
+            {
+                return (
+                    LaTried & Tried);
+            }
+        }
 
         [NotMapped]
         public string CountyPath
@@ -104,8 +113,9 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public string LaCode { get; set; }
 
         public virtual AddressType AddressType { get; set; }
+        // this slows down retreival tragically
         //   public virtual ICollection<BookItem> BookItems { get; set; }
-        public virtual County County { get; set; }
+        public virtual Authority Authority { get; set; }
         public virtual ICollection<Note> Notes { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
 
@@ -114,10 +124,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                if (County != null && County.Region != null)
-                {
-                    return string.Format("{0}\\{1}\\{2}", County.Region.Name, County.Name, Town);
-                }
+                // todo - come back
+                //if (Authority != null && Authority.Region != null)
+                //{
+                //    return string.Format("{0}\\{1}\\{2}", County.Region.Name, County.Name, Town);
+                //}
 
                 return null;
             }
@@ -159,18 +170,21 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
         public PageLinkModel ExtractFullLink()
         {
-            var result = string.Format(@"http://www.ghostpubs.com/haunted-pub/{0}/{1}/{2}/{3}/{4}", County.Region.Name,
-                County.Name, Town, Id, TradingName);
+            // todo - come back
+            //var result = string.Format(@"http://www.ghostpubs.com/haunted-pub/{0}/{1}/{2}/{3}/{4}", County.Region.Name,
+            //    County.Name, Town, Id, TradingName);
 
-            var info = new PageLinkModel
-            {
-                Id = Id,
-                Text = TradingName,
-                Title = string.Format("{0}, {1}", TradingName, Postcode),
-                Unc = result
-            };
+            //var info = new PageLinkModel
+            //{
+            //    Id = Id,
+            //    Text = TradingName,
+            //    Title = string.Format("{0}, {1}", TradingName, Postcode),
+            //    Unc = result
+            //};
 
-            return info;
+            //return info;
+
+            return null;
         }
     }
 }

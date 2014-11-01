@@ -14,9 +14,9 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         Authority GetAuthority(string code);
 
-        IEnumerable<County> GetHauntedCountiesInRegion(Int32 regionId);
+        IEnumerable<Authority> GetHauntedCountiesInRegion(Int32 regionId);
 
-        IEnumerable<Region> GetRegions();
+        IEnumerable<Authority> GetRegions();
 
         List<PageLinkModel> GetSitemapData(String root);
 
@@ -24,7 +24,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         OutputViewModel PrepareCountyModel(string currentCountyName, int currentCountyId,
             string currentCountyPath,
-            IEnumerable<string> towns, Region currentRegion, int count, string currentRegionPath, string currentRoot,
+            IEnumerable<string> towns, Authority currentRegion, int count, string currentRegionPath, string currentRoot,
             List<OutputViewModel> history);
 
         OutputViewModel PreparePubModel(ICollection<KeyValuePair<string, PageLinkModel>> pubTownLinks,
@@ -33,15 +33,15 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         OutputViewModel PrepareTownModel(string currentCountyPath,
             IEnumerable<KeyValuePair<string, PageLinkModel>> pubTownLinks, string town,
-            string currentCountyName, Region currentRegion, string currentRegionPath, string currentCountyDescription,
+            string currentCountyName, Authority currentRegion, string currentRegionPath, string currentCountyDescription,
             int currentCountyId, string currentRoot, List<OutputViewModel> history);
 
         OutputViewModel PreparePageTypeModel(PageTypeEnum pageType, string priority, string description,
             List<PageLinkModel> links,
             string title, string path, string currentRoot);
 
-        OutputViewModel PrepareRegionModel(Region currentRegion, string currentRegionPath, int orgsInRegionCount,
-            IEnumerable<County> hauntedCountiesInRegion, string currentRoot,
+        OutputViewModel PrepareRegionModel(Authority currentRegion, string currentRegionPath, int orgsInRegionCount,
+            IEnumerable<Authority> hauntedCountiesInRegion, string currentRoot,
             List<OutputViewModel> history);
 
         // no db dependencies

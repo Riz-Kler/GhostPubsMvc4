@@ -89,7 +89,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             this.HasOptional(t => t.AddressType)
                 .WithMany(t => t.Orgs)
                 .HasForeignKey(d => d.AddressTypeId);
-            this.HasOptional(t => t.County)
+            this.HasOptional(t => t.Authority)
                 .WithMany(t => t.Orgs)
                 .HasForeignKey(d => d.AuthorityId);
         }

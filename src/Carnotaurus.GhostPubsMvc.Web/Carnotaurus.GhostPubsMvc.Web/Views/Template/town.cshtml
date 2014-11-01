@@ -3,8 +3,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = string.Format("Haunted pubs in the town of {0}, {1}", Model.JumboTitle, Model.Lineage.County.Text);
     ViewBag.Link = Model.Lineage.Town.Url;
-    ViewBag.MetaDescription = Model.MetaDescription; ViewBag.ArticleDescription = Model.ArticleDescription;
-    
+    ViewBag.MetaDescription = Model.MetaDescription;
+    ViewBag.ArticleDescription = Model.ArticleDescription;
+
     ViewBag.Tag = Model.Tag;
     ViewBag.Tags = Model.Tags;
 }
@@ -57,8 +58,8 @@
         <div class="span4 bs-docs-sidebar text-center">
             <div>
                 <div>
-                     <img width='200' height='200' onclick=" window.open('http://www.ghostpubs.com/haunted-pub/detail.html', '_self'); " class="img-circle face-relative" src="~/Content/bootstrap/231/img/ghostpubs/padded-logo-125x125.png" alt="Ghost Pubs" title="Ghost Pubs" />
-                 </div>
+                    <img width='200' height='200' onclick=" window.open('http://www.ghostpubs.com/haunted-pub/detail.html', '_self'); " class="img-circle face-relative" src="~/Content/bootstrap/231/img/ghostpubs/padded-logo-125x125.png" alt="Ghost Pubs" title="Ghost Pubs" />
+                </div>
 
                 <div class="btn-group btn-group-vertical">
                     @foreach (var link in Model.PageLinks)

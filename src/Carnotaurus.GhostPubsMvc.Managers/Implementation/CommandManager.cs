@@ -49,10 +49,12 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             UpdateOrgFromGoogleResponse(result, org, countyAdmin);
         }
-         
+
         public void UpdateOrgFromLaApiResponse(Org org, XContainer result)
         {
             if (result == null) throw new ArgumentNullException("result");
+
+            org.LaTried = true;
 
             var administrative = result.Element("administrative");
 
@@ -75,6 +77,10 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         {
             if (result == null) throw new ArgumentNullException("result");
 
+            org.Modified = DateTime.Now;
+
+            org.Tried = true;
+
             UpdateGeocodes(result, org);
 
             UpdateLocality(result, org);
@@ -86,7 +92,6 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             if (countyAdmin != null)
             {
                 org.AdministrativeAreaLevel2 = countyAdmin.AdminLevelTwo;
-                org.Modified = DateTime.Now;
             }
         }
 

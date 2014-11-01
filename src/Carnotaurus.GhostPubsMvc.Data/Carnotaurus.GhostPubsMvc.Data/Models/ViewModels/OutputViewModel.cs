@@ -13,7 +13,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
     {
         #region Statics
 
-        public static OutputViewModel CreateRegionsOutputViewModel(string currentRoot, List<Region> regions)
+        public static OutputViewModel CreateRegionsOutputViewModel(string currentRoot, List<Authority> regions)
         {
             var regionsModel = new OutputViewModel(currentRoot)
             {
@@ -38,7 +38,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             return regionsModel;
         }
 
-        public static OutputViewModel CreateRegionOutputViewModel(Region currentRegion, string currentRegionPath,
+        public static OutputViewModel CreateRegionOutputViewModel(Authority currentRegion, string currentRegionPath,
             int orgsInRegionCount, IList<PageLinkModel> countyLinks, String currentRoot,
             IEnumerable<OutputViewModel> history)
         {
@@ -80,7 +80,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         }
 
         public static OutputViewModel CreateCountyOutputViewModel(string currentCountyName, int currentCountyId,
-            string currentCountyPath, Region currentRegion, int count, string currentRegionPath,
+            string currentCountyPath, Authority currentRegion, int count, string currentRegionPath,
             IList<PageLinkModel> townLinks,
             String currentRoot,
             IEnumerable<OutputViewModel> history)
@@ -137,7 +137,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public static OutputViewModel CreateTownOutputViewModel(string currentCountyPath, string town,
             string currentCountyName,
-            Region currentRegion, string currentRegionPath, string currentCountyDescription, int currentCountyId,
+            Authority currentRegion, string currentRegionPath, string currentCountyDescription, int currentCountyId,
             IList<PageLinkModel> pubLinks,
             string townPath, string currentRoot, IEnumerable<OutputViewModel> history)
         {
@@ -212,7 +212,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 Previous = history.LastOrDefault(x => x.Action == action),
                 Lat = pub.Lat.ToString(),
                 Lon = pub.Lon.ToString(),
-                OtherNames = pub.County.Orgs
+                OtherNames = pub.Authority.Orgs
                     .Where(x => x.Address == pub.Address && x.Postcode == pub.Postcode && x.Id != pub.Id)
                     .Select(
                         org => new PageLinkModel(currentRoot)
@@ -231,15 +231,15 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     {
                         Unc = pub.RegionPath,
                         Id = pub.Id,
-                        Text = pub.County.Region.Name,
-                        Title = pub.County.Region.Name
+                        Text = pub.Authority.ParentAuthority.Name,
+                        Title = pub.Authority.ParentAuthority.Name
                     },
                     County = new PageLinkModel(currentRoot)
                     {
                         Unc = pub.CountyPath,
                         Id = pub.Id,
-                        Text = pub.County.Name,
-                        Title = pub.County.Name
+                        Text = pub.Authority.Name,
+                        Title = pub.Authority.Name
                     },
                     Town = new PageLinkModel(currentRoot)
                     {

@@ -27,9 +27,7 @@ namespace Carnotaurus.GhostPubsMvc.Data
         public DbSet<BookItem> BookItems { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ContentPage> ContentPages { get; set; }
-        public DbSet<County> Counties { get; set; }
-        public DbSet<Region> Regions { get; set; }
-        public DbSet<Authority> LaCouncil { get; set; }
+        public DbSet<Authority> Authorities { get; set; }
         public DbSet<Feature> Features { get; set; }
         public DbSet<Note> Notes { get; set; }
         public DbSet<Org> Orgs { get; set; }
@@ -78,8 +76,6 @@ namespace Carnotaurus.GhostPubsMvc.Data
             modelBuilder.Configurations.Add(new BookItemMap());
             modelBuilder.Configurations.Add(new CategoryMap());
             modelBuilder.Configurations.Add(new ContentPageMap());
-            modelBuilder.Configurations.Add(new CountyMap());
-            modelBuilder.Configurations.Add(new RegionMap());
             modelBuilder.Configurations.Add(new AuthorityMap());
             modelBuilder.Configurations.Add(new FeatureMap());
             modelBuilder.Configurations.Add(new NoteMap());

@@ -54,7 +54,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         {
             _isDeprecated = false;
 
-            UpdateOrganisations(_queryManager.GetOrgsToUpdate());
+            var orgsToUpdate = _queryManager.GetOrgsToUpdate();
+
+            UpdateOrganisations(orgsToUpdate);
 
             // GenerateContent();
 
@@ -160,79 +162,93 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         {
             foreach (var org in orgsToUpdate)
             {
-                UpdateOrg(org);
+                SourceAndApplyApiData(org);
 
                 _commandManager.Save();
             }
         }
 
-        private void UpdateOrg(Org org)
+        private void SourceAndApplyApiData(Org org)
         {
-            var result = new XmlResult();
-
-            if (org.Tried & org.LaTried) return;
+            if (org.HasTriedAllApis) return;
 
             var elements = _thirdPartyApiManager.ReadElements(org);
 
+            SourceAndApplyApiData(org, elements);
+        }
+
+        private void SourceAndApplyApiData(Org org, IEnumerable<XElement> elements)
+        {
+            if (elements == null) return;
+
             foreach (var element in elements)
             {
-                if (element.ToString().Contains("GeocodeResponse"))
-                {
-                    if (!org.Tried)
-                    {
-                        result = _thirdPartyApiManager.RequestGoogleMapsApiResponse(element);
-
-                        org.GoogleMapData = result.Result.ToString();
-
-                        org.Modified = DateTime.Now;
-
-                        org.Tried = true;
-                    }
-                    else
-                    {
-                        result.ResultType = ResultTypeEnum.AlreadyTried;
-                    }
-
-                    if (result.ResultType == ResultTypeEnum.Success)
-                    {
-                        var countyAdmin = GetAuthority(element);
-
-                        _commandManager.UpdateOrgFromGoogleResponse(org, element, countyAdmin);
-                    }
-                }
-                else
-                {
-                    if (!org.LaTried)
-                    {
-                        result = _thirdPartyApiManager.RequestLaApiResponse(element);
-
-                        org.LaData = result.Result.ToString();
-
-                        org.Modified = DateTime.Now;
-
-                        org.LaTried = true;
-                    }
-                    else
-                    {
-                        result.ResultType = ResultTypeEnum.AlreadyTried;
-                    }
-
-                    if (result.ResultType == ResultTypeEnum.Success)
-                    {
-                        _commandManager.UpdateOrgFromLaApiResponse(org, element);
-
-                        if (org.LaCode != null)
-                        {
-                            var authority = _queryManager.GetAuthority(org.LaCode);
-
-                            if (authority == null) continue;
-
-                            _commandManager.UpdateAuthority(org, authority.Id);
-                        }
-
-                    }
-                }
+                SourceAndApplyApiData(org, element);
             }
+        }
+
+        private void SourceAndApplyApiData(Org org, XElement element)
+        {
+            if (element == null) return;
+
+            if (element.ToString().Contains("GeocodeResponse"))
+            {
+                SourceAndApplyGoogleMapsApiData(org, element);
+            }
+            else
+            {
+                SourceAndApplyPostcodeApiData(org, element);
+            }
+        }
+
+        private void SourceAndApplyPostcodeApiData(Org org, XElement element)
+        {
+            var result = new XmlResult();
+
+            if (!org.LaTried)
+            {
+                result = _thirdPartyApiManager.RequestLaApiResponse(element);
+
+                org.LaData = result.Result.ToString();
+            }
+            else
+            {
+                result.ResultType = ResultTypeEnum.AlreadyTried;
+            }
+
+            if (result.ResultType != ResultTypeEnum.Success) return;
+
+            _commandManager.UpdateOrgFromLaApiResponse(org, element);
+
+            if (org.LaCode == null) return;
+
+            var authority = _queryManager.GetAuthority(org.LaCode);
+
+            if (authority == null) return;
+
+            _commandManager.UpdateAuthority(org, authority.Id);
+        }
+
+        private void SourceAndApplyGoogleMapsApiData(Org org, XElement element)
+        {
+            var result = new XmlResult();
+
+            if (!org.Tried)
+            {
+                result = _thirdPartyApiManager.RequestGoogleMapsApiResponse(element);
+
+                org.GoogleMapData = result.Result.ToString();
+            }
+            else
+            {
+                result.ResultType = ResultTypeEnum.AlreadyTried;
+            }
+
+            if (result.ResultType != ResultTypeEnum.Success) return;
+
+            var countyAdmin = GetAuthority(element);
+
+            _commandManager.UpdateOrgFromGoogleResponse(org, element, countyAdmin);
         }
 
         private CountyAdminPair GetAuthority(XContainer result)
@@ -257,7 +273,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             };
         }
 
-        private IEnumerable<Region> CreateRegionsFile(string currentRoot)
+        private IEnumerable<Authority> CreateRegionsFile(string currentRoot)
         {
             var regions = _queryManager.GetRegions()
                 .ToList();
@@ -269,7 +285,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             return regions;
         }
 
-        private IEnumerable<County> CreateRegionFile(Region currentRegion, string currentRegionPath,
+        private IEnumerable<Authority> CreateRegionFile(Authority currentRegion, string currentRegionPath,
             Int32 orgsInRegionCount)
         {
             // write region directory
@@ -289,7 +305,6 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             return hauntedCountiesInRegion;
         }
 
-
         private void GenerateGeographicHtmlPages()
         {
             var regions = CreateRegionsFile(_currentRoot);
@@ -300,62 +315,66 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             }
         }
 
-        private void CreateRegionFiles(Region currentRegion)
+        private void CreateRegionFiles(Authority currentRegion)
         {
             var currentRegionPath = _queryManager.BuildPath(_currentRoot, currentRegion.Name);
 
             CreateAllCountyFilesForRegion(currentRegion, currentRegionPath);
         }
 
-        private void CreateAllCountyFilesForRegion(Region currentRegion, string currentRegionPath)
+        private void CreateAllCountyFilesForRegion(Authority currentRegion, string currentRegionPath)
         {
-            var orgsInRegionCount = currentRegion.Counties.Sum(x => x.Orgs.Count(
-                y => y.HauntedStatus.HasValue && y.HauntedStatus.Value));
+            // todo - come back
 
-            if (orgsInRegionCount == 0) return;
+            //var orgsInRegionCount = currentRegion.Counties.Sum(x => x.Orgs.Count(
+            //    y => y.HauntedStatus.HasValue && y.HauntedStatus.Value));
 
-            var countiesInRegion = CreateRegionFile(currentRegion, currentRegionPath, orgsInRegionCount);
+            //if (orgsInRegionCount == 0) return;
 
-            foreach (var currentCounty in countiesInRegion)
-            {
-                if (currentCounty == null) continue;
+            //var countiesInRegion = CreateRegionFile(currentRegion, currentRegionPath, orgsInRegionCount);
 
-                if (currentRegionPath == null) continue;
+            //foreach (var currentCounty in countiesInRegion)
+            //{
+            //    if (currentCounty == null) continue;
 
-                var currentCountyPath = _queryManager.BuildPath(currentRegionPath, currentCounty.Name);
+            //    if (currentRegionPath == null) continue;
 
-                if (currentCountyPath == null) continue;
+            //    var currentCountyPath = _queryManager.BuildPath(currentRegionPath, currentCounty.Name);
 
-                CreateCountyFiles(currentRegion, currentCountyPath, currentCounty.Name, currentRegionPath,
-                    currentCounty.Description, currentCounty.Id);
-            }
+            //    if (currentCountyPath == null) continue;
+
+            //    CreateCountyFiles(currentRegion, currentCountyPath, currentCounty.Name, currentRegionPath,
+            //        currentCounty.Description, currentCounty.Id);
+            //}
         }
 
-        private void CreateCountyFiles(Region currentRegion, string currentCountyPath, string currentCountyName,
+        private void CreateCountyFiles(Authority currentRegion, string currentCountyPath, string currentCountyName,
             string currentRegionPath, string currentCountyDescription, int currentCountyId)
         {
-            FileSystemHelper.CreateFolders(currentCountyPath, _isDeprecated);
+            // todo come back
 
-            // write them out backwards (so alphabetical from previous) and keep towns together (so need pub has a better chance to be in the same town) 
-            var orgsInCounty =
-                currentRegion.Counties.First(c => c.Name == currentCountyName)
-                    .Orgs.Where(x => x.Town != null && x.HauntedStatus == true)
-                    .OrderByDescending(org => org.Town)
-                    .ThenByDescending(org => org.TradingName)
-                    .ToList();
+            //FileSystemHelper.CreateFolders(currentCountyPath, _isDeprecated);
 
-            var townsInCounty = orgsInCounty.Select(x => x.Town).Distinct().ToList();
+            //// write them out backwards (so alphabetical from previous) and keep towns together (so need pub has a better chance to be in the same town) 
+            //var orgsInCounty =
+            //    currentRegion.Counties.First(c => c.Name == currentCountyName)
+            //        .Orgs.Where(x => x.Town != null && x.HauntedStatus == true)
+            //        .OrderByDescending(org => org.Town)
+            //        .ThenByDescending(org => org.TradingName)
+            //        .ToList();
 
-            CreateCountyFile(currentCountyName, currentCountyId, currentCountyPath, townsInCounty, currentRegion,
-                orgsInCounty.Count,
-                currentRegionPath);
+            //var townsInCounty = orgsInCounty.Select(x => x.Town).Distinct().ToList();
 
-            var pubTownLinks = new List<KeyValuePair<String, PageLinkModel>>();
+            //CreateCountyFile(currentCountyName, currentCountyId, currentCountyPath, townsInCounty, currentRegion,
+            //    orgsInCounty.Count,
+            //    currentRegionPath);
 
-            CreatePubsFiles(orgsInCounty, currentCountyPath, pubTownLinks);
+            //var pubTownLinks = new List<KeyValuePair<String, PageLinkModel>>();
 
-            CreateTownFiles(townsInCounty, currentCountyPath, pubTownLinks, currentCountyName, currentRegion,
-                currentRegionPath, currentCountyDescription, currentCountyId);
+            //CreatePubsFiles(orgsInCounty, currentCountyPath, pubTownLinks);
+
+            //CreateTownFiles(townsInCounty, currentCountyPath, pubTownLinks, currentCountyName, currentRegion,
+            //    currentRegionPath, currentCountyDescription, currentCountyId);
         }
 
         private void CreatePubsFiles(IEnumerable<Org> orgsInCounty, string currentCountyPath,
@@ -376,7 +395,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void CreateTownFiles(IEnumerable<string> townsInCounty,
             string currentCountyPath, List<KeyValuePair<string, PageLinkModel>> pubTownLinks, string currentCounty,
-            Region currentRegion, string currentRegionPath, string currentCountyDescription, int currentCountyId)
+            Authority currentRegion, string currentRegionPath, string currentCountyDescription, int currentCountyId)
         {
             // create the town pages
             foreach (var town in townsInCounty)
@@ -388,7 +407,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void CreateCountyFile(String currentCountyName, int currentCountyId, string currentCountyPath,
             IEnumerable<string> towns,
-            Region currentRegion, Int32 count, string currentRegionPath)
+            Authority currentRegion, Int32 count, string currentRegionPath)
         {
             var countyModel = _queryManager.PrepareCountyModel(currentCountyName, currentCountyId, currentCountyPath,
                 towns, currentRegion, count, currentRegionPath
@@ -425,7 +444,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         private void CreateTownFile(string currentCountyPath,
             IEnumerable<KeyValuePair<string, PageLinkModel>> pubTownLinks,
             string town,
-            String currentCountyName, Region currentRegion, string currentRegionPath, string currentCountyDescription,
+            String currentCountyName, Authority currentRegion, string currentRegionPath, string currentCountyDescription,
             int currentCountyId)
         {
             var townModel = _queryManager.PrepareTownModel(currentCountyPath, pubTownLinks, town, currentCountyName,
