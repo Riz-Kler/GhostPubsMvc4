@@ -11,6 +11,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 {
     public static class PrimativeExtensions
     {
+
         public static T DeepClone<T>(this T obj)
         {
             using (var ms = new MemoryStream())

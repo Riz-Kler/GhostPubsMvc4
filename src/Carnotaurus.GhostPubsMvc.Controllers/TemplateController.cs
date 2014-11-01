@@ -214,8 +214,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                     }
                     else
                     {
-                        result.ResultType = ResultTypeEnum.Success;
-                        result.Result = new XElement(org.GoogleMapData);
+                        result.ResultType = ResultTypeEnum.AlreadyTried;
                     }
 
                     if (result.ResultType == ResultTypeEnum.Success)

@@ -141,8 +141,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 }
             }
 
-            //var geocode = ReadGeocodeResponseElement(org);
-            //elements.Add(geocode);
+            var geocode = ReadGeocodeResponseElement(org);
+            elements.Add(geocode);
 
             return elements;
         }
@@ -191,7 +191,7 @@ http://statistics.data.gov.uk/id/statistical-geography/E14000969
             var requestUri =
                 string.Format(
                     "http://uk-postcodes.com/postcode/{0}.xml",
-                    org.Postcode.Replace(" ", "")
+                    org.Postcode. Replace(" ", "")
                     );
 
             XDocument document = null;
