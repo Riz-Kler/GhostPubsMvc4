@@ -223,7 +223,11 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
                         var authority = _queryManager.GetAuthority(org.LaCode);
 
-                        org.AuthorityId = authority.Id;
+                        if (org.AuthorityId != null)
+                        {
+                            org.AuthorityId = authority.Id;
+                            org.Modified = DateTime.Now;
+                        }
                     }
                 }
             }

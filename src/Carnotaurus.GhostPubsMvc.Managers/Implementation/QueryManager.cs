@@ -118,8 +118,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .Where(org =>
                     org != null
                         // todo - dpc - come back
-                    && org.HauntedStatus.HasValue && org.HauntedStatus.Value
-                    && org.AddressTypeId == 1
+                  //  && org.HauntedStatus.HasValue && org.HauntedStatus.Value
+                   // && org.AddressTypeId == 1
                     && org.Address != null
                     && org.Postcode != null
 

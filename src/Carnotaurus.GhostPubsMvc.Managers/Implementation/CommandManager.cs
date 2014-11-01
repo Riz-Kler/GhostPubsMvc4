@@ -35,6 +35,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         public void UpdateCounty(Org org, Int32 id)
         {
             org.AuthorityId = id;
+            org.Modified = DateTime.Now;
         }
 
         public void Save()
@@ -49,10 +50,10 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             UpdateOrgFromGoogleResponse(result, org, countyAdmin);
         }
 
-        public void UpdateCouncil(Org org, int match)
-        {
-            // todo - dpc - come back - org.CouncilId = match;
-        }
+        //public void UpdateCouncil(Org org, int match)
+        //{
+        //    // todo - dpc - come back - org.CouncilId = match;
+        //}
 
         public void UpdateOrgFromLaApiResponse(Org org, XContainer result)
         {
@@ -71,6 +72,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             if (code != null)
             {
                 org.LaCode = code.Value;
+                org.Modified = DateTime.Now;
             }
         }
 
@@ -89,6 +91,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             if (countyAdmin != null)
             {
                 org.AdministrativeAreaLevel2 = countyAdmin.AdminLevelTwo;
+                org.Modified = DateTime.Now;
             }
         }
 
@@ -103,7 +106,11 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             var firstResult = townResult.FirstNode as XElement;
 
-            if (firstResult != null) org.Town = firstResult.Value;
+            if (firstResult != null)
+            {
+                org.Town = firstResult.Value;
+                org.Modified = DateTime.Now;
+            }
         }
 
         private static void UpdateLocality(XContainer result, Org org)
@@ -121,6 +128,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             if (firstResult == null) return;
 
             org.Locality = firstResult.Value;
+            org.Modified = DateTime.Now;
         }
 
 
@@ -138,11 +146,17 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             var lat = locationElement.Element("lat");
             if (lat != null)
+            {
                 org.Lat = lat.Value.ToNullableDouble();
+                org.Modified = DateTime.Now;
+            }
 
             var lng = locationElement.Element("lng");
             if (lng != null)
+            {
                 org.Lon = lng.Value.ToNullableDouble();
+                org.Modified = DateTime.Now;
+            }
         }
     }
 }
