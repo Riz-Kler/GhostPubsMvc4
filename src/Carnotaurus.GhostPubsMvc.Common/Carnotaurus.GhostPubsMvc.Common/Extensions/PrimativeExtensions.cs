@@ -119,6 +119,19 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             return null;
         }
 
+
+        public static double? ToNullableDouble(this String value)
+        {
+            double result;
+
+            if (double.TryParse(value, out result))
+            {
+                return result;
+            }
+
+            return null;
+        }
+
         public static Int32 ToInt32(this Int32? nullable)
         {
             var result = 0;

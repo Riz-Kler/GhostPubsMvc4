@@ -156,9 +156,10 @@
     <Compile Include="Models\Entities\County.cs" />
     <Compile Include="Models\Entities\Feature.cs" />
     <Compile Include="Models\Entities\FeatureType.cs" />
-    <Compile Include="Models\Entities\LaCouncil.cs" />
+    <Compile Include="Models\Entities\Authority.cs" />
     <Compile Include="Models\Entities\LaCounty.cs" />
     <Compile Include="Models\Entities\LaRegion.cs" />
+    <Compile Include="Models\Mapping\LaCouncilMap.cs" />
     <Compile Include="Models\ViewModels\Breadcrumb.cs" />
     <Compile Include="Models\ViewModels\PageLinkModel.cs" />
     <Compile Include="Models\Entities\LocalAuthority.cs" />
@@ -170,7 +171,7 @@
     <Compile Include="Models\Mapping\CountyMap.cs" />
     <Compile Include="Models\Mapping\FeatureMap.cs" />
     <Compile Include="Models\Mapping\FeatureTypeMap.cs" />
-    <Compile Include="Models\Mapping\LocalAuthorityMap.cs" />
+    <Compile Include="Models\Mapping\AuthorityMap.cs" />
     <Compile Include="Models\Mapping\NoteMap.cs" />
     <Compile Include="Models\Mapping\OrgMap.cs" />
     <Compile Include="Models\Mapping\RegionMap.cs" />

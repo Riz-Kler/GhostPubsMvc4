@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Principal;
 using System.Xml.Linq;
+using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
 using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
@@ -31,7 +32,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             }
         }
 
-        public void UpdateCounty(Org org, int id)
+        public void UpdateCounty(Org org, Int32 id)
         {
             org.AuthorityId = id;
         }
@@ -68,7 +69,9 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             var code = council.Element("code");
 
             if (code != null)
+            {
                 org.LaCode = code.Value;
+            }
         }
 
         private void UpdateOrgFromGoogleResponse(XContainer result, Org org, CountyAdminPair countyAdmin)
@@ -86,11 +89,6 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             if (countyAdmin != null)
             {
                 org.AdministrativeAreaLevel2 = countyAdmin.AdminLevelTwo;
-
-                if (countyAdmin.CountyId.HasValue)
-                {
-                    UpdateCounty(org, countyAdmin.CountyId.Value);
-                }
             }
         }
 
@@ -140,11 +138,11 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             var lat = locationElement.Element("lat");
             if (lat != null)
-                org.Lat = Convert.ToDouble(lat.Value);
+                org.Lat = lat.Value.ToNullableDouble();
 
             var lng = locationElement.Element("lng");
             if (lng != null)
-                org.Lon = Convert.ToDouble(lng.Value);
+                org.Lon = lng.Value.ToNullableDouble();
         }
     }
 }

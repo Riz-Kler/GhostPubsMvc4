@@ -118,14 +118,14 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .Where(org =>
                     org != null
                         // todo - dpc - come back
-                         && org.HauntedStatus.HasValue && org.HauntedStatus.Value
+                    && org.HauntedStatus.HasValue && org.HauntedStatus.Value
                     && org.AddressTypeId == 1
                     && org.Address != null
                     && org.Postcode != null
 
                         // todo - dpc - come back
                         //   && org.CountyId == null
-                    && (!org.LaTried || ! org.Tried  )
+                    && (!org.LaTried || ! org.Tried)
                 )
                 //.Take(1000)
                 .ToList();
@@ -133,13 +133,22 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             return results;
         }
 
-        public County GetCounty(string name)
+        public Authority GetAuthority(string code)
         {
-            var results = _reader.Items<County>()
-                .FirstOrDefault(x => x.Name == name);
+            var results = _reader.Items<Authority>()
+                .FirstOrDefault(x => x.Code == code);
 
             return results;
         }
+
+
+        //public County LocalAuthority(string code)
+        //{
+        //    var results = _reader.Items<LocalAuthority>()
+        //        .FirstOrDefault(x => x.code == code);
+
+        //    return results;
+        //}
 
         public IEnumerable<Region> GetRegions()
         {
@@ -173,7 +182,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .ToList();
 
             var ranked = queryable.RankByDescending(i => i.Value,
-                (i, r) => new { Rank = r, Item = i })
+                (i, r) => new {Rank = r, Item = i})
                 .ToList();
 
             var index = 1;

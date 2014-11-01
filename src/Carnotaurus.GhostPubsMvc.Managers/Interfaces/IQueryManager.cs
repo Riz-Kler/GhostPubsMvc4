@@ -12,7 +12,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         IEnumerable<Org> GetOrgsToUpdate();
 
-        County GetCounty(string name);
+        Authority GetAuthority(string code);
 
         IEnumerable<County> GetHauntedCountiesInRegion(Int32 regionId);
 

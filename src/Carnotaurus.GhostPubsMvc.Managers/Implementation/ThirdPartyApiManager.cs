@@ -191,7 +191,7 @@ http://statistics.data.gov.uk/id/statistical-geography/E14000969
             var requestUri =
                 string.Format(
                     "http://uk-postcodes.com/postcode/{0}.xml",
-                    org.Postcode. Replace(" ", "")
+                    org.Postcode.Replace(" ", "")
                     );
 
             XDocument document = null;

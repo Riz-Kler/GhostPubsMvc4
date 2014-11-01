@@ -195,7 +195,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
                     if (result.ResultType == ResultTypeEnum.Success)
                     {
-                        var countyAdmin = GetCounty(element);
+                        var countyAdmin = GetAuthority(element);
 
                         _commandManager.UpdateOrgFromGoogleResponse(org, element, countyAdmin);
                     }
@@ -220,18 +220,22 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                     if (result.ResultType == ResultTypeEnum.Success)
                     {
                         _commandManager.UpdateOrgFromLaApiResponse(org, element);
+
+                        var authority = _queryManager.GetAuthority(org.LaCode);
+
+                        org.AuthorityId = authority.Id;
                     }
                 }
             }
         }
 
-        private CountyAdminPair GetCounty(XContainer result)
+        private CountyAdminPair GetAuthority(XContainer result)
         {
             var name = _thirdPartyApiManager.ExtractCountyName(result);
 
             if (name.ResultType != ResultTypeEnum.Success) return null;
 
-            var match = _queryManager.GetCounty(name.Result);
+            var match = _queryManager.GetAuthority(name.Result);
 
             Int32? id = null;
 

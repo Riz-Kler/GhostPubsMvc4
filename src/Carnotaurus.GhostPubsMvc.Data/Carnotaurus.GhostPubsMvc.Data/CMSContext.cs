@@ -29,7 +29,7 @@ namespace Carnotaurus.GhostPubsMvc.Data
         public DbSet<ContentPage> ContentPages { get; set; }
         public DbSet<County> Counties { get; set; }
         public DbSet<Region> Regions { get; set; }
-        public DbSet<LocalAuthority> LocalAuthorities { get; set; }
+        public DbSet<Authority> LaCouncil { get; set; }
         public DbSet<Feature> Features { get; set; }
         public DbSet<Note> Notes { get; set; }
         public DbSet<Org> Orgs { get; set; }
@@ -80,7 +80,7 @@ namespace Carnotaurus.GhostPubsMvc.Data
             modelBuilder.Configurations.Add(new ContentPageMap());
             modelBuilder.Configurations.Add(new CountyMap());
             modelBuilder.Configurations.Add(new RegionMap());
-            modelBuilder.Configurations.Add(new LocalAuthorityMap());
+            modelBuilder.Configurations.Add(new LaCouncilMap());
             modelBuilder.Configurations.Add(new FeatureMap());
             modelBuilder.Configurations.Add(new NoteMap());
             modelBuilder.Configurations.Add(new OrgMap());
