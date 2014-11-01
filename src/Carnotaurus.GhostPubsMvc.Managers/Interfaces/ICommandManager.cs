@@ -17,8 +17,6 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         void Save();
 
-        void UpdateCounty(Org org, int id);
-
-    //    void UpdateCouncil(Org org, int match);
+        void UpdateAuthority(Org org, int id);
     }
 }

@@ -227,10 +227,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
                             if (authority == null) continue;
 
-                            org.AuthorityId = authority.Id;
+                            _commandManager.UpdateAuthority(org, authority.Id);
                         }
-
-                        org.Modified = DateTime.Now;
+                         
                     }
                 }
             }

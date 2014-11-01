@@ -32,7 +32,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             }
         }
 
-        public void UpdateCounty(Org org, Int32 id)
+        public void UpdateAuthority(Org org, Int32 id)
         {
             org.AuthorityId = id;
             org.Modified = DateTime.Now;
@@ -49,12 +49,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             UpdateOrgFromGoogleResponse(result, org, countyAdmin);
         }
-
-        //public void UpdateCouncil(Org org, int match)
-        //{
-        //    // todo - dpc - come back - org.CouncilId = match;
-        //}
-
+         
         public void UpdateOrgFromLaApiResponse(Org org, XContainer result)
         {
             if (result == null) throw new ArgumentNullException("result");
