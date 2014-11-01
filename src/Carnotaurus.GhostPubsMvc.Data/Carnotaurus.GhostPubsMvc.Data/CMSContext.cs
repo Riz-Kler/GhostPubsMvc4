@@ -80,7 +80,7 @@ namespace Carnotaurus.GhostPubsMvc.Data
             modelBuilder.Configurations.Add(new ContentPageMap());
             modelBuilder.Configurations.Add(new CountyMap());
             modelBuilder.Configurations.Add(new RegionMap());
-            modelBuilder.Configurations.Add(new LaCouncilMap());
+            modelBuilder.Configurations.Add(new AuthorityMap());
             modelBuilder.Configurations.Add(new FeatureMap());
             modelBuilder.Configurations.Add(new NoteMap());
             modelBuilder.Configurations.Add(new OrgMap());
