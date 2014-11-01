@@ -229,7 +229,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
                             _commandManager.UpdateAuthority(org, authority.Id);
                         }
-                         
+
                     }
                 }
             }
@@ -309,7 +309,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void CreateAllCountyFilesForRegion(Region currentRegion, string currentRegionPath)
         {
-            var orgsInRegionCount = currentRegion.Counties.Sum(x => x.Orgs.Count(y => y.HauntedStatus == true));
+            var orgsInRegionCount = currentRegion.Counties.Sum(x => x.Orgs.Count(
+                y => y.HauntedStatus.HasValue && y.HauntedStatus.Value));
 
             if (orgsInRegionCount == 0) return;
 
