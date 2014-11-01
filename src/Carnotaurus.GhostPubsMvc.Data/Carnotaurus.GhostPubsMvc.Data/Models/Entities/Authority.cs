@@ -12,9 +12,9 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
         public string Name { get; set; }
         public string Code { get; set; }
-        public int Population { get; set; }
-        public int Hectares { get; set; }
-        public double Density { get; set; }
+        public int? Population { get; set; }
+        public int? Hectares { get; set; }
+        public double? Density { get; set; }
         public int ParentId { get; set; }
 
         //public virtual LaCounty LaCounty { get; set; }
