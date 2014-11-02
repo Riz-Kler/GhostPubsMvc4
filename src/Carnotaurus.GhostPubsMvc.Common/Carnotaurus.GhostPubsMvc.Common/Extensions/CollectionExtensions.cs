@@ -7,6 +7,34 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 {
     public static class CollectionExtensions
     {
+
+        public static string ExtractUnc(this IEnumerable<String> list)
+        {
+            const string pattern = "{0}\\{1}";
+
+            var result = list.Extract(pattern);
+
+            return result;
+        }
+
+        public static string Extract(this IEnumerable<String> list , string pattern)
+        {
+             
+            var result = list.Aggregate(string.Empty, (current, item) =>
+                string.Format(pattern, current, item));
+
+            return result;
+        }
+
+        public static List<String> ReverseItems(this IEnumerable<String> list)
+        {
+            var reversed = new List<string>(from c in list.Select((value, index) => new { value, index })
+                                            orderby c.index descending
+                                            select c.value);
+
+            return reversed;
+        }
+
         #region RankBy
 
         public static IEnumerable<TResult> RankBy<TSource, TKey, TResult>(

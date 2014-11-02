@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
+using System.Linq;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
@@ -124,15 +125,16 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                // todo - come back
-                //if (Authority != null && Authority.Region != null)
-                //{
-                //    return string.Format("{0}\\{1}\\{2}", County.Region.Name, County.Name, Town);
-                //}
+                var items = Authority.Lineage.ReverseItems();
 
-                return null;
+                var result = items.ExtractUnc();
+
+                result = string.Format("{0}\\{1}", result, Town);
+
+                return result;
             }
         }
+
 
         public int Id { get; set; }
 
@@ -170,19 +172,28 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
         public PageLinkModel ExtractFullLink()
         {
-            // todo - come back
-            //var result = string.Format(@"http://www.ghostpubs.com/haunted-pub/{0}/{1}/{2}/{3}/{4}", County.Region.Name,
-            //    County.Name, Town, Id, TradingName);
 
-            //var info = new PageLinkModel
-            //{
-            //    Id = Id,
-            //    Text = TradingName,
-            //    Title = string.Format("{0}, {1}", TradingName, Postcode),
-            //    Unc = result
-            //};
+            var result = Authority.Lineage.ReverseItems();
 
-            //return info;
+            result.Add(Town);
+
+            result.Add(Id.ToString(CultureInfo.InvariantCulture));
+
+            result.Add(TradingName);
+
+            var extractUnc = result.ExtractUnc();
+
+            extractUnc = string.Format(@"http://www.ghostpubs.com/haunted-pub/{0}", extractUnc);
+
+            var info = new PageLinkModel
+            {
+                Id = Id,
+                Text = TradingName,
+                Title = string.Format("{0}, {1}", TradingName, Postcode),
+                Unc = extractUnc
+            };
+
+            return info;
 
             return null;
         }

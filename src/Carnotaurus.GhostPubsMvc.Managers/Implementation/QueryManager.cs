@@ -119,8 +119,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .Where(org =>
                     org != null
                         // todo - dpc - come back
-                        //  && org.HauntedStatus.HasValue && org.HauntedStatus.Value
-                        // && org.AddressTypeId == 1
+                       && org.HauntedStatus.HasValue && org.HauntedStatus.Value
+                        && org.AddressTypeId == 1
                     && org.Address != null
                     && org.Postcode != null
 
@@ -131,12 +131,10 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 )
                 .Take(1)
                 .ToList();
-
-            var q = results.First();
-
+             
             return results;
         }
-
+         
         public Authority GetAuthority(string code)
         {
             var results = _reader.Items<Authority>()
@@ -163,17 +161,14 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
         public IEnumerable<Authority> GetHauntedCountiesInRegion(Int32 regionId)
         {
-            // todo - come back 
-            //var regions = _reader.Items<Authority>();
+            var regions = _reader.Items<Authority>().ToList();
 
-            //var region = regions.First(r => r.Id == regionId);
+            var filtered = regions.Where(x =>
+                x.ParentId == regionId 
+                && x.ParentAuthority.IsRegion 
+                && x.HasHauntedOrgs);
 
-            //var results =
-            //    region. Where(county => county.Orgs.Any(org => org.HauntedStatus == true));
-
-            //return results;
-
-            return null;
+            return filtered;
         }
 
 

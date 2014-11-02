@@ -58,13 +58,13 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             UpdateOrganisations(orgsToUpdate);
 
-            // GenerateContent();
+             GenerateContent();
 
-            //  GenerateSimpleHtmlPages();
+            GenerateSimpleHtmlPages();
 
-            //  GenerateLeaderboard();
+             GenerateLeaderboard();
 
-            //  GenerateWebmasterSitemap();
+             GenerateWebmasterSitemap();
         }
 
         private void GenerateWebmasterSitemap()
@@ -323,58 +323,60 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         }
 
         private void CreateAllCountyFilesForRegion(Authority currentRegion, string currentRegionPath)
-        {
-            // todo - come back
+        { 
+            var orgsInRegionCount = currentRegion.Orgs.Count(
+                y => y.HauntedStatus.HasValue && y.HauntedStatus.Value);
 
-            //var orgsInRegionCount = currentRegion.Counties.Sum(x => x.Orgs.Count(
-            //    y => y.HauntedStatus.HasValue && y.HauntedStatus.Value));
+            if (orgsInRegionCount == 0) return;
 
-            //if (orgsInRegionCount == 0) return;
+            var countiesInRegion = CreateRegionFile(currentRegion, currentRegionPath, orgsInRegionCount);
 
-            //var countiesInRegion = CreateRegionFile(currentRegion, currentRegionPath, orgsInRegionCount);
+            foreach (var currentCounty in countiesInRegion)
+            {
+                if (currentCounty == null) continue;
 
-            //foreach (var currentCounty in countiesInRegion)
-            //{
-            //    if (currentCounty == null) continue;
+                if (currentRegionPath == null) continue;
 
-            //    if (currentRegionPath == null) continue;
+                var currentCountyPath = _queryManager.BuildPath(currentRegionPath, currentCounty.Name);
 
-            //    var currentCountyPath = _queryManager.BuildPath(currentRegionPath, currentCounty.Name);
+                if (currentCountyPath == null) continue;
 
-            //    if (currentCountyPath == null) continue;
-
-            //    CreateCountyFiles(currentRegion, currentCountyPath, currentCounty.Name, currentRegionPath,
-            //        currentCounty.Description, currentCounty.Id);
-            //}
+                CreateCountyFiles(currentRegion, currentCountyPath, currentCounty.Name, currentRegionPath,
+                    currentCounty.Name, currentCounty.Id);
+            }
         }
 
         private void CreateCountyFiles(Authority currentRegion, string currentCountyPath, string currentCountyName,
             string currentRegionPath, string currentCountyDescription, int currentCountyId)
         {
-            // todo come back
+            FileSystemHelper.CreateFolders(currentCountyPath, _isDeprecated);
+             
+            // write them out backwards (so alphabetical from previous) and keep towns together (so need pub has a better chance to be in the same town) 
+            var orgsInCounty =
+                currentRegion.Orgs.Where(org =>
+                    org.Authority.Name == currentCountyName
+                    && org.Town != null
+                    && org.HauntedStatus.HasValue
+                    && org.HauntedStatus.Value)
+                    .OrderByDescending(org => org.Town)
+                    .ThenByDescending(org => org.TradingName)
+                    .ToList();
 
-            //FileSystemHelper.CreateFolders(currentCountyPath, _isDeprecated);
+            var townsInCounty = orgsInCounty
+                .Select(org => org.Town)
+                .Distinct()
+                .ToList();
 
-            //// write them out backwards (so alphabetical from previous) and keep towns together (so need pub has a better chance to be in the same town) 
-            //var orgsInCounty =
-            //    currentRegion.Counties.First(c => c.Name == currentCountyName)
-            //        .Orgs.Where(x => x.Town != null && x.HauntedStatus == true)
-            //        .OrderByDescending(org => org.Town)
-            //        .ThenByDescending(org => org.TradingName)
-            //        .ToList();
+            CreateCountyFile(currentCountyName, currentCountyId, currentCountyPath, townsInCounty, currentRegion,
+                orgsInCounty.Count,
+                currentRegionPath);
 
-            //var townsInCounty = orgsInCounty.Select(x => x.Town).Distinct().ToList();
+            var pubTownLinks = new List<KeyValuePair<String, PageLinkModel>>();
 
-            //CreateCountyFile(currentCountyName, currentCountyId, currentCountyPath, townsInCounty, currentRegion,
-            //    orgsInCounty.Count,
-            //    currentRegionPath);
+            CreatePubsFiles(orgsInCounty, currentCountyPath, pubTownLinks);
 
-            //var pubTownLinks = new List<KeyValuePair<String, PageLinkModel>>();
-
-            //CreatePubsFiles(orgsInCounty, currentCountyPath, pubTownLinks);
-
-            //CreateTownFiles(townsInCounty, currentCountyPath, pubTownLinks, currentCountyName, currentRegion,
-            //    currentRegionPath, currentCountyDescription, currentCountyId);
+            CreateTownFiles(townsInCounty, currentCountyPath, pubTownLinks, currentCountyName, currentRegion,
+                currentRegionPath, currentCountyDescription, currentCountyId);
         }
 
         private void CreatePubsFiles(IEnumerable<Org> orgsInCounty, string currentCountyPath,
