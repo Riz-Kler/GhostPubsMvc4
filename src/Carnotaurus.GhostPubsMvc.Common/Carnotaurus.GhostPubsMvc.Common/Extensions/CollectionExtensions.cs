@@ -17,9 +17,9 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             return result;
         }
 
-        public static string Extract(this IEnumerable<String> list , string pattern)
+        public static string Extract(this IEnumerable<String> list, string pattern)
         {
-             
+
             var result = list.Aggregate(string.Empty, (current, item) =>
                 string.Format(pattern, current, item));
 

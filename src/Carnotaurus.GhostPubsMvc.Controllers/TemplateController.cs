@@ -58,13 +58,13 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             UpdateOrganisations(orgsToUpdate);
 
-             GenerateContent();
+            GenerateContent();
 
             GenerateSimpleHtmlPages();
 
-             GenerateLeaderboard();
+            GenerateLeaderboard();
 
-             GenerateWebmasterSitemap();
+            GenerateWebmasterSitemap();
         }
 
         private void GenerateWebmasterSitemap()
@@ -246,31 +246,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             if (result.ResultType != ResultTypeEnum.Success) return;
 
-            var countyAdmin = GetAuthority(element);
-
-            _commandManager.UpdateOrgFromGoogleResponse(org, element, countyAdmin);
-        }
-
-        private CountyAdminPair GetAuthority(XContainer result)
-        {
-            var name = _thirdPartyApiManager.ExtractCountyName(result);
-
-            if (name.ResultType != ResultTypeEnum.Success) return null;
-
-            var match = _queryManager.GetAuthority(name.Result);
-
-            Int32? id = null;
-
-            if (match != null)
-            {
-                id = match.Id;
-            }
-
-            return new CountyAdminPair
-            {
-                CountyId = id,
-                AdminLevelTwo = name.Result
-            };
+            _commandManager.UpdateOrgFromGoogleResponse(org, element);
         }
 
         private IEnumerable<Authority> CreateRegionsFile(string currentRoot)
@@ -323,7 +299,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         }
 
         private void CreateAllCountyFilesForRegion(Authority currentRegion, string currentRegionPath)
-        { 
+        {
             var orgsInRegionCount = currentRegion.Orgs.Count(
                 y => y.HauntedStatus.HasValue && y.HauntedStatus.Value);
 
@@ -350,7 +326,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             string currentRegionPath, string currentCountyDescription, int currentCountyId)
         {
             FileSystemHelper.CreateFolders(currentCountyPath, _isDeprecated);
-             
+
             // write them out backwards (so alphabetical from previous) and keep towns together (so need pub has a better chance to be in the same town) 
             var orgsInCounty =
                 currentRegion.Orgs.Where(org =>

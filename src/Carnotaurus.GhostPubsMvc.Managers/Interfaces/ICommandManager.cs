@@ -11,7 +11,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         String CurrentUserName { get; }
 
-        void UpdateOrgFromGoogleResponse(Org org, XContainer element, CountyAdminPair countyAdmin);
+        void UpdateOrgFromGoogleResponse(Org org, XContainer element);
 
         void UpdateOrgFromLaApiResponse(Org org, XContainer result);
 

@@ -43,11 +43,11 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             _writer.SaveChanges();
         }
 
-        public void UpdateOrgFromGoogleResponse(Org org, XContainer element, CountyAdminPair countyAdmin)
+        public void UpdateOrgFromGoogleResponse(Org org, XContainer element)
         {
             var result = element.Element("result");
 
-            UpdateOrgFromGoogleResponse(result, org, countyAdmin);
+            UpdateOrgFromGoogleResponse(result, org);
         }
 
         public void UpdateOrgFromLaApiResponse(Org org, XContainer result)
@@ -73,7 +73,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             }
         }
 
-        private void UpdateOrgFromGoogleResponse(XContainer result, Org org, CountyAdminPair countyAdmin)
+        private void UpdateOrgFromGoogleResponse(XContainer result, Org org)
         {
             if (result == null) throw new ArgumentNullException("result");
 
@@ -87,12 +87,6 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             UpdateTown(result, org);
 
-            // administrative
-
-            if (countyAdmin != null)
-            {
-                org.AdministrativeAreaLevel2 = countyAdmin.AdminLevelTwo;
-            }
         }
 
         private static void UpdateTown(XContainer result, Org org)

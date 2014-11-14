@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Implementation\CommandManager.cs" />
-    <Compile Include="Implementation\CountyAdminPair.cs" />
     <Compile Include="Implementation\MailManager.cs" />
     <Compile Include="Implementation\MailSender.cs" />
     <Compile Include="Implementation\ThirdPartyApiManager.cs" />

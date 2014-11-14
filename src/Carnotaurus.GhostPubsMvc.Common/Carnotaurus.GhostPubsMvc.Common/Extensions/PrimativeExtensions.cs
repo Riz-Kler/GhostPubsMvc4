@@ -5,51 +5,13 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 {
     public static class PrimativeExtensions
     {
-        public static T DeepClone<T>(this T obj)
-        {
-            using (var ms = new MemoryStream())
-            {
-                var formatter = new BinaryFormatter();
-                formatter.Serialize(ms, obj);
-                ms.Position = 0;
-
-                return (T) formatter.Deserialize(ms);
-            }
-        }
-
-        public static string After(this string s, string searchString)
-        {
-            if (String.IsNullOrEmpty(searchString)) return s;
-            var idx = s.IndexOf(searchString, StringComparison.Ordinal);
-            return (idx < 0 ? string.Empty : s.Substring(idx + searchString.Length));
-        }
-
-        public static string Before(this string s, string searchString)
-        {
-            if (String.IsNullOrEmpty(searchString)) return s;
-            var idx = s.IndexOf(searchString, StringComparison.Ordinal);
-            return (idx < 0 ? string.Empty : s.Substring(0, idx));
-        }
-
-        public static string AfterLast(this string s, string searchString)
-        {
-            if (String.IsNullOrEmpty(searchString)) return s;
-            var idx = s.LastIndexOf(searchString, StringComparison.Ordinal);
-            return (idx < 0 ? string.Empty : s.Substring(idx + searchString.Length));
-        }
-
-        public static string BeforeLast(this string s, string searchString)
-        {
-            if (String.IsNullOrEmpty(searchString)) return s;
-            var idx = s.LastIndexOf(searchString, StringComparison.Ordinal);
-            return (idx < 0 ? string.Empty : s.Substring(0, idx));
-        }
 
         public static String DoubleApostrophes(this String value)
         {
@@ -87,6 +49,18 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             return !value.HasValue || value.Value.IsEmpty();
         }
 
+        public static Guid? ToNullableGuid(this String value)
+        {
+            Guid result;
+
+            if (Guid.TryParse(value, out result))
+            {
+                return result;
+            }
+
+            return null;
+        }
+
         public static Int32? ToNullableInt32(this String value)
         {
             int result;
@@ -106,24 +80,16 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             return result;
         }
 
+        public static Decimal ToDecimal(this String value)
+        {
+            return value.ToNullableDecimal() ?? 0;
+        }
+
         public static Decimal? ToNullableDecimal(this String value)
         {
             Decimal result;
 
             if (Decimal.TryParse(value, out result))
-            {
-                return result;
-            }
-
-            return null;
-        }
-
-
-        public static double? ToNullableDouble(this String value)
-        {
-            double result;
-
-            if (double.TryParse(value, out result))
             {
                 return result;
             }
@@ -152,13 +118,74 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
         public static List<string> SplitOnComma(this string commaSeparatedString)
         {
-            const char c = ',';
+            var result = commaSeparatedString.Split(',').ToList();
 
-            var output = commaSeparatedString.SplitOn(c);
-
-            return output;
+            return result;
         }
 
+        public static String RemoveSpecialCharacters(this Guid input)
+        {
+            return input.ToString().RemoveSpecialCharacters().ToUpper();
+        }
+
+        public static String RemoveSpecialCharacters(this String input)
+        {
+            var result = Regex.Replace(input, "[^0-9a-zA-Z]+", String.Empty);
+
+            return result;
+        }
+
+        public static T DeepClone<T>(this T obj)
+        {
+            using (var ms = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(ms, obj);
+                ms.Position = 0;
+
+                return (T)formatter.Deserialize(ms);
+            }
+        }
+
+        public static string After(this string s, string searchString)
+        {
+            if (String.IsNullOrEmpty(searchString)) return s;
+            var idx = s.IndexOf(searchString, StringComparison.Ordinal);
+            return (idx < 0 ? string.Empty : s.Substring(idx + searchString.Length));
+        }
+
+        public static string Before(this string s, string searchString)
+        {
+            if (String.IsNullOrEmpty(searchString)) return s;
+            var idx = s.IndexOf(searchString, StringComparison.Ordinal);
+            return (idx < 0 ? string.Empty : s.Substring(0, idx));
+        }
+
+        public static string AfterLast(this string s, string searchString)
+        {
+            if (String.IsNullOrEmpty(searchString)) return s;
+            var idx = s.LastIndexOf(searchString, StringComparison.Ordinal);
+            return (idx < 0 ? string.Empty : s.Substring(idx + searchString.Length));
+        }
+
+        public static string BeforeLast(this string s, string searchString)
+        {
+            if (String.IsNullOrEmpty(searchString)) return s;
+            var idx = s.LastIndexOf(searchString, StringComparison.Ordinal);
+            return (idx < 0 ? string.Empty : s.Substring(0, idx));
+        }
+
+        public static double? ToNullableDouble(this String value)
+        {
+            double result;
+
+            if (double.TryParse(value, out result))
+            {
+                return result;
+            }
+
+            return null;
+        }
 
         public static List<string> SplitOn(this string commaSeparatedString, char splitOn)
         {
@@ -191,7 +218,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
         public static string RedirectionalFormat(this string input)
         {
-            var replace = input.ToLower().SeoFormat().Replace("-", "_");
+            var replace = input.ToLower().SeoFormat().ReplaceHyphens();
 
             return replace;
         }
@@ -200,5 +227,16 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
         {
             return input.Underscore().Hyphenate();
         }
+
+        public static string RemoveSpaces(this string input)
+        {
+            return input.Replace(" ", "");
+        }
+
+        public static string ReplaceHyphens(this string input)
+        {
+            return input.Replace("-", "_");
+        }
+
     }
 }

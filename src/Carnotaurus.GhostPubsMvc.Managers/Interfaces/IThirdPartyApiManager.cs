@@ -17,6 +17,5 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         XmlResult RequestLaApiResponse(XElement element);
 
-        StringResult ExtractCountyName(XContainer result);
     }
 }

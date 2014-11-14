@@ -4,6 +4,7 @@ using System.Linq;
 using System.Xml.Linq;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
+using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Common.Helpers;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
@@ -18,26 +19,6 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         public ThirdPartyThirdPartyApiManager(IReadStore reader)
         {
             _reader = reader;
-        }
-
-
-        public StringResult ExtractCountyName(XContainer result)
-        {
-            var xmlResult = new StringResult();
-
-            var countyResult =
-                result.Elements("address_component")
-                    .FirstOrDefault(x => x.Value.EndsWith("administrative_area_level_2political"));
-
-            if (countyResult == null || countyResult.FirstNode == null) return xmlResult;
-
-            var inner = countyResult.FirstNode as XElement;
-
-            if (inner == null) return xmlResult;
-
-            xmlResult.Result = inner.Value;
-
-            return xmlResult;
         }
 
         public XmlResult RequestGoogleMapsApiResponse(XElement xElement)
@@ -89,6 +70,39 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         }
 
 
+        public List<XElement> ReadElements(Org org)
+        {
+            var elements = new List<XElement>();
+
+            if (org.Postcode.IsNotNullOrEmpty() && org.Postcode.Length >= 6)
+            {
+                var nso = ReadNsoResponseElement(org);
+                if (nso != null)
+                {
+                    elements.Add(nso);
+                }
+            }
+
+            var geocode = ReadGeocodeResponseElement(org);
+            elements.Add(geocode);
+
+            return elements;
+        }
+
+        public XElement ReadNsoResponseElement(Org org)
+        {
+            const string pattern = "http://uk-postcodes.com/postcode/{0}.xml";
+
+            var requestUri =
+                string.Format(
+                    pattern,
+                    org.Postcode.RemoveSpaces()
+                    );
+
+            return SafelyRequest(requestUri, "result");
+        }
+
+
         public XElement ReadGeocodeResponseElement(Org org)
         {
             // source correct address, using google maps api or similar
@@ -107,6 +121,11 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                     key
                     );
 
+            return SafelyRequest(requestUri, "GeocodeResponse");
+        }
+
+        private static XElement SafelyRequest(string requestUri, string elementName)
+        {
             XDocument document = null;
 
             try
@@ -120,7 +139,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             if (document != null)
             {
-                var element = document.Element("GeocodeResponse");
+                var element = document.Element(elementName);
 
                 return element;
             }
@@ -128,91 +147,5 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             return null;
         }
 
-        public List<XElement> ReadElements(Org org)
-        {
-            var elements = new List<XElement>();
-
-            if (org.Postcode.Length >= 6)
-            {
-                var nso = ReadNsoResponseElement(org);
-                if (nso != null)
-                {
-                    elements.Add(nso);
-                }
-            }
-
-            var geocode = ReadGeocodeResponseElement(org);
-            elements.Add(geocode);
-
-            return elements;
-        }
-
-        public XElement ReadNsoResponseElement(Org org)
-        {
-            /*
-             This XML file does not appear to have any style information associated with it. The document tree is shown below.
-<result>
-<postcode>SK1 3JT</postcode>
-<geo>
-<lat>53.40086635686018</lat>
-<lng>-2.1493842139459183</lng>
-<easting>390164.0</easting>
-<northing>389348.0</northing>
-<geohash>http://geohash.org/gcqrz16fedyz</geohash>
-</geo>
-<administrative>
-<council>
-<title>Stockport</title>
-<uri>
-http://statistics.data.gov.uk/id/statistical-geography/E08000007
-</uri>
-<code>E08000007</code>
-</council>
-<ward>
-<title>Manor</title>
-<uri>
-http://statistics.data.gov.uk/id/statistical-geography/E05000793
-</uri>
-<code>E05000793</code>
-</ward>
-<constituency>
-<title>Stockport</title>
-<uri>
-http://statistics.data.gov.uk/id/statistical-geography/E14000969
-</uri>
-<code>E14000969</code>
-</constituency>
-</administrative>
-</result>
-             */
-
-            // http://uk-postcodes.com/postcode/SK13JT.xml
-
-            var requestUri =
-                string.Format(
-                    "http://uk-postcodes.com/postcode/{0}.xml",
-                    org.Postcode.Replace(" ", "")
-                    );
-
-            XDocument document = null;
-
-            try
-            {
-                document = XDocument.Load(requestUri);
-            }
-            catch (Exception ex)
-            {
-                // throw new Exception(ex.InnerException.Message);
-            }
-
-            if (document != null)
-            {
-                var element = document.Element("result");
-
-                return element;
-            }
-
-            return null;
-        }
     }
 }

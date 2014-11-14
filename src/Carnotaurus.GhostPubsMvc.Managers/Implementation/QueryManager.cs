@@ -40,8 +40,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             return townModel;
         }
-
-
+         
         public OutputViewModel PreparePageTypeModel(PageTypeEnum pageType, string priority, string description,
             List<PageLinkModel> links,
             string title, string path, string currentRoot)
@@ -118,23 +117,20 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             var results = _reader.Items<Org>()
                 .Where(org =>
                     org != null
-                        // todo - dpc - come back
-                       && org.HauntedStatus.HasValue && org.HauntedStatus.Value
-                        && org.AddressTypeId == 1
+                    && org.HauntedStatus.HasValue && org.HauntedStatus.Value
+                    && org.AddressTypeId == 1
                     && org.Address != null
                     && org.Postcode != null
-
-                        // todo - dpc - come back
-                        //   && org.CountyId == null
-                        // && (!org.LaTried || !org.Tried)
                     && org.Authority != null
-                )
-                .Take(1)
+                    && (!org.LaTried || !org.Tried)
+
+                 )
+                //.Take(1)
                 .ToList();
-             
+
             return results;
         }
-         
+
         public Authority GetAuthority(string code)
         {
             var results = _reader.Items<Authority>()
@@ -142,15 +138,6 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             return results;
         }
-
-
-        //public County LocalAuthority(string code)
-        //{
-        //    var results = _reader.Items<LocalAuthority>()
-        //        .FirstOrDefault(x => x.code == code);
-
-        //    return results;
-        //}
 
         public IEnumerable<Authority> GetRegions()
         {
@@ -164,8 +151,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             var regions = _reader.Items<Authority>().ToList();
 
             var filtered = regions.Where(x =>
-                x.ParentId == regionId 
-                && x.ParentAuthority.IsRegion 
+                x.ParentId == regionId
+                && x.ParentAuthority.IsRegion
                 && x.HasHauntedOrgs);
 
             return filtered;
