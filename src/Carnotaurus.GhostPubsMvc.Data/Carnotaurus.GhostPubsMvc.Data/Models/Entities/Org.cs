@@ -182,7 +182,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
             var extractUnc = result.ExtractUnc();
 
-            extractUnc = string.Format(@"http://www.ghostpubs.com/haunted-pub/{0}", extractUnc);
+            extractUnc = string.Format(@"http://www.ghostpubs.com/haunted-pubs/{0}", extractUnc);
 
             var info = new PageLinkModel
             {

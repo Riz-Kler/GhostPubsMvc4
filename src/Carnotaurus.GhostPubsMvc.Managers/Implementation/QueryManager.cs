@@ -40,7 +40,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             return townModel;
         }
-         
+
         public OutputViewModel PreparePageTypeModel(PageTypeEnum pageType, string priority, string description,
             List<PageLinkModel> links,
             string title, string path, string currentRoot)
@@ -141,7 +141,9 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
         public IEnumerable<Authority> GetRegions()
         {
-            var results = _reader.Items<Authority>();
+            var results = _reader.Items<Authority>()
+                .ToList()
+                .Where(x => x.IsRegion);
 
             return results;
         }

@@ -13,7 +13,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             // Properties
             // Table & Column Mappings
             this.ToTable("Tag", "Organisation");
-            this.Property(t => t.Id).HasColumnName("TagID");
+            this.Property(t => t.Id).HasColumnName("ID");
             this.Property(t => t.LastModified).HasColumnName("LastModified");
             this.Property(t => t.OrgId).HasColumnName("OrgID");
             this.Property(t => t.FeatureId).HasColumnName("FeatureID");

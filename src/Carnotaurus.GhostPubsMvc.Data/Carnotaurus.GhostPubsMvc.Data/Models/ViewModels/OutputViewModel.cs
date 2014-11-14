@@ -13,9 +13,9 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
     {
         #region Statics
 
-        public static OutputViewModel CreateRegionsOutputViewModel(string currentRoot, List<Authority> regions)
+        public static OutputViewModel CreateAllUkRegionsOutputViewModel(string currentRoot, List<Authority> regions)
         {
-            var regionsModel = new OutputViewModel(currentRoot)
+            var viewModel = new OutputViewModel(currentRoot)
             {
                 JumboTitle = "Haunted pubs in UK by region",
                 Action = PageTypeEnum.Country,
@@ -35,7 +35,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 Parent = new KeyValuePair<string, string>("Home page", @"/"),
                 Priority = PageTypePriority.Country,
             };
-            return regionsModel;
+
+            return viewModel;
         }
 
         public static OutputViewModel CreateRegionOutputViewModel(Authority currentRegion, string currentRegionPath,
@@ -317,7 +318,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
                 if (!_currentRoot.IsNullOrEmpty())
                 {
-                    result = String.Format("http://www.ghostpubs.com/haunted-pub{0}",
+                    result = String.Format("http://www.ghostpubs.com/haunted-pubs{0}",
                         result.Replace(_currentRoot.ToLower(), String.Empty).Replace("\\", "/"));
                 }
 

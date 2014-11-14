@@ -85,7 +85,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void GenerateContent()
         {
-            _currentRoot = String.Format(@"C:\Carnotaurus\{0}\haunted-pub",
+            _currentRoot = String.Format(@"C:\Carnotaurus\{0}\haunted-pubs",
                 _generationId.ToString().ToLower().SeoFormat());
 
             if (_currentRoot != null)
@@ -249,16 +249,17 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             _commandManager.UpdateOrgFromGoogleResponse(org, element);
         }
 
-        private IEnumerable<Authority> CreateRegionsFile(string currentRoot)
+        private IEnumerable<Authority> CreateTopLevelRegionsFile(string currentRoot)
         {
-            var regions = _queryManager.GetRegions()
+            var results = _queryManager.GetRegions()
                 .ToList();
 
-            var regionsModel = OutputViewModel.CreateRegionsOutputViewModel(currentRoot, regions);
+            var viewModel = OutputViewModel.CreateAllUkRegionsOutputViewModel(currentRoot, results);
 
-            WriteLines(regionsModel);
+            // todo - it works but gets overwritten
+            WriteLines(viewModel);
 
-            return regions;
+            return results;
         }
 
         private IEnumerable<Authority> CreateRegionFile(Authority currentRegion, string currentRegionPath,
@@ -283,7 +284,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void GenerateGeographicHtmlPages()
         {
-            var regions = CreateRegionsFile(_currentRoot);
+            var regions = CreateTopLevelRegionsFile(_currentRoot);
 
             foreach (var currentRegion in regions)
             {

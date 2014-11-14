@@ -27,7 +27,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
                 if (!_currentRoot.IsNullOrEmpty())
                 {
-                    var url = String.Format("http://www.ghostpubs.com/haunted-pub{0}",
+                    var url = String.Format("http://www.ghostpubs.com/haunted-pubs{0}",
                         fullFilePath.Replace(_currentRoot.ToLower(), String.Empty).Replace("\\", "/"));
 
                     return url.SeoFormat().ToLower();

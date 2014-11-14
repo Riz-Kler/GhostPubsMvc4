@@ -50,7 +50,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
 
             // Table & Column Mappings
             this.ToTable("Org", "Organisation");
-            this.Property(t => t.Id).HasColumnName("OrgID");
+            this.Property(t => t.Id).HasColumnName("ID");
             this.Property(t => t.Created).HasColumnName("Created");
             this.Property(t => t.Modified).HasColumnName("Modified");
             this.Property(t => t.Deleted).HasColumnName("Deleted");
