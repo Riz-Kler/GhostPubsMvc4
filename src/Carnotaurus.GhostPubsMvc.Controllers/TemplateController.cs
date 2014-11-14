@@ -257,7 +257,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             var viewModel = OutputViewModel.CreateAllUkRegionsOutputViewModel(currentRoot, results);
 
             // todo - it works but gets overwritten
-            WriteLines(viewModel);
+            WriteFile(viewModel);
 
             return results;
         }
@@ -277,7 +277,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             var regionModel = _queryManager.PrepareRegionModel(currentRegion, currentRegionPath, orgsInRegionCount,
                 hauntedCountiesInRegion, _currentRoot, _history);
 
-            WriteLines(regionModel);
+            WriteFile(regionModel);
 
             return hauntedCountiesInRegion;
         }
@@ -393,7 +393,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 , _currentRoot, _history);
 
             // towns need to know about
-            WriteLines(countyModel);
+            WriteFile(countyModel);
         }
 
 
@@ -404,7 +404,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             var pubModel = _queryManager.PreparePubModel(pubTownLinks, currentTownPath, pub, _currentRoot, _history);
 
-            WriteLines(pubModel);
+            WriteFile(pubModel);
         }
 
         public void CreatePageTypeFile(PageTypeEnum pageType, string priority, string description,
@@ -417,7 +417,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             var model = _queryManager.PreparePageTypeModel(pageType, priority, description, links, title, path,
                 _currentRoot);
 
-            WriteLines(model);
+            WriteFile(model);
         }
 
         private void CreateTownFile(string currentCountyPath,
@@ -430,7 +430,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 currentRegion,
                 currentRegionPath, currentCountyDescription, currentCountyId, _currentRoot, _history);
 
-            WriteLines(townModel);
+            WriteFile(townModel);
         }
 
         protected String PrepareModel(OutputViewModel data)
@@ -440,7 +440,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             return output;
         }
 
-        public void WriteLines(OutputViewModel model)
+        public void WriteFile(OutputViewModel model)
         {
             var max = Resources.MaxSize.ToInt32();
 
