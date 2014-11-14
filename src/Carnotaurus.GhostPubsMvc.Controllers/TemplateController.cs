@@ -288,6 +288,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             foreach (var currentRegion in regions)
             {
+                // todo - dpc - the problem is here - there are no orgs in these regions but we know that wrong
                 CreateRegionFiles(currentRegion);
             }
         }
