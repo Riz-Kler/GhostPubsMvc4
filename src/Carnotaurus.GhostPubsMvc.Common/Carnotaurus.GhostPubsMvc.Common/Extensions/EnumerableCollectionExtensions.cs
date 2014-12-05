@@ -6,69 +6,69 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 {
     public static class EnumerableCollectionExtensions
     {
-        public static string ExtractUnc(this IEnumerable<string> list)
+        public static string ExtractUnc(this IEnumerable<string> enumerable)
         {
             const string pattern = "{0}\\{1}";
 
-            var result = list.Extract(pattern);
+            var result = enumerable.Extract(pattern);
 
             return result;
         }
 
-        public static string Extract(this IEnumerable<string> list, string pattern)
+        public static string Extract(this IEnumerable<string> enumerable, string pattern)
         {
-            var result = list.Aggregate(String.Empty, (current, item) =>
+            var result = enumerable.Aggregate(String.Empty, (current, item) =>
                 String.Format(pattern, current, item));
 
             return result;
         }
 
-        public static List<string> ReverseItems(this IEnumerable<string> list)
+        public static List<string> ReverseItems(this IEnumerable<string> enumerable)
         {
-            var result = new List<string>(from c in list.Select((value, index) => new { value, index })
+            var result = new List<string>(from c in enumerable.Select((value, index) => new { value, index })
                 orderby c.index descending
                 select c.value);
 
             return result;
         }
 
-        public static string ToCommaSeparatedString(this IEnumerable<string> inputList)
+        public static string ToCommaSeparatedString(this IEnumerable<string> enumerable)
         {
-            var result = String.Join(",", inputList.ToArray());
+            var result = String.Join(",", enumerable.ToArray());
 
             return result;
         }
 
-        public static string ToBackslashSeparatedString(this IEnumerable<string> inputList)
+        public static string ToBackslashSeparatedString(this IEnumerable<string> enumerable)
         {
-            var result = String.Join(@"\", inputList.ToArray());
+            var result = String.Join(@"\", enumerable.ToArray());
 
             return result;
         }
 
 
-        public static string Join(this IEnumerable<string> collection, String delimiter)
+        public static string Join(this IEnumerable<string> enumerable, String delimiter)
         {
-            return String.Join(delimiter, collection);
+            return String.Join(delimiter, enumerable);
         }
 
-        public static string JoinWithComma(this IEnumerable<string> collection)
+        public static string JoinWithComma(this IEnumerable<string> enumerable)
         {
-            return collection.Join(", ");
+            return enumerable.Join(", ");
         }
 
-        public static string JoinWithCommaReserve(this IEnumerable<string> collection)
+        public static string JoinWithCommaReserve(this IEnumerable<string> enumerable)
         {
-            collection = collection.Reverse();
+            enumerable = enumerable.Reverse();
 
-            return collection.Join(", ");
+            return enumerable.Join(", ");
         }
 
-        public static string OxbridgeAnd(this IEnumerable<string> collection)
+        public static string OxbridgeAnd(this IEnumerable<string> enumerable)
         {
             var output = String.Empty;
 
-            var list = collection.ToList();
+            var list = enumerable.ToList();
 
             if (list.Count > 1)
             {
