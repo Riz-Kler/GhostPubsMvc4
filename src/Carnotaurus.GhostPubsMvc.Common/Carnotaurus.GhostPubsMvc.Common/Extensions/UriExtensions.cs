@@ -9,7 +9,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
     {
         public static XElement GetElement(this Uri uri, string name)
         {
-            var document = uri.LoadDocument();
+            var document = uri.Load();
 
             XElement result = null;
 
@@ -21,7 +21,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             return result;
         }
 
-        public static XDocument LoadDocument(this Uri uri)
+        public static XDocument Load(this Uri uri)
         {
             XDocument result = null;
 
