@@ -32,8 +32,11 @@ namespace Carnotaurus.GhostPubsMvc.Common.Result
             get
             {
                 if (PageSize == 0) return 0;
+
                 var pages = (ItemCount/PageSize);
+
                 if ((ItemCount%PageSize) > 0) pages++;
+
                 return pages;
             }
         }

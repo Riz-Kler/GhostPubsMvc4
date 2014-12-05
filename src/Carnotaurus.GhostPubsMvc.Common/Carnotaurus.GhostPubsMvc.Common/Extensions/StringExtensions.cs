@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -7,7 +7,7 @@ using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 {
-    public static class PrimativeExtensions
+    public static class StringExtensions
     {
         public static string Between(this string text, string a, string b)
         {
@@ -102,26 +102,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
             return null;
         }
-
-        public static Int32 ToInt32(this Int32? nullable)
-        {
-            var result = 0;
-
-            if (nullable.HasValue)
-            {
-                result = nullable.Value;
-            }
-
-            return result;
-        }
-
-        public static Boolean IsAboveZero(this Int32 value)
-        {
-            var result = value > 0;
-
-            return result;
-        }
-
+         
         public static List<string> SplitOnComma(this string commaSeparatedString)
         {
             var result = commaSeparatedString.Split(',').ToList();
@@ -140,35 +121,35 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
         {
             if (String.IsNullOrEmpty(find)) return input;
             var idx = input.IndexOf(find, StringComparison.Ordinal);
-            return (idx < 0 ? string.Empty : input.Substring(idx + find.Length));
+            return (idx < 0 ? String.Empty : input.Substring(idx + find.Length));
         }
 
         public static string Before(this string input, string find)
         {
             if (String.IsNullOrEmpty(find)) return input;
             var idx = input.IndexOf(find, StringComparison.Ordinal);
-            return (idx < 0 ? string.Empty : input.Substring(0, idx));
+            return (idx < 0 ? String.Empty : input.Substring(0, idx));
         }
 
         public static string AfterLast(this string input, string find)
         {
             if (String.IsNullOrEmpty(find)) return input;
             var idx = input.LastIndexOf(find, StringComparison.Ordinal);
-            return (idx < 0 ? string.Empty : input.Substring(idx + find.Length));
+            return (idx < 0 ? String.Empty : input.Substring(idx + find.Length));
         }
 
         public static string BeforeLast(this string input, string find)
         {
             if (String.IsNullOrEmpty(find)) return input;
             var idx = input.LastIndexOf(find, StringComparison.Ordinal);
-            return (idx < 0 ? string.Empty : input.Substring(0, idx));
+            return (idx < 0 ? String.Empty : input.Substring(0, idx));
         }
 
         public static double? ToNullableDouble(this String input)
         {
             double result;
 
-            if (double.TryParse(input, out result))
+            if (Double.TryParse(input, out result))
             {
                 return result;
             }
@@ -194,7 +175,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             if (String.IsNullOrEmpty(input))
                 return input;
 
-            return string.Format("{0}{1}",
+            return String.Format("{0}{1}",
                 input.First().ToString(CultureInfo.CurrentCulture).ToUpper(),
                 String.Join(String.Empty, input.Skip(1))
                 );
@@ -225,6 +206,11 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
         public static string ReplaceHyphens(this string input)
         {
             return input.Replace("-", "_");
+        }
+
+        public static bool IsNullOrWhiteSpace(this string input)
+        {
+            return String.IsNullOrWhiteSpace(input);
         }
     }
 }

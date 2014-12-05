@@ -4,6 +4,8 @@ using Carnotaurus.GhostPubsMvc.Common.Extensions;
 
 namespace Carnotaurus.GhostPubsMvc.Common.Helpers
 {
+    // todo - dpc - see if there is a better way of defining a path other than being a simple string
+
     public class FileSystemHelper
     {
         public static void DeleteDirectory(string targetDir)

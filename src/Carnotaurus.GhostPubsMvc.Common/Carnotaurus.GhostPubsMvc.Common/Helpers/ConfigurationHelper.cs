@@ -22,7 +22,8 @@ namespace Carnotaurus.GhostPubsMvc.Common.Helpers
 
         public static KeyValuePair<string, string> GetNameValuePair(String key)
         {
-            var result = ToDictionary().Where(x => x.Key == key);
+            var result = ToDictionary()
+                .Where(x => x.Key == key);
 
             return result.First();
         }

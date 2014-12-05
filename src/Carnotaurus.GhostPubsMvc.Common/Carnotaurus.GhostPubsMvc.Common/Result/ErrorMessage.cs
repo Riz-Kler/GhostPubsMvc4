@@ -1,4 +1,6 @@
-﻿namespace Carnotaurus.GhostPubsMvc.Common.Result
+﻿using Carnotaurus.GhostPubsMvc.Common.Extensions;
+
+namespace Carnotaurus.GhostPubsMvc.Common.Result
 {
     public class ErrorMessage
     {
@@ -8,8 +10,10 @@
 
         public override string ToString()
         {
-            if (string.IsNullOrWhiteSpace(PropertyName)) return Reason;
-            return string.Format("{0} : {1}", PropertyName, Reason);
+            string result = PropertyName.IsNullOrWhiteSpace() ?
+                Reason : string.Format("{0} : {1}", PropertyName, Reason);
+
+            return result;
         }
     }
 }
