@@ -79,9 +79,13 @@
     <Compile Include="Extensions\CommandResultExtensions.cs" />
     <Compile Include="Extensions\ControllerBaseExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Extensions\GuidExtensions.cs" />
     <Compile Include="Extensions\InjectionExtensions\DependencyInjectionScanner.cs" />
     <Compile Include="Extensions\InjectionExtensions\ExcludeFromDiRegistrationAttribute.cs" />
+    <Compile Include="Extensions\NetExtensions.cs" />
     <Compile Include="Extensions\PrimativeExtensions.cs" />
+    <Compile Include="Extensions\GenericExtensions.cs" />
+    <Compile Include="Extensions\XmlExtensions.cs" />
     <Compile Include="Helpers\FileSystemHelper.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

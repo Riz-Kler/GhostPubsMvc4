@@ -1,17 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.RegularExpressions;
-using System.Xml.Linq;
 using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 {
     public static class PrimativeExtensions
     {
+        public static string Between(this string text, string a, string b)
+        {
+            var position = text.IndexOf(a) + a.Length;
+            var right = text.Right(text.Length + a.Length - position);
+            var indexOf = right.IndexOf(b);
+            var left = Left(right, indexOf);
+            var between = left.Substring(a.Length, left.Length - a.Length);
+
+            return between;
+        }
+
+        public static string Left(string input, int indexOf)
+        {
+            var left = input.Substring(0, indexOf);
+
+            return left;
+        }
+
+        public static string Right(this string input, int length)
+        {
+            var right = length >= input.Length ? input : input.Substring(input.Length - length);
+
+            return right;
+        }
 
         public static String DoubleApostrophes(this String value)
         {
@@ -32,21 +53,6 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             var isNullOrEmpty = String.IsNullOrEmpty(value);
 
             return isNullOrEmpty;
-        }
-
-        public static Boolean IsNotEmpty(this Guid value)
-        {
-            return !value.IsEmpty();
-        }
-
-        public static Boolean IsEmpty(this Guid value)
-        {
-            return value == Guid.Empty;
-        }
-
-        public static Boolean IsNullOrEmpty(this Guid? value)
-        {
-            return !value.HasValue || value.Value.IsEmpty();
         }
 
         public static Guid? ToNullableGuid(this String value)
@@ -123,28 +129,11 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             return result;
         }
 
-        public static String RemoveSpecialCharacters(this Guid input)
-        {
-            return input.ToString().RemoveSpecialCharacters().ToUpper();
-        }
-
         public static String RemoveSpecialCharacters(this String input)
         {
             var result = Regex.Replace(input, "[^0-9a-zA-Z]+", String.Empty);
 
             return result;
-        }
-
-        public static T DeepClone<T>(this T obj)
-        {
-            using (var ms = new MemoryStream())
-            {
-                var formatter = new BinaryFormatter();
-                formatter.Serialize(ms, obj);
-                ms.Position = 0;
-
-                return (T)formatter.Deserialize(ms);
-            }
         }
 
         public static string After(this string s, string searchString)
@@ -237,6 +226,5 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
         {
             return input.Replace("-", "_");
         }
-
     }
 }

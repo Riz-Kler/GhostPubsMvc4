@@ -14,7 +14,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         Authority GetAuthority(string code);
 
-        IEnumerable<Authority> GetHauntedCountiesInRegion(Int32 regionId);
+        IEnumerable<Authority> GetHauntedFirstDescendantAuthoritiesInRegion(Int32 regionId);
 
         IEnumerable<Authority> GetRegions();
 

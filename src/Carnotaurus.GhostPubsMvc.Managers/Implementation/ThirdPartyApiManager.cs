@@ -99,7 +99,9 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                     org.Postcode.RemoveSpaces()
                     );
 
-            return SafelyRequest(requestUri, "result");
+            var uri = new Uri(requestUri);
+
+            return  uri.GetElement( "result");
         }
 
 
@@ -121,30 +123,9 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                     key
                     );
 
-            return SafelyRequest(requestUri, "GeocodeResponse");
-        }
+            var uri = new Uri(requestUri);
 
-        private static XElement SafelyRequest(string requestUri, string elementName)
-        {
-            XDocument document = null;
-
-            try
-            {
-                document = XDocument.Load(requestUri);
-            }
-            catch (Exception ex)
-            {
-                // throw new Exception(ex.InnerException.Message);
-            }
-
-            if (document != null)
-            {
-                var element = document.Element(elementName);
-
-                return element;
-            }
-
-            return null;
+            return uri.GetElement("GeocodeResponse");
         }
 
     }

@@ -11,7 +11,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
     {
         public Authority()
         {
-            this.Orgs = new List<Org>();
+            Orgs = new List<Org>();
+            Authoritys = new List<Authority>();
         }
 
         [NotMapped]
@@ -22,6 +23,22 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 var result = Type.ToLower() == "region";
 
                 return result;
+            }
+        }
+
+        [NotMapped]
+        public List<String> RegionalLineage
+        {
+            get
+            {
+                var list = Lineage;
+
+                list.Remove("ENGLAND");
+                list.Remove("ENGLAND AND WALES");
+                list.Remove("GREAT BRITAIN");
+                list.Remove("UNITED KINGDOM");
+
+                return list;
             }
         }
 
@@ -57,16 +74,36 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             }
         }
 
+        //      && x.ParentAuthority.IsRegion
+        //        && x.Authoritys.Any(y => y.HasHauntedOrgs)
+        // todo - dpc - perform count
         public bool HasHauntedOrgs
         {
             get
             {
-                var isHaunted = Orgs.Any(x => x.HauntedStatus.HasValue && x.HauntedStatus.Value);
+                var isHaunted = CountHauntedOrgs > 0;
 
                 return isHaunted;
 
             }
         }
+
+        public int CountHauntedOrgs
+        {
+            get
+            {
+                var count = 0;
+
+                count = Authoritys.Any() ? 
+                    // how to get county and metropolian county 
+                    Authoritys.Sum(s => s.Orgs.Count(x => x.HauntedStatus.HasValue && x.HauntedStatus.Value)) :
+                    // other ones
+                    Orgs.Count(x => x.HauntedStatus.HasValue && x.HauntedStatus.Value);
+
+                return count;
+            }
+        }
+
         public int Id { get; set; }
 
         public string Name { get; set; }
@@ -77,6 +114,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public double? Density { get; set; }
 
         public virtual ICollection<Org> Orgs { get; set; }
+
+        public virtual ICollection<Authority> Authoritys { get; set; }
 
         // recursive fix
         public int ParentId { get; set; }

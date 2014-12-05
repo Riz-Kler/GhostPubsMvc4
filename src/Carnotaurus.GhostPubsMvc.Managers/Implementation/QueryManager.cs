@@ -61,10 +61,11 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             IEnumerable<Authority> hauntedCountiesInRegion, string currentRoot,
             List<OutputViewModel> history)
         {
-            var countyLinks = hauntedCountiesInRegion.Select(x => new PageLinkModel(currentRoot)
+            var countyLinks = hauntedCountiesInRegion.Select(x => new PageLinkModel(currentRegionPath)
             {
                 Text = x.Name,
-                Title = x.Name
+                Title = x.Name,
+                Unc = string.Format("{0}\\{1}\\{2}", currentRoot, x.RegionalLineage.ReverseItems().ToBackslashSeparatedString(), x.Name).SeoFormat()
             }).ToList();
 
             var regionModel = OutputViewModel.CreateRegionOutputViewModel(currentRegion, currentRegionPath,
@@ -148,16 +149,20 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             return results;
         }
 
-        public IEnumerable<Authority> GetHauntedCountiesInRegion(Int32 regionId)
+        // this only seems to work for every authority except county and metropolian county (these have an extra tier of districts)
+        public IEnumerable<Authority> GetHauntedFirstDescendantAuthoritiesInRegion(Int32 regionId)
         {
-            var regions = _reader.Items<Authority>().ToList();
-
-            var filtered = regions.Where(x =>
+            var list = _reader.Items<Authority>().ToList();
+            
+            var inRegion = list
+                .Where(x =>
                 x.ParentId == regionId
                 && x.ParentAuthority.IsRegion
-                && x.HasHauntedOrgs);
-
-            return filtered;
+                && x.HasHauntedOrgs
+                )
+                .ToList();
+             
+            return inRegion;
         }
 
 

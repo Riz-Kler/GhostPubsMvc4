@@ -35,7 +35,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
             if (result != 0)
             {
-                var item = items.FirstOrDefault(x => Convert.ToInt32(x.Value) == result);
+                var item = items.FirstOrDefault(x => x.Value.ToInt32() == result);
 
                 if (item != null)
                 {

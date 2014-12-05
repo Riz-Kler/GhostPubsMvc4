@@ -272,14 +272,14 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             // should be list of counties that have ghost pubs?
             // var countiesInRegion = currentRegion.Counties.ToList();
 
-            var hauntedCountiesInRegion = _queryManager.GetHauntedCountiesInRegion(currentRegion.Id).ToList();
+            var inRegion = _queryManager.GetHauntedFirstDescendantAuthoritiesInRegion(currentRegion.Id).ToList();
 
             var regionModel = _queryManager.PrepareRegionModel(currentRegion, currentRegionPath, orgsInRegionCount,
-                hauntedCountiesInRegion, _currentRoot, _history);
+                inRegion, _currentRoot, _history);
 
             WriteFile(regionModel);
 
-            return hauntedCountiesInRegion;
+            return inRegion;
         }
 
         private void GenerateGeographicHtmlPages()
@@ -302,8 +302,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void CreateAllCountyFilesForRegion(Authority currentRegion, string currentRegionPath)
         {
-            var orgsInRegionCount = currentRegion.Orgs.Count(
-                y => y.HauntedStatus.HasValue && y.HauntedStatus.Value);
+            var firstDescendantAuthoritiesInRegion = _queryManager.GetHauntedFirstDescendantAuthoritiesInRegion(currentRegion.Id);
+
+            var orgsInRegionCount = firstDescendantAuthoritiesInRegion.Sum(x => x.CountHauntedOrgs);
 
             if (orgsInRegionCount == 0) return;
 
