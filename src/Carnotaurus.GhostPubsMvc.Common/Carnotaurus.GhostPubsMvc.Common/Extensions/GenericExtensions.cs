@@ -15,7 +15,9 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
                 stream.Position = 0;
 
-                return (T) formatter.Deserialize(stream);
+                var result = (T) formatter.Deserialize(stream);
+
+                return result;
             }
         }
     }

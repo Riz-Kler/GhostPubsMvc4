@@ -33,14 +33,13 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
             var result = Convert.ToInt32(selected);
 
-            if (result != 0)
-            {
-                var item = items.FirstOrDefault(x => x.Value.ToInt32() == result);
+            if (result == 0) return items;
 
-                if (item != null)
-                {
-                    item.Selected = true;
-                }
+            var item = items.FirstOrDefault(x => x.Value.ToInt32() == result);
+
+            if (item != null)
+            {
+                item.Selected = true;
             }
 
             return items;

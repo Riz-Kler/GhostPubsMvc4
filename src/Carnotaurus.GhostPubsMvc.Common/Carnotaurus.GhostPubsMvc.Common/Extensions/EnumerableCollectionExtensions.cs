@@ -1,13 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 
 namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 {
-    public static class CollectionExtensions
+    public static class EnumerableCollectionExtensions
     {
-        public static string ExtractUnc(this IEnumerable<String> list)
+        public static string ExtractUnc(this IEnumerable<string> list)
         {
             const string pattern = "{0}\\{1}";
 
@@ -16,53 +15,37 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             return result;
         }
 
-        public static string Extract(this IEnumerable<String> list, string pattern)
+        public static string Extract(this IEnumerable<string> list, string pattern)
         {
-            var result = list.Aggregate(string.Empty, (current, item) =>
-                string.Format(pattern, current, item));
+            var result = list.Aggregate(String.Empty, (current, item) =>
+                String.Format(pattern, current, item));
 
             return result;
         }
 
-        public static List<String> ReverseItems(this IEnumerable<String> list)
+        public static List<string> ReverseItems(this IEnumerable<string> list)
         {
-            var reversed = new List<string>(from c in list.Select((value, index) => new {value, index})
+            var result = new List<string>(from c in list.Select((value, index) => new { value, index })
                 orderby c.index descending
                 select c.value);
 
-            return reversed;
+            return result;
         }
 
         public static string ToCommaSeparatedString(this IEnumerable<string> inputList)
         {
-            var output = String.Join(",", inputList.ToArray());
-            return output;
-        }
-
-        public static string ToBackslashSeparatedString(this IEnumerable<string> inputList)
-        {
-            var output = String.Join(@"\", inputList.ToArray());
-            return output;
-        }
-
-        public static Int32 ToInt32(this NameValueCollection collection, String key)
-        {
-            var result = collection[key].ToInt32();
+            var result = String.Join(",", inputList.ToArray());
 
             return result;
         }
 
-        public static IDictionary<string, string> ToDictionary(this NameValueCollection col)
+        public static string ToBackslashSeparatedString(this IEnumerable<string> inputList)
         {
-            IDictionary<string, string> results = new Dictionary<string, string>();
+            var result = String.Join(@"\", inputList.ToArray());
 
-            foreach (var key in col.AllKeys)
-            {
-                results.Add(key, col[key]);
-            }
-
-            return results;
+            return result;
         }
+
 
         public static string Join(this IEnumerable<string> collection, String delimiter)
         {
@@ -96,6 +79,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
             return output;
         }
+
 
         #region RankBy
 
@@ -144,7 +128,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
             var grouped = source.GroupBy(keySelector);
             var ordered =
-                descending
+                @descending
                     ? grouped.OrderByDescending(g => g.Key, comparer)
                     : grouped.OrderBy(g => g.Key, comparer);
 
@@ -152,7 +136,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             foreach (var group in ordered)
             {
                 var rank = totalRank;
-                foreach (var item in group)
+                foreach (var item in @group)
                 {
                     yield return resultSelector(item, rank);
                     totalRank++;
@@ -209,14 +193,14 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
             var grouped = source.GroupBy(keySelector);
             var ordered =
-                descending
+                @descending
                     ? grouped.OrderByDescending(g => g.Key, comparer)
                     : grouped.OrderBy(g => g.Key, comparer);
 
             var rank = 1;
             foreach (var group in ordered)
             {
-                foreach (var item in group)
+                foreach (var item in @group)
                 {
                     yield return resultSelector(item, rank);
                 }

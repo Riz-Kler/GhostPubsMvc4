@@ -75,11 +75,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\CollectionExtensions.cs" />
+    <Compile Include="Extensions\NameValueCollectionExtensions.cs" />
     <Compile Include="Extensions\CommandResultExtensions.cs" />
     <Compile Include="Extensions\ControllerBaseExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\GuidExtensions.cs" />
+    <Compile Include="Extensions\EnumerableCollectionExtensions.cs" />
     <Compile Include="Extensions\InjectionExtensions\DependencyInjectionScanner.cs" />
     <Compile Include="Extensions\InjectionExtensions\ExcludeFromDiRegistrationAttribute.cs" />
     <Compile Include="Extensions\NumericExtensions.cs" />
