@@ -6,7 +6,8 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 {
     public static class ControllerBaseExtensions
     {
-        public static string RenderRazorViewToString(this Controller controller, string viewName, object model)
+        // todo - dpc - ensure that changing from Controller to ControllerBase works
+        public static string RenderRazorViewToString(this ControllerBase controller, string viewName, object model)
         {
             if (controller == null)
             {
@@ -19,50 +20,60 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             }
 
             controller.ViewData.Model = model;
-            using (var sw = new StringWriter())
+
+            using (var stringWriter = new StringWriter())
             {
                 var viewResult = ViewEngines.Engines.FindPartialView(controller.ControllerContext, viewName);
+
                 var viewContext = new ViewContext(controller.ControllerContext, viewResult.View, controller.ViewData,
-                    controller.TempData, sw);
-                viewResult.View.Render(viewContext, sw);
+                    controller.TempData, stringWriter);
+
+                viewResult.View.Render(viewContext, stringWriter);
+
                 viewResult.ViewEngine.ReleaseView(controller.ControllerContext, viewResult.View);
-                return sw.GetStringBuilder().ToString();
+
+                var result = stringWriter.GetStringBuilder().ToString();
+
+                return result;
             }
         }
 
         public static string GetViewTemplate(this ControllerBase controller, string viewName = null)
         {
-            var viewPath = GetPhysicalViewPath(controller, viewName);
+            var physicalViewPath = GetPhysicalViewPath(controller, viewName);
 
-            var template = File.ReadAllText(viewPath);
+            var result = File.ReadAllText(physicalViewPath);
 
-            return template;
+            return result;
         }
 
         public static string GetPhysicalViewPath(this ControllerBase controller, string viewName = null)
         {
-            var virtualPath = GetVirtualViewPath(controller, viewName);
+            var virtualViewPath = GetVirtualViewPath(controller, viewName);
 
-            return controller.ControllerContext.HttpContext.Server.MapPath(virtualPath);
+            var result = controller.ControllerContext.HttpContext.Server.MapPath(virtualViewPath);
+
+            return result;
         }
 
-        public static string PrepareView(this Controller controller, Object model, String viewName = null)
+        // todo - dpc - ensure that changing from Controller to ControllerBase works
+        public static string PrepareView(this ControllerBase controller, Object model, String viewName = null)
         {
-            if (String.IsNullOrEmpty(viewName))
+            if (viewName.IsNullOrEmpty())
             {
                 viewName = controller.ControllerContext.RouteData.GetRequiredString("action");
             }
 
             var viewPath = GetVirtualViewPath(controller, viewName);
 
-            var html = RenderRazorViewToString(controller, viewPath, model);
+            var result = RenderRazorViewToString(controller, viewPath, model);
 
-            return html;
+            return result;
         }
 
         public static string GetVirtualViewPath(this ControllerBase controller, string viewName = null)
         {
-            String path = null;
+            String result = null;
 
             if (controller == null)
             {
@@ -76,16 +87,16 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
                 viewName = context.RouteData.GetRequiredString("action");
             }
 
-            var result = ViewEngines.Engines.FindView(context, viewName, null);
+            var findView = ViewEngines.Engines.FindView(context, viewName, null);
 
-            var compiledView = result.View as BuildManagerCompiledView;
+            var buildManagerCompiledView = findView.View as BuildManagerCompiledView;
 
-            if (compiledView != null)
+            if (buildManagerCompiledView != null)
             {
-                path = compiledView.ViewPath;
+                result = buildManagerCompiledView.ViewPath;
             }
 
-            return path;
+            return result;
         }
     }
 }

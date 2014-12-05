@@ -54,14 +54,14 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
         public static IDictionary<string, string> ToDictionary(this NameValueCollection col)
         {
-            IDictionary<string, string> dict = new Dictionary<string, string>();
+            IDictionary<string, string> results = new Dictionary<string, string>();
 
-            foreach (var k in col.AllKeys)
+            foreach (var key in col.AllKeys)
             {
-                dict.Add(k, col[k]);
+                results.Add(key, col[key]);
             }
 
-            return dict;
+            return results;
         }
 
         public static string Join(this IEnumerable<string> collection, String delimiter)

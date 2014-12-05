@@ -12,15 +12,15 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
         public static string Between(this string text, string a, string b)
         {
             var position = text.IndexOf(a) + a.Length;
-            var right = text.Right(text.Length + a.Length - position);
-            var indexOf = right.IndexOf(b);
-            var left = Left(right, indexOf);
+            var cutFromRight = text.Right(text.Length + a.Length - position);
+            var indexOf = cutFromRight.IndexOf(b);
+            var left = cutFromRight.Left(indexOf);
             var between = left.Substring(a.Length, left.Length - a.Length);
 
             return between;
         }
 
-        public static string Left(string input, int indexOf)
+        public static string Left(this string input, int indexOf)
         {
             var left = input.Substring(0, indexOf);
 
@@ -136,39 +136,39 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             return result;
         }
 
-        public static string After(this string s, string searchString)
+        public static string After(this string input, string find)
         {
-            if (String.IsNullOrEmpty(searchString)) return s;
-            var idx = s.IndexOf(searchString, StringComparison.Ordinal);
-            return (idx < 0 ? string.Empty : s.Substring(idx + searchString.Length));
+            if (String.IsNullOrEmpty(find)) return input;
+            var idx = input.IndexOf(find, StringComparison.Ordinal);
+            return (idx < 0 ? string.Empty : input.Substring(idx + find.Length));
         }
 
-        public static string Before(this string s, string searchString)
+        public static string Before(this string input, string find)
         {
-            if (String.IsNullOrEmpty(searchString)) return s;
-            var idx = s.IndexOf(searchString, StringComparison.Ordinal);
-            return (idx < 0 ? string.Empty : s.Substring(0, idx));
+            if (String.IsNullOrEmpty(find)) return input;
+            var idx = input.IndexOf(find, StringComparison.Ordinal);
+            return (idx < 0 ? string.Empty : input.Substring(0, idx));
         }
 
-        public static string AfterLast(this string s, string searchString)
+        public static string AfterLast(this string input, string find)
         {
-            if (String.IsNullOrEmpty(searchString)) return s;
-            var idx = s.LastIndexOf(searchString, StringComparison.Ordinal);
-            return (idx < 0 ? string.Empty : s.Substring(idx + searchString.Length));
+            if (String.IsNullOrEmpty(find)) return input;
+            var idx = input.LastIndexOf(find, StringComparison.Ordinal);
+            return (idx < 0 ? string.Empty : input.Substring(idx + find.Length));
         }
 
-        public static string BeforeLast(this string s, string searchString)
+        public static string BeforeLast(this string input, string find)
         {
-            if (String.IsNullOrEmpty(searchString)) return s;
-            var idx = s.LastIndexOf(searchString, StringComparison.Ordinal);
-            return (idx < 0 ? string.Empty : s.Substring(0, idx));
+            if (String.IsNullOrEmpty(find)) return input;
+            var idx = input.LastIndexOf(find, StringComparison.Ordinal);
+            return (idx < 0 ? string.Empty : input.Substring(0, idx));
         }
 
-        public static double? ToNullableDouble(this String value)
+        public static double? ToNullableDouble(this String input)
         {
             double result;
 
-            if (double.TryParse(value, out result))
+            if (double.TryParse(input, out result))
             {
                 return result;
             }
@@ -176,16 +176,16 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             return null;
         }
 
-        public static List<string> SplitOn(this string commaSeparatedString, char splitOn)
+        public static List<string> SplitOn(this string concatenated, char splitOn)
         {
-            var output = commaSeparatedString.Split(splitOn).ToList();
+            var output = concatenated.Split(splitOn).ToList();
 
             return output;
         }
 
-        public static List<string> SplitOnSlash(this string commaSeparatedString)
+        public static List<string> SplitOnSlash(this string slashSeparated)
         {
-            var output = commaSeparatedString.SplitOn('\\');
+            var output = slashSeparated.SplitOn('\\');
             return output;
         }
 

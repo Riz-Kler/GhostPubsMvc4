@@ -16,12 +16,12 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
         public static Boolean IsNullOrEmpty(this Guid? value)
         {
-            return !value.HasValue || value.Value.IsEmpty();
+            return (!value.HasValue) || (value.Value.IsEmpty());
         }
 
         public static String RemoveSpecialCharacters(this Guid input)
         {
-            return input.ToString().RemoveSpecialCharacters().ToUpper();
+            return input.ToString().ToUpper().RemoveSpecialCharacters();
         }
     }
 }

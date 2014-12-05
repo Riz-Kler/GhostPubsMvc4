@@ -7,15 +7,15 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
     {
         public static T DeepClone<T>(this T obj)
         {
-            using (var ms = new MemoryStream())
+            using (var stream = new MemoryStream())
             {
                 var formatter = new BinaryFormatter();
 
-                formatter.Serialize(ms, obj);
+                formatter.Serialize(stream, obj);
 
-                ms.Position = 0;
+                stream.Position = 0;
 
-                return (T) formatter.Deserialize(ms);
+                return (T) formatter.Deserialize(stream);
             }
         }
     }
