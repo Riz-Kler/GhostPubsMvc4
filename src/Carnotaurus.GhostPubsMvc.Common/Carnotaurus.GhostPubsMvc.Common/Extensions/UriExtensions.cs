@@ -16,8 +16,8 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             if (document != null)
             {
                 result = document.Element(name);
-            } 
-             
+            }
+
             return result;
         }
 
