@@ -9,22 +9,32 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
     {
         public static XElement GetElement(this Uri uri, string name)
         {
-            XDocument document = null;
+            var document = uri.LoadDocument();
+
+            XElement result = null;
+
+            if (document != null)
+            {
+                result = document.Element(name);
+            } 
+             
+            return result;
+        }
+
+        public static XDocument LoadDocument(this Uri uri)
+        {
+            XDocument result = null;
 
             try
             {
-                document = XDocument.Load(uri.AbsoluteUri);
+                result = XDocument.Load(uri.AbsoluteUri);
             }
             catch (Exception ex)
             {
                 // throw new Exception(ex.InnerException.Message);
             }
 
-            if (document == null) return null;
-
-            var element = document.Element(name);
-
-            return element;
+            return result;
         }
 
         public static string HttpGet(this Uri uri)
@@ -56,6 +66,6 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
             return result;
         }
-  
+
     }
 }
