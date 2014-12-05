@@ -102,7 +102,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
             return null;
         }
-         
+
         public static List<string> SplitOnComma(this string commaSeparatedString)
         {
             var result = commaSeparatedString.Split(',').ToList();

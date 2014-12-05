@@ -66,6 +66,5 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
             return result;
         }
-
     }
 }

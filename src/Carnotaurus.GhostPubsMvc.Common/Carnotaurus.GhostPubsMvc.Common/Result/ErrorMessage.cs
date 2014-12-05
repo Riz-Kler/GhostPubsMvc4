@@ -10,8 +10,9 @@ namespace Carnotaurus.GhostPubsMvc.Common.Result
 
         public override string ToString()
         {
-            string result = PropertyName.IsNullOrWhiteSpace() ?
-                Reason : string.Format("{0} : {1}", PropertyName, Reason);
+            var result = PropertyName.IsNullOrWhiteSpace()
+                ? Reason
+                : string.Format("{0} : {1}", PropertyName, Reason);
 
             return result;
         }

@@ -6,7 +6,6 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 {
     public static class NameValueCollectionExtensions
     {
- 
         public static Int32 ToInt32(this NameValueCollection nameValueCollection, String key)
         {
             var result = nameValueCollection[key].ToInt32();

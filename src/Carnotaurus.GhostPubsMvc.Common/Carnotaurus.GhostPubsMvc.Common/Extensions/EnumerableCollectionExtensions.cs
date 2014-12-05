@@ -25,7 +25,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
         public static List<string> ReverseItems(this IEnumerable<string> enumerable)
         {
-            var result = new List<string>(from c in enumerable.Select((value, index) => new { value, index })
+            var result = new List<string>(from c in enumerable.Select((value, index) => new {value, index})
                 orderby c.index descending
                 select c.value);
 
@@ -79,7 +79,6 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
             return output;
         }
-
 
         #region RankBy
 
