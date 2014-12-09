@@ -44,6 +44,29 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 return result;
             }
         }
+         
+        [NotMapped]
+        public bool IsDistrict
+        {
+            get
+            {
+                var result = Type.ToLower().Contains("district");
+
+                return result;
+            }
+        }
+
+
+        [NotMapped]
+        public bool IsCounty
+        {
+            get
+            {
+                var result = Type.ToLower().Contains("county");
+
+                return result;
+            }
+        }
 
         [NotMapped]
         public List<String> RegionalLineage
