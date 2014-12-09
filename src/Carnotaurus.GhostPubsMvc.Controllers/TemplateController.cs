@@ -86,7 +86,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         private void GenerateContent()
         {
             _currentRoot = String.Format(@"C:\Carnotaurus\{0}\haunted-pubs\",
-                _generationId.ToString().ToLower().SeoFormat());
+                _generationId.ToString().SeoFormat());
 
             if (_currentRoot != null)
             {
