@@ -50,7 +50,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                var list = Lineage;
+                var list = Levels;
 
                 list.Remove("ENGLAND");
                 list.Remove("ENGLAND AND WALES");
@@ -60,31 +60,20 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 return list;
             }
         }
-
+         
         [NotMapped]
-        public String LineageSignature
+        public List<String> Levels
         {
             get
             {
-                var result = Lineage.SeoFormat();
+                var result = LevelsAscending.ReverseItems();
 
                 return result;
             }
         }
 
         [NotMapped]
-        public List<String> Lineage
-        {
-            get
-            {
-                var result = LineageAscending.ReverseItems();
-
-                return result;
-            }
-        }
-
-        [NotMapped]
-        protected List<String> LineageAscending
+        protected List<String> LevelsAscending
         {
             get
             {

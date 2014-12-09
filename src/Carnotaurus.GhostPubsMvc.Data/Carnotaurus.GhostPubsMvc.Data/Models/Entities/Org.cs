@@ -120,13 +120,13 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public virtual ICollection<Tag> Tags { get; set; }
 
         [NotMapped]
-        public virtual String UncRelTownPath
+        public virtual String FilenameRelTownPath
         {
             get
             {
-                var items = Authority.Lineage;
+                var items = Authority.Levels;
 
-                var result = items.ExtractUnc();
+                var result = items.ExtractFilename();
 
                 result = string.Format("{0}\\{1}", result, Town);
 
@@ -149,7 +149,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 }
                 else
                 {
-                    output = string.Format("{0}\\{1}", output, b.ToLower().SeoFormat());
+                    output = string.Format("{0}-{1}", output, b.ToLower().SeoFormat());
                 }
             }
 
@@ -163,7 +163,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 Id = Id,
                 Text = TradingName,
                 Title = string.Format("{0}, {1}", TradingName, Postcode),
-                Unc = Path,
+                Filename = Path,
             };
 
             return info;
@@ -172,7 +172,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public PageLinkModel ExtractFullLink()
         {
 
-            var result = Authority.Lineage;
+            var result = Authority.Levels;
 
             result.Add(Town);
 
@@ -180,16 +180,16 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
             result.Add(TradingName);
 
-            var extractUnc = result.ExtractUnc();
+            var extractFilename = result.ExtractFilename();
 
-            extractUnc = string.Format(@"http://www.ghostpubs.com/haunted-pubs/{0}", extractUnc);
+            extractFilename = string.Format(@"http://www.ghostpubs.com/haunted-pubs/{0}", extractFilename);
 
             var info = new PageLinkModel
             {
                 Id = Id,
                 Text = TradingName,
                 Title = string.Format("{0}, {1}", TradingName, Postcode),
-                Unc = extractUnc
+                Filename = extractFilename
             };
 
             return info;

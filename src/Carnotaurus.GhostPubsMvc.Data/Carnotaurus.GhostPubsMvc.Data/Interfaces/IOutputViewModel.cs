@@ -8,5 +8,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Interfaces
         String JumboTitle { get; set; }
 
         PageTypeEnum Action { get; set; }
+
+        String Filename { get; set; }
     }
 }

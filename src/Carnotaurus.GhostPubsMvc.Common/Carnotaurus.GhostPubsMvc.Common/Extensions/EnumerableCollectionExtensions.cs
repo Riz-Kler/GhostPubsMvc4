@@ -6,7 +6,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 {
     public static class EnumerableCollectionExtensions
     {
-        public static string ExtractUnc(this IEnumerable<string> enumerable)
+        public static string ExtractFilename(this IEnumerable<string> enumerable)
         {
             const string pattern = "{0}\\{1}";
 

@@ -23,11 +23,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         {
             get
             {
-                var fullFilePath = String.Concat(Unc, @"\", "detail.html").ToLower();
+                var fullFilePath = String.Concat(Filename, @"\", "detail.html").ToLower();
 
                 if (!_currentRoot.IsNullOrEmpty())
                 {
-                    var url = String.Format("http://www.ghostpubs.com/haunted-pubs{0}",
+                    var url = String.Format("http://www.ghostpubs.com/haunted-pubs{0}/",
                         fullFilePath.Replace(_currentRoot.ToLower(), String.Empty).Replace("\\", "/"));
 
                     return url.SeoFormat().ToLower();
@@ -37,7 +37,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             }
         }
 
-        public String Unc { get; set; }
+        public String Filename { get; set; }
 
         public String Title { get; set; }
 

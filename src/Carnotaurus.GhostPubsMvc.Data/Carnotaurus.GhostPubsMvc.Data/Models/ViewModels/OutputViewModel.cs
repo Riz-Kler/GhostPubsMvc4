@@ -19,6 +19,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
             var viewModel = new OutputViewModel(currentRoot)
             {
+                Filename = "UK",
                 JumboTitle = "Haunted pubs in UK by region",
                 Action = PageTypeEnum.Country,
                 PageLinks = regions.Select(x => x.Name != null
@@ -26,14 +27,13 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     {
                         Text = x.Name,
                         Title = x.Name,
-                        Unc = string.Format(@"\{0}", x.Name.SeoFormat())
+                        Filename = string.Format(@"\{0}", x.Name.SeoFormat())
                     }
                     : null).OrderBy(x => x.Text).ToList(),
                 MetaDescription = string.Format("Haunted pubs in {0}",
                     regions.Select(region => region.Name).OxbridgeAnd()),
                 ArticleDescription = string.Format("Haunted pubs in {0}",
                     regions.Select(region => region.Name).OxbridgeAnd()),
-                Unc = currentRoot,
                 Parent = new KeyValuePair<string, string>("Home page", @"/"),
                 Priority = PageTypePriority.Country,
             };
@@ -41,12 +41,13 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             return viewModel;
         }
 
-        public static OutputViewModel CreateRegionOutputViewModel(Authority currentRegion, string currentRegionPath,
+        public static OutputViewModel CreateRegionOutputViewModel(Authority currentRegion,
             int orgsInRegionCount, IList<PageLinkModel> countyLinks, String currentRoot,
             IEnumerable<OutputViewModel> history)
         {
             var regionModel = new OutputViewModel(currentRoot)
             {
+                Filename = currentRegion.Name,
                 JumboTitle = currentRegion.Name,
                 Action = PageTypeEnum.Region,
                 PageLinks = countyLinks.Select(x => x.Text != null
@@ -54,17 +55,16 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     {
                         Text = x.Text,
                         Title = x.Text,
-                        Unc =
+                        Filename =
                             string.Format(@"\{0}\{1}", currentRegion.Name.SeoFormat(),
                                 x.Text.SeoFormat())
                     }
                     : null).OrderBy(x => x.Text).ToList(),
                 MetaDescription = string.Format("Haunted pubs in {0}", countyLinks.Select(x => x.Text).OxbridgeAnd()),
                 ArticleDescription = string.Format("Haunted pubs in {0}", countyLinks.Select(x => x.Text).OxbridgeAnd()),
-                Unc = currentRegionPath,
                 Parent =
-                    new KeyValuePair<string, string>(currentRegion.Name,
-                        currentRegion.Name.SeoFormat().ToLower()),
+                   new KeyValuePair<string, string>(currentRegion.Name,
+                       currentRegion.Name.SeoFormat().ToLower()),
                 Total = orgsInRegionCount,
                 Priority = PageTypePriority.Region,
                 Previous = history.LastOrDefault(x => x.Action == PageTypeEnum.Region),
@@ -72,7 +72,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 {
                     Region = new PageLinkModel(currentRoot)
                     {
-                        Unc = currentRegionPath,
+                        Filename = currentRegion.Name,
                         Id = currentRegion.Id,
                         Text = currentRegion.Name,
                         Title = currentRegion.Name,
@@ -83,13 +83,14 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         }
 
         public static OutputViewModel CreateCountyOutputViewModel(string currentCountyName, int currentCountyId,
-            string currentCountyPath, Authority currentRegion, int count, string currentRegionPath,
+           Authority currentRegion, int count,
             IList<PageLinkModel> townLinks,
             String currentRoot,
             IEnumerable<OutputViewModel> history)
         {
             var countyModel = new OutputViewModel(currentRoot)
             {
+                Filename = currentCountyName,
                 JumboTitle = currentCountyName,
                 Action = PageTypeEnum.County,
                 PageLinks = townLinks.Select(linkModel => linkModel.Text != null
@@ -97,7 +98,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     {
                         Text = linkModel.Text,
                         Title = linkModel.Text,
-                        Unc =
+                        Filename =
                             string.Format(@"\{0}\{1}\{2}",
                                 currentRegion.Name.SeoFormat(),
                                 currentCountyName.SeoFormat(),
@@ -111,7 +112,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 ArticleDescription = string.Format(
                     "Haunted pubs in {0}",
                     townLinks.Select(x => x.Text).OxbridgeAnd()),
-                Unc = currentCountyPath,
                 Parent = new KeyValuePair<string, string>(currentRegion.Name,
                     currentRegion.Name.SeoFormat().ToLower()),
                 Total = count,
@@ -121,14 +121,14 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 {
                     Region = new PageLinkModel(currentRoot)
                     {
-                        Unc = currentRegionPath,
+                        Filename = currentRegion.Name,
                         Id = currentRegion.Id,
                         Text = currentRegion.Name,
                         Title = currentRegion.Name
                     },
                     County = new PageLinkModel(currentRoot)
                     {
-                        Unc = currentCountyPath,
+                        Filename = currentCountyName,
                         Id = currentCountyId,
                         Text = currentCountyName,
                         Title = currentCountyName
@@ -138,14 +138,15 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             return countyModel;
         }
 
-        public static OutputViewModel CreateTownOutputViewModel(string currentCountyPath, string town,
+        public static OutputViewModel CreateTownOutputViewModel(string town,
             string currentCountyName,
-            Authority currentRegion, string currentRegionPath, string currentCountyDescription, int currentCountyId,
+            Authority currentRegion, string currentCountyDescription, int currentCountyId,
             IList<PageLinkModel> pubLinks,
             string townPath, string currentRoot, IEnumerable<OutputViewModel> history)
         {
             var townModel = new OutputViewModel(currentRoot)
             {
+                Filename = town,
                 JumboTitle = town,
                 Action = PageTypeEnum.Town,
                 PageLinks = pubLinks.Select(x => x.Text != null
@@ -153,7 +154,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     {
                         Text = x.Text,
                         Title = x.Title,
-                        Unc =
+                        Filename =
                             string.Format(@"\{0}\{1}\{2}\{3}\{4}", currentRegion.Name.SeoFormat(),
                                 currentCountyName.SeoFormat(),
                                 town.SeoFormat(), x.Id, x.Text.SeoFormat())
@@ -161,7 +162,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     : null).OrderBy(x => x.Text).ToList(),
                 MetaDescription = string.Format("{0}, {1}, {2}", town, currentCountyName, currentRegion.Name),
                 ArticleDescription = string.Format("{0}, {1}, {2}", town, currentCountyName, currentRegion.Name),
-                Unc = townPath,
                 Parent = new KeyValuePair<string, string>(currentCountyDescription, String.Empty),
                 Total = pubLinks.Count(),
                 Priority = PageTypePriority.Town,
@@ -170,21 +170,21 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 {
                     Region = new PageLinkModel(currentRoot)
                     {
-                        Unc = currentRegionPath,
+                        Filename = currentRegion.Name,
                         Id = currentRegion.Id,
                         Text = currentRegion.Name,
                         Title = currentRegion.Name
                     },
                     County = new PageLinkModel(currentRoot)
                     {
-                        Unc = currentCountyPath,
+                        Filename = currentCountyName,
                         Id = currentCountyId,
                         Text = currentCountyName,
                         Title = currentCountyName
                     },
                     Town = new PageLinkModel(currentRoot)
                     {
-                        Unc = townPath,
+                        Filename = townPath,
                         Id = currentCountyId,
                         Text = town,
                         Title = town
@@ -202,13 +202,13 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         {
             var pubModel = new OutputViewModel(currentRoot)
             {
+                Filename = pub.Id + "-" + pub.TradingName.SeoFormat() + "-" + pub.Locality.SeoFormat(),
                 JumboTitle = pub.TradingName,
                 Action = action,
                 PageLinks = notes,
                 MetaDescription =
                     string.Format("{0}, {1} : {2}", pub.Address, pub.PostcodePrimaryPart, notes.First().Text),
                 ArticleDescription = string.Format("{0}, {1}", pub.Address, pub.PostcodePrimaryPart),
-                Unc = pub.Path,
                 Parent = new KeyValuePair<string, string>(pub.Town, pub.Town.SeoFormat().ToLower()),
                 Tags = pub.Tags.Select(x => x.Feature.Name).ToList(),
                 Priority = PageTypePriority.Pub,
@@ -223,7 +223,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                             Id = org.Id,
                             Text = org.TradingName,
                             Title = org.TradingName,
-                            Unc =
+                            Filename =
                                 string.Format("{0}/{1}/{2}", pub.TownPath.SeoFormat(), org.Id,
                                     org.TradingName.SeoFormat())
                         }
@@ -232,28 +232,28 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 {
                     Region = new PageLinkModel(currentRoot)
                     {
-                        Unc = pub.RegionPath,
+                        Filename = pub.RegionPath,
                         Id = pub.Id,
                         Text = pub.Authority.ParentAuthority.Name,
                         Title = pub.Authority.ParentAuthority.Name
                     },
                     County = new PageLinkModel(currentRoot)
                     {
-                        Unc = pub.CountyPath,
+                        Filename = pub.CountyPath,
                         Id = pub.Id,
                         Text = pub.Authority.Name,
                         Title = pub.Authority.Name
                     },
                     Town = new PageLinkModel(currentRoot)
                     {
-                        Unc = pub.TownPath,
+                        Filename = pub.TownPath,
                         Id = pub.Id,
                         Text = pub.Town,
                         Title = pub.Town
                     },
                     Pub = new PageLinkModel(currentRoot)
                     {
-                        Unc = pub.Path,
+                        Filename = pub.Path,
                         Id = pub.Id,
                         Text = pub.TradingName,
                         Title = pub.TradingName
@@ -273,7 +273,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 Action = pageType,
                 MetaDescription = description,
                 ArticleDescription = description,
-                Unc = path,
+                Filename = path,
                 Priority = priority,
                 PageLinks = links,
                 Total = links != null ? links.Count() : 0
@@ -283,13 +283,13 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         #endregion Statics
 
-        private readonly String _currentRoot = String.Empty;
+        public String CurrentRoot { get; set; }
 
         public OutputViewModel(String currentRoot)
         {
             PageLinks = new List<PageLinkModel>();
             Tags = new List<String>();
-            _currentRoot = currentRoot;
+            CurrentRoot = currentRoot;
         }
 
         public String Lat { get; set; }
@@ -310,18 +310,28 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public IList<PageLinkModel> PageLinks { get; set; }
 
-        public String Unc { get; set; }
+        public String Filename { get; set; }
+
+        public String FriendlyFilename
+        {
+            get
+            {
+                var result = Filename.SeoFormat().RemoveSpecialCharacters(true).ToLower(); 
+
+                return result;
+            }
+        }
 
         public String Url
         {
             get
             {
-                var result = String.Concat(Unc, @"\", "detail.html").ToLower();
+                var result = String.Concat(Filename, @"\", "detail.html").ToLower();
 
-                if (!_currentRoot.IsNullOrEmpty())
+                if (!CurrentRoot.IsNullOrEmpty())
                 {
-                    result = String.Format("http://www.ghostpubs.com/haunted-pubs{0}",
-                        result.Replace(_currentRoot.ToLower(), String.Empty).Replace("\\", "/"));
+                    result = String.Format("http://www.ghostpubs.com/haunted-pubs{0}/",
+                        result.Replace(CurrentRoot.ToLower(), String.Empty).Replace("\\", "/"));
                 }
 
                 return result;
@@ -366,5 +376,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public String JumboTitle { get; set; }
 
         public PageTypeEnum Action { get; set; }
+
     }
 }

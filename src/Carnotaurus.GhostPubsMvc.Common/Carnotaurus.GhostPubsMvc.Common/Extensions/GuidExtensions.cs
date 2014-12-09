@@ -21,7 +21,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
         public static String RemoveSpecialCharacters(this Guid input)
         {
-            return input.ToString().ToUpper().RemoveSpecialCharacters();
+            return input.ToString().ToUpper().RemoveSpecialCharacters(false);
         }
     }
 }

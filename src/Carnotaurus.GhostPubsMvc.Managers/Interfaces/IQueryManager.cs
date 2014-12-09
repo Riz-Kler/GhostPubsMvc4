@@ -18,35 +18,35 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         IEnumerable<Authority> GetRegions();
 
-        List<PageLinkModel> GetSitemapData(String root);
+        //List<PageLinkModel> GetSitemapData(String root);
 
         // weird
 
         OutputViewModel PrepareCountyModel(string currentCountyName, int currentCountyId,
-            string currentCountyPath,
-            IEnumerable<string> towns, Authority currentRegion, int count, string currentRegionPath, string currentRoot,
+
+            IEnumerable<string> towns, Authority currentRegion, int count, string currentRoot,
             List<OutputViewModel> history);
 
         OutputViewModel PreparePubModel(ICollection<KeyValuePair<string, PageLinkModel>> pubTownLinks,
-            string currentTownPath, Org pub, string currentRoot, List<OutputViewModel> history
+           Org pub, string currentRoot, List<OutputViewModel> history
             );
 
-        OutputViewModel PrepareTownModel(string currentCountyPath,
+        OutputViewModel PrepareTownModel(
             IEnumerable<KeyValuePair<string, PageLinkModel>> pubTownLinks, string town,
-            string currentCountyName, Authority currentRegion, string currentRegionPath, string currentCountyDescription,
+            string currentCountyName, Authority currentRegion, string currentCountyDescription,
             int currentCountyId, string currentRoot, List<OutputViewModel> history);
 
         OutputViewModel PreparePageTypeModel(PageTypeEnum pageType, string priority, string description,
             List<PageLinkModel> links,
             string title, string path, string currentRoot);
 
-        OutputViewModel PrepareRegionModel(Authority currentRegion, string currentRegionPath, int orgsInRegionCount,
+        OutputViewModel PrepareRegionModel(Authority currentRegion, int orgsInRegionCount,
             IEnumerable<Authority> hauntedCountiesInRegion, string currentRoot,
             List<OutputViewModel> history);
 
         // no db dependencies
-        String PrepareWebmasterSitemap(List<String> items);
+        //String PrepareWebmasterSitemap(List<String> items);
 
-        string BuildPath(params String[] builder);
+        string BuildPath(Boolean isLevelled, params String[] builder);
     }
 }

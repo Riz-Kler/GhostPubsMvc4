@@ -110,9 +110,11 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             return result;
         }
 
-        public static String RemoveSpecialCharacters(this String input)
+        public static String RemoveSpecialCharacters(this String input, bool exceptHyphen)
         {
-            var result = Regex.Replace(input, "[^0-9a-zA-Z]+", String.Empty);
+            string pattern = exceptHyphen ? "[^a-zA-Z0-9 -]" : "[^0-9a-zA-Z]+";
+
+            var result = Regex.Replace(input, pattern, String.Empty);
 
             return result;
         }

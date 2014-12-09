@@ -20,22 +20,22 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             _reader = reader;
         }
 
-        public OutputViewModel PrepareTownModel(string currentCountyPath,
+        public OutputViewModel PrepareTownModel(
             IEnumerable<KeyValuePair<string, PageLinkModel>> pubTownLinks, string town,
-            string currentCountyName, Authority currentRegion, string currentRegionPath, string currentCountyDescription,
+            string currentCountyName, Authority currentRegion, string currentCountyDescription,
             int currentCountyId,
             string currentRoot, List<OutputViewModel> history)
         {
-            var townPath = BuildPath(currentCountyPath, town);
+            var townPath = BuildPath(false, currentRoot, town);
 
             var pubLinks = pubTownLinks
                 .Where(x => x.Key.Equals(town))
                 .Select(x => x.Value)
                 .ToList();
 
-            var townModel = OutputViewModel.CreateTownOutputViewModel(currentCountyPath, town, currentCountyName,
+            var townModel = OutputViewModel.CreateTownOutputViewModel(town, currentCountyName,
                 currentRegion,
-                currentRegionPath, currentCountyDescription,
+                 currentCountyDescription,
                 currentCountyId, pubLinks, townPath, currentRoot, history);
 
             return townModel;
@@ -56,27 +56,26 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             return model;
         }
 
-        public OutputViewModel PrepareRegionModel(Authority currentRegion, string currentRegionPath,
+        public OutputViewModel PrepareRegionModel(Authority currentRegion,
             int orgsInRegionCount,
             IEnumerable<Authority> hauntedCountiesInRegion, string currentRoot,
             List<OutputViewModel> history)
         {
-            var countyLinks = hauntedCountiesInRegion.Select(x => new PageLinkModel(currentRegionPath)
+            var countyLinks = hauntedCountiesInRegion.Select(x => new PageLinkModel(currentRoot)
             {
                 Text = x.Name,
                 Title = x.Name,
-                Unc = string.Format("{0}\\{1}\\{2}", currentRoot, x.RegionalLineage.ReverseItems().JoinWithBackslash(), x.Name).SeoFormat()
+                Filename = string.Format("{0}\\{1}\\{2}", currentRoot, x.RegionalLineage.ReverseItems().JoinWithBackslash(), x.Name).SeoFormat()
             }).ToList();
 
-            var regionModel = OutputViewModel.CreateRegionOutputViewModel(currentRegion, currentRegionPath,
+            var regionModel = OutputViewModel.CreateRegionOutputViewModel(currentRegion,
                 orgsInRegionCount, countyLinks, currentRoot, history);
 
             return regionModel;
         }
 
         public OutputViewModel PrepareCountyModel(string currentCountyName, int currentCountyId,
-            string currentCountyPath,
-            IEnumerable<string> towns, Authority currentRegion, int count, string currentRegionPath, string currentRoot,
+            IEnumerable<string> towns, Authority currentRegion, int count, string currentRoot,
             List<OutputViewModel> history)
         {
             var townLinks = towns.Select(s => new PageLinkModel(currentRoot)
@@ -86,17 +85,15 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             }).ToList();
 
             var countyModel = OutputViewModel.CreateCountyOutputViewModel(currentCountyName, currentCountyId,
-                currentCountyPath, currentRegion, count,
-                currentRegionPath, townLinks, currentRoot, history);
+                 currentRegion, count,
+                 townLinks, currentRoot, history);
             return countyModel;
         }
 
         public OutputViewModel PreparePubModel(ICollection<KeyValuePair<string, PageLinkModel>> pubTownLinks,
-            string currentTownPath, Org pub, string currentRoot, List<OutputViewModel> history
+            Org pub, string currentRoot, List<OutputViewModel> history
             )
-        {
-            pub.TownPath = currentTownPath;
-
+        { 
             pubTownLinks.Add(new KeyValuePair<string, PageLinkModel>(pub.Town, pub.ExtractLink(currentRoot)));
 
             var notes = pub.Notes.Select(note => new PageLinkModel(currentRoot)
@@ -153,7 +150,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         public IEnumerable<Authority> GetHauntedFirstDescendantAuthoritiesInRegion(Int32 regionId)
         {
             var list = _reader.Items<Authority>().ToList();
-            
+
             var inRegion = list
                 .Where(x =>
                 x.ParentId == regionId
@@ -161,71 +158,73 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 && x.HasHauntedOrgs
                 )
                 .ToList();
-             
+
             return inRegion;
         }
 
 
-        public List<PageLinkModel> GetSitemapData(string currentRoot)
-        {
-            var data = _reader.Items<Org>();
+        //public List<PageLinkModel> GetSitemapData(string currentRoot)
+        //{
+        //    var data = _reader.Items<Org>();
 
-            var queryable = data
-                .Where(org => org.HauntedStatus == true)
-                .ToList()
-                .GroupBy(org => org.UncRelTownPath)
-                .Select(x => new KeyValuePair<String, Int32>(x.Key, x.Count()))
-                .ToList();
+        //    var queryable = data
+        //        .Where(org => org.HauntedStatus == true)
+        //        .ToList()
+        //        .GroupBy(org => org.FilenameRelTownPath)
+        //        .Select(x => new KeyValuePair<String, Int32>(x.Key, x.Count()))
+        //        .ToList();
 
-            var ranked = queryable.RankByDescending(i => i.Value,
-                (i, r) => new { Rank = r, Item = i })
-                .ToList();
+        //    var ranked = queryable.RankByDescending(i => i.Value,
+        //        (i, r) => new { Rank = r, Item = i })
+        //        .ToList();
 
-            var index = 1;
+        //    var index = 1;
 
-            var results = ranked.Select(pair =>
-                CreatePageLinkModel(currentRoot, pair.Item, ref index, pair.Rank)
-                )
-                .ToList();
+        //    var results = ranked.Select(pair =>
+        //        CreatePageLinkModel(currentRoot, pair.Item, ref index, pair.Rank)
+        //        )
+        //        .ToList();
 
-            // Key and Group
-            return results;
-        }
-
-
-        public string PrepareWebmasterSitemap(List<string> sitepmap)
-        {
-            // generate the Google webmaster tools xml url sitemap
-            var sb = new StringBuilder();
-
-            sb.AppendLine(@"<?xml version=""1.0"" encoding=""UTF-8""?>");
-
-            sb.AppendLine(
-                @"<urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xsi:schemaLocation=""http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"">");
-
-            if (sitepmap != null)
-            {
-                foreach (var item in sitepmap)
-                {
-                    sb.AppendLine(item);
-                }
-            }
-
-            sb.AppendLine("</urlset>");
-
-            return sb.ToString();
-        }
+        //    // Key and Group
+        //    return results;
+        //}
 
 
-        public String BuildPath(params String[] builder)
+        //public string PrepareWebmasterSitemap(List<string> sitepmap)
+        //{
+        //    // generate the Google webmaster tools xml url sitemap
+        //    var sb = new StringBuilder();
+
+        //    sb.AppendLine(@"<?xml version=""1.0"" encoding=""UTF-8""?>");
+
+        //    sb.AppendLine(
+        //        @"<urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xsi:schemaLocation=""http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"">");
+
+        //    if (sitepmap != null)
+        //    {
+        //        foreach (var item in sitepmap)
+        //        {
+        //            sb.AppendLine(item);
+        //        }
+        //    }
+
+        //    sb.AppendLine("</urlset>");
+
+        //    return sb.ToString();
+        //}
+
+
+        public String BuildPath(Boolean isLevelled, params String[] builder)
         {
             var output = String.Empty;
+
+            string pattern = isLevelled ? "{0}\\{1}" : "{0}-{1}";
 
             foreach (var s in builder)
             {
                 output = output == String.Empty
                     ? s.ToLower().SeoFormat()
-                    : string.Format("{0}\\{1}", output, s.ToLower().SeoFormat());
+                    : string.Format(pattern, output, s.ToLower().SeoFormat());
             }
 
             return output;
@@ -245,7 +244,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             var data = _reader.Items<Org>();
 
             var queryable = data
-                .Where(org => org.HauntedStatus == true
+                .Where(org => org.HauntedStatus.HasValue
+                                && org.HauntedStatus.Value
                               && org.Authority.ParentAuthority.Name == townLineage.Region
                               && org.Authority.Name == townLineage.County
                               && org.Town == townLineage.Town)
@@ -259,12 +259,16 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 Title =
                     string.Format("{0} ({1} pubs in this area)",
                         townLineage.FriendlyDescription, pathKeyValuePair.Value),
-                Unc = string.Format("{0}\\{1}", currentRoot, pathKeyValuePair.Key),
+                Filename = string.Format("{0}\\{1}", currentRoot, pathKeyValuePair.Key),
                 Id = index - 1,
                 Links = queryable
             };
 
             return result;
         }
+
+
+
+
     }
 }
