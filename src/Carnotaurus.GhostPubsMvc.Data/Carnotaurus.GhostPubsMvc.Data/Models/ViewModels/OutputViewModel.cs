@@ -89,7 +89,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         {
             var countyModel = new OutputViewModel(currentRoot)
             {
-                Filename = authority.Name,
+                Filename = (authority.Name + "-" + "county").SeoFormat(),
                 JumboTitle = authority.Name,
                 Action = PageTypeEnum.County,
                 PageLinks = townLinks.Select(linkModel => linkModel.Text != null
@@ -139,7 +139,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public static OutputViewModel CreateTownOutputViewModel(string town,
 
-            Authority currentCounty, 
+            Authority currentCounty,
             IList<PageLinkModel> pubLinks,
             string townPath, string currentRoot, IEnumerable<OutputViewModel> history)
         {
