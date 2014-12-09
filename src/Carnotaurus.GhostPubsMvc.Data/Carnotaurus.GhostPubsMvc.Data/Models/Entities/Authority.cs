@@ -14,31 +14,26 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             Orgs = new List<Org>();
             Authoritys = new List<Authority>();
         }
-
-
-        public int Id { get; set; }
-
+         
         public string Name { get; set; }
         public string Code { get; set; }
         public string Type { get; set; }
         public int? Population { get; set; }
         public int? Hectares { get; set; }
-
-
         public DateTime? Created { get; set; }
         public DateTime? Modified { get; set; }
         public DateTime? Deleted { get; set; }
 
         // recursive fix
         public int ParentId { get; set; }
+
         [ForeignKey("ParentId")]
         public virtual Authority ParentAuthority { get; set; }
 
         public virtual ICollection<Org> Orgs { get; set; }
 
         public virtual ICollection<Authority> Authoritys { get; set; }
-
-
+         
         [NotMapped]
         public bool IsRegion
         {
@@ -131,7 +126,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 var isHaunted = CountHauntedOrgs > 0;
 
                 return isHaunted;
-
             }
         }
 
@@ -142,10 +136,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             {
                 var count = 0;
 
-                count = Authoritys.Any() ?
-                    // how to get county and metropolian county 
-                    Authoritys.Sum(s => s.Orgs.Count(x => x.HauntedStatus.HasValue && x.HauntedStatus.Value)) :
-                    // other ones
+                count = Authoritys.Any()
+                    ? // how to get county and metropolian county 
+                    Authoritys.Sum(s => s.Orgs.Count(x => x.HauntedStatus.HasValue && x.HauntedStatus.Value))
+                    : // other ones
                     Orgs.Count(x => x.HauntedStatus.HasValue && x.HauntedStatus.Value);
 
                 return count;
@@ -161,11 +155,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
                 if (!Population.HasValue || !Hectares.HasValue) return density;
 
-                density = (double)Population / (double)Hectares;
+                density = (double) Population/(double) Hectares;
 
                 return density;
             }
         }
 
+        public int Id { get; set; }
     }
 }
