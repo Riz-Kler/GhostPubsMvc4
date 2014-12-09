@@ -15,6 +15,30 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             Authoritys = new List<Authority>();
         }
 
+
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+        public string Code { get; set; }
+        public string Type { get; set; }
+        public int? Population { get; set; }
+        public int? Hectares { get; set; }
+
+
+        public DateTime? Created { get; set; }
+        public DateTime? Modified { get; set; }
+        public DateTime? Deleted { get; set; }
+
+        // recursive fix
+        public int ParentId { get; set; }
+        [ForeignKey("ParentId")]
+        public virtual Authority ParentAuthority { get; set; }
+
+        public virtual ICollection<Org> Orgs { get; set; }
+
+        public virtual ICollection<Authority> Authoritys { get; set; }
+
+
         [NotMapped]
         public bool IsRegion
         {
@@ -43,7 +67,29 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         }
 
         [NotMapped]
+        public String LineageSignature
+        {
+            get
+            {
+                var result = Lineage.SeoFormat();
+
+                return result;
+            }
+        }
+
+        [NotMapped]
         public List<String> Lineage
+        {
+            get
+            {
+                var result = LineageAscending.ReverseItems();
+
+                return result;
+            }
+        }
+
+        [NotMapped]
+        protected List<String> LineageAscending
         {
             get
             {
@@ -77,6 +123,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         //      && x.ParentAuthority.IsRegion
         //        && x.Authoritys.Any(y => y.HasHauntedOrgs)
         // todo - dpc - perform count
+        [NotMapped]
         public bool HasHauntedOrgs
         {
             get
@@ -88,13 +135,14 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             }
         }
 
+        [NotMapped]
         public int CountHauntedOrgs
         {
             get
             {
                 var count = 0;
 
-                count = Authoritys.Any() ? 
+                count = Authoritys.Any() ?
                     // how to get county and metropolian county 
                     Authoritys.Sum(s => s.Orgs.Count(x => x.HauntedStatus.HasValue && x.HauntedStatus.Value)) :
                     // other ones
@@ -104,27 +152,20 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             }
         }
 
-        public int Id { get; set; }
+        [NotMapped]
+        public double Density
+        {
+            get
+            {
+                var density = 0.0;
 
-        public string Name { get; set; }
-        public string Code { get; set; }
-        public string Type { get; set; }
-        public int? Population { get; set; }
-        public int? Hectares { get; set; }
-        public double? Density { get; set; }
+                if (!Population.HasValue || !Hectares.HasValue) return density;
 
-        public virtual ICollection<Org> Orgs { get; set; }
+                density = (double)Population / (double)Hectares;
 
-        public virtual ICollection<Authority> Authoritys { get; set; }
-
-        // recursive fix
-        public int ParentId { get; set; }
-        [ForeignKey("ParentId")]
-        public virtual Authority ParentAuthority { get; set; }
-
-        public DateTime? Created { get; set; }
-        public DateTime? Modified { get; set; }
-        public DateTime? Deleted { get; set; }
+                return density;
+            }
+        }
 
     }
 }

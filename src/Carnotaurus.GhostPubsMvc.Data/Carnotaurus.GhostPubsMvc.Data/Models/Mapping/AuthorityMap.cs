@@ -24,7 +24,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             this.Property(t => t.Code).HasColumnName("Code");
             this.Property(t => t.Population).HasColumnName("Population");
             this.Property(t => t.Hectares).HasColumnName("Hectares");
-            this.Property(t => t.Density).HasColumnName("Density");
+            //this.Property(t => t.Density).HasColumnName("Density");
             this.Property(t => t.ParentId).HasColumnName("ParentID");
 
             //// Relationships

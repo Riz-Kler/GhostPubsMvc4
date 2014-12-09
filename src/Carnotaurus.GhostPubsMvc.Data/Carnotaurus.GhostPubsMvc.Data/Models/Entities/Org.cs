@@ -124,7 +124,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                var items = Authority.Lineage.ReverseItems();
+                var items = Authority.Lineage;
 
                 var result = items.ExtractUnc();
 
@@ -172,7 +172,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public PageLinkModel ExtractFullLink()
         {
 
-            var result = Authority.Lineage.ReverseItems();
+            var result = Authority.Lineage;
 
             result.Add(Town);
 

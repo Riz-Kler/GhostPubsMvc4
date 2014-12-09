@@ -25,27 +25,33 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
         public static List<string> ReverseItems(this IEnumerable<string> enumerable)
         {
-            var result = new List<string>(from c in enumerable.Select((value, index) => new {value, index})
-                orderby c.index descending
-                select c.value);
+            var result = new List<string>(from c in enumerable.Select((value, index) => new { value, index })
+                                          orderby c.index descending
+                                          select c.value);
 
             return result;
         }
-
-        public static string ToCommaSeparatedString(this IEnumerable<string> enumerable)
+         
+        public static string SeoFormat(this IEnumerable<string> enumerable)
         {
-            var result = String.Join(",", enumerable.ToArray());
+            var result = JoinWithSpace(enumerable.ToArray()).SeoFormat();
 
             return result;
         }
 
-        public static string ToBackslashSeparatedString(this IEnumerable<string> enumerable)
+        public static string JoinWithSpace(this IEnumerable<string> enumerable)
         {
-            var result = String.Join(@"\", enumerable.ToArray());
+            var result = Join(enumerable.ToArray(), " ");
 
             return result;
         }
 
+        public static string JoinWithBackslash(this IEnumerable<string> enumerable)
+        {
+            var result = Join(enumerable.ToArray(), @"\");
+
+            return result;
+        }
 
         public static string Join(this IEnumerable<string> enumerable, String delimiter)
         {

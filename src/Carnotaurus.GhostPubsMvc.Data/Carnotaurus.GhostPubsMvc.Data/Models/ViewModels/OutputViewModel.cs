@@ -15,6 +15,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public static OutputViewModel CreateAllUkRegionsOutputViewModel(string currentRoot, List<Authority> regions)
         {
+            if (regions == null) throw new ArgumentNullException("regions");
+
             var viewModel = new OutputViewModel(currentRoot)
             {
                 JumboTitle = "Haunted pubs in UK by region",

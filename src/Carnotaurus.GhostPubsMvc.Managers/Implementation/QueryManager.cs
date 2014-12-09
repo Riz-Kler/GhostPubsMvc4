@@ -65,7 +65,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             {
                 Text = x.Name,
                 Title = x.Name,
-                Unc = string.Format("{0}\\{1}\\{2}", currentRoot, x.RegionalLineage.ReverseItems().ToBackslashSeparatedString(), x.Name).SeoFormat()
+                Unc = string.Format("{0}\\{1}\\{2}", currentRoot, x.RegionalLineage.ReverseItems().JoinWithBackslash(), x.Name).SeoFormat()
             }).ToList();
 
             var regionModel = OutputViewModel.CreateRegionOutputViewModel(currentRegion, currentRegionPath,
