@@ -22,8 +22,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
         public OutputViewModel PrepareTownModel(
             IEnumerable<KeyValuePair<string, PageLinkModel>> pubTownLinks, string town,
-            string currentCountyName, Authority currentRegion, string currentCountyDescription,
-            int currentCountyId,
+           Authority currentCounty, 
             string currentRoot, List<OutputViewModel> history)
         {
             var townPath = BuildPath(false, currentRoot, town);
@@ -33,10 +32,9 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .Select(x => x.Value)
                 .ToList();
 
-            var townModel = OutputViewModel.CreateTownOutputViewModel(town, currentCountyName,
-                currentRegion,
-                 currentCountyDescription,
-                currentCountyId, pubLinks, townPath, currentRoot, history);
+            var townModel = OutputViewModel.CreateTownOutputViewModel(town, currentCounty ,
+                 
+                 pubLinks, townPath, currentRoot, history);
 
             return townModel;
         }
@@ -74,26 +72,23 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             return regionModel;
         }
 
-        public OutputViewModel PrepareCountyModel(string currentCountyName, int currentCountyId,
-            IEnumerable<string> towns, Authority currentRegion, int count, string currentRoot,
-            List<OutputViewModel> history)
-        {
+        public OutputViewModel PrepareCountyModel(Authority authority, IEnumerable<string> towns, int count, string currentRoot, List<OutputViewModel> history)          {
             var townLinks = towns.Select(s => new PageLinkModel(currentRoot)
             {
                 Text = s,
                 Title = s
             }).ToList();
 
-            var countyModel = OutputViewModel.CreateCountyOutputViewModel(currentCountyName, currentCountyId,
-                 currentRegion, count,
+            var countyModel = OutputViewModel.CreateCountyOutputViewModel(authority, count,
                  townLinks, currentRoot, history);
+
             return countyModel;
         }
 
         public OutputViewModel PreparePubModel(ICollection<KeyValuePair<string, PageLinkModel>> pubTownLinks,
             Org pub, string currentRoot, List<OutputViewModel> history
             )
-        { 
+        {
             pubTownLinks.Add(new KeyValuePair<string, PageLinkModel>(pub.Town, pub.ExtractLink(currentRoot)));
 
             var notes = pub.Notes.Select(note => new PageLinkModel(currentRoot)

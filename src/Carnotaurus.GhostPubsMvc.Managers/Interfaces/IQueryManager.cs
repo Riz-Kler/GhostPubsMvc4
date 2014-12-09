@@ -22,10 +22,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         // weird
 
-        OutputViewModel PrepareCountyModel(string currentCountyName, int currentCountyId,
-
-            IEnumerable<string> towns, Authority currentRegion, int count, string currentRoot,
-            List<OutputViewModel> history);
+        OutputViewModel PrepareCountyModel(Authority authority, IEnumerable<string> towns, int count, string currentRoot, List<OutputViewModel> history);
 
         OutputViewModel PreparePubModel(ICollection<KeyValuePair<string, PageLinkModel>> pubTownLinks,
            Org pub, string currentRoot, List<OutputViewModel> history
@@ -33,8 +30,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         OutputViewModel PrepareTownModel(
             IEnumerable<KeyValuePair<string, PageLinkModel>> pubTownLinks, string town,
-            string currentCountyName, Authority currentRegion, string currentCountyDescription,
-            int currentCountyId, string currentRoot, List<OutputViewModel> history);
+             Authority currentCounty,  
+             string currentRoot, List<OutputViewModel> history);
 
         OutputViewModel PreparePageTypeModel(PageTypeEnum pageType, string priority, string description,
             List<PageLinkModel> links,
