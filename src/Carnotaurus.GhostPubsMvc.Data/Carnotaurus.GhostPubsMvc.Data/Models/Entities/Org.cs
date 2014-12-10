@@ -1,11 +1,16 @@
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 using System.Linq;
+using System.Security.Policy;
+using System.Web.Mvc;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
+using Castle.Core.Internal;
+using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 {
@@ -16,6 +21,18 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             //BookItems = new List<BookItem>();
             Notes = new List<Note>();
             Tags = new List<Tag>();
+        }
+
+
+        [NotMapped]
+        public string DescriptionFromNotes
+        {
+            get
+            {
+                var result = Notes.Select(x => x.Text).JoinWithSpace();
+
+                return result.SeoMetaDescriptionTruncate();
+            }
         }
 
         [NotMapped]
@@ -46,18 +63,66 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public string TownPath { get; set; }
 
         [NotMapped]
-        public string Path
+        public List<string> Sections
         {
             get
             {
-                if (TownPath == null)
-                {
-                    TownPath = string.Empty;
-                }
+                var sections = new List<string>();
 
-                var current = BuildPath(TownPath, Id.ToString(CultureInfo.InvariantCulture), TradingName);
+                sections.AddRange(NameExtended);
+                sections.Add(Authority.ParentAuthority.Name);
+                sections.AddRange(Authority.ParentAuthority.LevelsAscending);
+                sections.Add("Haunted Pubs");
+                sections.Add("Inns");
+                sections.Add("Hotels");
+                sections.AddRange(Tags.Select(x => x.Feature.Name));
 
-                return current;
+                return sections.ToList();
+
+            }
+        }
+
+        [NotMapped]
+        public string Title
+        {
+            get
+            {
+                var items = NameExtended;
+
+                var result = items.JoinWithComma() + " | " + TradingName + " Ghost";
+
+                return result;
+            }
+
+        }
+
+        [NotMapped]
+        public List<string> NameExtended
+        {
+            get
+            {
+                var items = new List<String>();
+
+                items.AddIf(TradingName);
+
+                items.AddIf(Locality);
+
+                items.AddIf(Town);
+
+                items.AddIf(Authority.Name);
+                return items;
+            }
+        }
+
+
+        [NotMapped]
+        public string Filename
+        {
+            get
+            {
+                var dash = string.Format("{0} {1} {2}", Id, TradingName, Locality).Dashify();
+
+                return dash;
             }
         }
 
@@ -145,11 +210,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             {
                 if (output == String.Empty)
                 {
-                    output = b.ToLower().Dash();
+                    output = b.ToLower().Dashify();
                 }
                 else
                 {
-                    output = string.Format("{0}-{1}", output, b.ToLower().Dash());
+                    output = string.Format("{0}-{1}", output, b.ToLower().Dashify());
                 }
             }
 
@@ -163,7 +228,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 Id = Id,
                 Text = TradingName,
                 Title = string.Format("{0}, {1}", TradingName, Postcode),
-                Filename = Path,
+                Filename = Filename,
             };
 
             return info;

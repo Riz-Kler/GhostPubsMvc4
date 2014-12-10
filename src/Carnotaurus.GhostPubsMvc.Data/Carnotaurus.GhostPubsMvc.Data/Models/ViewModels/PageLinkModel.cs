@@ -30,10 +30,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     var url = String.Format("http://www.ghostpubs.com/haunted-pubs{0}/",
                         fullFilePath.Replace(_currentRoot.ToLower(), String.Empty).Replace("\\", "/"));
 
-                    return url.Dash().ToLower();
+                    return url.Dashify().ToLower();
                 }
 
-                return fullFilePath.Replace("\\", "/").Dash().ToLower();
+                return fullFilePath.Replace("\\", "/").Dashify().ToLower();
             }
         }
 

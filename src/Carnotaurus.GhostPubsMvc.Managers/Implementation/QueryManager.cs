@@ -22,7 +22,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
         public OutputViewModel PrepareTownModel(
             IEnumerable<KeyValuePair<string, PageLinkModel>> pubTownLinks, string town,
-           Authority currentCounty, 
+           Authority currentCounty,
             string currentRoot, List<OutputViewModel> history)
         {
             var townPath = BuildPath(false, currentRoot, town);
@@ -32,8 +32,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .Select(x => x.Value)
                 .ToList();
 
-            var townModel = OutputViewModel.CreateTownOutputViewModel(town, currentCounty ,
-                 
+            var townModel = OutputViewModel.CreateTownOutputViewModel(town, currentCounty,
+
                  pubLinks, townPath, currentRoot, history);
 
             return townModel;
@@ -41,7 +41,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
         public OutputViewModel PreparePageTypeModel(PageTypeEnum pageType, string priority, string description,
             List<PageLinkModel> links,
-            string title, string path, string currentRoot)
+            string title, string currentRoot)
         {
             if (title == null)
             {
@@ -49,7 +49,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             }
 
             var model = OutputViewModel.CreatePageTypeOutputViewModel(pageType, priority, description, links, title,
-                path, currentRoot);
+                 currentRoot);
 
             return model;
         }
@@ -63,7 +63,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             {
                 Text = x.Name,
                 Title = x.Name,
-                Filename = string.Format("{0}\\{1}\\{2}", currentRoot, x.RegionalLineage.ReverseItems().JoinWithBackslash(), x.Name).Dash()
+                Filename = string.Format("{0}\\{1}\\{2}", currentRoot, x.RegionalLineage.ReverseItems().JoinWithBackslash(), x.Name).Dashify()
             }).ToList();
 
             var regionModel = OutputViewModel.CreateRegionOutputViewModel(currentRegion,
@@ -72,7 +72,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             return regionModel;
         }
 
-        public OutputViewModel PrepareCountyModel(Authority authority, IEnumerable<string> towns, int count, string currentRoot, List<OutputViewModel> history)          {
+        public OutputViewModel PrepareCountyModel(Authority authority, IEnumerable<string> towns, int count, string currentRoot, List<OutputViewModel> history)
+        {
             var townLinks = towns.Select(s => new PageLinkModel(currentRoot)
             {
                 Text = s,
@@ -218,8 +219,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             foreach (var s in builder)
             {
                 output = output == String.Empty
-                    ? s.ToLower().Dash()
-                    : string.Format(pattern, output, s.ToLower().Dash());
+                    ? s.ToLower().Dashify()
+                    : string.Format(pattern, output, s.ToLower().Dashify());
             }
 
             return output;

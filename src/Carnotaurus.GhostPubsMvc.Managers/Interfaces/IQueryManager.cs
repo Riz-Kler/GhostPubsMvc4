@@ -35,7 +35,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         OutputViewModel PreparePageTypeModel(PageTypeEnum pageType, string priority, string description,
             List<PageLinkModel> links,
-            string title, string path, string currentRoot);
+            string title,  string currentRoot);
 
         OutputViewModel PrepareRegionModel(Authority currentRegion, int orgsInRegionCount,
             IEnumerable<Authority> hauntedCountiesInRegion, string currentRoot,

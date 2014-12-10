@@ -190,14 +190,36 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
         public static string RedirectionalFormat(this string input)
         {
-            var replace = input.Dash().ReplaceHyphens();
+            var replace = input.Dashify().ReplaceHyphens();
 
             return replace;
         }
 
-        public static string Dash(this string input)
+        public static string Dashify(this string input)
         {
+            if (String.IsNullOrEmpty(input))
+            {
+                return input;
+            }
+
             return input.ToLower().Underscore().Hyphenate();
+        }
+
+        public static string SeoMetaDescriptionTruncate(this string text)
+        {
+            const int max = 156;
+
+            return text.Wrap(max).First();
+        }
+
+        public static String[] Wrap(this string text, int max)
+        {
+            var charCount = 0;
+            var lines = text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            return lines.GroupBy(w => (charCount += (((charCount % max) + w.Length + 1 >= max)
+                            ? max - (charCount % max) : 0) + w.Length + 1) / max)
+                        .Select(g => string.Join(" ", g.ToArray()))
+                        .ToArray();
         }
 
         public static string RemoveSpaces(this string input)

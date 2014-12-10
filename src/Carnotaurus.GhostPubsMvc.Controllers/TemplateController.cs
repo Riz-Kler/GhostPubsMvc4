@@ -58,9 +58,17 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             UpdateOrganisations(orgsToUpdate);
 
-            GenerateContent();
+            _currentRoot = String.Format(@"C:\Carnotaurus\{0}\haunted-pubs\",
+                _generationId.ToString().Dashify());
 
-            GenerateSimpleHtmlPages();
+            if (_currentRoot != null)
+            {
+                FileSystemHelper.EnsureFolders(_currentRoot, _isDeprecated);
+            }
+
+           // GenerateSimpleHtmlPages();
+
+            GenerateContent();
 
             // GenerateLeaderboard();
 
@@ -85,15 +93,13 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void GenerateContent()
         {
-            _currentRoot = String.Format(@"C:\Carnotaurus\{0}\haunted-pubs\",
-                _generationId.ToString().Dash());
 
-            if (_currentRoot != null)
+            var x = new Filter()
             {
-                FileSystemHelper.EnsureFolders(_currentRoot, _isDeprecated);
-            }
-
-            GenerateGeographicHtmlPages();
+                RegionName = "North West",
+                RegionCounty = "Cheshire West and Chester"
+            };
+            GenerateGeographicHtmlPages(x);
         }
 
         private void GenerateSimpleHtmlPages()
@@ -255,7 +261,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 .ToList();
 
             var viewModel = OutputViewModel.CreateAllUkRegionsOutputViewModel(currentRoot, results);
-             
+
             WriteFile(viewModel);
 
             return results;
@@ -279,36 +285,42 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             return inRegion;
         }
 
-        private void GenerateGeographicHtmlPages()
+        public class Filter
+        {
+            public String RegionName { get; set; }
+            public String RegionCounty { get; set; }
+        }
+
+        private void GenerateGeographicHtmlPages(Filter filter)
         {
             var regions = CreateTopLevelRegionsFile(_currentRoot);
 
             foreach (var currentRegion in regions)
             {
-                // todo - dpc - the problem is here - there are no orgs in these regions but we know that wrong
-                CreateRegionFiles(currentRegion);
+                if (currentRegion.Name == filter.RegionName)
+                {
+                    // todo - dpc - the problem is here - there are no orgs in these regions but we know that wrong
+                    CreateAllFilesForRegion(currentRegion, filter);
+                }
             }
         }
 
-        private void CreateRegionFiles(Authority currentRegion)
-        {
-
-            CreateAllFilesForRegion(currentRegion);
-        }
-
-        private void CreateAllFilesForRegion(Authority currentRegion)
+        private void CreateAllFilesForRegion(Authority currentRegion, Filter filter)
         {
             var firstDescendantAuthoritiesInRegion = _queryManager.GetHauntedFirstDescendantAuthoritiesInRegion(currentRegion.Id);
 
             var orgsInRegionCount = firstDescendantAuthoritiesInRegion.Sum(x => x.CountHauntedOrgs);
 
             if (orgsInRegionCount == 0) return;
-
+             
             var inRegion = CreateRegionHeaderFile(currentRegion, orgsInRegionCount);
 
             foreach (var authority in inRegion)
             {
-                CreateAuthorityFilesTop(authority);
+                if (authority.Name == filter.RegionCounty)
+                {
+                    CreateAuthorityFilesTop(authority);
+                }
             }
         }
 
@@ -405,14 +417,14 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         public void CreatePageTypeFile(PageTypeEnum pageType, string priority, string description,
             List<PageLinkModel> links = null, string title = null)
         {
-            var path = string.Format("{0}\\{1}", _currentRoot, pageType);
+            var model = _queryManager.PreparePageTypeModel(pageType, priority, description, links, title,
+               _currentRoot);
 
-            FileSystemHelper.CreateFolders(path, _isDeprecated);
+            var pathOverride = string.Format("{0}{1}", _currentRoot, "uk\\");
 
-            var model = _queryManager.PreparePageTypeModel(pageType, priority, description, links, title, path,
-                _currentRoot);
+            FileSystemHelper.CreateFolders(pathOverride, _isDeprecated);
 
-            WriteFile(model);
+            WriteFile(model, pathOverride);
         }
 
         private void CreateTownFile(
@@ -436,6 +448,13 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         public void WriteFile(OutputViewModel model)
         {
+            WriteFile(model, null);
+        }
+
+        public void WriteFile(OutputViewModel model, string pathOverride)
+        {
+            if (model == null) throw new ArgumentNullException("model");
+
             var max = Resources.MaxSize.ToInt32();
 
             if (!_isDeprecated)
@@ -449,7 +468,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                     _history.RemoveAt(0);
                 }
 
-                WritePage(model);
+                WritePage(model, pathOverride);
             }
             else
             {
@@ -457,14 +476,18 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             }
         }
 
-        private void WritePage(OutputViewModel model)
+        private void WritePage(OutputViewModel model, string pathOverride)
         {
             var contents = PrepareModel(model);
 
             if (model.Filename == null) return;
 
-            var fullFilePath = String.Concat(model.CurrentRoot.ToLower(), model.FriendlyFilename, ".html");
+            var toUse = !pathOverride.IsNullOrEmpty() ? pathOverride : model.CurrentRoot.ToLower();
 
+            if (toUse == null) throw new ArgumentNullException("model");
+
+            var fullFilePath = String.Concat(toUse, model.FriendlyFilename, ".html");
+           
             FileSystemHelper.WriteFile(fullFilePath, contents);
         }
 

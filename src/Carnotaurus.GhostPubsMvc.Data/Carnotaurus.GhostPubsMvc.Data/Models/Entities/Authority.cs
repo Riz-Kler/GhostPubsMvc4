@@ -14,7 +14,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             Orgs = new List<Org>();
             Authoritys = new List<Authority>();
         }
-         
+
         public string Name { get; set; }
         public string Code { get; set; }
         public string Type { get; set; }
@@ -33,7 +33,16 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public virtual ICollection<Org> Orgs { get; set; }
 
         public virtual ICollection<Authority> Authoritys { get; set; }
-         
+
+        [NotMapped]
+        public string UniqueName
+        {
+            get
+            {
+                return string.Format("{0} {1}", Name, Type).Dashify();
+            }
+        }
+
         [NotMapped]
         public bool IsRegion
         {
@@ -44,7 +53,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 return result;
             }
         }
-         
+
         [NotMapped]
         public bool IsDistrict
         {
@@ -55,7 +64,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 return result;
             }
         }
-
 
         [NotMapped]
         public bool IsCounty
@@ -83,7 +91,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 return list;
             }
         }
-         
+
         [NotMapped]
         public List<String> Levels
         {
@@ -96,7 +104,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         }
 
         [NotMapped]
-        protected List<String> LevelsAscending
+        public List<String> LevelsAscending
         {
             get
             {
@@ -167,7 +175,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
                 if (!Population.HasValue || !Hectares.HasValue) return density;
 
-                density = (double) Population/(double) Hectares;
+                density = (double)Population / (double)Hectares;
 
                 return density;
             }
