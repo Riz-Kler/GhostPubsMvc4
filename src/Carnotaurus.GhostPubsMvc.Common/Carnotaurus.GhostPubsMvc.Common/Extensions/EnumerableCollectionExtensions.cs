@@ -32,9 +32,9 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             return result;
         }
          
-        public static string SeoFormat(this IEnumerable<string> enumerable)
+        public static string Dash(this IEnumerable<string> enumerable)
         {
-            var result = JoinWithSpace(enumerable.ToArray()).SeoFormat();
+            var result = JoinWithSpace(enumerable.ToArray()).Dash();
 
             return result;
         }

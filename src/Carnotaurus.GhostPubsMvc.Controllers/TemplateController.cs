@@ -86,7 +86,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         private void GenerateContent()
         {
             _currentRoot = String.Format(@"C:\Carnotaurus\{0}\haunted-pubs\",
-                _generationId.ToString().SeoFormat());
+                _generationId.ToString().Dash());
 
             if (_currentRoot != null)
             {
@@ -255,8 +255,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 .ToList();
 
             var viewModel = OutputViewModel.CreateAllUkRegionsOutputViewModel(currentRoot, results);
-
-            // todo - it works but gets overwritten
+             
             WriteFile(viewModel);
 
             return results;

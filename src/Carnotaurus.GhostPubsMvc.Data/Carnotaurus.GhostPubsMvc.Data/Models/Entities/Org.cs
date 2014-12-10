@@ -145,11 +145,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             {
                 if (output == String.Empty)
                 {
-                    output = b.ToLower().SeoFormat();
+                    output = b.ToLower().Dash();
                 }
                 else
                 {
-                    output = string.Format("{0}-{1}", output, b.ToLower().SeoFormat());
+                    output = string.Format("{0}-{1}", output, b.ToLower().Dash());
                 }
             }
 

@@ -190,12 +190,12 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
         public static string RedirectionalFormat(this string input)
         {
-            var replace = input.SeoFormat().ReplaceHyphens();
+            var replace = input.Dash().ReplaceHyphens();
 
             return replace;
         }
 
-        public static string SeoFormat(this string input)
+        public static string Dash(this string input)
         {
             return input.ToLower().Underscore().Hyphenate();
         }

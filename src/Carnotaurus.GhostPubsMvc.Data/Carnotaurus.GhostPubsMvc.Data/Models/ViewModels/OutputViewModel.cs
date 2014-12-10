@@ -27,7 +27,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     {
                         Text = x.Name,
                         Title = x.Name,
-                        Filename = string.Format(@"\{0}", x.Name.SeoFormat())
+                        Filename = string.Format(@"\{0}", x.Name.Dash())
                     }
                     : null).OrderBy(x => x.Text).ToList(),
                 MetaDescription = string.Format("Haunted pubs in {0}",
@@ -56,15 +56,15 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                         Text = x.Text,
                         Title = x.Text,
                         Filename =
-                            string.Format(@"\{0}\{1}", currentRegion.Name.SeoFormat(),
-                                x.Text.SeoFormat())
+                            string.Format(@"\{0}\{1}", currentRegion.Name.Dash(),
+                                x.Text.Dash())
                     }
                     : null).OrderBy(x => x.Text).ToList(),
                 MetaDescription = string.Format("Haunted pubs in {0}", countyLinks.Select(x => x.Text).OxbridgeAnd()),
                 ArticleDescription = string.Format("Haunted pubs in {0}", countyLinks.Select(x => x.Text).OxbridgeAnd()),
                 Parent =
                    new KeyValuePair<string, string>(currentRegion.Name,
-                       currentRegion.Name.SeoFormat().ToLower()),
+                       currentRegion.Name.Dash().ToLower()),
                 Total = orgsInRegionCount,
                 Priority = PageTypePriority.Region,
                 Previous = history.LastOrDefault(x => x.Action == PageTypeEnum.Region),
@@ -89,7 +89,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         {
             var countyModel = new OutputViewModel(currentRoot)
             {
-                Filename = (authority.Name + "-" + "county").SeoFormat(),
+                Filename = (authority.Name + "-" + "county").Dash(),
                 JumboTitle = authority.Name,
                 Action = PageTypeEnum.County,
                 PageLinks = townLinks.Select(linkModel => linkModel.Text != null
@@ -99,9 +99,9 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                         Title = linkModel.Text,
                         Filename =
                             string.Format(@"\{0}\{1}\{2}",
-                                authority.ParentAuthority.Name.SeoFormat(),
-                                authority.Name.SeoFormat(),
-                                linkModel.Text.SeoFormat()
+                                authority.ParentAuthority.Name.Dash(),
+                                authority.Name.Dash(),
+                                linkModel.Text.Dash()
                                 )
                     }
                     : null).OrderBy(x => x.Text).ToList(),
@@ -112,7 +112,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     "Haunted pubs in {0}",
                     townLinks.Select(x => x.Text).OxbridgeAnd()),
                 Parent = new KeyValuePair<string, string>(authority.ParentAuthority.Name,
-                    authority.ParentAuthority.Name.SeoFormat().ToLower()),
+                    authority.ParentAuthority.Name.Dash().ToLower()),
                 Total = count,
                 Priority = PageTypePriority.County,
                 Previous = history.LastOrDefault(x => x.Action == PageTypeEnum.County),
@@ -145,7 +145,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         {
             var townModel = new OutputViewModel(currentRoot)
             {
-                Filename = (town + "-" + currentCounty.Name).SeoFormat(),
+                Filename = (town + "-" + currentCounty.Name).Dash(),
                 JumboTitle = town + " in " + currentCounty.Name,
                 Action = PageTypeEnum.Town,
                 PageLinks = pubLinks.Select(x => x.Text != null
@@ -154,9 +154,9 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                         Text = x.Text,
                         Title = x.Title,
                         Filename =
-                            string.Format(@"\{0}\{1}\{2}\{3}\{4}", currentCounty.ParentAuthority.Name.SeoFormat(),
-                                currentCounty.Name.SeoFormat(),
-                                town.SeoFormat(), x.Id, x.Text.SeoFormat())
+                            string.Format(@"\{0}\{1}\{2}\{3}\{4}", currentCounty.ParentAuthority.Name.Dash(),
+                                currentCounty.Name.Dash(),
+                                town.Dash(), x.Id, x.Text.Dash())
                     }
                     : null).OrderBy(x => x.Text).ToList(),
                 MetaDescription = string.Format("{0}, {1}, {2}", town, currentCounty.Name, currentCounty.ParentAuthority.Name),
@@ -201,14 +201,14 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         {
             var pubModel = new OutputViewModel(currentRoot)
             {
-                Filename = pub.Id + "-" + pub.TradingName.SeoFormat() + "-" + pub.Locality.SeoFormat(),
+                Filename = pub.Id + "-" + pub.TradingName.Dash() + "-" + pub.Locality.Dash(),
                 JumboTitle = pub.TradingName,
                 Action = action,
                 PageLinks = notes,
                 MetaDescription =
                     string.Format("{0}, {1} : {2}", pub.Address, pub.PostcodePrimaryPart, notes.First().Text),
                 ArticleDescription = string.Format("{0}, {1}", pub.Address, pub.PostcodePrimaryPart),
-                Parent = new KeyValuePair<string, string>(pub.Town, pub.Town.SeoFormat().ToLower()),
+                Parent = new KeyValuePair<string, string>(pub.Town, pub.Town.Dash().ToLower()),
                 Tags = pub.Tags.Select(x => x.Feature.Name).ToList(),
                 Priority = PageTypePriority.Pub,
                 Previous = history.LastOrDefault(x => x.Action == action),
@@ -223,8 +223,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                             Text = org.TradingName,
                             Title = org.TradingName,
                             Filename =
-                                string.Format("{0}/{1}/{2}", pub.TownPath.SeoFormat(), org.Id,
-                                    org.TradingName.SeoFormat())
+                                string.Format("{0}/{1}/{2}", pub.TownPath.Dash(), org.Id,
+                                    org.TradingName.Dash())
                         }
                     ).ToList(),
                 Lineage = new Breadcrumb
@@ -315,7 +315,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         {
             get
             {
-                var result = Filename.SeoFormat().RemoveSpecialCharacters(true).ToLower();
+                var result = Filename.Dash().RemoveSpecialCharacters(true).ToLower();
 
                 return result;
             }

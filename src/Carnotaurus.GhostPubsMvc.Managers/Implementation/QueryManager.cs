@@ -63,7 +63,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             {
                 Text = x.Name,
                 Title = x.Name,
-                Filename = string.Format("{0}\\{1}\\{2}", currentRoot, x.RegionalLineage.ReverseItems().JoinWithBackslash(), x.Name).SeoFormat()
+                Filename = string.Format("{0}\\{1}\\{2}", currentRoot, x.RegionalLineage.ReverseItems().JoinWithBackslash(), x.Name).Dash()
             }).ToList();
 
             var regionModel = OutputViewModel.CreateRegionOutputViewModel(currentRegion,
@@ -218,8 +218,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             foreach (var s in builder)
             {
                 output = output == String.Empty
-                    ? s.ToLower().SeoFormat()
-                    : string.Format(pattern, output, s.ToLower().SeoFormat());
+                    ? s.ToLower().Dash()
+                    : string.Format(pattern, output, s.ToLower().Dash());
             }
 
             return output;
