@@ -84,17 +84,17 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             return regionModel;
         }
 
-        public static OutputViewModel CreateCountyOutputViewModel(Authority authority, int count,
-            IList<PageLinkModel> townLinks,
+        public static OutputViewModel CreateAuthorityOutputViewModel(Authority authority, int count,
+            IList<PageLinkModel> locations,
             String currentRoot,
             IEnumerable<OutputViewModel> history)
         {
-            var countyModel = new OutputViewModel(currentRoot)
+            var model = new OutputViewModel(currentRoot)
             {
                 Filename = authority.QualifiedName.Dashify(),
                 JumboTitle = authority.Name,
                 Action = PageTypeEnum.County,
-                PageLinks = townLinks.Select(linkModel => linkModel.Text != null
+                PageLinks = locations.Select(linkModel => linkModel.Text != null
                     ? new PageLinkModel(currentRoot)
                     {
                         Text = linkModel.Text,
@@ -109,11 +109,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     : null).OrderBy(x => x.Text).ToList(),
                 MetaDescription = string.Format(
                     "Haunted pubs in {0}",
-                    townLinks.Select(x => x.Text).OxbridgeAnd())
+                    locations.Select(x => x.Text).OxbridgeAnd())
                     .SeoMetaDescriptionTruncate(),
                 ArticleDescription = string.Format(
                     "Haunted pubs in {0}",
-                    townLinks.Select(x => x.Text).OxbridgeAnd()),
+                    locations.Select(x => x.Text).OxbridgeAnd()),
                 Parent = new KeyValuePair<string, string>(authority.ParentAuthority.Name,
                     authority.ParentAuthority.Name.Dashify().ToLower()),
                 Total = count,
@@ -137,7 +137,9 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     }
                 }
             };
-            return countyModel;
+
+            return model;
+
         }
 
         public static OutputViewModel CreateLocalityOutputViewModel(string locality,

@@ -72,18 +72,18 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             return regionModel;
         }
 
-        public OutputViewModel PrepareCountyModel(Authority authority, IEnumerable<string> towns, int count, string currentRoot, List<OutputViewModel> history)
+        public OutputViewModel PrepareAuthorityModel(Authority authority, IEnumerable<string> locations, int count, string currentRoot, List<OutputViewModel> history)
         {
-            var townLinks = towns.Select(s => new PageLinkModel(currentRoot)
+            var links = locations.Select(s => new PageLinkModel(currentRoot)
             {
                 Text = s,
                 Title = s
             }).ToList();
 
-            var countyModel = OutputViewModel.CreateCountyOutputViewModel(authority, count,
-                 townLinks, currentRoot, history);
+            var model = OutputViewModel.CreateAuthorityOutputViewModel(authority, count,
+                 links, currentRoot, history);
 
-            return countyModel;
+            return model;
         }
 
         public OutputViewModel PreparePubModel( 
