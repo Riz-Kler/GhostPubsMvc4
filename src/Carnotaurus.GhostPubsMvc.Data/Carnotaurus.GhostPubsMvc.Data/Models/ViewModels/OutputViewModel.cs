@@ -20,6 +20,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             var viewModel = new OutputViewModel(currentRoot)
             {
                 Filename = "UK",
+                PageTitle = "Haunted pubs in UK by region",
                 JumboTitle = "Haunted pubs in UK by region",
                 Action = PageTypeEnum.Country,
                 PageLinks = regions.Select(x => x.Name != null
@@ -49,6 +50,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             var regionModel = new OutputViewModel(currentRoot)
             {
                 Filename = currentRegion.QualifiedName,
+                PageTitle = currentRegion.Name,
                 JumboTitle = currentRegion.Name,
                 Action = PageTypeEnum.Region,
                 PageLinks = countyLinks.Select(x => x.Text != null
@@ -93,6 +95,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             {
                 Filename = authority.QualifiedName.Dashify(),
                 JumboTitle = authority.Name,
+                PageTitle = authority.Name,
                 Action = PageTypeEnum.Authority,
                 PageLinks = locations.Select(linkModel => linkModel.Text != null
                     ? new PageLinkModel(currentRoot)
@@ -151,6 +154,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             {
                 Filename = locality.InDashifed(authority.QualifiedName),
                 JumboTitle = locality.In(authority.QualifiedName),
+                PageTitle = locality.In(authority.QualifiedName),
                 Action = PageTypeEnum.Locality,
                 PageLinks = pubLinks.Select(x => x.Text != null
                     ? new PageLinkModel(currentRoot)
@@ -215,6 +219,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             {
                 Filename = pub.Filename,
                 JumboTitle = pub.Title,
+                PageTitle = pub.Title,
                 Action = action,
                 PageLinks = notes,
                 MetaDescription = pub.DescriptionFromNotes,
@@ -281,6 +286,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             var model = new OutputViewModel(currentRoot)
             {
                 JumboTitle = title,
+                PageTitle = title,
                 Action = pageType,
                 MetaDescription = description.SeoMetaDescriptionTruncate(),
                 ArticleDescription = description,
@@ -384,6 +390,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public String JumboTitle { get; set; }
 
         public PageTypeEnum Action { get; set; }
+
+        public string PageTitle { get; set; }
 
     }
 }

@@ -96,8 +96,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             var filter = new RegionFilterModel
             {
                 // UA
-                //RegionName = "North West",
-                //CountyName = "Cheshire West and Chester"
+                Name = "North West",
+                Division= "Cheshire West and Chester"
 
                 // London borough
                 // RegionName = "London",
@@ -116,8 +116,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 //Division = "Strabane"
 
                 // Met County
-                Name = "North East",
-                Division = "Tyne and Wear"
+                //Name = "North East",
+                //Division = "Tyne and Wear"
 
                 //// County
                 //RegionName = "North West",
@@ -315,7 +315,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             foreach (var currentRegion in regions)
             {
-                if (currentRegion.Name == filterModel.Name)
+                if (filterModel.Name.IsNullOrEmpty() || currentRegion.Name == filterModel.Name)
                 {
                     // todo - dpc - the problem is here - there are no orgs in these regions but we know that wrong
                     CreateAllFilesForRegion(currentRegion, filterModel);
@@ -336,7 +336,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             foreach (var authority in inRegion)
             {
-                if (authority.Name == filterModel.Division)
+                if (filterModel.Division.IsNullOrEmpty() ||  authority.Name == filterModel.Division)
                 {
                     CreateAuthorityFilesTop(authority);
                 }
