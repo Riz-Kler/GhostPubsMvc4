@@ -143,15 +143,14 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         }
 
         public static OutputViewModel CreateLocalityOutputViewModel(string locality,
-
-            Authority authority,
+                 Authority authority,
             IList<PageLinkModel> pubLinks,
             string townPath, string currentRoot, IEnumerable<OutputViewModel> history)
         {
             var townModel = new OutputViewModel(currentRoot)
             {
-                Filename = (locality + " in " + authority.QualifiedName).Dashify(),
-                JumboTitle = locality + " in " + authority.QualifiedName,
+                Filename = locality.InDashifed(authority.QualifiedName),
+                JumboTitle = locality.In(authority.QualifiedName),
                 Action = PageTypeEnum.Locality,
                 PageLinks = pubLinks.Select(x => x.Text != null
                     ? new PageLinkModel(currentRoot)
@@ -189,7 +188,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     },
                     Locality = new PageLinkModel(currentRoot)
                     {
-                        Filename = (locality + " in " + authority.QualifiedName).Dashify(),
+                        Filename = locality.InDashifed(authority.QualifiedName),
                         Id = authority.Id,
                         Text = locality,
                         Title = locality
@@ -257,7 +256,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     },
                     Locality = new PageLinkModel(currentRoot)
                     {
-                        Filename = (pub.Locality + " in " + pub.Authority.QualifiedName).Dashify(),
+                        Filename = pub.QualifiedLocalityDashified
+                        .Dashify(),
                         Id = pub.Id,
                         Text = pub.Locality,
                         Title = pub.Locality

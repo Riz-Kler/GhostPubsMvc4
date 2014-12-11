@@ -39,7 +39,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                return string.Format("{0} {1}", Name, Type.Replace("met ", String.Empty));
+                return string.Format("{0} {1}", Name, Type.Replace("Met ", String.Empty));
                 
             }
         }

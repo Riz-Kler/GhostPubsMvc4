@@ -108,16 +108,16 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 //CountyName = "The Vale of Glamorgan"
 
                 // Sc District
-                Name = "Scotland",
-                Division = "Glasgow City"
+                //Name = "Scotland",
+                //Division = "Glasgow City"
 
                 //// NI District
                 //Name = "Northern Ireland",
                 //Division = "Strabane"
 
-                //// Met County
-                //Name = "North East",
-                //Division = "Tyne and Wear"
+                // Met County
+                Name = "North East",
+                Division = "Tyne and Wear"
 
                 //// County
                 //RegionName = "North West",

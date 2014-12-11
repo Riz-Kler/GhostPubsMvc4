@@ -25,6 +25,28 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
 
         [NotMapped]
+        public string QualifiedLocalityDashified
+        {
+            get
+            {
+                var result = QualifiedLocality.Dashify();
+
+                return result;
+            }
+        }
+
+        [NotMapped]
+        public string QualifiedLocality
+        {
+            get
+            {
+                var result = Locality.In(Authority.QualifiedName);
+
+                return result;
+            }
+        }
+
+        [NotMapped]
         public string DescriptionFromNotes
         {
             get

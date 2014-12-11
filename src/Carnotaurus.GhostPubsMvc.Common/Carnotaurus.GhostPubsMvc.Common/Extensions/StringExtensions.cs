@@ -9,6 +9,16 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 {
     public static class StringExtensions
     {
+        public static string In(this string a, string b)
+        {
+            return string.Format("{0} in {1}", a, b);
+        }
+
+        public static string InDashifed(this string a, string b)
+        {
+            return a.In(b).Dashify();
+        }
+
         public static string Between(this string text, string a, string b)
         {
             var position = text.IndexOf(a) + a.Length;
