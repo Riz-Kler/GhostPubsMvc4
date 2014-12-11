@@ -107,7 +107,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
                 items.AddIf(Locality);
 
-                items.AddIf(Town);
+                items.AddIf(PostalTown);
 
                 items.AddIf(Authority.Name);
                 return items;
@@ -158,7 +158,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public string AlternateName { get; set; }
         public string SimpleName { get; set; }
         public string Locality { get; set; }
-        public string Town { get; set; }
+        public string PostalTown { get; set; }
         public string Postcode { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
@@ -193,7 +193,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
                 var result = items.ExtractFilename();
 
-                result = string.Format("{0}\\{1}", result, Town);
+                result = string.Format("{0}\\{1}", result, PostalTown);
 
                 return result;
             }
@@ -239,7 +239,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
             var result = Authority.Levels;
 
-            result.Add(Town);
+            result.Add(Locality);
 
             result.Add(Id.ToString(CultureInfo.InvariantCulture));
 

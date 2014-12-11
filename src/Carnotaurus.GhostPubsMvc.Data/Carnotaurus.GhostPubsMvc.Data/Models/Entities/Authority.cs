@@ -35,11 +35,21 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public virtual ICollection<Authority> Authoritys { get; set; }
 
         [NotMapped]
-        public string UniqueName
+        public string QualifiedName
         {
             get
             {
-                return string.Format("{0} {1}", Name, Type).Dashify();
+                return string.Format("{0} {1}", Name, Type);
+                
+            }
+        }
+
+        [NotMapped]
+        public string QualifiedNameDashified
+        {
+            get
+            {
+                return QualifiedName.Dashify();
             }
         }
 

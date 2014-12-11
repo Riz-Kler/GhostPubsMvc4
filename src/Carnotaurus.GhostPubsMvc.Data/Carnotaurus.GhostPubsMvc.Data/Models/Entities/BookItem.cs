@@ -11,7 +11,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public int? BookId { get; set; }
         public int? OrgId { get; set; }
         public string County { get; set; }
-        public string Town { get; set; }
+        public string PostalTown { get; set; }
         public string AlternativeTown { get; set; }
         public string TradingName { get; set; }
         public string Text { get; set; }

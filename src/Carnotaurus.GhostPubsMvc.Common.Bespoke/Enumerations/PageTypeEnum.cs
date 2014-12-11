@@ -5,7 +5,7 @@
         Country,
         Region,
         County,
-        Town,
+        Locality,
         Pub,
         Sitemap,
         Submissions,

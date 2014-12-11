@@ -20,7 +20,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             _reader = reader;
         }
 
-        public OutputViewModel PrepareTownModel(
+        public OutputViewModel PrepareLocalityModel(
             IEnumerable<KeyValuePair<string, PageLinkModel>> pubTownLinks, string town,
            Authority currentCounty,
             string currentRoot, List<OutputViewModel> history)
@@ -32,7 +32,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .Select(x => x.Value)
                 .ToList();
 
-            var townModel = OutputViewModel.CreateTownOutputViewModel(town, currentCounty,
+            var townModel = OutputViewModel.CreateLocalityOutputViewModel(town, currentCounty,
 
                  pubLinks, townPath, currentRoot, history);
 
@@ -224,26 +224,26 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                     "The key is null or empty; this is usually because the CountryID or AddressTypeID is null or [HauntedOrgs_Fix] has not been run.");
             }
 
-            var townLineage = new TownModel(pathKeyValuePair.Key);
+            var lineage = new LocalityModel(pathKeyValuePair.Key);
 
             var data = _reader.Items<Org>();
 
             var queryable = data
                 .Where(org => org.HauntedStatus.HasValue
                                 && org.HauntedStatus.Value
-                              && org.Authority.ParentAuthority.Name == townLineage.Region
-                              && org.Authority.Name == townLineage.County
-                              && org.Town == townLineage.Town)
+                              && org.Authority.ParentAuthority.Name == lineage.Region
+                              && org.Authority.Name == lineage.County
+                              && org.Locality== lineage.Locality)
                 .ToList()
                 .Select(x => x.ExtractFullLink())
                 .ToList();
 
             var result = new PageLinkModel(currentRoot)
             {
-                Text = string.Format("{0}. {1}", rank, townLineage.FriendlyDescription),
+                Text = string.Format("{0}. {1}", rank, lineage.FriendlyDescription),
                 Title =
                     string.Format("{0} ({1} pubs in this area)",
-                        townLineage.FriendlyDescription, pathKeyValuePair.Value),
+                        lineage.FriendlyDescription, pathKeyValuePair.Value),
                 Filename = string.Format("{0}\\{1}", currentRoot, pathKeyValuePair.Key),
                 Id = index - 1,
                 Links = queryable

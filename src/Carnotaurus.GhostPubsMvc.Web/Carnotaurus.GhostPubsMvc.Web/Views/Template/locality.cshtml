@@ -1,8 +1,8 @@
 ﻿@model Carnotaurus.GhostPubsMvc.Data.Models.ViewModels.OutputViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = string.Format("Haunted pubs in the town of {0}, {1}", Model.JumboTitle, Model.Lineage.County.Text);
-    ViewBag.Link = Model.Lineage.Town.Url;
+    ViewBag.Title = string.Format("Haunted pubs in the locality of {0}, {1}", Model.JumboTitle, Model.Lineage.County.Text);
+    ViewBag.Link = Model.Lineage.Locality.Url;
     ViewBag.MetaDescription = Model.MetaDescription;
     ViewBag.ArticleDescription = Model.ArticleDescription;
 
@@ -15,7 +15,7 @@
 <header class="jumbotron subhead">
     <div class="container">
         <div>
-            <h1>Haunted pubs in the town of @Model.JumboTitle</h1>
+            <h1>Haunted pubs in the locality of @Model.JumboTitle</h1>
             <p class="lead">
                 @Model.MetaDescription
             </p>
@@ -46,10 +46,10 @@
             <a href="@Model.Lineage.County.Url" title="@Model.Lineage.County.Title">@Model.Lineage.County.Text</a>
         }
 
-        @if (Model.Lineage.Town != null)
+        @if (Model.Lineage.Locality != null)
         {
             <span>&gt;&nbsp;</span>
-            <span>@Model.Lineage.Town.Text</span>
+            <span>@Model.Lineage.Locality.Text</span>
         }
 
     </div>

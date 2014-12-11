@@ -1,7 +1,7 @@
 ﻿@model Carnotaurus.GhostPubsMvc.Data.Models.ViewModels.OutputViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = string.Format("{0}, {1}", Model.JumboTitle, Model.Lineage.Town.Text);
+    ViewBag.Title = string.Format("{0}, {1}", Model.JumboTitle, Model.Lineage.Locality.Text);
     ViewBag.Link = Model.Url;
     ViewBag.MetaDescription = Model.MetaDescription;
     ViewBag.ArticleDescription = Model.ArticleDescription;
@@ -45,10 +45,10 @@
             <a href="@Model.Lineage.County.Url" title="@Model.Lineage.County.Title">@Model.Lineage.County.Text</a>
         }
 
-        @if (Model.Lineage.Town != null)
+        @if (Model.Lineage.Locality != null)
         {
             <span>&gt;</span>
-            <a href="@Model.Lineage.Town.Url" title="@Model.Lineage.Town.Title">@Model.Lineage.Town.Text</a>
+            <a href="@Model.Lineage.Locality.Url" title="@Model.Lineage.Locality.Title">@Model.Lineage.Locality.Text</a>
         }
 
         @if (Model.Lineage.Pub != null)

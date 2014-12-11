@@ -3,9 +3,9 @@ using Carnotaurus.GhostPubsMvc.Common.Extensions;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
-    public class TownModel
+    public class LocalityModel
     {
-        public TownModel(String path)
+        public LocalityModel(String path)
         {
             Path = path;
 
@@ -13,14 +13,14 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
             Region = arr[0];
             County = arr[1];
-            Town = arr[2];
+            Locality = arr[2];
         }
 
         public String Path { get; set; }
 
         public String Region { get; set; }
         public String County { get; set; }
-        public String Town { get; set; }
+        public String Locality { get; set; }
 
         public String FriendlyDescription
         {

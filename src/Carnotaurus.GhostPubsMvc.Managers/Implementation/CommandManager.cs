@@ -102,7 +102,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             if (firstResult != null)
             {
-                org.Town = firstResult.Value;
+                org.PostalTown = firstResult.Value;
                 org.Modified = DateTime.Now;
             }
         }

@@ -697,7 +697,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Template\town.cshtml" />
+    <Content Include="Views\Template\locality.cshtml" />
     <Content Include="Views\Template\county.cshtml" />
     <Content Include="Views\Template\generate.cshtml" />
     <Content Include="Views\Template\region.cshtml" />

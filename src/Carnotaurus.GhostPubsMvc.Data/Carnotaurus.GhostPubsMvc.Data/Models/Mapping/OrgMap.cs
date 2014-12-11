@@ -24,7 +24,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             this.Property(t => t.Locality)
                 .HasMaxLength(300);
 
-            this.Property(t => t.Town)
+            this.Property(t => t.PostalTown)
                 .HasMaxLength(300);
              
             this.Property(t => t.Postcode)
@@ -63,7 +63,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             this.Property(t => t.AlternateName).HasColumnName("AlternateName");
             this.Property(t => t.SimpleName).HasColumnName("SimpleName");
             this.Property(t => t.Locality).HasColumnName("Locality");
-            this.Property(t => t.Town).HasColumnName("Town");
+            this.Property(t => t.PostalTown).HasColumnName("Town");
             this.Property(t => t.Postcode).HasColumnName("Postcode");
             this.Property(t => t.Address).HasColumnName("Address");
             this.Property(t => t.Phone).HasColumnName("Phone");

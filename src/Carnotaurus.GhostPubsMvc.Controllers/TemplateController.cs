@@ -352,20 +352,20 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             var orgs =
                 authority.Orgs.Where(org =>
                     org.Authority.Name == authority.Name
-                    && org.Town != null
+                    && org.Locality != null
                     && org.HauntedStatus.HasValue
                     && org.HauntedStatus.Value
                     && org.AddressTypeId == 1)
-                    .OrderByDescending(org => org.Town)
+                    .OrderByDescending(org => org.Locality)
                     .ThenByDescending(org => org.TradingName)
                     .ToList();
 
-            var townsInCounty = orgs
-                .Select(org => org.Town)
+            var localities = orgs
+                .Select(org => org.Locality)
                 .Distinct()
                 .ToList();
 
-            CreateCountyFile(authority, townsInCounty,
+            CreateCountyFile(authority, localities,
                 orgs.Count
                 );
 
@@ -373,23 +373,23 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             var pubTownLinks = CreatePubsFiles(orgs);
 
-            CreateTownFiles(townsInCounty, pubTownLinks, authority);
+            CreateTownFiles(localities, pubTownLinks, authority);
         }
 
         private List<KeyValuePair<String, PageLinkModel>> CreatePubsFiles(IEnumerable<Org> pubs)
         {
-            var pubTownLinks = new List<KeyValuePair<String, PageLinkModel>>();
+            var localityLinks = new List<KeyValuePair<String, PageLinkModel>>();
 
             foreach (var pub in pubs)
             {
                 //town file needs knowledge of its pubs, e.g., trading name
                 CreatePubFile(pub);
 
-                pubTownLinks.Add(new KeyValuePair<string, PageLinkModel>(pub.Town, pub.ExtractLink(_currentRoot)));
+                localityLinks.Add(new KeyValuePair<string, PageLinkModel>(pub.Locality, pub.ExtractLink(_currentRoot)));
 
             }
 
-            return pubTownLinks;
+            return localityLinks;
         }
 
         private void CreateTownFiles(IEnumerable<string> townsInCounty,
@@ -441,7 +441,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             string town,
            Authority currentAuthority)
         {
-            var townModel = _queryManager.PrepareTownModel(pubTownLinks, town,
+            var townModel = _queryManager.PrepareLocalityModel(pubTownLinks, town,
                 currentAuthority,
                    _currentRoot, _history);
 
