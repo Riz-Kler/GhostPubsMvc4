@@ -157,6 +157,7 @@
     <Compile Include="Models\Entities\FeatureType.cs" />
     <Compile Include="Models\Entities\Authority.cs" />
     <Compile Include="Models\Mapping\AuthorityMap.cs" />
+    <Compile Include="Models\RegionFilterModel.cs" />
     <Compile Include="Models\ViewModels\Breadcrumb.cs" />
     <Compile Include="Models\ViewModels\PageLinkModel.cs" />
     <Compile Include="Models\Mapping\AddressTypeMap.cs" />

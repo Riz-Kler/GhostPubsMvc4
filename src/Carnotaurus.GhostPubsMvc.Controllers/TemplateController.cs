@@ -8,6 +8,7 @@ using Carnotaurus.GhostPubsMvc.Common.Bespoke;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Common.Helpers;
+using Carnotaurus.GhostPubsMvc.Data.Models;
 using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
 using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 using Carnotaurus.GhostPubsMvc.Managers.Implementation;
@@ -94,13 +95,31 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void GenerateContent()
         {
-            var filter = new Filter()
+            var filter = new RegionFilterModel()
            {
-               // Unitary
+               // UA
                //RegionName = "North West",
                //CountyName = "Cheshire West and Chester"
-               RegionName = "North East",
-               CountyName = "Tyne and Wear"
+
+               // Met County
+               //RegionName = "North East",
+               //CountyName = "Tyne and Wear"
+
+               //// County
+               //RegionName = "North West",
+               //CountyName = "Cumbria"
+
+               // London borough
+               // RegionName = "London",
+               // CountyName = "Bromley"
+
+               // W District
+               //RegionName = "Wales",
+               //CountyName = "The Vale of Glamorgan"
+
+               // Sc District
+               Name = "Scotland",
+               Division = "Glasgow City"	
            };
 
             GenerateGeographicHtmlPages(filter);
@@ -289,27 +308,21 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             return inRegion;
         }
 
-        public class Filter
-        {
-            public String RegionName { get; set; }
-            public String CountyName { get; set; }
-        }
-
-        private void GenerateGeographicHtmlPages(Filter filter)
+        private void GenerateGeographicHtmlPages(RegionFilterModel filterModel)
         {
             var regions = CreateTopLevelRegionsFile(_currentRoot);
 
             foreach (var currentRegion in regions)
             {
-                if (currentRegion.Name == filter.RegionName)
+                if (currentRegion.Name == filterModel.Name)
                 {
                     // todo - dpc - the problem is here - there are no orgs in these regions but we know that wrong
-                    CreateAllFilesForRegion(currentRegion, filter);
+                    CreateAllFilesForRegion(currentRegion, filterModel);
                 }
             }
         }
 
-        private void CreateAllFilesForRegion(Authority currentRegion, Filter filter)
+        private void CreateAllFilesForRegion(Authority currentRegion, RegionFilterModel filterModel)
         {
             var firstDescendantAuthoritiesInRegion = _queryManager.GetHauntedFirstDescendantAuthoritiesInRegion(currentRegion.Id);
 
@@ -321,7 +334,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             foreach (var authority in inRegion)
             {
-                if (authority.Name == filter.CountyName)
+                if (authority.Name == filterModel.Division)
                 {
                     CreateAuthorityFilesTop(authority);
                 }

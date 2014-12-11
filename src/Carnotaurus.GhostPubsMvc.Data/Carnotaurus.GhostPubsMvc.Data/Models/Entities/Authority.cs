@@ -39,7 +39,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                return string.Format("{0} {1}", Name, Type);
+                return string.Format("{0} {1}", Name, Type.Replace("met ", String.Empty));
                 
             }
         }
@@ -93,10 +93,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             {
                 var list = Levels;
 
-                list.Remove("ENGLAND");
-                list.Remove("ENGLAND AND WALES");
-                list.Remove("GREAT BRITAIN");
-                list.Remove("UNITED KINGDOM");
+                list.Remove("England");
+                list.Remove("England and Wales");
+                list.Remove("Great Britain");
+                list.Remove("United Kingdom");
 
                 return list;
             }
