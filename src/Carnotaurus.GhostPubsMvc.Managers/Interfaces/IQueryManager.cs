@@ -24,7 +24,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         OutputViewModel PrepareCountyModel(Authority authority, IEnumerable<string> towns, int count, string currentRoot, List<OutputViewModel> history);
 
-        OutputViewModel PreparePubModel(ICollection<KeyValuePair<string, PageLinkModel>> pubTownLinks,
+        OutputViewModel PreparePubModel( 
            Org pub, string currentRoot, List<OutputViewModel> history
             );
 

@@ -198,11 +198,18 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         }
 
         public static OutputViewModel CreatePubOutputViewModel(Org pub,
-            PageTypeEnum action,
-            IList<PageLinkModel> notes,
             String currentRoot,
             IEnumerable<OutputViewModel> history)
-        {
+        { 
+            var notes = pub.Notes.Select(note => new PageLinkModel(currentRoot)
+            {
+                Id = note.Id,
+                Text = note.Text,
+                Title = note.Text
+            }).ToList();
+
+            const PageTypeEnum action = PageTypeEnum.Pub;
+
             var pubModel = new OutputViewModel(currentRoot)
             {
                 Filename = pub.Filename,

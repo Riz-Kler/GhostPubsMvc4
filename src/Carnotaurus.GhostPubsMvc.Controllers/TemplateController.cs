@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web.Mvc;
 using System.Xml.Linq;
@@ -66,7 +67,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 FileSystemHelper.EnsureFolders(_currentRoot, _isDeprecated);
             }
 
-           // GenerateSimpleHtmlPages();
+            // GenerateSimpleHtmlPages();
 
             GenerateContent();
 
@@ -93,13 +94,16 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void GenerateContent()
         {
+            var filter = new Filter()
+           {
+               // Unitary
+               //RegionName = "North West",
+               //CountyName = "Cheshire West and Chester"
+               RegionName = "North East",
+               CountyName = "Tyne and Wear"
+           };
 
-            var x = new Filter()
-            {
-                RegionName = "North West",
-                RegionCounty = "Cheshire West and Chester"
-            };
-            GenerateGeographicHtmlPages(x);
+            GenerateGeographicHtmlPages(filter);
         }
 
         private void GenerateSimpleHtmlPages()
@@ -288,7 +292,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         public class Filter
         {
             public String RegionName { get; set; }
-            public String RegionCounty { get; set; }
+            public String CountyName { get; set; }
         }
 
         private void GenerateGeographicHtmlPages(Filter filter)
@@ -312,12 +316,12 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             var orgsInRegionCount = firstDescendantAuthoritiesInRegion.Sum(x => x.CountHauntedOrgs);
 
             if (orgsInRegionCount == 0) return;
-             
+
             var inRegion = CreateRegionHeaderFile(currentRegion, orgsInRegionCount);
 
             foreach (var authority in inRegion)
             {
-                if (authority.Name == filter.RegionCounty)
+                if (authority.Name == filter.CountyName)
                 {
                     CreateAuthorityFilesTop(authority);
                 }
@@ -343,44 +347,49 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void CreateAuthorityFiles(Authority authority)
         {
-            bool createTownsAndPubsFiles = !authority.IsCounty;
+            var createTownsAndPubsFiles = !authority.IsCounty;
 
-            var hauntedOrgsInCounty =
+            var orgs =
                 authority.Orgs.Where(org =>
                     org.Authority.Name == authority.Name
                     && org.Town != null
                     && org.HauntedStatus.HasValue
-                    && org.HauntedStatus.Value)
+                    && org.HauntedStatus.Value
+                    && org.AddressTypeId == 1)
                     .OrderByDescending(org => org.Town)
                     .ThenByDescending(org => org.TradingName)
                     .ToList();
 
-            var townsInCounty = hauntedOrgsInCounty
+            var townsInCounty = orgs
                 .Select(org => org.Town)
                 .Distinct()
                 .ToList();
 
             CreateCountyFile(authority, townsInCounty,
-                hauntedOrgsInCounty.Count
+                orgs.Count
                 );
 
             if (!createTownsAndPubsFiles) return;
 
-            var pubTownLinks = new List<KeyValuePair<String, PageLinkModel>>();
-
-            CreatePubsFiles(hauntedOrgsInCounty, pubTownLinks);
+            var pubTownLinks = CreatePubsFiles(orgs);
 
             CreateTownFiles(townsInCounty, pubTownLinks, authority);
         }
 
-        private void CreatePubsFiles(IEnumerable<Org> orgsInCounty,
-            ICollection<KeyValuePair<string, PageLinkModel>> pubTownLinks)
+        private List<KeyValuePair<String, PageLinkModel>> CreatePubsFiles(IEnumerable<Org> pubs)
         {
-            foreach (var currentOrg in orgsInCounty)
+            var pubTownLinks = new List<KeyValuePair<String, PageLinkModel>>();
+
+            foreach (var pub in pubs)
             {
                 //town file needs knowledge of its pubs, e.g., trading name
-                CreatePubFile(pubTownLinks, currentOrg);
+                CreatePubFile(pub);
+
+                pubTownLinks.Add(new KeyValuePair<string, PageLinkModel>(pub.Town, pub.ExtractLink(_currentRoot)));
+
             }
+
+            return pubTownLinks;
         }
 
         private void CreateTownFiles(IEnumerable<string> townsInCounty,
@@ -407,9 +416,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         }
 
 
-        private void CreatePubFile(ICollection<KeyValuePair<string, PageLinkModel>> pubTownLinks, Org pub)
+        private void CreatePubFile(Org pub)
         {
-            var pubModel = _queryManager.PreparePubModel(pubTownLinks, pub, _currentRoot, _history);
+            var pubModel = _queryManager.PreparePubModel(pub, _currentRoot, _history);
 
             WriteFile(pubModel);
         }
@@ -487,7 +496,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             if (toUse == null) throw new ArgumentNullException("model");
 
             var fullFilePath = String.Concat(toUse, model.FriendlyFilename, ".html");
-           
+
             FileSystemHelper.WriteFile(fullFilePath, contents);
         }
 

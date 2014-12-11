@@ -86,22 +86,11 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             return countyModel;
         }
 
-        public OutputViewModel PreparePubModel(ICollection<KeyValuePair<string, PageLinkModel>> pubTownLinks,
+        public OutputViewModel PreparePubModel( 
             Org pub, string currentRoot, List<OutputViewModel> history
             )
         {
-            pubTownLinks.Add(new KeyValuePair<string, PageLinkModel>(pub.Town, pub.ExtractLink(currentRoot)));
-
-            var notes = pub.Notes.Select(note => new PageLinkModel(currentRoot)
-            {
-                Id = note.Id,
-                Text = note.Text,
-                Title = note.Text
-            }).ToList();
-
-            const PageTypeEnum action = PageTypeEnum.Pub;
-
-            var pubModel = OutputViewModel.CreatePubOutputViewModel(pub, action, notes, currentRoot, history);
+            var pubModel = OutputViewModel.CreatePubOutputViewModel(pub,  currentRoot, history);
 
             return pubModel;
         }
