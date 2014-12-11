@@ -118,8 +118,13 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                //CountyName = "The Vale of Glamorgan"
 
                // Sc District
-               Name = "Scotland",
-               Division = "Glasgow City"	
+               //Name = "Scotland",
+               //Division = "Glasgow City"
+
+               //// NI District
+               //Name = "Northern Ireland",
+               //Division = "Strabane"
+
            };
 
             GenerateGeographicHtmlPages(filter);
