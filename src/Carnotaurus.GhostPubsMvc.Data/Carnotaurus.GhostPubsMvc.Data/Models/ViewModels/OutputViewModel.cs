@@ -93,7 +93,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             {
                 Filename = authority.QualifiedName.Dashify(),
                 JumboTitle = authority.Name,
-                Action = PageTypeEnum.County,
+                Action = PageTypeEnum.Authority,
                 PageLinks = locations.Select(linkModel => linkModel.Text != null
                     ? new PageLinkModel(currentRoot)
                     {
@@ -117,8 +117,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 Parent = new KeyValuePair<string, string>(authority.ParentAuthority.Name,
                     authority.ParentAuthority.Name.Dashify().ToLower()),
                 Total = count,
-                Priority = PageTypePriority.County,
-                Previous = history.LastOrDefault(x => x.Action == PageTypeEnum.County),
+                Priority = PageTypePriority.Authority,
+                Previous = history.LastOrDefault(x => x.Action == PageTypeEnum.Authority),
                 Lineage = new Breadcrumb
                 {
                     Region = new PageLinkModel(currentRoot)
@@ -128,7 +128,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                         Text = authority.ParentAuthority.Name,
                         Title = authority.ParentAuthority.Name
                     },
-                    County = new PageLinkModel(currentRoot)
+                    Authority = new PageLinkModel(currentRoot)
                     {
                         Filename = authority.QualifiedName,
                         Id = authority.Id,
@@ -179,7 +179,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                         Text = authority.ParentAuthority.Name,
                         Title = authority.ParentAuthority.Name
                     },
-                    County = new PageLinkModel(currentRoot)
+                    Authority = new PageLinkModel(currentRoot)
                     {
                         Filename = authority.QualifiedName,
                         Id = authority.Id,
@@ -247,7 +247,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                         Text = pub.Authority.ParentAuthority.Name,
                         Title = pub.Authority.ParentAuthority.Name
                     },
-                    County = new PageLinkModel(currentRoot)
+                    Authority = new PageLinkModel(currentRoot)
                     {
                         Filename = pub.Authority.QualifiedName,
                         Id = pub.Id,

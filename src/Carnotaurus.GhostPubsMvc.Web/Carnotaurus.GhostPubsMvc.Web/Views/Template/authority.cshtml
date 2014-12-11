@@ -2,7 +2,7 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = string.Format("Haunted pubs in {0}", Model.JumboTitle);
-    ViewBag.Link = Model.Lineage.County.Url;
+    ViewBag.Link = Model.Lineage.Authority.Url;
     ViewBag.MetaDescription = Model.MetaDescription;
     ViewBag.ArticleDescription = Model.ArticleDescription;
 
@@ -39,10 +39,10 @@
             <a href="@Model.Lineage.Region.Url" title="@Model.Lineage.Region.Title">@Model.Lineage.Region.Text</a>
         }
 
-        @if (Model.Lineage.County != null)
+        @if (Model.Lineage.Authority != null)
         {
             <span>&gt;</span>
-            <span>@Model.Lineage.County.Text</span>
+            <span>@Model.Lineage.Authority.Text</span>
         }
 
     </div>

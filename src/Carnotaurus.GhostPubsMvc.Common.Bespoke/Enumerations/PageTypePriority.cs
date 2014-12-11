@@ -9,7 +9,7 @@
 
         public const string Pub = "0.9";
         public const string Locality = "0.8";
-        public const string County = "0.7";
+        public const string Authority = "0.7";
         public const string Region = "0.6";
         public const string Country = "0.5";
 

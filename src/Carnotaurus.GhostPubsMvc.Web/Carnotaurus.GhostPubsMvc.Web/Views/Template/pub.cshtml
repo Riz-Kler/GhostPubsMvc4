@@ -39,10 +39,10 @@
             <a href="@Model.Lineage.Region.Url" title="@Model.Lineage.Region.Title">@Model.Lineage.Region.Text</a>
         }
 
-        @if (Model.Lineage.County != null)
+        @if (Model.Lineage.Authority != null)
         {
             <span>&gt;</span>
-            <a href="@Model.Lineage.County.Url" title="@Model.Lineage.County.Title">@Model.Lineage.County.Text</a>
+            <a href="@Model.Lineage.Authority.Url" title="@Model.Lineage.Authority.Title">@Model.Lineage.Authority.Text</a>
         }
 
         @if (Model.Lineage.Locality != null)

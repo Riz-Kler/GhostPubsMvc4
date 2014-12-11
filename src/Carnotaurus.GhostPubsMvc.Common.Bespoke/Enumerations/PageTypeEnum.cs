@@ -4,7 +4,7 @@
     {
         Country,
         Region,
-        County,
+        Authority,
         Locality,
         Pub,
         Sitemap,
