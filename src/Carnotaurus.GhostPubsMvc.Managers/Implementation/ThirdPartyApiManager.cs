@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Xml.Linq;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
@@ -101,7 +100,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             var uri = new Uri(requestUri);
 
-            return  uri.GetElement( "result");
+            return uri.GetElement("result");
         }
 
 
@@ -127,6 +126,5 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             return uri.GetElement("GeocodeResponse");
         }
-
     }
 }

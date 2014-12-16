@@ -97,7 +97,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             {
                 // UA
                 Name = "North West",
-                Division= "Cheshire West and Chester"
+                Division = "Cheshire West and Chester"
 
                 // London borough
                 // RegionName = "London",
@@ -336,7 +336,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             foreach (var authority in inRegion)
             {
-                if (filterModel.Division.IsNullOrEmpty() ||  authority.Name == filterModel.Division)
+                if (filterModel.Division.IsNullOrEmpty() || authority.Name == filterModel.Division)
                 {
                     CreateAuthorityFilesTop(authority);
                 }

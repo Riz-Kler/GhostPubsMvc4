@@ -37,20 +37,13 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         [NotMapped]
         public string QualifiedName
         {
-            get
-            {
-                return string.Format("{0} {1}", Name, Type.Replace("Met ", String.Empty));
-                
-            }
+            get { return string.Format("{0} {1}", Name, Type.Replace("Met ", String.Empty)); }
         }
 
         [NotMapped]
         public string QualifiedNameDashified
         {
-            get
-            {
-                return QualifiedName.Dashify();
-            }
+            get { return QualifiedName.Dashify(); }
         }
 
         [NotMapped]

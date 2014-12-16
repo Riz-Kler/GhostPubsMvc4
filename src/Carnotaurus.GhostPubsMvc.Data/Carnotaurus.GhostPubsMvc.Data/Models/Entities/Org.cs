@@ -1,16 +1,11 @@
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 using System.Linq;
-using System.Security.Policy;
-using System.Web.Mvc;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
-using Castle.Core.Internal;
-using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 {
@@ -100,7 +95,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 sections.AddRange(Tags.Select(x => x.Feature.Name));
 
                 return sections.ToList();
-
             }
         }
 
@@ -111,11 +105,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             {
                 var items = NameExtended;
 
-                var result = items.JoinWithComma() + " | " + TradingName + " Ghost";
+                var result = string.Format("{0} | {1} Ghost", items.JoinWithComma(), TradingName);
 
                 return result;
             }
-
         }
 
         [NotMapped]
@@ -258,7 +251,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
         public PageLinkModel ExtractFullLink()
         {
-
             var result = Authority.Levels;
 
             result.Add(Locality);

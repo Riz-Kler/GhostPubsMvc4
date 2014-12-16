@@ -26,7 +26,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
 
             this.Property(t => t.PostalTown)
                 .HasMaxLength(300);
-             
+
             this.Property(t => t.Postcode)
                 .HasMaxLength(8);
 

@@ -86,7 +86,6 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             UpdateLocality(result, org);
 
             UpdateTown(result, org);
-
         }
 
         private static void UpdateTown(XContainer result, Org org)

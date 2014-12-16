@@ -22,20 +22,21 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         // weird
 
-        OutputViewModel PrepareAuthorityModel(Authority authority, IEnumerable<string> towns, int count, string currentRoot, List<OutputViewModel> history);
+        OutputViewModel PrepareAuthorityModel(Authority authority, IEnumerable<string> towns, int count,
+            string currentRoot, List<OutputViewModel> history);
 
-        OutputViewModel PreparePubModel( 
-           Org pub, string currentRoot, List<OutputViewModel> history
+        OutputViewModel PreparePubModel(
+            Org pub, string currentRoot, List<OutputViewModel> history
             );
 
         OutputViewModel PrepareLocalityModel(
             IEnumerable<KeyValuePair<string, PageLinkModel>> pubTownLinks, string town,
-             Authority currentCounty,  
-             string currentRoot, List<OutputViewModel> history);
+            Authority currentCounty,
+            string currentRoot, List<OutputViewModel> history);
 
         OutputViewModel PreparePageTypeModel(PageTypeEnum pageType, string priority, string description,
             List<PageLinkModel> links,
-            string title,  string currentRoot);
+            string title, string currentRoot);
 
         OutputViewModel PrepareRegionModel(Authority currentRegion, int orgsInRegionCount,
             IEnumerable<Authority> hauntedCountiesInRegion, string currentRoot,

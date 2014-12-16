@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
@@ -22,7 +21,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
         public OutputViewModel PrepareLocalityModel(
             IEnumerable<KeyValuePair<string, PageLinkModel>> pubTownLinks, string town,
-           Authority currentCounty,
+            Authority currentCounty,
             string currentRoot, List<OutputViewModel> history)
         {
             var townPath = BuildPath(false, currentRoot, town);
@@ -33,8 +32,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .ToList();
 
             var townModel = OutputViewModel.CreateLocalityOutputViewModel(town, currentCounty,
-
-                 pubLinks, townPath, currentRoot, history);
+                pubLinks, townPath, currentRoot, history);
 
             return townModel;
         }
@@ -49,7 +47,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             }
 
             var model = OutputViewModel.CreatePageTypeOutputViewModel(pageType, priority, description, links, title,
-                 currentRoot);
+                currentRoot);
 
             return model;
         }
@@ -63,7 +61,9 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             {
                 Text = x.Name,
                 Title = x.Name,
-                Filename = string.Format("{0}\\{1}\\{2}", currentRoot, x.RegionalLineage.ReverseItems().JoinWithBackslash(), x.Name).Dashify()
+                Filename =
+                    string.Format("{0}\\{1}\\{2}", currentRoot, x.RegionalLineage.ReverseItems().JoinWithBackslash(),
+                        x.Name).Dashify()
             }).ToList();
 
             var regionModel = OutputViewModel.CreateRegionOutputViewModel(currentRegion,
@@ -72,7 +72,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             return regionModel;
         }
 
-        public OutputViewModel PrepareAuthorityModel(Authority authority, IEnumerable<string> locations, int count, string currentRoot, List<OutputViewModel> history)
+        public OutputViewModel PrepareAuthorityModel(Authority authority, IEnumerable<string> locations, int count,
+            string currentRoot, List<OutputViewModel> history)
         {
             var links = locations.Select(s => new PageLinkModel(currentRoot)
             {
@@ -81,16 +82,16 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             }).ToList();
 
             var model = OutputViewModel.CreateAuthorityOutputViewModel(authority, count,
-                 links, currentRoot, history);
+                links, currentRoot, history);
 
             return model;
         }
 
-        public OutputViewModel PreparePubModel( 
+        public OutputViewModel PreparePubModel(
             Org pub, string currentRoot, List<OutputViewModel> history
             )
         {
-            var pubModel = OutputViewModel.CreatePubOutputViewModel(pub,  currentRoot, history);
+            var pubModel = OutputViewModel.CreatePubOutputViewModel(pub, currentRoot, history);
 
             return pubModel;
         }
@@ -106,8 +107,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                     && org.Postcode != null
                     && org.Authority != null
                     && (!org.LaTried || !org.Tried)
-
-                 )
+                )
                 //.Take(1)
                 .ToList();
 
@@ -138,9 +138,9 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             var inRegion = list
                 .Where(x =>
-                x.ParentId == regionId
-                && x.ParentAuthority.IsRegion
-                && x.HasHauntedOrgs
+                    x.ParentId == regionId
+                    && x.ParentAuthority.IsRegion
+                    && x.HasHauntedOrgs
                 )
                 .ToList();
 
@@ -203,7 +203,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         {
             var output = String.Empty;
 
-            string pattern = isLevelled ? "{0}\\{1}" : "{0}-{1}";
+            var pattern = isLevelled ? "{0}\\{1}" : "{0}-{1}";
 
             foreach (var s in builder)
             {
@@ -230,10 +230,10 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             var queryable = data
                 .Where(org => org.HauntedStatus.HasValue
-                                && org.HauntedStatus.Value
+                              && org.HauntedStatus.Value
                               && org.Authority.ParentAuthority.Name == lineage.Region
                               && org.Authority.Name == lineage.County
-                              && org.Locality== lineage.Locality)
+                              && org.Locality == lineage.Locality)
                 .ToList()
                 .Select(x => x.ExtractFullLink())
                 .ToList();
@@ -251,9 +251,5 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             return result;
         }
-
-
-
-
     }
 }

@@ -86,6 +86,7 @@
     <Compile Include="Extensions\InjectionExtensions\ExcludeFromDiRegistrationAttribute.cs" />
     <Compile Include="Extensions\NumericExtensions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
+    <Compile Include="Extensions\StringConversionExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\UriExtensions.cs" />
     <Compile Include="Helpers\FileSystemHelper.cs" />

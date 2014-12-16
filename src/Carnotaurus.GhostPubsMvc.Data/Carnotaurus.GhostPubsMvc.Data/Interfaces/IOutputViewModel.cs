@@ -12,6 +12,5 @@ namespace Carnotaurus.GhostPubsMvc.Data.Interfaces
         String Filename { get; set; }
 
         String PageTitle { get; set; }
-
     }
 }

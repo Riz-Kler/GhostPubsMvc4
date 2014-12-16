@@ -6,7 +6,6 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 {
     public static class EnumerableCollectionExtensions
     {
-     
         public static string ExtractFilename(this IEnumerable<string> enumerable)
         {
             const string pattern = "{0}\\{1}";
@@ -32,7 +31,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
             return result;
         }
-         
+
         public static string Dash(this IEnumerable<string> enumerable)
         {
             var result = JoinWithSpace(enumerable.ToArray()).Dashify();

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Xml.Linq;
 using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
-using Carnotaurus.GhostPubsMvc.Managers.Implementation;
 
 namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 {

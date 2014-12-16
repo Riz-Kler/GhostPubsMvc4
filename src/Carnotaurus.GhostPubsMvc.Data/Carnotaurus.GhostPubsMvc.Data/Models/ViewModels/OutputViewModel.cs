@@ -64,11 +64,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     }
                     : null).OrderBy(x => x.Text).ToList(),
                 MetaDescription = string.Format("Haunted pubs in {0}", countyLinks.Select(x => x.Text).OxbridgeAnd())
-                .SeoMetaDescriptionTruncate(),
+                    .SeoMetaDescriptionTruncate(),
                 ArticleDescription = string.Format("Haunted pubs in {0}", countyLinks.Select(x => x.Text).OxbridgeAnd()),
                 Parent =
-                   new KeyValuePair<string, string>(currentRegion.Name,
-                       currentRegion.Name.Dashify().ToLower()),
+                    new KeyValuePair<string, string>(currentRegion.Name,
+                        currentRegion.Name.Dashify().ToLower()),
                 Total = orgsInRegionCount,
                 Priority = PageTypePriority.Region,
                 Previous = history.LastOrDefault(x => x.Action == PageTypeEnum.Region),
@@ -142,11 +142,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             };
 
             return model;
-
         }
 
         public static OutputViewModel CreateLocalityOutputViewModel(string locality,
-                 Authority authority,
+            Authority authority,
             IList<PageLinkModel> pubLinks,
             string townPath, string currentRoot, IEnumerable<OutputViewModel> history)
         {
@@ -167,9 +166,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                                 locality.Dashify(), x.Id, x.Text.Dashify())
                     }
                     : null).OrderBy(x => x.Text).ToList(),
-                MetaDescription = string.Format("{0}, {1}, {2}", locality, authority.Name, authority.ParentAuthority.Name)
-                .SeoMetaDescriptionTruncate(),
-                ArticleDescription = string.Format("{0}, {1}, {2}", locality, authority.Name, authority.ParentAuthority.Name),
+                MetaDescription =
+                    string.Format("{0}, {1}, {2}", locality, authority.Name, authority.ParentAuthority.Name)
+                        .SeoMetaDescriptionTruncate(),
+                ArticleDescription =
+                    string.Format("{0}, {1}, {2}", locality, authority.Name, authority.ParentAuthority.Name),
                 Parent = new KeyValuePair<string, string>(authority.ParentAuthority.Name, String.Empty),
                 Total = pubLinks.Count(),
                 Priority = PageTypePriority.Locality,
@@ -232,8 +233,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 Lon = pub.Lon.ToString(),
                 OtherNames = pub.Authority.Orgs
                     .Where(x => x.Address == pub.Address
-                        && x.Postcode == pub.Postcode
-                        && x.Id != pub.Id)
+                                && x.Postcode == pub.Postcode
+                                && x.Id != pub.Id)
                     .Select(
                         org => new PageLinkModel(currentRoot)
                         {
@@ -262,7 +263,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     Locality = new PageLinkModel(currentRoot)
                     {
                         Filename = pub.QualifiedLocalityDashified
-                        .Dashify(),
+                            .Dashify(),
                         Id = pub.Id,
                         Text = pub.Locality,
                         Title = pub.Locality
@@ -294,14 +295,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 Priority = priority,
                 PageLinks = links,
                 Total = links != null ? links.Count() : 0
-
             };
             return model;
         }
 
         #endregion Statics
-
-        public String CurrentRoot { get; set; }
 
         public OutputViewModel(String currentRoot)
         {
@@ -309,6 +307,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             Tags = new List<String>();
             CurrentRoot = currentRoot;
         }
+
+        public String CurrentRoot { get; set; }
 
         public String Lat { get; set; }
 
@@ -327,8 +327,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public IList<PageLinkModel> OtherNames { get; set; }
 
         public IList<PageLinkModel> PageLinks { get; set; }
-
-        public String Filename { get; set; }
 
         public String FriendlyFilename
         {
@@ -387,11 +385,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             }
         }
 
+        public String Filename { get; set; }
+
         public String JumboTitle { get; set; }
 
         public PageTypeEnum Action { get; set; }
 
         public string PageTitle { get; set; }
-
     }
 }

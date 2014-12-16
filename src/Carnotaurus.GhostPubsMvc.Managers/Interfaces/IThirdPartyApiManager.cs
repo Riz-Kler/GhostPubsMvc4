@@ -16,6 +16,5 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
         XmlResult RequestGoogleMapsApiResponse(XElement element);
 
         XmlResult RequestLaApiResponse(XElement element);
-
     }
 }
