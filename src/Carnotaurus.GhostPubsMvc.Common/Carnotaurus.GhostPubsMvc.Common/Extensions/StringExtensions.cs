@@ -16,7 +16,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
         public static string InDashifed(this string a, string b)
         {
-            return a.In(b).Dashify();
+            return (a.In(b)).Dashify();
         }
 
         public static string Between(this string text, string a, string b)

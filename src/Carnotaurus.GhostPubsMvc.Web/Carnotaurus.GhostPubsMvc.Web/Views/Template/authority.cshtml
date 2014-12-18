@@ -14,7 +14,7 @@
 <header class="jumbotron subhead">
     <div class="container">
         <div>
-            <h1>Haunted pubs in the county of @Model.JumboTitle</h1>
+            <h1>Haunted pubs in the authority of @Model.JumboTitle</h1>
             <p class="lead">
                 @Model.ArticleDescription
             </p>
@@ -92,12 +92,10 @@
                 <div id="fb-root"></div>
 
                 <div class="fb-comments" data-href="@ViewBag.Link" data-numposts="5" data-colorscheme="dark"></div>
-
-
-
+                 
                 <div class="fb-like" data-href="@ViewBag.Link" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 
-                <p><a href='../detail.html' title="Back to @Model.Parent.Key region">Back to @Model.Parent.Key region</a></p>
+                <p><a href='@Model.Lineage.Region.Url' title="Back to @Model.Lineage.Region.Text">Back to @Model.Lineage.Region.Text</a></p>
                 <hr class="bs-docs-separator">
             </section>
         </div>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
 using System.Xml.Linq;
@@ -66,23 +67,23 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 FileSystemHelper.EnsureFolders(_currentRoot, _isDeprecated);
             }
 
-            // GenerateSimpleHtmlPages();
+            GenerateSimpleHtmlPages();
 
             GenerateContent();
 
-            // GenerateLeaderboard();
+            GenerateLeaderboard();
 
-            //GenerateWebmasterSitemap();
+            GenerateWebmasterSitemap();
         }
 
-        //private void GenerateWebmasterSitemap()
-        //{
-        //    var sm = _queryManager.PrepareWebmasterSitemap(_historySitemap);
+        private void GenerateWebmasterSitemap()
+        {
+            var webmasterSitemap = _queryManager.PrepareWebmasterSitemap(_historySitemap);
 
-        //    var fullFilePath = String.Format("{0}/ghostpubs-sitemap.xml", _currentRoot);
+            var fullFilePath = String.Format("{0}/ghostpubs-sitemap.xml", _currentRoot);
 
-        //    FileSystemHelper.WriteFile(fullFilePath, sm);
-        //}
+            FileSystemHelper.WriteFile(fullFilePath, webmasterSitemap);
+        }
 
         private void GenerateDeadContent()
         {
@@ -96,16 +97,16 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             var filter = new RegionFilterModel
             {
                 // UA
-                Name = "North West",
-                Division = "Cheshire West and Chester"
+                //Name = "North West",
+                //Division = "Cheshire West and Chester"
 
                 // London borough
-                // RegionName = "London",
-                // CountyName = "Bromley"
+                Name = "London",
+                Division = "Bromley"
 
                 // W District
-                //RegionName = "Wales",
-                //CountyName = "The Vale of Glamorgan"
+                //Name = "Wales",
+                //Division = "The Vale of Glamorgan"
 
                 // Sc District
                 //Name = "Scotland",
@@ -120,8 +121,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 //Division = "Tyne and Wear"
 
                 //// County
-                //RegionName = "North West",
-                //CountyName = "Cumbria"
+                //Name = "North West",
+                //Division = "Cumbria"
             };
 
             GenerateGeographicHtmlPages(filter);
@@ -169,28 +170,27 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             CreatePageTypeFile(PageTypeEnum.Privacy, PageTypePriority.Privacy, "Privacy policy");
         }
 
-        //private void GenerateLeaderboard()
-        //{
-        //    List<PageLinkModel> data = null;
+        private void GenerateLeaderboard()
+        {
+            if (_isDeprecated) return;
 
-        //    if (!_isDeprecated)
-        //    {
-        //        data = GetLeaderboardData();
+            var data = GetLeaderboardData();
 
-        //        CreatePageTypeFile(PageTypeEnum.Sitemap,
-        //            PageTypePriority.Sitemap, "Sitemap: Pub leaderboard of most haunted areas in UK", data);
-        //    }
-        //}
+            CreatePageTypeFile(PageTypeEnum.Sitemap,
+                PageTypePriority.Sitemap, "Sitemap: Pub leaderboard of most haunted areas in UK", data);
+        }
 
-        //public List<PageLinkModel> GetLeaderboardData()
-        //{
-        //    var results = _queryManager.GetSitemapData(_currentRoot);
+        public List<PageLinkModel> GetLeaderboardData()
+        {
+            var results = _queryManager.GetSitemapData(_currentRoot);
 
-        //    return results;
-        //}
+            return results;
+        }
 
         private void UpdateOrganisations(IEnumerable<Org> orgsToUpdate)
         {
+            if (orgsToUpdate == null) throw new ArgumentNullException("orgsToUpdate");
+
             foreach (var org in orgsToUpdate)
             {
                 SourceAndApplyApiData(org);
@@ -201,6 +201,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void SourceAndApplyApiData(Org org)
         {
+            if (org == null) throw new ArgumentNullException("org");
+
             if (org.HasTriedAllApis) return;
 
             var elements = _thirdPartyApiManager.ReadElements(org);
@@ -210,6 +212,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void SourceAndApplyApiData(Org org, IEnumerable<XElement> elements)
         {
+            if (org == null) throw new ArgumentNullException("org");
             if (elements == null) return;
 
             foreach (var element in elements)
@@ -220,6 +223,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void SourceAndApplyApiData(Org org, XElement element)
         {
+            if (org == null) throw new ArgumentNullException("org");
             if (element == null) return;
 
             if (element.ToString().Contains("GeocodeResponse"))
@@ -234,6 +238,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void SourceAndApplyPostcodeApiData(Org org, XElement element)
         {
+            if (org == null) throw new ArgumentNullException("org");
+            if (element == null) throw new ArgumentNullException("element");
+
             var result = new XmlResult();
 
             if (!org.LaTried)
@@ -262,6 +269,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void SourceAndApplyGoogleMapsApiData(Org org, XElement element)
         {
+            if (org == null) throw new ArgumentNullException("org");
+            if (element == null) throw new ArgumentNullException("element");
+
             var result = new XmlResult();
 
             if (!org.Tried)
@@ -292,16 +302,16 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             return results;
         }
 
-        private IEnumerable<Authority> CreateRegionHeaderFile(Authority currentRegion,
+        private IEnumerable<Authority> CreateRegionHeaderFile(Authority region,
             Int32 orgsInRegionCount)
         {
             // region file needs knowledge of its counties
             // should be list of counties that have ghost pubs?
             // var countiesInRegion = currentRegion.Counties.ToList();
 
-            var inRegion = _queryManager.GetHauntedFirstDescendantAuthoritiesInRegion(currentRegion.Id).ToList();
+            var inRegion = _queryManager.GetHauntedFirstDescendantAuthoritiesInRegion(region.Id).ToList();
 
-            var regionModel = _queryManager.PrepareRegionModel(currentRegion, orgsInRegionCount,
+            var regionModel = _queryManager.PrepareRegionModel(region, orgsInRegionCount,
                 inRegion, _currentRoot, _history);
 
             WriteFile(regionModel);
@@ -317,22 +327,21 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             {
                 if (filterModel.Name.IsNullOrEmpty() || currentRegion.Name == filterModel.Name)
                 {
-                    // todo - dpc - the problem is here - there are no orgs in these regions but we know that wrong
                     CreateAllFilesForRegion(currentRegion, filterModel);
                 }
             }
         }
 
-        private void CreateAllFilesForRegion(Authority currentRegion, RegionFilterModel filterModel)
+        private void CreateAllFilesForRegion(Authority region, RegionFilterModel filterModel)
         {
             var firstDescendantAuthoritiesInRegion =
-                _queryManager.GetHauntedFirstDescendantAuthoritiesInRegion(currentRegion.Id);
+                _queryManager.GetHauntedFirstDescendantAuthoritiesInRegion(region.Id);
 
             var orgsInRegionCount = firstDescendantAuthoritiesInRegion.Sum(x => x.CountHauntedOrgs);
 
             if (orgsInRegionCount == 0) return;
 
-            var inRegion = CreateRegionHeaderFile(currentRegion, orgsInRegionCount);
+            var inRegion = CreateRegionHeaderFile(region, orgsInRegionCount);
 
             foreach (var authority in inRegion)
             {
@@ -362,9 +371,11 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void CreateAuthorityFiles(Authority authority)
         {
+            if (authority == null) throw new ArgumentNullException("authority");
+
             if (!authority.IsCounty)
             {
-                var pubs =
+                var orgs =
                     authority.Orgs.Where(org =>
                         org.Authority.Name == authority.Name
                         && org.Locality != null
@@ -375,16 +386,16 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                         .ThenByDescending(org => org.TradingName)
                         .ToList();
 
-                var localities = pubs
+                var localities = orgs
                     .Select(p => p.Locality)
                     .Distinct()
                     .ToList();
 
                 CreateAuthorityFile(authority, localities,
-                    pubs.Count
+                    orgs.Count
                     );
 
-                var links = CreatePubsFiles(pubs);
+                var links = CreatePubsFiles(orgs);
 
                 CreateLocalityFiles(localities, links, authority);
             }
@@ -401,29 +412,33 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             }
         }
 
-        private List<KeyValuePair<String, PageLinkModel>> CreatePubsFiles(IEnumerable<Org> pubs)
+        private List<KeyValuePair<String, PageLinkModel>> CreatePubsFiles(IEnumerable<Org> orgs)
         {
             var localityLinks = new List<KeyValuePair<String, PageLinkModel>>();
 
-            foreach (var pub in pubs)
+            foreach (var org in orgs)
             {
                 //town file needs knowledge of its pubs, e.g., trading name
-                CreatePubFile(pub);
+                CreateOrgFile(org);
 
-                localityLinks.Add(new KeyValuePair<string, PageLinkModel>(pub.Locality, pub.ExtractLink(_currentRoot)));
+                localityLinks.Add(new KeyValuePair<string, PageLinkModel>(org.Locality, org.ExtractLink(_currentRoot)));
             }
 
             return localityLinks;
         }
 
-        private void CreateLocalityFiles(IEnumerable<string> townsInCounty,
-            List<KeyValuePair<string, PageLinkModel>> pubTownLinks, Authority currentAuthority
+        private void CreateLocalityFiles(IEnumerable<string> localities,
+            List<KeyValuePair<string, PageLinkModel>> orgLocalityLinks, Authority authority
             )
         {
+            if (localities == null) throw new ArgumentNullException("localities");
+            if (orgLocalityLinks == null) throw new ArgumentNullException("orgLocalityLinks");
+            if (authority == null) throw new ArgumentNullException("authority");
+
             // create the town pages
-            foreach (var town in townsInCounty)
+            foreach (var locality in localities)
             {
-                CreateTownFile(pubTownLinks, town, currentAuthority);
+                CreateLocalityFile(orgLocalityLinks, locality, authority);
             }
         }
 
@@ -431,6 +446,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             IEnumerable<string> locations,
             Int32 count)
         {
+            if (authority == null) throw new ArgumentNullException("authority");
+            if (locations == null) throw new ArgumentNullException("locations");
+
             var model = _queryManager.PrepareAuthorityModel(authority,
                 locations, count, _currentRoot, _history);
 
@@ -438,16 +456,23 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         }
 
 
-        private void CreatePubFile(Org pub)
+        private void CreateOrgFile(Org org)
         {
-            var pubModel = _queryManager.PreparePubModel(pub, _currentRoot, _history);
+            if (org == null) throw new ArgumentNullException("org");
 
-            WriteFile(pubModel);
+            var model = _queryManager.PrepareOrgModel(org, _currentRoot, _history);
+
+            WriteFile(model);
         }
 
         public void CreatePageTypeFile(PageTypeEnum pageType, string priority, string description,
             List<PageLinkModel> links = null, string title = null)
         {
+            if (links == null)
+            {
+                links = new List<PageLinkModel>();
+            }
+
             var model = _queryManager.PreparePageTypeModel(pageType, priority, description, links, title,
                 _currentRoot);
 
@@ -458,20 +483,26 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             WriteFile(model, pathOverride);
         }
 
-        private void CreateTownFile(
-            IEnumerable<KeyValuePair<string, PageLinkModel>> pubTownLinks,
-            string town,
-            Authority currentAuthority)
+        private void CreateLocalityFile(
+            IEnumerable<KeyValuePair<string, PageLinkModel>> orgLocalityLinks,
+            string locality,
+            Authority authority)
         {
-            var townModel = _queryManager.PrepareLocalityModel(pubTownLinks, town,
-                currentAuthority,
+            if (orgLocalityLinks == null) throw new ArgumentNullException("orgLocalityLinks");
+            if (locality == null) throw new ArgumentNullException("locality");
+            if (authority == null) throw new ArgumentNullException("authority");
+
+            var model = _queryManager.PrepareLocalityModel(orgLocalityLinks, locality,
+                authority,
                 _currentRoot, _history);
 
-            WriteFile(townModel);
+            WriteFile(model);
         }
 
         protected String PrepareModel(OutputViewModel data)
         {
+            if (data == null) throw new ArgumentNullException("data");
+
             var output = this.PrepareView(data, data.Action.ToString());
 
             return output;
@@ -479,6 +510,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         public void WriteFile(OutputViewModel model)
         {
+            if (model == null) throw new ArgumentNullException("model");
             WriteFile(model, null);
         }
 
@@ -486,50 +518,69 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         {
             if (model == null) throw new ArgumentNullException("model");
 
-            var max = Resources.MaxSize.ToInt32();
+            if (_isDeprecated) return;
 
-            if (!_isDeprecated)
+            if (!pathOverride.IsNullOrEmpty())
             {
-                _historySitemap.Add(model.SitemapItem);
+                model.CurrentRoot = pathOverride;
+            }
 
+            if (_historySitemap != null) _historySitemap.Add(model.SitemapItem);
+
+            if (_history != null)
+            {
                 _history.Add(model);
+
+                var max = Resources.MaxSize.ToInt32();
 
                 if (_history.Count > max)
                 {
                     _history.RemoveAt(0);
                 }
-
-                WritePage(model, pathOverride);
             }
+
+            WritePage(model, pathOverride);
         }
 
         private void WritePage(OutputViewModel model, string pathOverride)
         {
+            if (model == null) throw new ArgumentNullException("model");
+
             var contents = PrepareModel(model);
+
+            if (contents == null) throw new ArgumentNullException("contents");
 
             if (model.Filename == null) return;
 
-            var toUse = !pathOverride.IsNullOrEmpty() ? pathOverride : model.CurrentRoot.ToLower();
+            var toUse = !pathOverride.IsNullOrEmpty()
+                ? pathOverride
+                : model.CurrentRoot.ToLower();
 
-            if (toUse == null) throw new ArgumentNullException("model");
+            if (toUse == null) throw new ArgumentNullException("toUse");
 
-            var fullFilePath = String.Concat(toUse, model.FriendlyFilename, ".html");
+            if (model.FriendlyFilename == null) return;
+
+            var fullFilePath = String.Format("{0}{1}{2}",
+                toUse,
+                model.FriendlyFilename,
+                ".html");
 
             FileSystemHelper.WriteFile(fullFilePath, contents);
         }
 
-        //private void WriteMissingPage(OutputViewModel model)
-        //{
-        //    var missing = model.DeepClone();
+        private void WriteMissingPage(OutputViewModel model)
+        {
+            if (model == null) throw new ArgumentNullException("model");
+            var missing = model.DeepClone();
 
-        //    missing.Action = PageTypeEnum.Missing;
+            missing.Action = PageTypeEnum.Missing;
 
-        //    var contents = PrepareModel(missing);
+            var contents = PrepareModel(missing);
 
-        //    if (!contents.IsNotNullOrEmpty()) return;
+            if (!contents.IsNotNullOrEmpty()) return;
 
-        //    FileSystemHelper.WriteFile(String.Concat(model.Filename.ToLower(), @"\", "detail.html").RedirectionalFormat(),
-        //        contents);
-        //}
+            FileSystemHelper.WriteFile(String.Concat(model.Filename.ToLower(), @"\", "detail.html").RedirectionalFormat(),
+                contents);
+        }
     }
 }

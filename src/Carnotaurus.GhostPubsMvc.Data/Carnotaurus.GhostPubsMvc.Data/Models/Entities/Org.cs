@@ -18,6 +18,70 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             Tags = new List<Tag>();
         }
 
+        public DateTime Created { get; set; }
+        public DateTime Modified { get; set; }
+        public DateTime? Deleted { get; set; }
+        public int? AddressTypeId { get; set; }
+        public int? AuthorityId { get; set; }
+        public int? ParentId { get; set; }
+        public bool? TradingStatus { get; set; }
+        public bool? HauntedStatus { get; set; }
+        public string TradingName { get; set; }
+        public string AlternateName { get; set; }
+        public string SimpleName { get; set; }
+        public string Locality { get; set; }
+        public string PostalTown { get; set; }
+        public string Postcode { get; set; }
+        public string Address { get; set; }
+        public string Phone { get; set; }
+        public string Twitter { get; set; }
+        public string Email { get; set; }
+        public string Facebook { get; set; }
+        public string Website { get; set; }
+        public int? OsX { get; set; }
+        public int? OsY { get; set; }
+        public double? Lat { get; set; }
+        public double? Lon { get; set; }
+        public bool Tried { get; set; }
+        public string GoogleMapData { get; set; }
+
+        public bool LaTried { get; set; }
+        public string LaData { get; set; }
+        public string LaCode { get; set; }
+
+        public virtual AddressType AddressType { get; set; }
+        // this slows down retreival tragically
+        //   public virtual ICollection<BookItem> BookItems { get; set; }
+        public virtual Authority Authority { get; set; }
+        public virtual ICollection<Note> Notes { get; set; }
+        public virtual ICollection<Tag> Tags { get; set; }
+
+
+        public int Id { get; set; }
+
+        #region Unmapped properties
+
+        [NotMapped]
+        public string PostcodePrimaryPart
+        {
+            get
+            {
+                var prepare = Postcode.Trim();
+
+                var output = String.Empty;
+
+                if (prepare.Length > 2)
+                {
+                    output = prepare
+                        .Substring(0, prepare.Length - 3)
+                        .Trim();
+                }
+
+                return output;
+            }
+        }
+
+
 
         [NotMapped]
         public string QualifiedLocalityDashified
@@ -61,21 +125,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                     LaTried & Tried);
             }
         }
-
-        [NotMapped]
-        public string CountyPath
-        {
-            get { return TownPath.BeforeLast(@"\"); }
-        }
-
-
-        [NotMapped]
-        public string RegionPath
-        {
-            get { return CountyPath.BeforeLast(@"\"); }
-        }
-
-
+         
         [NotMapped]
         public string TownPath { get; set; }
 
@@ -112,6 +162,19 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         }
 
         [NotMapped]
+        public string JumboTitle
+        {
+            get
+            {
+                var items = NameExtended;
+
+                var result = string.Format("{0}", items.JoinWithComma());
+
+                return result;
+            }
+        }
+
+        [NotMapped]
         public List<string> NameExtended
         {
             get
@@ -141,63 +204,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             }
         }
 
-        [NotMapped]
-        public string PostcodePrimaryPart
-        {
-            get
-            {
-                var prepare = Postcode.Trim();
-
-                var output = String.Empty;
-
-                if (prepare.Length > 2)
-                {
-                    output = prepare
-                        .Substring(0, prepare.Length - 3)
-                        .Trim();
-                }
-
-                return output;
-            }
-        }
-
-        public DateTime Created { get; set; }
-        public DateTime Modified { get; set; }
-        public DateTime? Deleted { get; set; }
-        public int? AddressTypeId { get; set; }
-        public int? AuthorityId { get; set; }
-        public int? ParentId { get; set; }
-        public bool? TradingStatus { get; set; }
-        public bool? HauntedStatus { get; set; }
-        public string TradingName { get; set; }
-        public string AlternateName { get; set; }
-        public string SimpleName { get; set; }
-        public string Locality { get; set; }
-        public string PostalTown { get; set; }
-        public string Postcode { get; set; }
-        public string Address { get; set; }
-        public string Phone { get; set; }
-        public string Twitter { get; set; }
-        public string Email { get; set; }
-        public string Facebook { get; set; }
-        public string Website { get; set; }
-        public int? OsX { get; set; }
-        public int? OsY { get; set; }
-        public double? Lat { get; set; }
-        public double? Lon { get; set; }
-        public bool Tried { get; set; }
-        public string GoogleMapData { get; set; }
-
-        public bool LaTried { get; set; }
-        public string LaData { get; set; }
-        public string LaCode { get; set; }
-
-        public virtual AddressType AddressType { get; set; }
-        // this slows down retreival tragically
-        //   public virtual ICollection<BookItem> BookItems { get; set; }
-        public virtual Authority Authority { get; set; }
-        public virtual ICollection<Note> Notes { get; set; }
-        public virtual ICollection<Tag> Tags { get; set; }
 
         [NotMapped]
         public virtual String FilenameRelTownPath
@@ -214,30 +220,15 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             }
         }
 
+        #endregion Unmapped properties
 
-        public int Id { get; set; }
+        #region Methods
 
-        public String BuildPath(params String[] builder)
-        {
-            var output = String.Empty;
-
-            foreach (var b in builder)
-            {
-                if (output == String.Empty)
-                {
-                    output = b.ToLower().Dashify();
-                }
-                else
-                {
-                    output = string.Format("{0}-{1}", output, b.ToLower().Dashify());
-                }
-            }
-
-            return output;
-        }
 
         public PageLinkModel ExtractLink(String currentRoot)
         {
+            if (currentRoot == null) throw new ArgumentNullException("currentRoot");
+
             var info = new PageLinkModel(currentRoot)
             {
                 Id = Id,
@@ -248,6 +239,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
             return info;
         }
+
 
         public PageLinkModel ExtractFullLink()
         {
@@ -272,8 +264,9 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             };
 
             return info;
-
-            return null;
         }
+
+
+        #endregion Methods
     }
 }

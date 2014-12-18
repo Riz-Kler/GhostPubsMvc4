@@ -43,7 +43,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         [NotMapped]
         public string QualifiedNameDashified
         {
-            get { return QualifiedName.Dashify(); }
+            get
+            {
+                return QualifiedName.Dashify();
+            }
         }
 
         [NotMapped]
@@ -138,17 +141,14 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             }
         }
 
-        //      && x.ParentAuthority.IsRegion
-        //        && x.Authoritys.Any(y => y.HasHauntedOrgs)
-        // todo - dpc - perform count
         [NotMapped]
         public bool HasHauntedOrgs
         {
             get
             {
-                var isHaunted = CountHauntedOrgs > 0;
+                var result = CountHauntedOrgs.IsAboveZero();
 
-                return isHaunted;
+                return result;
             }
         }
 

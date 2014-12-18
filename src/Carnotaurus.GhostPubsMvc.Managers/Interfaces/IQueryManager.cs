@@ -18,33 +18,32 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         IEnumerable<Authority> GetRegions();
 
-        //List<PageLinkModel> GetSitemapData(String root);
+        List<PageLinkModel> GetSitemapData(String root);
 
         // weird
 
-        OutputViewModel PrepareAuthorityModel(Authority authority, IEnumerable<string> towns, int count,
+        OutputViewModel PrepareAuthorityModel(Authority authority, IEnumerable<string> localities, int count,
             string currentRoot, List<OutputViewModel> history);
 
-        OutputViewModel PreparePubModel(
-            Org pub, string currentRoot, List<OutputViewModel> history
+        OutputViewModel PrepareOrgModel(
+            Org org, string currentRoot, List<OutputViewModel> history
             );
 
         OutputViewModel PrepareLocalityModel(
-            IEnumerable<KeyValuePair<string, PageLinkModel>> pubTownLinks, string town,
-            Authority currentCounty,
+            IEnumerable<KeyValuePair<string, PageLinkModel>> orgLocalityLinks, string locality,
+            Authority authority,
             string currentRoot, List<OutputViewModel> history);
 
         OutputViewModel PreparePageTypeModel(PageTypeEnum pageType, string priority, string description,
             List<PageLinkModel> links,
             string title, string currentRoot);
 
-        OutputViewModel PrepareRegionModel(Authority currentRegion, int orgsInRegionCount,
-            IEnumerable<Authority> hauntedCountiesInRegion, string currentRoot,
+        OutputViewModel PrepareRegionModel(Authority region, int orgsInRegionCount,
+            IEnumerable<Authority> hauntedAuthoritiesInRegion, string currentRoot,
             List<OutputViewModel> history);
 
         // no db dependencies
-        //String PrepareWebmasterSitemap(List<String> items);
+        String PrepareWebmasterSitemap(List<String> items);
 
-        string BuildPath(Boolean isLevelled, params String[] builder);
     }
 }

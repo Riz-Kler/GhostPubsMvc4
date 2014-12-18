@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
@@ -20,27 +21,35 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         }
 
         public OutputViewModel PrepareLocalityModel(
-            IEnumerable<KeyValuePair<string, PageLinkModel>> pubTownLinks, string town,
-            Authority currentCounty,
+            IEnumerable<KeyValuePair<string, PageLinkModel>> orgLocalityLinks, string locality,
+            Authority authority,
             string currentRoot, List<OutputViewModel> history)
         {
-            var townPath = BuildPath(false, currentRoot, town);
+            if (orgLocalityLinks == null) throw new ArgumentNullException("orgLocalityLinks");
+            if (locality == null) throw new ArgumentNullException("locality");
+            if (authority == null) throw new ArgumentNullException("authority");
+            if (history == null) throw new ArgumentNullException("history");
 
-            var pubLinks = pubTownLinks
-                .Where(x => x.Key.Equals(town))
+            var links = orgLocalityLinks
+                .Where(x => x.Key.Equals(locality))
                 .Select(x => x.Value)
                 .ToList();
 
-            var townModel = OutputViewModel.CreateLocalityOutputViewModel(town, currentCounty,
-                pubLinks, townPath, currentRoot, history);
+            var model = OutputViewModel.CreateLocalityOutputViewModel(locality, authority,
+                links, currentRoot, history);
 
-            return townModel;
+            return model;
         }
 
         public OutputViewModel PreparePageTypeModel(PageTypeEnum pageType, string priority, string description,
             List<PageLinkModel> links,
             string title, string currentRoot)
         {
+            if (priority == null) throw new ArgumentNullException("priority");
+            if (description == null) throw new ArgumentNullException("description");
+            if (links == null) throw new ArgumentNullException("links");
+            if (currentRoot == null) throw new ArgumentNullException("currentRoot");
+
             if (title == null)
             {
                 title = pageType.ToString().CamelCaseToWords();
@@ -52,48 +61,61 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             return model;
         }
 
-        public OutputViewModel PrepareRegionModel(Authority currentRegion,
+        public OutputViewModel PrepareRegionModel(Authority region,
             int orgsInRegionCount,
-            IEnumerable<Authority> hauntedCountiesInRegion, string currentRoot,
+            IEnumerable<Authority> hauntedAuthoritiesInRegion, string currentRoot,
             List<OutputViewModel> history)
         {
-            var countyLinks = hauntedCountiesInRegion.Select(x => new PageLinkModel(currentRoot)
+            if (region == null) throw new ArgumentNullException("region");
+            if (hauntedAuthoritiesInRegion == null) throw new ArgumentNullException("hauntedAuthoritiesInRegion");
+            if (currentRoot == null) throw new ArgumentNullException("currentRoot");
+            if (history == null) throw new ArgumentNullException("history");
+
+            var authorityLinks = hauntedAuthoritiesInRegion.Select(authority => new PageLinkModel(currentRoot)
             {
-                Text = x.Name,
-                Title = x.Name,
-                Filename =
-                    string.Format("{0}\\{1}\\{2}", currentRoot, x.RegionalLineage.ReverseItems().JoinWithBackslash(),
-                        x.Name).Dashify()
+                Text = authority.Name,
+                Title = authority.Name,
+                Filename = authority.QualifiedNameDashified
             }).ToList();
 
-            var regionModel = OutputViewModel.CreateRegionOutputViewModel(currentRegion,
-                orgsInRegionCount, countyLinks, currentRoot, history);
+            var model = OutputViewModel.CreateRegionOutputViewModel(region,
+                orgsInRegionCount, authorityLinks, currentRoot, history);
 
-            return regionModel;
+            return model;
         }
 
-        public OutputViewModel PrepareAuthorityModel(Authority authority, IEnumerable<string> locations, int count,
+        public OutputViewModel PrepareAuthorityModel(Authority authority, IEnumerable<string> localities, int count,
             string currentRoot, List<OutputViewModel> history)
         {
-            var links = locations.Select(s => new PageLinkModel(currentRoot)
+            if (authority == null) throw new ArgumentNullException("authority");
+            if (localities == null) throw new ArgumentNullException("localities");
+            if (currentRoot == null) throw new ArgumentNullException("currentRoot");
+            if (history == null) throw new ArgumentNullException("history");
+
+            var links = localities.Select(locality => new PageLinkModel(currentRoot)
             {
-                Text = s,
-                Title = s
+                Text = locality,
+                Title = locality,
+                Filename = locality.InDashifed(authority.QualifiedName)
             }).ToList();
 
+            // dpc - cheshire-west-and-chester-ua.html should contain links to localities, such as: duddon-in-cheshire-west-and-chester-ua.html
             var model = OutputViewModel.CreateAuthorityOutputViewModel(authority, count,
                 links, currentRoot, history);
 
             return model;
         }
 
-        public OutputViewModel PreparePubModel(
-            Org pub, string currentRoot, List<OutputViewModel> history
+        public OutputViewModel PrepareOrgModel(
+            Org org, string currentRoot, List<OutputViewModel> history
             )
         {
-            var pubModel = OutputViewModel.CreatePubOutputViewModel(pub, currentRoot, history);
+            if (org == null) throw new ArgumentNullException("org");
+            if (history == null) throw new ArgumentNullException("history");
 
-            return pubModel;
+            var model = OutputViewModel.CreateOrgOutputViewModel(org, currentRoot, history);
+
+            return model;
         }
 
         public IEnumerable<Org> GetOrgsToUpdate()
@@ -148,76 +170,62 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         }
 
 
-        //public List<PageLinkModel> GetSitemapData(string currentRoot)
-        //{
-        //    var data = _reader.Items<Org>();
-
-        //    var queryable = data
-        //        .Where(org => org.HauntedStatus == true)
-        //        .ToList()
-        //        .GroupBy(org => org.FilenameRelTownPath)
-        //        .Select(x => new KeyValuePair<String, Int32>(x.Key, x.Count()))
-        //        .ToList();
-
-        //    var ranked = queryable.RankByDescending(i => i.Value,
-        //        (i, r) => new { Rank = r, Item = i })
-        //        .ToList();
-
-        //    var index = 1;
-
-        //    var results = ranked.Select(pair =>
-        //        CreatePageLinkModel(currentRoot, pair.Item, ref index, pair.Rank)
-        //        )
-        //        .ToList();
-
-        //    // Key and Group
-        //    return results;
-        //}
-
-
-        //public string PrepareWebmasterSitemap(List<string> sitepmap)
-        //{
-        //    // generate the Google webmaster tools xml url sitemap
-        //    var sb = new StringBuilder();
-
-        //    sb.AppendLine(@"<?xml version=""1.0"" encoding=""UTF-8""?>");
-
-        //    sb.AppendLine(
-        //        @"<urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xsi:schemaLocation=""http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"">");
-
-        //    if (sitepmap != null)
-        //    {
-        //        foreach (var item in sitepmap)
-        //        {
-        //            sb.AppendLine(item);
-        //        }
-        //    }
-
-        //    sb.AppendLine("</urlset>");
-
-        //    return sb.ToString();
-        //}
-
-
-        public String BuildPath(Boolean isLevelled, params String[] builder)
+        public List<PageLinkModel> GetSitemapData(string currentRoot)
         {
-            var output = String.Empty;
+            if (currentRoot == null) throw new ArgumentNullException("currentRoot");
 
-            var pattern = isLevelled ? "{0}\\{1}" : "{0}-{1}";
+            var data = _reader.Items<Org>();
 
-            foreach (var s in builder)
+            var queryable = data
+                .Where(org => org.HauntedStatus == true)
+                .ToList()
+                .GroupBy(org => org.FilenameRelTownPath)
+                .Select(x => new KeyValuePair<String, Int32>(x.Key, x.Count()))
+                .ToList();
+
+            var ranked = queryable.RankByDescending(i => i.Value,
+                (i, r) => new { Rank = r, Item = i })
+                .ToList();
+
+            var index = 1;
+
+            var results = ranked.Select(pair =>
+                CreatePageLinkModel(currentRoot, pair.Item, ref index, pair.Rank)
+                )
+                .ToList();
+
+            // Key and Group
+            return results;
+        }
+
+        public string PrepareWebmasterSitemap(List<string> items)
+        {
+            // generate the Google webmaster tools xml url sitemap
+            var sb = new StringBuilder();
+
+            sb.AppendLine(@"<?xml version=""1.0"" encoding=""UTF-8""?>");
+
+            sb.AppendLine(
+                @"<urlset xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xsi:schemaLocation=""http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"">");
+
+            if (items != null)
             {
-                output = output == String.Empty
-                    ? s.ToLower().Dashify()
-                    : string.Format(pattern, output, s.ToLower().Dashify());
+                foreach (var item in items)
+                {
+                    sb.AppendLine(item);
+                }
             }
 
-            return output;
+            sb.AppendLine("</urlset>");
+
+            return sb.ToString();
         }
 
         private PageLinkModel CreatePageLinkModel(string currentRoot, KeyValuePair<string, int> pathKeyValuePair,
             ref int index, int rank)
         {
+            if (currentRoot == null) throw new ArgumentNullException("currentRoot");
+
             if (pathKeyValuePair.Key.IsNullOrEmpty())
             {
                 throw new Exception(
@@ -232,7 +240,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .Where(org => org.HauntedStatus.HasValue
                               && org.HauntedStatus.Value
                               && org.Authority.ParentAuthority.Name == lineage.Region
-                              && org.Authority.Name == lineage.County
+                              && org.Authority.Name == lineage.Division
                               && org.Locality == lineage.Locality)
                 .ToList()
                 .Select(x => x.ExtractFullLink())

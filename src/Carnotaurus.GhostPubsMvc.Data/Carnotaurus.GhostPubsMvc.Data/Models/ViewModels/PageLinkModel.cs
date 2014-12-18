@@ -23,12 +23,18 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         {
             get
             {
-                var url = String.Format("http://www.ghostpubs.com/haunted-pubs/{0}.html",
-                    Filename.Replace(_currentRoot.ToLower(), String.Empty).Replace("\\", "/"));
+                if (Filename.IsNullOrEmpty()) return String.Empty;
+
+                var pattern = _currentRoot.Contains(@"\uk\")
+                    ? "http://www.ghostpubs.com/haunted-pubs/uk/{0}.html"
+                    : "http://www.ghostpubs.com/haunted-pubs/{0}.html";
+
+                var url = String.Format(pattern, Filename.Replace("\\", "/"));
 
                 return url.Dashify().ToLower();
             }
         }
+
 
         public String Filename { get; set; }
 
