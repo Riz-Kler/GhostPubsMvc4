@@ -94,38 +94,38 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void GenerateContent()
         {
-            var filter = new RegionFilterModel
-            {
-                // UA
-                //Name = "North West",
-                //Division = "Cheshire West and Chester"
+            //var filter = new RegionFilterModel
+            //{
+            //    // UA
+            //    //Name = "North West",
+            //    //Division = "Cheshire West and Chester"
 
-                // London borough
-                Name = "London",
-                Division = "Bromley"
+            //    // London borough
+            //    //Name = "London",
+            //    //Division = "Bromley"
 
-                // W District
-                //Name = "Wales",
-                //Division = "The Vale of Glamorgan"
+            //    // W District
+            //    //Name = "Wales",
+            //    //Division = "The Vale of Glamorgan"
 
-                // Sc District
-                //Name = "Scotland",
-                //Division = "Glasgow City"
+            //    // Sc District
+            //    //Name = "Scotland",
+            //    //Division = "Glasgow City"
 
-                //// NI District
-                //Name = "Northern Ireland",
-                //Division = "Strabane"
+            //    //// NI District
+            //    //Name = "Northern Ireland",
+            //    //Division = "Strabane"
 
-                // Met County
-                //Name = "North East",
-                //Division = "Tyne and Wear"
+            //    // Met County
+            //    //Name = "North East",
+            //    //Division = "Tyne and Wear"
 
-                //// County
-                //Name = "North West",
-                //Division = "Cumbria"
-            };
+            //    //// County
+            //    //Name = "North West",
+            //    //Division = "Cumbria"
+            //};
 
-            GenerateGeographicHtmlPages(filter);
+            GenerateGeographicHtmlPages();
         }
 
         private void GenerateSimpleHtmlPages()
@@ -319,13 +319,18 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             return inRegion;
         }
 
+        private void GenerateGeographicHtmlPages()
+        {
+            GenerateGeographicHtmlPages(null);
+        }
+
         private void GenerateGeographicHtmlPages(RegionFilterModel filterModel)
         {
             var regions = CreateTopLevelRegionsFile(_currentRoot);
 
             foreach (var currentRegion in regions)
             {
-                if (filterModel.Name.IsNullOrEmpty() || currentRegion.Name == filterModel.Name)
+                if (filterModel == null || ((filterModel.Name.IsNullOrEmpty() || currentRegion.Name == filterModel.Name)))
                 {
                     CreateAllFilesForRegion(currentRegion, filterModel);
                 }
@@ -345,7 +350,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             foreach (var authority in inRegion)
             {
-                if (filterModel.Division.IsNullOrEmpty() || authority.Name == filterModel.Division)
+                if (filterModel == null || filterModel.Division.IsNullOrEmpty() || authority.Name == filterModel.Division)
                 {
                     CreateAuthorityFilesTop(authority);
                 }
