@@ -45,7 +45,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public static OutputViewModel CreateRegionOutputViewModel(Authority region,
             int orgsInRegionCount, IList<PageLinkModel> authorityLinks, String currentRoot,
-            IEnumerable<OutputViewModel> history)
+             OutputViewModel  history)
         {
             if (region == null) throw new ArgumentNullException("region");
             if (authorityLinks == null) throw new ArgumentNullException("authorityLinks");
@@ -71,7 +71,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 ArticleDescription = string.Format("Haunted pubs in {0}", authorityLinks.Select(x => x.Text).OxbridgeAnd()),
                 Total = orgsInRegionCount,
                 Priority = PageTypePriority.Region,
-                Previous = history.LastOrDefault(x => x.Action == PageTypeEnum.Region),
+                Previous = history ,
                 Lineage = new Breadcrumb
                 {
                     Region = new PageLinkModel(currentRoot)
@@ -90,7 +90,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public static OutputViewModel CreateAuthorityOutputViewModel(Authority authority, int count,
             IList<PageLinkModel> locations,
             String currentRoot,
-            IEnumerable<OutputViewModel> history)
+             OutputViewModel history)
         {
             if (authority == null) throw new ArgumentNullException("authority");
             if (locations == null) throw new ArgumentNullException("locations");
@@ -113,7 +113,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     locations.Select(x => x.Text).OxbridgeAnd()),
                 Total = count,
                 Priority = PageTypePriority.Authority,
-                Previous = history.LastOrDefault(x => x.Action == PageTypeEnum.Authority),
+                Previous = history,
                 Lineage = new Breadcrumb
                 {
                     Region = new PageLinkModel(currentRoot)
@@ -139,7 +139,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public static OutputViewModel CreateLocalityOutputViewModel(string locality,
             Authority authority,
             IList<PageLinkModel> orgLinks,
-            string currentRoot, IEnumerable<OutputViewModel> history)
+            string currentRoot,  OutputViewModel  history)
         {
             if (locality == null) throw new ArgumentNullException("locality");
             if (authority == null) throw new ArgumentNullException("authority");
@@ -170,7 +170,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                      string.Format("{0}, {1}, {2}", locality, authority.Name, authority.ParentAuthority.Name),
                  Total = orgLinks.Count(),
                  Priority = PageTypePriority.Locality,
-                 Previous = history.LastOrDefault(x => x.Action == PageTypeEnum.Locality),
+                 Previous = history ,
                  Lineage = new Breadcrumb
                  {
                      Region = new PageLinkModel(currentRoot)
@@ -202,7 +202,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public static OutputViewModel CreateOrgOutputViewModel(Org org,
             String currentRoot,
-            IEnumerable<OutputViewModel> history)
+             OutputViewModel history)
         {
             if (org == null) throw new ArgumentNullException("org");
             if (currentRoot == null) throw new ArgumentNullException("currentRoot");
@@ -228,7 +228,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 ArticleDescription = string.Format("{0}, {1}", org.Address, org.PostcodePrimaryPart),
                 Tags = org.Sections,
                 Priority = PageTypePriority.Pub,
-                Previous = history.LastOrDefault(x => x.Action == action),
+                Previous = history ,
                 Lat = org.Lat.ToString(),
                 Lon = org.Lon.ToString(),
                 OtherNames = org.Authority.Orgs

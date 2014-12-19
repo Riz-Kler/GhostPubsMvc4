@@ -7,7 +7,7 @@ using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 {
     public interface IQueryManager
-    {
+    { 
         // Todo - each of these methods should return a QueryResult class
 
         IEnumerable<Org> GetOrgsToUpdate();
@@ -23,24 +23,23 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
         // weird
 
         OutputViewModel PrepareAuthorityModel(Authority authority, IEnumerable<string> localities, int count,
-            string currentRoot, List<OutputViewModel> history);
+            string currentRoot);
 
         OutputViewModel PrepareOrgModel(
-            Org org, string currentRoot, List<OutputViewModel> history
+            Org org, string currentRoot
             );
 
         OutputViewModel PrepareLocalityModel(
             IEnumerable<KeyValuePair<string, PageLinkModel>> orgLocalityLinks, string locality,
             Authority authority,
-            string currentRoot, List<OutputViewModel> history);
+            string currentRoot);
 
         OutputViewModel PreparePageTypeModel(PageTypeEnum pageType, string priority, string description,
             List<PageLinkModel> links,
             string title, string currentRoot);
 
         OutputViewModel PrepareRegionModel(Authority region, int orgsInRegionCount,
-            IEnumerable<Authority> hauntedAuthoritiesInRegion, string currentRoot,
-            List<OutputViewModel> history);
+            IEnumerable<Authority> hauntedAuthoritiesInRegion, string currentRoot);
 
         // no db dependencies
         String PrepareWebmasterSitemap(List<String> items);

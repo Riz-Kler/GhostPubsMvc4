@@ -70,7 +70,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Bespoke {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 600.
+        ///   Looks up a localized string similar to 100.
         /// </summary>
         public static string MaxSize {
             get {

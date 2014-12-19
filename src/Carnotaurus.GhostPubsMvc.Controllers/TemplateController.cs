@@ -19,8 +19,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
     {
         private readonly ICommandManager _commandManager;
 
-        private readonly List<OutputViewModel> _history;
-        private readonly List<String> _historySitemap;
+        // todo - come back sitemap history
+        // private readonly List<String> _historySitemap;
         private readonly IQueryManager _queryManager;
         private readonly IThirdPartyApiManager _thirdPartyApiManager;
 
@@ -37,9 +37,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             _thirdPartyApiManager = thirdPartyApiManager;
 
-            _history = new List<OutputViewModel>();
-
-            _historySitemap = new List<String>();
+           // _historySitemap = new List<String>();
         }
 
         public ActionResult Generate()
@@ -71,19 +69,24 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             GenerateContent();
 
-            GenerateLeaderboard();
 
-            GenerateWebmasterSitemap();
+            // todo - come back sitemap history
+            // GenerateLeaderboard();
+
+
+            // todo - come back sitemap history
+            // GenerateWebmasterSitemap();
         }
 
-        private void GenerateWebmasterSitemap()
-        {
-            var webmasterSitemap = _queryManager.PrepareWebmasterSitemap(_historySitemap);
+        // todo - come back sitemap history
+        //private void GenerateWebmasterSitemap()
+        //{
+        //    var webmasterSitemap = _queryManager.PrepareWebmasterSitemap(_historySitemap);
 
-            var fullFilePath = String.Format("{0}/ghostpubs-sitemap.xml", _currentRoot);
+        //    var fullFilePath = String.Format("{0}/ghostpubs-sitemap.xml", _currentRoot);
 
-            FileSystemHelper.WriteFile(fullFilePath, webmasterSitemap);
-        }
+        //    FileSystemHelper.WriteFile(fullFilePath, webmasterSitemap);
+        //}
 
         private void GenerateDeadContent()
         {
@@ -94,38 +97,42 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void GenerateContent()
         {
-            //var filter = new RegionFilterModel
-            //{
-            //    // UA
-            //    //Name = "North West",
-            //    //Division = "Cheshire West and Chester"
+            var filter = new RegionFilterModel
+            {
+                // UA
+                //Name = "North West",
+                //Division = "Cheshire West and Chester"
 
-            //    // London borough
-            //    //Name = "London",
-            //    //Division = "Bromley"
+                // London borough
+                //Name = "London",
+                //Division = "Bromley"
 
-            //    // W District
-            //    //Name = "Wales",
-            //    //Division = "The Vale of Glamorgan"
+                // W District
+                //Name = "Wales",
+                //Division = "The Vale of Glamorgan"
 
-            //    // Sc District
-            //    //Name = "Scotland",
-            //    //Division = "Glasgow City"
+                // Sc District
+                //Name = "Scotland",
+                //Division = "Glasgow City"
 
-            //    //// NI District
-            //    //Name = "Northern Ireland",
-            //    //Division = "Strabane"
+                //// NI District
+                //Name = "Northern Ireland",
+                //Division = "Strabane"
 
-            //    // Met County
-            //    //Name = "North East",
-            //    //Division = "Tyne and Wear"
+                // Met County
+                //Name = "North East",
+                //Division = "Tyne and Wear"
 
-            //    //// County
-            //    //Name = "North West",
-            //    //Division = "Cumbria"
-            //};
+                Name = "South West",
+                Division = "Devon",
+                
 
-            GenerateGeographicHtmlPages();
+                //// County
+                //Name = "North West",
+                //Division = "Cumbria"
+            };
+
+            GenerateGeographicHtmlPages(filter);
         }
 
         private void GenerateSimpleHtmlPages()
@@ -312,7 +319,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             var inRegion = _queryManager.GetHauntedFirstDescendantAuthoritiesInRegion(region.Id).ToList();
 
             var regionModel = _queryManager.PrepareRegionModel(region, orgsInRegionCount,
-                inRegion, _currentRoot, _history);
+                inRegion, _currentRoot );
 
             WriteFile(regionModel);
 
@@ -455,7 +462,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             if (locations == null) throw new ArgumentNullException("locations");
 
             var model = _queryManager.PrepareAuthorityModel(authority,
-                locations, count, _currentRoot, _history);
+                locations, count, _currentRoot );
 
             WriteFile(model);
         }
@@ -465,7 +472,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         {
             if (org == null) throw new ArgumentNullException("org");
 
-            var model = _queryManager.PrepareOrgModel(org, _currentRoot, _history);
+            var model = _queryManager.PrepareOrgModel(org, _currentRoot );
 
             WriteFile(model);
         }
@@ -499,7 +506,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             var model = _queryManager.PrepareLocalityModel(orgLocalityLinks, locality,
                 authority,
-                _currentRoot, _history);
+                _currentRoot );
 
             WriteFile(model);
         }
@@ -530,20 +537,10 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 model.CurrentRoot = pathOverride;
             }
 
-            if (_historySitemap != null) _historySitemap.Add(model.SitemapItem);
 
-            if (_history != null)
-            {
-                _history.Add(model);
-
-                var max = Resources.MaxSize.ToInt32();
-
-                if (_history.Count > max)
-                {
-                    _history.RemoveAt(0);
-                }
-            }
-
+            // todo - come back sitemap history
+            // if (_historySitemap != null) _historySitemap.Add(model.SitemapItem);
+             
             WritePage(model, pathOverride);
         }
 

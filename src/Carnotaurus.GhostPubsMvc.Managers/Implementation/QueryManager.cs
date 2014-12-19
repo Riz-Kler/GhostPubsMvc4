@@ -14,7 +14,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
     public class QueryManager : IQueryManager
     {
         private readonly IReadStore _reader;
-
+         
         public QueryManager(IReadStore reader)
         {
             _reader = reader;
@@ -23,20 +23,22 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         public OutputViewModel PrepareLocalityModel(
             IEnumerable<KeyValuePair<string, PageLinkModel>> orgLocalityLinks, string locality,
             Authority authority,
-            string currentRoot, List<OutputViewModel> history)
+            string currentRoot)
         {
             if (orgLocalityLinks == null) throw new ArgumentNullException("orgLocalityLinks");
             if (locality == null) throw new ArgumentNullException("locality");
             if (authority == null) throw new ArgumentNullException("authority");
-            if (history == null) throw new ArgumentNullException("history");
 
             var links = orgLocalityLinks
                 .Where(x => x.Key.Equals(locality))
                 .Select(x => x.Value)
                 .ToList();
 
+            // todo - dpc - come back - history
+            var History = new OutputViewModel(currentRoot);
+
             var model = OutputViewModel.CreateLocalityOutputViewModel(locality, authority,
-                links, currentRoot, history);
+                links, currentRoot, History);
 
             return model;
         }
@@ -63,13 +65,11 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
         public OutputViewModel PrepareRegionModel(Authority region,
             int orgsInRegionCount,
-            IEnumerable<Authority> hauntedAuthoritiesInRegion, string currentRoot,
-            List<OutputViewModel> history)
+            IEnumerable<Authority> hauntedAuthoritiesInRegion, string currentRoot)
         {
             if (region == null) throw new ArgumentNullException("region");
             if (hauntedAuthoritiesInRegion == null) throw new ArgumentNullException("hauntedAuthoritiesInRegion");
             if (currentRoot == null) throw new ArgumentNullException("currentRoot");
-            if (history == null) throw new ArgumentNullException("history");
 
             var authorityLinks = hauntedAuthoritiesInRegion.Select(authority => new PageLinkModel(currentRoot)
             {
@@ -78,19 +78,22 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 Filename = authority.QualifiedNameDashified
             }).ToList();
 
+
+            // todo - dpc - come back - history
+            var History = new OutputViewModel(currentRoot);
+
             var model = OutputViewModel.CreateRegionOutputViewModel(region,
-                orgsInRegionCount, authorityLinks, currentRoot, history);
+                orgsInRegionCount, authorityLinks, currentRoot, History);
 
             return model;
         }
 
         public OutputViewModel PrepareAuthorityModel(Authority authority, IEnumerable<string> localities, int count,
-            string currentRoot, List<OutputViewModel> history)
+            string currentRoot)
         {
             if (authority == null) throw new ArgumentNullException("authority");
             if (localities == null) throw new ArgumentNullException("localities");
             if (currentRoot == null) throw new ArgumentNullException("currentRoot");
-            if (history == null) throw new ArgumentNullException("history");
 
             var links = localities.Select(locality => new PageLinkModel(currentRoot)
             {
@@ -99,21 +102,27 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 Filename = locality.InDashifed(authority.QualifiedName)
             }).ToList();
 
+
+            // todo - dpc - come back - history
+            var History = new OutputViewModel(currentRoot);
+
             // dpc - cheshire-west-and-chester-ua.html should contain links to localities, such as: duddon-in-cheshire-west-and-chester-ua.html
             var model = OutputViewModel.CreateAuthorityOutputViewModel(authority, count,
-                links, currentRoot, history);
+                links, currentRoot, History);
 
             return model;
         }
 
         public OutputViewModel PrepareOrgModel(
-            Org org, string currentRoot, List<OutputViewModel> history
-            )
+            Org org, string currentRoot)
         {
             if (org == null) throw new ArgumentNullException("org");
-            if (history == null) throw new ArgumentNullException("history");
 
-            var model = OutputViewModel.CreateOrgOutputViewModel(org, currentRoot, history);
+
+            // todo - dpc - come back - history
+            var History = new OutputViewModel(currentRoot);
+
+            var model = OutputViewModel.CreateOrgOutputViewModel(org, currentRoot, History);
 
             return model;
         }

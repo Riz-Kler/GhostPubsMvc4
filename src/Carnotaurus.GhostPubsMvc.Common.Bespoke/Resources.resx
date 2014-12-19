@@ -121,6 +121,6 @@
     <value>CMS_Profile</value>
   </data>
   <data name="MaxSize" xml:space="preserve">
-    <value>600</value>
+    <value>100</value>
   </data>
 </root>
