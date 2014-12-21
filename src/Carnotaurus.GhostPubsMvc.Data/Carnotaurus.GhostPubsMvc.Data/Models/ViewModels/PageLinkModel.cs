@@ -34,8 +34,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 return url.Dashify().ToLower();
             }
         }
-
-
+         
         public String Filename { get; set; }
 
         public String Title { get; set; }
@@ -43,11 +42,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public String Text { get; set; }
 
         public Int32 Id { get; set; }
-
-        public string ControlId
-        {
-            get { return string.Concat("collapse", Id.ToString(CultureInfo.InvariantCulture)); }
-        }
 
         public List<PageLinkModel> Links { get; set; }
     }

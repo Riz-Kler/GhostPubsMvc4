@@ -35,10 +35,10 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .ToList();
 
             // todo - dpc - come back - history
-            var History = new OutputViewModel(currentRoot);
+            var next = new OutputViewModel(currentRoot);
 
             var model = OutputViewModel.CreateLocalityOutputViewModel(locality, authority,
-                links, currentRoot, History);
+                links, currentRoot, next);
 
             return model;
         }
@@ -77,13 +77,12 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 Title = authority.Name,
                 Filename = authority.QualifiedNameDashified
             }).ToList();
-
-
+             
             // todo - dpc - come back - history
-            var History = new OutputViewModel(currentRoot);
+            var next = new OutputViewModel(currentRoot);
 
             var model = OutputViewModel.CreateRegionOutputViewModel(region,
-                orgsInRegionCount, authorityLinks, currentRoot, History);
+                orgsInRegionCount, authorityLinks, currentRoot, next);
 
             return model;
         }
@@ -104,11 +103,11 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
 
             // todo - dpc - come back - history
-            var History = new OutputViewModel(currentRoot);
+            var next = new OutputViewModel(currentRoot);
 
             // dpc - cheshire-west-and-chester-ua.html should contain links to localities, such as: duddon-in-cheshire-west-and-chester-ua.html
             var model = OutputViewModel.CreateAuthorityOutputViewModel(authority, count,
-                links, currentRoot, History);
+                links, currentRoot, next);
 
             return model;
         }
@@ -120,9 +119,9 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
 
             // todo - dpc - come back - history
-            var History = new OutputViewModel(currentRoot);
+            var next = new OutputViewModel(currentRoot);
 
-            var model = OutputViewModel.CreateOrgOutputViewModel(org, currentRoot, History);
+            var model = OutputViewModel.CreateOrgOutputViewModel(org, currentRoot, next);
 
             return model;
         }

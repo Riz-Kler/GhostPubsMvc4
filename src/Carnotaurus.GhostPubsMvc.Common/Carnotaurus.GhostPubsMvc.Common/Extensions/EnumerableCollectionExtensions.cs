@@ -70,7 +70,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             return enumerable.Join(", ");
         }
 
-        public static string OxbridgeAnd(this IEnumerable<string> enumerable)
+        public static string OxfordAnd(this IEnumerable<string> enumerable)
         {
             var output = String.Empty;
 

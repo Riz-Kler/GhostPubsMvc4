@@ -13,10 +13,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
     {
         #region Statics
 
-        public static OutputViewModel CreateAllUkRegionsOutputViewModel(string currentRoot, List<Authority> regions)
+        public static OutputViewModel CreateAllUkRegionsOutputViewModel(string currentRoot, List<PageLinkModel> pageLinks, string metaDescription, string articleDescription)
         {
             if (currentRoot == null) throw new ArgumentNullException("currentRoot");
-            if (regions == null) throw new ArgumentNullException("regions");
+            if (pageLinks == null) throw new ArgumentNullException("pageLinks");
+            if (metaDescription == null) throw new ArgumentNullException("metaDescription");
+            if (articleDescription == null) throw new ArgumentNullException("articleDescription");
 
             var viewModel = new OutputViewModel(currentRoot)
             {
@@ -24,19 +26,9 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 PageTitle = "Haunted pubs in UK by region",
                 JumboTitle = "Haunted pubs in UK by region",
                 Action = PageTypeEnum.Country,
-                PageLinks = regions.Select(x => x.Name != null
-                    ? new PageLinkModel(currentRoot)
-                    {
-                        Text = x.Name,
-                        Title = x.Name,
-                        Filename = x.QualifiedName.Dashify()
-                    }
-                    : null).OrderBy(x => x.Text).ToList(),
-                MetaDescription = string.Format("Haunted pubs in {0}",
-                    regions.Select(region => region.Name).OxbridgeAnd())
-                    .SeoMetaDescriptionTruncate(),
-                ArticleDescription = string.Format("Haunted pubs in {0}",
-                    regions.Select(region => region.Name).OxbridgeAnd()),
+                PageLinks = pageLinks,
+                MetaDescription = metaDescription,
+                ArticleDescription = articleDescription,
                 Priority = PageTypePriority.Country,
             };
 
@@ -45,12 +37,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public static OutputViewModel CreateRegionOutputViewModel(Authority region,
             int orgsInRegionCount, IList<PageLinkModel> authorityLinks, String currentRoot,
-             OutputViewModel  history)
+             OutputViewModel  next)
         {
             if (region == null) throw new ArgumentNullException("region");
             if (authorityLinks == null) throw new ArgumentNullException("authorityLinks");
             if (currentRoot == null) throw new ArgumentNullException("currentRoot");
-            if (history == null) throw new ArgumentNullException("history");
+            if (next == null) throw new ArgumentNullException("next");
 
             var regionModel = new OutputViewModel(currentRoot)
             {
@@ -66,12 +58,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                         Filename = x.Filename
                     }
                     : null).OrderBy(x => x.Text).ToList(),
-                MetaDescription = string.Format("Haunted pubs in {0}", authorityLinks.Select(x => x.Text).OxbridgeAnd())
+                MetaDescription = string.Format("Haunted pubs in {0}", authorityLinks.Select(x => x.Text).OxfordAnd())
                     .SeoMetaDescriptionTruncate(),
-                ArticleDescription = string.Format("Haunted pubs in {0}", authorityLinks.Select(x => x.Text).OxbridgeAnd()),
+                ArticleDescription = string.Format("Haunted pubs in {0}", authorityLinks.Select(x => x.Text).OxfordAnd()),
                 Total = orgsInRegionCount,
                 Priority = PageTypePriority.Region,
-                Previous = history ,
+                Next = next ,
                 Lineage = new Breadcrumb
                 {
                     Region = new PageLinkModel(currentRoot)
@@ -106,14 +98,14 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 PageLinks = locations.OrderBy(x => x.Text).ToList(),
                 MetaDescription = string.Format(
                     "Haunted pubs in {0}",
-                    locations.Select(x => x.Text).OxbridgeAnd())
+                    locations.Select(x => x.Text).OxfordAnd())
                     .SeoMetaDescriptionTruncate(),
                 ArticleDescription = string.Format(
                     "Haunted pubs in {0}",
-                    locations.Select(x => x.Text).OxbridgeAnd()),
+                    locations.Select(x => x.Text).OxfordAnd()),
                 Total = count,
                 Priority = PageTypePriority.Authority,
-                Previous = history,
+                Next = history,
                 Lineage = new Breadcrumb
                 {
                     Region = new PageLinkModel(currentRoot)
@@ -170,7 +162,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                      string.Format("{0}, {1}, {2}", locality, authority.Name, authority.ParentAuthority.Name),
                  Total = orgLinks.Count(),
                  Priority = PageTypePriority.Locality,
-                 Previous = history ,
+                 Next = history ,
                  Lineage = new Breadcrumb
                  {
                      Region = new PageLinkModel(currentRoot)
@@ -228,7 +220,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 ArticleDescription = string.Format("{0}, {1}", org.Address, org.PostcodePrimaryPart),
                 Tags = org.Sections,
                 Priority = PageTypePriority.Pub,
-                Previous = history ,
+                Next = history ,
                 Lat = org.Lat.ToString(),
                 Lon = org.Lon.ToString(),
                 OtherNames = org.Authority.Orgs
@@ -367,7 +359,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public String Priority { get; set; }
 
-        public OutputViewModel Previous { get; set; }
+        public OutputViewModel Next { get; set; }
 
         public String SitemapItem
         {

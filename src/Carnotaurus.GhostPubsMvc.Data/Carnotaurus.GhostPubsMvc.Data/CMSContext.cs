@@ -23,8 +23,8 @@ namespace Carnotaurus.GhostPubsMvc.Data
 
         public DbSet<AddressType> AddressTypes { get; set; }
         public DbSet<FeatureType> FeatureTypes { get; set; }
-        public DbSet<Book> Books { get; set; }
-        public DbSet<BookItem> BookItems { get; set; }
+        //  public DbSet<Book> Books { get; set; }
+        // public DbSet<BookItem> BookItems { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<ContentPage> ContentPages { get; set; }
         public DbSet<Authority> Authorities { get; set; }
