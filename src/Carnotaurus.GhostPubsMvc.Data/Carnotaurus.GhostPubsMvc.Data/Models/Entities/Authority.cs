@@ -37,7 +37,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         [NotMapped]
         public string QualifiedName
         {
-            get { return string.Format("{0} {1}", Name, Type.Replace("Met ", String.Empty)); }
+            get { return String.Format("{0} {1}", Name, Type.Replace("Met ", String.Empty)); }
         }
 
         [NotMapped]
@@ -84,7 +84,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
         // todo - come back - this won't work for Scotland and NI
         [NotMapped]
-        public List<String> RegionalLineage
+        public List<string> RegionalLineage
         {
             get
             {
@@ -100,7 +100,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         }
 
         [NotMapped]
-        public List<String> Levels
+        public List<string> Levels
         {
             get
             {
@@ -111,13 +111,13 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         }
 
         [NotMapped]
-        public List<String> LevelsAscending
+        public List<string> LevelsAscending
         {
             get
             {
                 var lastAncestor = this;
 
-                var list = new List<String>();
+                var list = new List<string>();
 
                 while (lastAncestor != null && lastAncestor.ParentId != 0)
                 {
@@ -185,6 +185,15 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             }
         }
 
+        [NotMapped]
+        public bool IsMainlandUnitedKingdomRegion
+        {
+            get
+            {
+                return IsRegion && Authoritys.Any();
+            }
+        }
+
         public int Id { get; set; }
 
         public Authority GetNext()
@@ -211,6 +220,5 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
             return next;
         }
-
     }
 }

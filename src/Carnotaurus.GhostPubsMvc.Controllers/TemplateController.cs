@@ -325,7 +325,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             WriteFile(viewModel);
         }
 
-        private IEnumerable<Authority> CreateRegionHeaderFile(Authority region,
+        private List<Authority> CreateRegionHeaderFile(Authority region,
             Int32 orgsInRegionCount)
         {
             // region file needs knowledge of its counties
@@ -365,20 +365,37 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void CreateAllFilesForRegion(Authority region, RegionFilterModel filterModel)
         {
-            var firstDescendantAuthoritiesInRegion =
-                _queryManager.GetHauntedFirstDescendantAuthoritiesInRegion(region.Id);
+            int orgsInRegionCount;
 
-            var orgsInRegionCount = firstDescendantAuthoritiesInRegion.Sum(x => x.CountHauntedOrgs);
+            if (!region.IsMainlandUnitedKingdomRegion)
+            {
+                orgsInRegionCount = region.CountHauntedOrgs;
+            }
+            else
+            {
+                var firstDescendantAuthoritiesInRegion =
+                    _queryManager.GetHauntedFirstDescendantAuthoritiesInRegion(region.Id);
+
+                orgsInRegionCount = firstDescendantAuthoritiesInRegion.Sum(x => x.CountHauntedOrgs);
+            }
 
             if (orgsInRegionCount == 0) return;
 
             var inRegion = CreateRegionHeaderFile(region, orgsInRegionCount);
 
-            foreach (var authority in inRegion)
+            if (!inRegion.Any())
             {
-                if (filterModel == null || filterModel.Division.IsNullOrEmpty() || authority.Name == filterModel.Division)
+                CreateAuthorityFilesTop(region);
+            }
+            else
+            {
+                foreach (var authority in inRegion)
                 {
-                    CreateAuthorityFilesTop(authority);
+                    if (filterModel == null || filterModel.Division.IsNullOrEmpty() ||
+                        authority.Name == filterModel.Division)
+                    {
+                        CreateAuthorityFilesTop(authority);
+                    }
                 }
             }
         }
@@ -415,7 +432,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                         && org.AddressTypeId == 1)
                         .OrderByDescending(org => org.Locality)
                         .ThenByDescending(org => org.TradingName);
-                       // .ToList();
+                // .ToList();
 
                 var localities = orgs
                     .Select(p => p.Locality)
@@ -479,7 +496,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         {
             if (authority == null) throw new ArgumentNullException("authority");
             if (locations == null) throw new ArgumentNullException("locations");
-             
+
             var links = locations.Select(locality => new PageLinkModel(_currentRoot)
             {
                 Text = locality,
@@ -488,7 +505,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                     ? locality
                     : locality.InDashifed(authority.QualifiedName)
             }).ToList();
-             
+
             var model = _queryManager.PrepareAuthorityModel(authority,
                 links, count, _currentRoot);
 
