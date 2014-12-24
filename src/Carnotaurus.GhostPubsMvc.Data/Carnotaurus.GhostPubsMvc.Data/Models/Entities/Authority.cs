@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
+using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 {
@@ -196,29 +197,56 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
         public int Id { get; set; }
 
-        public Authority GetNext()
+        public PageLinkModel GetNext()
         {
+            if (QualifiedName.IsNullOrEmpty()) throw new ArgumentNullException("QualifiedName");
+
+            Authority sibbling = null;
+
+            // create a default
+            var result = new PageLinkModel
+            {
+                Text = QualifiedName,
+                Title = QualifiedName,
+                Filename = QualifiedNameDashified
+            };
+
             var ints = ParentAuthority.Authoritys
                 .Where(h => h.HasHauntedOrgs)
                 .OrderBy(o => o.QualifiedName)
                 .Select(s => s.Id).ToList();
 
-            var findIndex = ints.FindIndex(i => i == Id);
-
-            var nextIndex = findIndex + 1;
-
-            var maxIndex = ints.Count;
-
-            if (nextIndex == maxIndex)
+            if (ints.Count() > 1)
             {
-                nextIndex = 0;
+                var findIndex = ints.FindIndex(i => i == Id);
+
+                var nextIndex = findIndex + 1;
+
+                var maxIndex = ints.Count;
+
+                if (nextIndex == maxIndex)
+                {
+                    nextIndex = 0;
+                }
+
+                var nextId = ints[nextIndex];
+
+                sibbling = ParentAuthority.Authoritys
+                    .FirstOrDefault(x => x.Id == nextId);
             }
 
-            var nextId = ints[nextIndex];
+            if (sibbling != null)
+            {
+                result = new PageLinkModel
+                {
+                    Text = sibbling.QualifiedName,
+                    Title = sibbling.QualifiedName,
+                    Filename = sibbling.QualifiedNameDashified
+                };
+            }
 
-            var next = ParentAuthority.Authoritys.FirstOrDefault(x => x.Id == nextId);
-
-            return next;
+            return result;
         }
+
     }
 }

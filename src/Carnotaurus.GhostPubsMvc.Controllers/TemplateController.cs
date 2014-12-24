@@ -593,10 +593,6 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         {
             if (model == null) throw new ArgumentNullException("model");
 
-            var contents = PrepareModel(model);
-
-            if (contents == null) throw new ArgumentNullException("contents");
-
             if (model.Filename == null) return;
 
             var toUse = !pathOverride.IsNullOrEmpty()
@@ -605,12 +601,18 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             if (toUse == null) throw new ArgumentNullException("toUse");
 
-            if (model.FriendlyFilename == null) return;
-
             var fullFilePath = String.Format("{0}{1}{2}",
                 toUse,
                 model.FriendlyFilename,
                 ".html");
+ 
+            if (model.FriendlyFilename == null) return;
+
+            var contents = PrepareModel(model);
+
+            if (contents == null) throw new ArgumentNullException("contents");
+            
+            model = null;
 
             FileSystemHelper.WriteFile(fullFilePath, contents);
         }

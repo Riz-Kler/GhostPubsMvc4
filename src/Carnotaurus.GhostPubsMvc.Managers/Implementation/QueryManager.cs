@@ -78,16 +78,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 Filename = authority.QualifiedNameDashified
             }).ToList();
 
-            var sibbling = region.GetNext();
-
-            // todo - dpc - come back - history
-            var next = new PageLinkModel
-            {
-                Text = sibbling.QualifiedName,
-                Title = sibbling.QualifiedName,
-                Filename = sibbling.QualifiedNameDashified
-             };
-
+            var next = region.GetNext();
+             
             var model = OutputViewModel.CreateRegionOutputViewModel(region,
                 orgsInRegionCount, authorityLinks, currentRoot, next);
 
