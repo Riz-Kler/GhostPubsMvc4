@@ -22,7 +22,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         // weird
 
-        OutputViewModel PrepareAuthorityModel(Authority authority, IEnumerable<string> localities, int count,
+        OutputViewModel PrepareAuthorityModel(Authority authority, List<PageLinkModel> localities, int count,
             string currentRoot);
 
         OutputViewModel PrepareOrgModel(

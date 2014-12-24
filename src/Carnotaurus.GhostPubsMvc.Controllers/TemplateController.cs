@@ -479,9 +479,18 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         {
             if (authority == null) throw new ArgumentNullException("authority");
             if (locations == null) throw new ArgumentNullException("locations");
-
+             
+            var links = locations.Select(locality => new PageLinkModel(_currentRoot)
+            {
+                Text = locality,
+                Title = locality,
+                Filename = authority.IsCounty
+                    ? locality
+                    : locality.InDashifed(authority.QualifiedName)
+            }).ToList();
+             
             var model = _queryManager.PrepareAuthorityModel(authority,
-                locations, count, _currentRoot);
+                links, count, _currentRoot);
 
             WriteFile(model);
         }

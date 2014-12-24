@@ -159,7 +159,18 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
         {
             const int max = 156;
 
-            return text.Wrap(max).First();
+            String result = string.Empty;
+
+            try
+            {
+                 result = text.Wrap(max).First();
+            }
+            catch (Exception ex)
+            {
+                var m = ex.InnerException;
+            }
+
+            return result;
         }
 
         public static String[] Wrap(this string text, int max)

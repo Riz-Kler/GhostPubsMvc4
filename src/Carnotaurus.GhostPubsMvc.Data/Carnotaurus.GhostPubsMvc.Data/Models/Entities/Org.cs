@@ -50,13 +50,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public string LaCode { get; set; }
 
         public virtual AddressType AddressType { get; set; }
-        // this slows down retreival tragically
-        //   public virtual ICollection<BookItem> BookItems { get; set; }
         public virtual Authority Authority { get; set; }
         public virtual ICollection<Note> Notes { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
 
-
+        // this slows down retreival tragically
+        //   public virtual ICollection<BookItem> BookItems { get; set; }
         public int Id { get; set; }
 
         #region Unmapped properties
@@ -80,8 +79,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 return output;
             }
         }
-
-
 
         [NotMapped]
         public string QualifiedLocalityDashified
@@ -125,9 +122,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                     LaTried & Tried);
             }
         }
-         
-        [NotMapped]
-        public string TownPath { get; set; }
 
         [NotMapped]
         public List<string> Sections
@@ -192,7 +186,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             }
         }
 
-
         [NotMapped]
         public string Filename
         {
@@ -204,19 +197,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             }
         }
 
-
         [NotMapped]
-        public virtual String FilenameRelTownPath
+        public string GeoPath
         {
             get
             {
-                var items = Authority.Levels;
-
-                var result = items.ExtractFilename();
-
-                result = string.Format("{0}\\{1}", result, PostalTown);
-
-                return result;
+                return Authority.Levels.JoinWithBackslash();
             }
         }
 
@@ -266,6 +252,30 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             return info;
         }
 
+        public Org GetNextOrg()
+        {
+            var ints = Authority.Orgs
+                .Where(h => h.HauntedStatus.HasValue && h.HauntedStatus.Value)
+                .OrderBy(o => o.QualifiedLocality)
+                .Select(s => s.Id).ToList();
+
+            var findIndex = ints.FindIndex(i => i == Id);
+
+            var nextIndex = findIndex + 1;
+
+            var maxIndex = ints.Count;
+
+            if (nextIndex == maxIndex)
+            {
+                nextIndex = 0;
+            }
+
+            var nextId = ints[nextIndex];
+
+            var nextOrg = Authority.Orgs.FirstOrDefault(x => x.Id == nextId);
+
+            return nextOrg;
+        }
 
         #endregion Methods
     }

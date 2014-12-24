@@ -37,7 +37,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public static OutputViewModel CreateRegionOutputViewModel(Authority region,
             int orgsInRegionCount, IList<PageLinkModel> authorityLinks, String currentRoot,
-             OutputViewModel  next)
+             PageLinkModel next)
         {
             if (region == null) throw new ArgumentNullException("region");
             if (authorityLinks == null) throw new ArgumentNullException("authorityLinks");
@@ -82,7 +82,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public static OutputViewModel CreateAuthorityOutputViewModel(Authority authority, int count,
             IList<PageLinkModel> locations,
             String currentRoot,
-             OutputViewModel history)
+             PageLinkModel history)
         {
             if (authority == null) throw new ArgumentNullException("authority");
             if (locations == null) throw new ArgumentNullException("locations");
@@ -131,7 +131,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public static OutputViewModel CreateLocalityOutputViewModel(string locality,
             Authority authority,
             IList<PageLinkModel> orgLinks,
-            string currentRoot,  OutputViewModel  history)
+            string currentRoot, 
+            PageLinkModel history)
         {
             if (locality == null) throw new ArgumentNullException("locality");
             if (authority == null) throw new ArgumentNullException("authority");
@@ -194,7 +195,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public static OutputViewModel CreateOrgOutputViewModel(Org org,
             String currentRoot,
-             OutputViewModel history)
+             PageLinkModel history)
         {
             if (org == null) throw new ArgumentNullException("org");
             if (currentRoot == null) throw new ArgumentNullException("currentRoot");
@@ -359,7 +360,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public String Priority { get; set; }
 
-        public OutputViewModel Next { get; set; }
+        public PageLinkModel Next { get; set; }
 
         public String SitemapItem
         {

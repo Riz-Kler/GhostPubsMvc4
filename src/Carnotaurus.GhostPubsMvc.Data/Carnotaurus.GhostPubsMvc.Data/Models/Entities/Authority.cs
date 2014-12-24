@@ -82,6 +82,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             }
         }
 
+        // todo - come back - this won't work for Scotland and NI
         [NotMapped]
         public List<String> RegionalLineage
         {
@@ -185,5 +186,31 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         }
 
         public int Id { get; set; }
+
+        public Authority GetNext()
+        {
+            var ints = ParentAuthority.Authoritys
+                .Where(h => h.HasHauntedOrgs)
+                .OrderBy(o => o.QualifiedName)
+                .Select(s => s.Id).ToList();
+
+            var findIndex = ints.FindIndex(i => i == Id);
+
+            var nextIndex = findIndex + 1;
+
+            var maxIndex = ints.Count;
+
+            if (nextIndex == maxIndex)
+            {
+                nextIndex = 0;
+            }
+
+            var nextId = ints[nextIndex];
+
+            var next = ParentAuthority.Authoritys.FirstOrDefault(x => x.Id == nextId);
+
+            return next;
+        }
+
     }
 }

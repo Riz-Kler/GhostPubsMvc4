@@ -14,7 +14,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
     public class QueryManager : IQueryManager
     {
         private readonly IReadStore _reader;
-         
+
         public QueryManager(IReadStore reader)
         {
             _reader = reader;
@@ -35,7 +35,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .ToList();
 
             // todo - dpc - come back - history
-            var next = new OutputViewModel(currentRoot);
+            var next = new PageLinkModel(currentRoot);
 
             var model = OutputViewModel.CreateLocalityOutputViewModel(locality, authority,
                 links, currentRoot, next);
@@ -77,9 +77,16 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 Title = authority.Name,
                 Filename = authority.QualifiedNameDashified
             }).ToList();
-             
+
+            var sibbling = region.GetNext();
+
             // todo - dpc - come back - history
-            var next = new OutputViewModel(currentRoot);
+            var next = new PageLinkModel
+            {
+                Text = sibbling.QualifiedName,
+                Title = sibbling.QualifiedName,
+                Filename = sibbling.QualifiedNameDashified
+             };
 
             var model = OutputViewModel.CreateRegionOutputViewModel(region,
                 orgsInRegionCount, authorityLinks, currentRoot, next);
@@ -87,27 +94,19 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             return model;
         }
 
-        public OutputViewModel PrepareAuthorityModel(Authority authority, IEnumerable<string> localities, int count,
+        public OutputViewModel PrepareAuthorityModel(Authority authority, List<PageLinkModel> localities, int count,
             string currentRoot)
         {
             if (authority == null) throw new ArgumentNullException("authority");
             if (localities == null) throw new ArgumentNullException("localities");
             if (currentRoot == null) throw new ArgumentNullException("currentRoot");
 
-            var links = localities.Select(locality => new PageLinkModel(currentRoot)
-            {
-                Text = locality,
-                Title = locality,
-                Filename = locality.InDashifed(authority.QualifiedName)
-            }).ToList();
-
-
             // todo - dpc - come back - history
-            var next = new OutputViewModel(currentRoot);
+            var next = new PageLinkModel(currentRoot);
 
             // dpc - cheshire-west-and-chester-ua.html should contain links to localities, such as: duddon-in-cheshire-west-and-chester-ua.html
             var model = OutputViewModel.CreateAuthorityOutputViewModel(authority, count,
-                links, currentRoot, next);
+                localities, currentRoot, next);
 
             return model;
         }
@@ -117,9 +116,19 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         {
             if (org == null) throw new ArgumentNullException("org");
 
+            var nex = org.GetNextOrg();
+
+            var next = new PageLinkModel(currentRoot);
 
             // todo - dpc - come back - history
-            var next = new OutputViewModel(currentRoot);
+            if (nex != null)
+            {
+                next = new PageLinkModel(currentRoot)
+                {
+                    Title = nex.JumboTitle
+                };
+
+            }
 
             var model = OutputViewModel.CreateOrgOutputViewModel(org, currentRoot, next);
 
@@ -156,7 +165,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         {
             var results = _reader.Items<Authority>()
                 .ToList()
-                .Where(x => x.IsRegion);
+                .Where(x => x.IsRegion && x.HasHauntedOrgs)
+                .OrderBy(o => o.Name);
 
             return results;
         }
@@ -187,7 +197,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             var queryable = data
                 .Where(org => org.HauntedStatus == true)
                 .ToList()
-                .GroupBy(org => org.FilenameRelTownPath)
+                .GroupBy(org => org.GeoPath)
                 .Select(x => new KeyValuePair<String, Int32>(x.Key, x.Count()))
                 .ToList();
 
