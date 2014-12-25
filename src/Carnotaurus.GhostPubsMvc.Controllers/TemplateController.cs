@@ -60,16 +60,16 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 FileSystemHelper.EnsureFolders(_currentRoot, false);
             }
 
-            GenerateSimpleHtmlPages();
+            //GenerateSimpleHtmlPages();
 
-            GenerateContent();
+            //GenerateContent();
 
-            GenerateLeaderboard();
+            GenerateHtmlSitemap();
 
-            GenerateWebmasterSitemap();
+            GenerateGoogleWebmasterSitemap();
         }
 
-        private void GenerateWebmasterSitemap()
+        private void GenerateGoogleWebmasterSitemap()
         {
             var webmasterSitemap = _queryManager.PrepareWebmasterSitemap(_historySitemap);
 
@@ -160,15 +160,15 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             CreatePageTypeFile(PageTypeEnum.Privacy, PageTypePriority.Privacy, "Privacy policy");
         }
 
-        private void GenerateLeaderboard()
+        private void GenerateHtmlSitemap()
         {
-            var data = GetLeaderboardData();
+            var data = GetSitemapData();
 
             CreatePageTypeFile(PageTypeEnum.Sitemap,
                 PageTypePriority.Sitemap, "Sitemap: Pub leaderboard of most haunted areas in UK", data);
         }
 
-        public List<PageLinkModel> GetLeaderboardData()
+        public List<PageLinkModel> GetSitemapData()
         {
             var results = _queryManager.GetSitemapData(_currentRoot);
 

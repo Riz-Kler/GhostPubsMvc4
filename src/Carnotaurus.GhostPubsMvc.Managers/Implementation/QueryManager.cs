@@ -89,7 +89,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             var last = links.Last();
 
             var findIndex = list.FindLastIndex(i => i.Value.Url == last.Url);
-             
+
             var nextIndex = findIndex + 1;
 
             var maxIndex = list.Count;
@@ -100,14 +100,14 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             }
 
             var result = list[nextIndex];
-             
+
             var next = new PageLinkModel
             {
                 Text = result.Key,
                 Title = result.Key,
-                Filename = result.Key .InDashifed(authority.QualifiedName)
+                Filename = result.Key.InDashifed(authority.QualifiedName)
             };
-             
+
             var model = OutputViewModel.CreateLocalityOutputViewModel(locality, authority,
                 links, next);
 
@@ -309,16 +309,21 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .Select(x => x.ExtractFullLink())
                 .ToList();
 
-            var result = new PageLinkModel
+            var result = new PageLinkModel();
+
+            if (queryable.Any())
             {
-                Text = string.Format("{0}. {1}", rank, lineage.FriendlyDescription),
-                Title =
-                    string.Format("{0} ({1} pubs in this area)",
-                        lineage.FriendlyDescription, pathKeyValuePair.Value),
-                Filename = string.Format("{0}\\{1}", currentRoot, pathKeyValuePair.Key),
-                Id = index - 1,
-                Links = queryable
-            };
+                result = new PageLinkModel
+               {
+                   Text = string.Format("{0}. {1}", rank, lineage.FriendlyDescription),
+                   Title =
+                       string.Format("{0} ({1} pubs in this area)",
+                           lineage.FriendlyDescription, pathKeyValuePair.Value),
+                   Filename = string.Format("{0}\\{1}", currentRoot, pathKeyValuePair.Key),
+                   Id = index - 1,
+                   Links = queryable
+               };
+            }
 
             return result;
         }
