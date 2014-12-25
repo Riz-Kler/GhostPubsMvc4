@@ -3,24 +3,25 @@ using Carnotaurus.GhostPubsMvc.Common.Extensions;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
-    public class LocalityModel
+    public class GeoPathModel
     {
-        public LocalityModel(String path)
+        public GeoPathModel(String path)
         {
             Path = path;
 
             var arr = Path.SplitOnSlash();
 
-            Region = arr[0];
-            Division = arr[1];
-            Locality = arr[2];
+            var itemCount = arr.Count;
+
+            ParentOfRightmost = arr[itemCount - 2];
+            Rightmost = arr[itemCount - 1];
         }
 
         public String Path { get; set; }
 
-        public String Region { get; set; }
-        public String Division { get; set; }
-        public String Locality { get; set; }
+        public String ParentOfRightmost { get; set; }
+
+        public String Rightmost { get; set; }
 
         public String FriendlyDescription
         {

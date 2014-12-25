@@ -200,7 +200,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         [NotMapped]
         public string GeoPath
         {
-            get { return Authority.Levels.JoinWithBackslash(); }
+            get
+            {
+                return Authority.Levels.JoinWithBackslash() + "\\" + Authority.QualifiedName;
+                
+            }
         }
 
         #endregion Unmapped properties

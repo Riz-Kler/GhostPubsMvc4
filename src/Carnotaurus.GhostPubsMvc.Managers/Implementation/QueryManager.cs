@@ -237,7 +237,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         {
             if (currentRoot == null) throw new ArgumentNullException("currentRoot");
 
-            var data = _reader.Items<Org>();
+            var data = _reader.Items<Org>()
+   .ToList();
 
             var queryable = data
                 .Where(org => org.HauntedStatus == true)
@@ -251,9 +252,9 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .ToList();
 
             var index = 1;
-
+             
             var results = ranked.Select(pair =>
-                CreatePageLinkModel(currentRoot, pair.Item, ref index, pair.Rank)
+                CreatePageLinkModel(currentRoot, pair.Item, ref index, pair.Rank, data)
                 )
                 .ToList();
 
@@ -285,7 +286,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         }
 
         private PageLinkModel CreatePageLinkModel(string currentRoot, KeyValuePair<string, int> pathKeyValuePair,
-            ref int index, int rank)
+            ref int index, int rank, List<Org> data
+)
         {
             if (currentRoot == null) throw new ArgumentNullException("currentRoot");
 
@@ -295,16 +297,14 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                     "The key is null or empty; this is usually because the CountryID or AddressTypeID is null or [HauntedOrgs_Fix] has not been run.");
             }
 
-            var lineage = new LocalityModel(pathKeyValuePair.Key);
-
-            var data = _reader.Items<Org>();
+            var lineage = new GeoPathModel(pathKeyValuePair.Key);
 
             var queryable = data
                 .Where(org => org.HauntedStatus.HasValue
                               && org.HauntedStatus.Value
-                              && org.Authority.ParentAuthority.Name == lineage.Region
-                              && org.Authority.Name == lineage.Division
-                              && org.Locality == lineage.Locality)
+                              && org.Authority.ParentAuthority.Name == lineage.ParentOfRightmost
+                              && org.Authority.QualifiedName == lineage.Rightmost
+                              )
                 .ToList()
                 .Select(x => x.ExtractFullLink())
                 .ToList();
