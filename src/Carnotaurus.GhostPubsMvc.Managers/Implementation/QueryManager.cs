@@ -78,7 +78,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 Filename = authority.QualifiedNameDashified
             }).ToList();
 
-            var next = region.GetNext();
+            var next = region.GetNextLink();
              
             var model = OutputViewModel.CreateRegionOutputViewModel(region,
                 orgsInRegionCount, authorityLinks, currentRoot, next);
@@ -108,20 +108,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         {
             if (org == null) throw new ArgumentNullException("org");
 
-            var nex = org.GetNextOrg();
-
-            var next = new PageLinkModel(currentRoot);
-
-            // todo - dpc - come back - history
-            if (nex != null)
-            {
-                next = new PageLinkModel(currentRoot)
-                {
-                    Title = nex.JumboTitle
-                };
-
-            }
-
+            var next = org.GetNextLink();
+             
             var model = OutputViewModel.CreateOrgOutputViewModel(org, currentRoot, next);
 
             return model;

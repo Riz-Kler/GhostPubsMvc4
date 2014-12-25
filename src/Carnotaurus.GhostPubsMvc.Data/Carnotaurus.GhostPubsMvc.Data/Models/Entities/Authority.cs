@@ -197,7 +197,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
         public int Id { get; set; }
 
-        public PageLinkModel GetNext()
+        public PageLinkModel GetNextLink()
         {
             if (QualifiedName.IsNullOrEmpty()) throw new ArgumentNullException("QualifiedName");
 

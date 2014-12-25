@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
@@ -251,30 +252,57 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
             return info;
         }
+         
 
-        public Org GetNextOrg()
+        public PageLinkModel GetNextLink()
         {
+            if (TradingName.IsNullOrEmpty()) throw new ArgumentNullException("TradingName");
+
+            Org sibbling = null;
+
+            // todo - dpc - create a default
+            var result = new PageLinkModel
+            {
+                Text = TradingName,
+                Title = TradingName,
+                Filename = Filename
+            };
+
             var ints = Authority.Orgs
                 .Where(h => h.HauntedStatus.HasValue && h.HauntedStatus.Value)
                 .OrderBy(o => o.QualifiedLocality)
                 .Select(s => s.Id).ToList();
 
-            var findIndex = ints.FindIndex(i => i == Id);
-
-            var nextIndex = findIndex + 1;
-
-            var maxIndex = ints.Count;
-
-            if (nextIndex == maxIndex)
+            if (ints.Count() > 1)
             {
-                nextIndex = 0;
+                var findIndex = ints.FindIndex(i => i == Id);
+
+                var nextIndex = findIndex + 1;
+
+                var maxIndex = ints.Count;
+
+                if (nextIndex == maxIndex)
+                {
+                    nextIndex = 0;
+                }
+
+                var nextId = ints[nextIndex];
+
+                sibbling = Authority.Orgs
+                    .FirstOrDefault(x => x.Id == nextId);
             }
 
-            var nextId = ints[nextIndex];
+            if (sibbling != null)
+            {
+                result = new PageLinkModel
+                {
+                    Text = sibbling.TradingName,
+                    Title = sibbling.TradingName,
+                    Filename = sibbling.Filename
+                };
+            }
 
-            var nextOrg = Authority.Orgs.FirstOrDefault(x => x.Id == nextId);
-
-            return nextOrg;
+            return result;
         }
 
         #endregion Methods
