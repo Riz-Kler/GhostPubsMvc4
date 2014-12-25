@@ -233,10 +233,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         }
 
 
-        public List<PageLinkModel> GetSitemapData(string currentRoot)
+        public List<PageLinkModel> GetSitemapData()
         {
-            if (currentRoot == null) throw new ArgumentNullException("currentRoot");
-
             var data = _reader.Items<Org>()
                 .ToList();
 

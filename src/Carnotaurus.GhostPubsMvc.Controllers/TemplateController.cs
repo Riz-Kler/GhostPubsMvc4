@@ -61,13 +61,13 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             }
 
             GenerateSimpleHtmlPages();
-
+             
+            GenerateHtmlSitemap();
+            
             GenerateContent();
 
-            GenerateHtmlSitemap();
-
             GenerateGoogleWebmasterSitemap();
-        }
+         }
 
         private void GenerateGoogleWebmasterSitemap()
         {
@@ -170,7 +170,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         public List<PageLinkModel> GetSitemapData()
         {
-            var results = _queryManager.GetSitemapData(_currentRoot);
+            var results = _queryManager.GetSitemapData();
 
             return results;
         }
@@ -494,7 +494,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             WriteFile(model);
         }
-         
+
         private void CreateOrgFile(Org org)
         {
             if (org == null) throw new ArgumentNullException("org");
