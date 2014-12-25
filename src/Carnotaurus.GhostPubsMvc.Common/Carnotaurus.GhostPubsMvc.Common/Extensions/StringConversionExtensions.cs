@@ -4,7 +4,6 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 {
     public static class StringConversionExtensions
     {
-
         public static Guid? ToNullableGuid(this String value)
         {
             Guid result;

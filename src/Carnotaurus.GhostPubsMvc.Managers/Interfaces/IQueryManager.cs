@@ -7,7 +7,7 @@ using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 {
     public interface IQueryManager
-    { 
+    {
         // Todo - each of these methods should return a QueryResult class
 
         IEnumerable<Org> GetOrgsToUpdate();
@@ -43,6 +43,5 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         // no db dependencies
         String PrepareWebmasterSitemap(List<String> items);
-
     }
 }

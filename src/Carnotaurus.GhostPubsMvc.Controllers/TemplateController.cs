@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Web.Mvc;
 using System.Xml.Linq;
@@ -303,7 +302,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 .ToList();
 
             var pageLinks = regions.Select(x => x.Name != null
-                ? new PageLinkModel(currentRoot)
+                ? new PageLinkModel
                 {
                     Text = x.Name,
                     Title = x.Name,
@@ -312,15 +311,16 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 : null).OrderBy(x => x.Text).ToList();
 
             var metaDescription = string.Format("Haunted pubs in {0}",
-                    regions.Select(region => region.Name).OxfordAnd())
-                    .SeoMetaDescriptionTruncate();
+                regions.Select(region => region.Name).OxfordAnd())
+                .SeoMetaDescriptionTruncate();
 
             var articleDescription = string.Format("Haunted pubs in {0}",
                 regions.Select(region => region.Name).OxfordAnd());
 
             regions = null;
 
-            var viewModel = OutputViewModel.CreateAllUkRegionsOutputViewModel(currentRoot, pageLinks, metaDescription, articleDescription);
+            var viewModel = OutputViewModel.CreateAllUkRegionsOutputViewModel(currentRoot, pageLinks, metaDescription,
+                articleDescription);
 
             WriteFile(viewModel);
         }
@@ -356,7 +356,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             foreach (var currentRegion in regions)
             {
-                if (filterModel == null || ((filterModel.Name.IsNullOrEmpty() || currentRegion.Name == filterModel.Name)))
+                if (filterModel == null ||
+                    ((filterModel.Name.IsNullOrEmpty() || currentRegion.Name == filterModel.Name)))
                 {
                     CreateAllFilesForRegion(currentRegion, filterModel);
                 }
@@ -497,7 +498,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             if (authority == null) throw new ArgumentNullException("authority");
             if (locations == null) throw new ArgumentNullException("locations");
 
-            var links = locations.Select(locality => new PageLinkModel(_currentRoot)
+            var links = locations.Select(locality => new PageLinkModel
             {
                 Text = locality,
                 Title = locality,
@@ -577,10 +578,10 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             if (_isDeprecated) return;
 
-            if (!pathOverride.IsNullOrEmpty())
-            {
-                model.CurrentRoot = pathOverride;
-            }
+            //if (!pathOverride.IsNullOrEmpty())
+            //{
+            //    model.CurrentRoot = pathOverride;
+            //}
 
 
             // todo - come back sitemap history
@@ -597,21 +598,24 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             var toUse = !pathOverride.IsNullOrEmpty()
                 ? pathOverride
-                : model.CurrentRoot.ToLower();
+                : _currentRoot.ToLower();
 
-            if (toUse == null) throw new ArgumentNullException("toUse");
+            if (toUse == null)
+            {
+                throw new ArgumentNullException("toUse");
+            }
 
             var fullFilePath = String.Format("{0}{1}{2}",
                 toUse,
                 model.FriendlyFilename,
                 ".html");
- 
+
             if (model.FriendlyFilename == null) return;
 
             var contents = PrepareModel(model);
 
             if (contents == null) throw new ArgumentNullException("contents");
-            
+
             model = null;
 
             FileSystemHelper.WriteFile(fullFilePath, contents);
@@ -628,7 +632,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             if (!contents.IsNotNullOrEmpty()) return;
 
-            FileSystemHelper.WriteFile(String.Concat(model.Filename.ToLower(), @"\", "detail.html").RedirectionalFormat(),
+            FileSystemHelper.WriteFile(
+                String.Concat(model.Filename.ToLower(), @"\", "detail.html").RedirectionalFormat(),
                 contents);
         }
     }

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
@@ -201,22 +200,18 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         [NotMapped]
         public string GeoPath
         {
-            get
-            {
-                return Authority.Levels.JoinWithBackslash();
-            }
+            get { return Authority.Levels.JoinWithBackslash(); }
         }
 
         #endregion Unmapped properties
 
         #region Methods
 
-
         public PageLinkModel ExtractLink(String currentRoot)
         {
             if (currentRoot == null) throw new ArgumentNullException("currentRoot");
 
-            var info = new PageLinkModel(currentRoot)
+            var info = new PageLinkModel
             {
                 Id = Id,
                 Text = TradingName,
@@ -252,7 +247,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
             return info;
         }
-         
+
 
         public PageLinkModel GetNextLink()
         {

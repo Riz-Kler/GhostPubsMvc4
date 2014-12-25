@@ -13,14 +13,15 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
     {
         #region Statics
 
-        public static OutputViewModel CreateAllUkRegionsOutputViewModel(string currentRoot, List<PageLinkModel> pageLinks, string metaDescription, string articleDescription)
+        public static OutputViewModel CreateAllUkRegionsOutputViewModel(string currentRoot,
+            List<PageLinkModel> pageLinks, string metaDescription, string articleDescription)
         {
             if (currentRoot == null) throw new ArgumentNullException("currentRoot");
             if (pageLinks == null) throw new ArgumentNullException("pageLinks");
             if (metaDescription == null) throw new ArgumentNullException("metaDescription");
             if (articleDescription == null) throw new ArgumentNullException("articleDescription");
 
-            var viewModel = new OutputViewModel(currentRoot)
+            var viewModel = new OutputViewModel
             {
                 Filename = "UK",
                 PageTitle = "Haunted pubs in UK by region",
@@ -37,21 +38,21 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public static OutputViewModel CreateRegionOutputViewModel(Authority region,
             int orgsInRegionCount, IList<PageLinkModel> authorityLinks, String currentRoot,
-             PageLinkModel next)
+            PageLinkModel next)
         {
             if (region == null) throw new ArgumentNullException("region");
             if (authorityLinks == null) throw new ArgumentNullException("authorityLinks");
             if (currentRoot == null) throw new ArgumentNullException("currentRoot");
             if (next == null) throw new ArgumentNullException("next");
 
-            var regionModel = new OutputViewModel(currentRoot)
+            var regionModel = new OutputViewModel
             {
                 Filename = region.QualifiedName,
                 PageTitle = region.Name,
                 JumboTitle = region.Name,
                 Action = PageTypeEnum.Region,
                 PageLinks = authorityLinks.Select(x => x.Text != null
-                    ? new PageLinkModel(currentRoot)
+                    ? new PageLinkModel
                     {
                         Text = x.Text,
                         Title = x.Text,
@@ -60,13 +61,14 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     : null).OrderBy(x => x.Text).ToList(),
                 MetaDescription = string.Format("Haunted pubs in {0}", authorityLinks.Select(x => x.Text).OxfordAnd())
                     .SeoMetaDescriptionTruncate(),
-                ArticleDescription = string.Format("Haunted pubs in {0}", authorityLinks.Select(x => x.Text).OxfordAnd()),
+                ArticleDescription =
+                    string.Format("Haunted pubs in {0}", authorityLinks.Select(x => x.Text).OxfordAnd()),
                 Total = orgsInRegionCount,
                 Priority = PageTypePriority.Region,
-                Next = next ,
+                Next = next,
                 Lineage = new Breadcrumb
                 {
-                    Region = new PageLinkModel(currentRoot)
+                    Region = new PageLinkModel
                     {
                         Filename = region.QualifiedName,
                         Id = region.Id,
@@ -82,13 +84,13 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public static OutputViewModel CreateAuthorityOutputViewModel(Authority authority, int count,
             IList<PageLinkModel> locations,
             String currentRoot,
-             PageLinkModel history)
+            PageLinkModel history)
         {
             if (authority == null) throw new ArgumentNullException("authority");
             if (locations == null) throw new ArgumentNullException("locations");
             if (currentRoot == null) throw new ArgumentNullException("currentRoot");
             if (history == null) throw new ArgumentNullException("history");
-            var model = new OutputViewModel(currentRoot)
+            var model = new OutputViewModel
             {
                 // this is for example: cheshire-west-and-chester-ua.html
                 Filename = authority.QualifiedName.Dashify(),
@@ -108,14 +110,14 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 Next = history,
                 Lineage = new Breadcrumb
                 {
-                    Region = new PageLinkModel(currentRoot)
+                    Region = new PageLinkModel
                     {
                         Filename = authority.ParentAuthority.QualifiedName,
                         Id = authority.ParentAuthority.Id,
                         Text = authority.ParentAuthority.Name,
                         Title = authority.ParentAuthority.Name
                     },
-                    Authority = new PageLinkModel(currentRoot)
+                    Authority = new PageLinkModel
                     {
                         Filename = authority.QualifiedName,
                         Id = authority.Id,
@@ -131,7 +133,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public static OutputViewModel CreateLocalityOutputViewModel(string locality,
             Authority authority,
             IList<PageLinkModel> orgLinks,
-            string currentRoot, 
+            string currentRoot,
             PageLinkModel history)
         {
             if (locality == null) throw new ArgumentNullException("locality");
@@ -140,68 +142,68 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             if (currentRoot == null) throw new ArgumentNullException("currentRoot");
             if (history == null) throw new ArgumentNullException("history");
 
-            var model = new OutputViewModel(currentRoot)
-             {
-                 // dpc - example: duddon-in-cheshire-west-and-chester-ua.html
-                 Filename = locality.InDashifed(authority.QualifiedName),
-                 JumboTitle = locality.In(authority.QualifiedName),
-                 PageTitle = locality.In(authority.QualifiedName),
-                 Action = PageTypeEnum.Locality,
-                 PageLinks = orgLinks.Select(x => x.Text != null
-                     ? new PageLinkModel(currentRoot)
-                     {
-                         Text = x.Text,
-                         Title = x.Title,
-                         // dpc - example: 10930-the-headless-woman-duddon.html
-                         Filename = x.Filename
-                     }
-                     : null).OrderBy(x => x.Text).ToList(),
-                 MetaDescription =
-                     string.Format("{0}, {1}, {2}", locality, authority.Name, authority.ParentAuthority.Name)
-                         .SeoMetaDescriptionTruncate(),
-                 ArticleDescription =
-                     string.Format("{0}, {1}, {2}", locality, authority.Name, authority.ParentAuthority.Name),
-                 Total = orgLinks.Count(),
-                 Priority = PageTypePriority.Locality,
-                 Next = history ,
-                 Lineage = new Breadcrumb
-                 {
-                     Region = new PageLinkModel(currentRoot)
-                     {
-                         Filename = authority.ParentAuthority.QualifiedName,
-                         Id = authority.ParentAuthority.Id,
-                         Text = authority.ParentAuthority.Name,
-                         Title = authority.ParentAuthority.Name
-                     },
-                     Authority = new PageLinkModel(currentRoot)
-                     {
-                         Filename = authority.QualifiedName,
-                         Id = authority.Id,
-                         Text = authority.Name,
-                         Title = authority.Name
-                     },
-                     Locality = new PageLinkModel(currentRoot)
-                     {
-                         Filename = locality.InDashifed(authority.QualifiedName),
-                         Id = authority.Id,
-                         Text = locality,
-                         Title = locality
-                     }
-                 }
-             };
+            var model = new OutputViewModel
+            {
+                // dpc - example: duddon-in-cheshire-west-and-chester-ua.html
+                Filename = locality.InDashifed(authority.QualifiedName),
+                JumboTitle = locality.In(authority.QualifiedName),
+                PageTitle = locality.In(authority.QualifiedName),
+                Action = PageTypeEnum.Locality,
+                PageLinks = orgLinks.Select(x => x.Text != null
+                    ? new PageLinkModel
+                    {
+                        Text = x.Text,
+                        Title = x.Title,
+                        // dpc - example: 10930-the-headless-woman-duddon.html
+                        Filename = x.Filename
+                    }
+                    : null).OrderBy(x => x.Text).ToList(),
+                MetaDescription =
+                    string.Format("{0}, {1}, {2}", locality, authority.Name, authority.ParentAuthority.Name)
+                        .SeoMetaDescriptionTruncate(),
+                ArticleDescription =
+                    string.Format("{0}, {1}, {2}", locality, authority.Name, authority.ParentAuthority.Name),
+                Total = orgLinks.Count(),
+                Priority = PageTypePriority.Locality,
+                Next = history,
+                Lineage = new Breadcrumb
+                {
+                    Region = new PageLinkModel
+                    {
+                        Filename = authority.ParentAuthority.QualifiedName,
+                        Id = authority.ParentAuthority.Id,
+                        Text = authority.ParentAuthority.Name,
+                        Title = authority.ParentAuthority.Name
+                    },
+                    Authority = new PageLinkModel
+                    {
+                        Filename = authority.QualifiedName,
+                        Id = authority.Id,
+                        Text = authority.Name,
+                        Title = authority.Name
+                    },
+                    Locality = new PageLinkModel
+                    {
+                        Filename = locality.InDashifed(authority.QualifiedName),
+                        Id = authority.Id,
+                        Text = locality,
+                        Title = locality
+                    }
+                }
+            };
 
             return model;
         }
 
         public static OutputViewModel CreateOrgOutputViewModel(Org org,
             String currentRoot,
-             PageLinkModel history)
+            PageLinkModel history)
         {
             if (org == null) throw new ArgumentNullException("org");
             if (currentRoot == null) throw new ArgumentNullException("currentRoot");
             if (history == null) throw new ArgumentNullException("history");
 
-            var notes = org.Notes.Select(note => new PageLinkModel(currentRoot)
+            var notes = org.Notes.Select(note => new PageLinkModel
             {
                 Id = note.Id,
                 Text = note.Text,
@@ -210,7 +212,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
             const PageTypeEnum action = PageTypeEnum.Pub;
 
-            var model = new OutputViewModel(currentRoot)
+            var model = new OutputViewModel
             {
                 Filename = org.Filename,
                 JumboTitle = org.JumboTitle,
@@ -221,15 +223,15 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 ArticleDescription = string.Format("{0}, {1}", org.Address, org.PostcodePrimaryPart),
                 Tags = org.Sections,
                 Priority = PageTypePriority.Pub,
-                Next = history ,
+                Next = history,
                 Lat = org.Lat.ToString(),
                 Lon = org.Lon.ToString(),
                 OtherNames = org.Authority.Orgs
-                    .Where(o=> o.Address == org.Address
+                    .Where(o => o.Address == org.Address
                                 && o.Postcode == org.Postcode
                                 && o.Id != org.Id)
                     .Select(
-                        o => new PageLinkModel(currentRoot)
+                        o => new PageLinkModel
                         {
                             Id = o.Id,
                             Text = o.TradingName,
@@ -239,21 +241,21 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     ).ToList(),
                 Lineage = new Breadcrumb
                 {
-                    Region = new PageLinkModel(currentRoot)
+                    Region = new PageLinkModel
                     {
                         Filename = org.Authority.ParentAuthority.QualifiedName,
                         Id = org.Id,
                         Text = org.Authority.ParentAuthority.Name,
                         Title = org.Authority.ParentAuthority.Name
                     },
-                    Authority = new PageLinkModel(currentRoot)
+                    Authority = new PageLinkModel
                     {
                         Filename = org.Authority.QualifiedName,
                         Id = org.Id,
                         Text = org.Authority.Name,
                         Title = org.Authority.Name
                     },
-                    Locality = new PageLinkModel(currentRoot)
+                    Locality = new PageLinkModel
                     {
                         Filename = org.QualifiedLocalityDashified
                             .Dashify(),
@@ -261,7 +263,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                         Text = org.Locality,
                         Title = org.Locality
                     },
-                    Pub = new PageLinkModel(currentRoot)
+                    Pub = new PageLinkModel
                     {
                         Filename = org.Filename,
                         Id = org.Id,
@@ -283,7 +285,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             if (title == null) throw new ArgumentNullException("title");
             if (currentRoot == null) throw new ArgumentNullException("currentRoot");
 
-            var model = new OutputViewModel(currentRoot)
+            var model = new OutputViewModel(true)
             {
                 JumboTitle = title,
                 PageTitle = title,
@@ -301,14 +303,22 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         #endregion Statics
 
-        public OutputViewModel(String currentRoot)
+        public OutputViewModel()
         {
             PageLinks = new List<PageLinkModel>();
             Tags = new List<String>();
-            CurrentRoot = currentRoot;
+            IsStandardLink = false;
         }
 
-        public String CurrentRoot { get; set; }
+        public OutputViewModel(bool isStandardLink)
+        {
+            PageLinks = new List<PageLinkModel>();
+            Tags = new List<String>();
+            IsStandardLink = isStandardLink;
+        }
+
+        public bool IsStandardLink { get; set; }
+
 
         public String Lat { get; set; }
 
@@ -344,7 +354,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             {
                 if (Filename.IsNullOrEmpty()) return String.Empty;
 
-                var pattern = CurrentRoot.Contains(@"\uk\")
+                var pattern = IsStandardLink // CurrentRoot.Contains(@"\uk\")
                     ? "http://www.ghostpubs.com/haunted-pubs/uk/{0}.html"
                     : "http://www.ghostpubs.com/haunted-pubs/{0}.html";
 
@@ -394,6 +404,5 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public PageTypeEnum Action { get; set; }
 
         public string PageTitle { get; set; }
-
     }
 }

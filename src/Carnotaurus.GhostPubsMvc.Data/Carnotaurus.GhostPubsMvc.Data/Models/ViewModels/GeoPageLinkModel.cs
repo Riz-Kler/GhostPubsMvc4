@@ -1,32 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
+using Carnotaurus.GhostPubsMvc.Common.Bespoke.Extensions;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
     [Serializable]
-    public class PageLinkModel
-    {
-        private readonly bool _isStandardLink;
-
-        public PageLinkModel()
-        {
-        }
-
-        public PageLinkModel(bool isStandardLink)
-        {
-            _isStandardLink = isStandardLink;
-        }
-
+    public class GeoPageLinkModel : IPageLinkModel
+    { 
         public String Url
         {
             get
             {
                 if (Filename.IsNullOrEmpty()) return String.Empty;
 
-                var pattern = _isStandardLink //_isGeoLink.Contains(@"\uk\")
-                    ? "http://www.ghostpubs.com/haunted-pubs/uk/{0}.html"
-                    : "http://www.ghostpubs.com/haunted-pubs/{0}.html";
+                var pattern =  "http://www.ghostpubs.com/haunted-pubs/{0}.html";
 
                 var url = String.Format(pattern, Filename.Replace("\\", "/"));
 
@@ -42,6 +31,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public Int32 Id { get; set; }
 
-        public List<PageLinkModel> Links { get; set; }
+        public List<IPageLinkModel> Links { get; set; }
     }
 }

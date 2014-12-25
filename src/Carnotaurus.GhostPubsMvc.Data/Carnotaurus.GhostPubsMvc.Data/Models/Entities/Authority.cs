@@ -44,10 +44,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         [NotMapped]
         public string QualifiedNameDashified
         {
-            get
-            {
-                return QualifiedName.Dashify();
-            }
+            get { return QualifiedName.Dashify(); }
         }
 
         [NotMapped]
@@ -180,7 +177,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
                 if (!Population.HasValue || !Hectares.HasValue) return density;
 
-                density = (double)Population / (double)Hectares;
+                density = (double) Population/(double) Hectares;
 
                 return density;
             }
@@ -189,10 +186,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         [NotMapped]
         public bool IsMainlandUnitedKingdomRegion
         {
-            get
-            {
-                return IsRegion && Authoritys.Any();
-            }
+            get { return IsRegion && Authoritys.Any(); }
         }
 
         public int Id { get; set; }
@@ -247,6 +241,5 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
             return result;
         }
-
     }
 }

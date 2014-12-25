@@ -8,7 +8,8 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
     {
         public static string RenderRazorViewToString(this ControllerBase controller, string viewName, object model)
         {
-            if (controller == null) throw new ArgumentNullException("controller", "Extension method called on a null controller");
+            if (controller == null)
+                throw new ArgumentNullException("controller", "Extension method called on a null controller");
             if (viewName == null) throw new ArgumentNullException("viewName");
             if (model == null) throw new ArgumentNullException("model");
 

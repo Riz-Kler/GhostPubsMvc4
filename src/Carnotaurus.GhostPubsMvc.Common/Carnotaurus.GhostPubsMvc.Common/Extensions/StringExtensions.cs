@@ -159,11 +159,11 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
         {
             const int max = 156;
 
-            String result = string.Empty;
+            var result = string.Empty;
 
             try
             {
-                 result = text.Wrap(max).First();
+                result = text.Wrap(max).First();
             }
             catch (Exception ex)
             {
@@ -176,10 +176,10 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
         public static String[] Wrap(this string text, int max)
         {
             var charCount = 0;
-            var lines = text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            return lines.GroupBy(w => (charCount += (((charCount % max) + w.Length + 1 >= max)
-                ? max - (charCount % max)
-                : 0) + w.Length + 1) / max)
+            var lines = text.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+            return lines.GroupBy(w => (charCount += (((charCount%max) + w.Length + 1 >= max)
+                ? max - (charCount%max)
+                : 0) + w.Length + 1)/max)
                 .Select(g => string.Join(" ", g.ToArray()))
                 .ToArray();
         }
