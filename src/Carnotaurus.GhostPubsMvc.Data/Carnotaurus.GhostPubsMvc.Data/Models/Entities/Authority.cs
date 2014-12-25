@@ -241,5 +241,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
             return result;
         }
+
     }
 }

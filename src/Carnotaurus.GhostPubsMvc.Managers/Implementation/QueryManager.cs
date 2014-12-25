@@ -20,6 +20,57 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             _reader = reader;
         }
 
+        //public PageLinkModel GetNextLink()
+        //{
+        //    if (QualifiedName.IsNullOrEmpty()) throw new ArgumentNullException("QualifiedName");
+
+        //    Authority sibbling = null;
+
+        //    // create a default
+        //    var result = new PageLinkModel
+        //    {
+        //        Text = QualifiedName,
+        //        Title = QualifiedName,
+        //        Filename = QualifiedNameDashified
+        //    };
+
+        //    var ints = ParentAuthority.Authoritys
+        //        .Where(h => h.HasHauntedOrgs)
+        //        .OrderBy(o => o.QualifiedName)
+        //        .Select(s => s.Id).ToList();
+
+        //    if (ints.Count() > 1)
+        //    {
+        //        var findIndex = ints.FindIndex(i => i == Id);
+
+        //        var nextIndex = findIndex + 1;
+
+        //        var maxIndex = ints.Count;
+
+        //        if (nextIndex == maxIndex)
+        //        {
+        //            nextIndex = 0;
+        //        }
+
+        //        var nextId = ints[nextIndex];
+
+        //        sibbling = ParentAuthority.Authoritys
+        //            .FirstOrDefault(x => x.Id == nextId);
+        //    }
+
+        //    if (sibbling != null)
+        //    {
+        //        result = new PageLinkModel
+        //        {
+        //            Text = sibbling.QualifiedName,
+        //            Title = sibbling.QualifiedName,
+        //            Filename = sibbling.QualifiedNameDashified
+        //        };
+        //    }
+
+        //    return result;
+        //}
+
         public OutputViewModel PrepareLocalityModel(
             IEnumerable<KeyValuePair<string, PageLinkModel>> orgLocalityLinks, string locality,
             Authority authority)
@@ -28,14 +79,35 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             if (locality == null) throw new ArgumentNullException("locality");
             if (authority == null) throw new ArgumentNullException("authority");
 
-            var links = orgLocalityLinks
+            var list = orgLocalityLinks.ToList();
+
+            var links = list
                 .Where(x => x.Key.Equals(locality))
                 .Select(x => x.Value)
                 .ToList();
 
-            // todo - dpc - come back - history
-            var next = new PageLinkModel();
+            var last = links.Last();
 
+            var findIndex = list.FindLastIndex(i => i.Value.Url == last.Url);
+             
+            var nextIndex = findIndex + 1;
+
+            var maxIndex = list.Count;
+
+            if (nextIndex == maxIndex)
+            {
+                nextIndex = 0;
+            }
+
+            var result = list[nextIndex];
+             
+            var next = new PageLinkModel
+            {
+                Text = result.Key,
+                Title = result.Key,
+                Filename = result.Key .InDashifed(authority.QualifiedName)
+            };
+             
             var model = OutputViewModel.CreateLocalityOutputViewModel(locality, authority,
                 links, next);
 
@@ -86,7 +158,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         {
             if (authority == null) throw new ArgumentNullException("authority");
             if (localities == null) throw new ArgumentNullException("localities");
-             
+
             var next = authority.GetNextLink();
 
             // dpc - cheshire-west-and-chester-ua.html should contain links to localities, such as: duddon-in-cheshire-west-and-chester-ua.html

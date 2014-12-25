@@ -433,18 +433,18 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                         && org.AddressTypeId == 1)
                         .OrderByDescending(org => org.Locality)
                         .ThenByDescending(org => org.TradingName);
-                // .ToList();
-
+                 
                 var localities = orgs
                     .Select(p => p.Locality)
                     .Distinct()
+                    .OrderBy(o => o)
                     .ToList();
 
                 CreateAuthorityFile(authority, localities,
                     orgs.Count()
                     );
 
-                var links = CreatePubsFiles(orgs);
+                var links = CreateOrgFiles(orgs);
 
                 CreateLocalityFiles(localities, links, authority);
             }
@@ -461,7 +461,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             }
         }
 
-        private List<KeyValuePair<String, PageLinkModel>> CreatePubsFiles(IEnumerable<Org> orgs)
+        private List<KeyValuePair<String, PageLinkModel>> CreateOrgFiles(IEnumerable<Org> orgs)
         {
             var localityLinks = new List<KeyValuePair<String, PageLinkModel>>();
 
