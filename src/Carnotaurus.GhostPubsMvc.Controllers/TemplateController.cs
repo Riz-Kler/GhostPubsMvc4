@@ -24,7 +24,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private String _currentRoot = String.Empty;
         private Guid _generationId;
-         
+
         public TemplateController(IQueryManager queryManager, ICommandManager commandManager,
             IThirdPartyApiManager thirdPartyApiManager)
         {
@@ -34,7 +34,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             _thirdPartyApiManager = thirdPartyApiManager;
 
-            // _historySitemap = new List<String>();
+            _historySitemap = new List<String>();
         }
 
         public ActionResult Generate()
@@ -47,7 +47,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         }
 
         private void GenerateLiveContent()
-        { 
+        {
             var orgsToUpdate = _queryManager.GetOrgsToUpdate();
 
             UpdateOrganisations(orgsToUpdate);
@@ -77,7 +77,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             FileSystemHelper.WriteFile(fullFilePath, webmasterSitemap);
         }
-         
+
         private void GenerateContent()
         {
             var filter = new RegionFilterModel
@@ -161,7 +161,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         }
 
         private void GenerateLeaderboard()
-        { 
+        {
             var data = GetLeaderboardData();
 
             CreatePageTypeFile(PageTypeEnum.Sitemap,
@@ -556,7 +556,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         public void WriteFile(OutputViewModel model, string pathOverride)
         {
             if (model == null) throw new ArgumentNullException("model");
-             
+
             if (_historySitemap != null) _historySitemap.Add(model.SitemapItem);
 
             WritePage(model, pathOverride);
