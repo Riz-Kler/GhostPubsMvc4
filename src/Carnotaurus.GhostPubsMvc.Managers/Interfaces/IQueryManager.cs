@@ -22,24 +22,21 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         // weird
 
-        OutputViewModel PrepareAuthorityModel(Authority authority, List<PageLinkModel> localities, int count,
-            string currentRoot);
+        OutputViewModel PrepareAuthorityModel(Authority authority, List<PageLinkModel> localities, int count);
 
         OutputViewModel PrepareOrgModel(
-            Org org, string currentRoot
-            );
+            Org org);
 
         OutputViewModel PrepareLocalityModel(
             IEnumerable<KeyValuePair<string, PageLinkModel>> orgLocalityLinks, string locality,
-            Authority authority,
-            string currentRoot);
+            Authority authority);
 
         OutputViewModel PreparePageTypeModel(PageTypeEnum pageType, string priority, string description,
             List<PageLinkModel> links,
-            string title, string currentRoot);
+            string title);
 
         OutputViewModel PrepareRegionModel(Authority region, int orgsInRegionCount,
-            IEnumerable<Authority> hauntedAuthoritiesInRegion, string currentRoot);
+            IEnumerable<Authority> hauntedAuthoritiesInRegion);
 
         // no db dependencies
         String PrepareWebmasterSitemap(List<String> items);

@@ -22,8 +22,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
         public OutputViewModel PrepareLocalityModel(
             IEnumerable<KeyValuePair<string, PageLinkModel>> orgLocalityLinks, string locality,
-            Authority authority,
-            string currentRoot)
+            Authority authority)
         {
             if (orgLocalityLinks == null) throw new ArgumentNullException("orgLocalityLinks");
             if (locality == null) throw new ArgumentNullException("locality");
@@ -38,38 +37,35 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             var next = new PageLinkModel();
 
             var model = OutputViewModel.CreateLocalityOutputViewModel(locality, authority,
-                links, currentRoot, next);
+                links, next);
 
             return model;
         }
 
         public OutputViewModel PreparePageTypeModel(PageTypeEnum pageType, string priority, string description,
             List<PageLinkModel> links,
-            string title, string currentRoot)
+            string title)
         {
             if (priority == null) throw new ArgumentNullException("priority");
             if (description == null) throw new ArgumentNullException("description");
             if (links == null) throw new ArgumentNullException("links");
-            if (currentRoot == null) throw new ArgumentNullException("currentRoot");
 
             if (title == null)
             {
                 title = pageType.ToString().CamelCaseToWords();
             }
 
-            var model = OutputViewModel.CreatePageTypeOutputViewModel(pageType, priority, description, links, title,
-                currentRoot);
+            var model = OutputViewModel.CreatePageTypeOutputViewModel(pageType, priority, description, links, title);
 
             return model;
         }
 
         public OutputViewModel PrepareRegionModel(Authority region,
             int orgsInRegionCount,
-            IEnumerable<Authority> hauntedAuthoritiesInRegion, string currentRoot)
+            IEnumerable<Authority> hauntedAuthoritiesInRegion)
         {
             if (region == null) throw new ArgumentNullException("region");
             if (hauntedAuthoritiesInRegion == null) throw new ArgumentNullException("hauntedAuthoritiesInRegion");
-            if (currentRoot == null) throw new ArgumentNullException("currentRoot");
 
             var authorityLinks = hauntedAuthoritiesInRegion.Select(authority => new PageLinkModel
             {
@@ -81,36 +77,33 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             var next = region.GetNextLink();
 
             var model = OutputViewModel.CreateRegionOutputViewModel(region,
-                orgsInRegionCount, authorityLinks, currentRoot, next);
+                orgsInRegionCount, authorityLinks, next);
 
             return model;
         }
 
-        public OutputViewModel PrepareAuthorityModel(Authority authority, List<PageLinkModel> localities, int count,
-            string currentRoot)
+        public OutputViewModel PrepareAuthorityModel(Authority authority, List<PageLinkModel> localities, int count)
         {
             if (authority == null) throw new ArgumentNullException("authority");
             if (localities == null) throw new ArgumentNullException("localities");
-            if (currentRoot == null) throw new ArgumentNullException("currentRoot");
-
-            // todo - dpc - come back - history
+             
             var next = authority.GetNextLink();
 
             // dpc - cheshire-west-and-chester-ua.html should contain links to localities, such as: duddon-in-cheshire-west-and-chester-ua.html
             var model = OutputViewModel.CreateAuthorityOutputViewModel(authority, count,
-                localities, currentRoot, next);
+                localities, next);
 
             return model;
         }
 
         public OutputViewModel PrepareOrgModel(
-            Org org, string currentRoot)
+            Org org)
         {
             if (org == null) throw new ArgumentNullException("org");
 
             var next = org.GetNextLink();
 
-            var model = OutputViewModel.CreateOrgOutputViewModel(org, currentRoot, next);
+            var model = OutputViewModel.CreateOrgOutputViewModel(org, next);
 
             return model;
         }
@@ -182,7 +175,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .ToList();
 
             var ranked = queryable.RankByDescending(i => i.Value,
-                (i, r) => new {Rank = r, Item = i})
+                (i, r) => new { Rank = r, Item = i })
                 .ToList();
 
             var index = 1;

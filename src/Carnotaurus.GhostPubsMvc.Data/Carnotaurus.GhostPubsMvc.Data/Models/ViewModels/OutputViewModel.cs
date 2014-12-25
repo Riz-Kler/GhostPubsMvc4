@@ -37,12 +37,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         }
 
         public static OutputViewModel CreateRegionOutputViewModel(Authority region,
-            int orgsInRegionCount, IList<PageLinkModel> authorityLinks, String currentRoot,
+            int orgsInRegionCount, IList<PageLinkModel> authorityLinks, 
             PageLinkModel next)
         {
             if (region == null) throw new ArgumentNullException("region");
             if (authorityLinks == null) throw new ArgumentNullException("authorityLinks");
-            if (currentRoot == null) throw new ArgumentNullException("currentRoot");
             if (next == null) throw new ArgumentNullException("next");
 
             var regionModel = new OutputViewModel
@@ -82,13 +81,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         }
 
         public static OutputViewModel CreateAuthorityOutputViewModel(Authority authority, int count,
-            IList<PageLinkModel> locations,
-            String currentRoot,
+            IList<PageLinkModel> locations, 
             PageLinkModel history)
         {
             if (authority == null) throw new ArgumentNullException("authority");
-            if (locations == null) throw new ArgumentNullException("locations");
-            if (currentRoot == null) throw new ArgumentNullException("currentRoot");
+            if (locations == null) throw new ArgumentNullException("locations"); 
             if (history == null) throw new ArgumentNullException("history");
             var model = new OutputViewModel
             {
@@ -133,14 +130,13 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public static OutputViewModel CreateLocalityOutputViewModel(string locality,
             Authority authority,
             IList<PageLinkModel> orgLinks,
-            string currentRoot,
+       
             PageLinkModel history)
         {
             if (locality == null) throw new ArgumentNullException("locality");
             if (authority == null) throw new ArgumentNullException("authority");
             if (orgLinks == null) throw new ArgumentNullException("orgLinks");
-            if (currentRoot == null) throw new ArgumentNullException("currentRoot");
-            if (history == null) throw new ArgumentNullException("history");
+             if (history == null) throw new ArgumentNullException("history");
 
             var model = new OutputViewModel
             {
@@ -195,12 +191,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             return model;
         }
 
-        public static OutputViewModel CreateOrgOutputViewModel(Org org,
-            String currentRoot,
+        public static OutputViewModel CreateOrgOutputViewModel(Org org, 
             PageLinkModel history)
         {
-            if (org == null) throw new ArgumentNullException("org");
-            if (currentRoot == null) throw new ArgumentNullException("currentRoot");
+            if (org == null) throw new ArgumentNullException("org"); 
             if (history == null) throw new ArgumentNullException("history");
 
             var notes = org.Notes.Select(note => new PageLinkModel
@@ -278,13 +272,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public static OutputViewModel CreatePageTypeOutputViewModel(PageTypeEnum pageType, string priority,
             string description,
-            List<PageLinkModel> links, string title, string currentRoot)
+            List<PageLinkModel> links, string title )
         {
             if (priority == null) throw new ArgumentNullException("priority");
             if (description == null) throw new ArgumentNullException("description");
             if (title == null) throw new ArgumentNullException("title");
-            if (currentRoot == null) throw new ArgumentNullException("currentRoot");
-
+             
             var model = new OutputViewModel(true)
             {
                 JumboTitle = title,

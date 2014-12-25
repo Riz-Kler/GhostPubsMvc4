@@ -335,7 +335,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             var inRegion = _queryManager.GetHauntedFirstDescendantAuthoritiesInRegion(region.Id).ToList();
 
             var regionModel = _queryManager.PrepareRegionModel(region, orgsInRegionCount,
-                inRegion, _currentRoot);
+                inRegion);
 
             WriteFile(regionModel);
 
@@ -503,12 +503,12 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Text = locality,
                 Title = locality,
                 Filename = authority.IsCounty
-                    ? locality
+                    ? locality.Dashify()
                     : locality.InDashifed(authority.QualifiedName)
             }).ToList();
 
             var model = _queryManager.PrepareAuthorityModel(authority,
-                links, count, _currentRoot);
+                links, count);
 
             WriteFile(model);
         }
@@ -518,7 +518,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         {
             if (org == null) throw new ArgumentNullException("org");
 
-            var model = _queryManager.PrepareOrgModel(org, _currentRoot);
+            var model = _queryManager.PrepareOrgModel(org);
 
             WriteFile(model);
         }
@@ -531,8 +531,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 links = new List<PageLinkModel>();
             }
 
-            var model = _queryManager.PreparePageTypeModel(pageType, priority, description, links, title,
-                _currentRoot);
+            var model = _queryManager.PreparePageTypeModel(pageType, priority, description, links, title);
 
             var pathOverride = string.Format("{0}{1}", _currentRoot, "uk\\");
 
@@ -551,8 +550,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             if (authority == null) throw new ArgumentNullException("authority");
 
             var model = _queryManager.PrepareLocalityModel(orgLocalityLinks, locality,
-                authority,
-                _currentRoot);
+                authority
+                );
 
             WriteFile(model);
         }
