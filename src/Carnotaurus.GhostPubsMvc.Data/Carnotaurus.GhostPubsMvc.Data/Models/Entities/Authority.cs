@@ -80,8 +80,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             }
         }
 
-        // todo - come back - this won't work for Scotland and NI
-        [NotMapped]
+         [NotMapped]
         public List<string> RegionalLineage
         {
             get

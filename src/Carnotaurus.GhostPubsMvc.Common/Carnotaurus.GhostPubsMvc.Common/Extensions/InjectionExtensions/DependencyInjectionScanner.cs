@@ -23,7 +23,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions.InjectionExtensions
 
             foreach (var reg in registrations)
             {
-                // todo - dpc - come back - this was set to Transient which meant instances were newed-up without being reused
+                // this was set to Transient which meant instances were newed-up without being reused
                 container.Register(reg.Service, reg.Implementation, Lifestyle.Singleton);
             }
         }

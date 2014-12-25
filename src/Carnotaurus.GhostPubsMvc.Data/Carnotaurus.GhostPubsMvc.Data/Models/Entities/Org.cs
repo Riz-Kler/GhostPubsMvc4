@@ -254,8 +254,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             if (TradingName.IsNullOrEmpty()) throw new ArgumentNullException("TradingName");
 
             Org sibbling = null;
-
-            // todo - dpc - create a default
+             
             var result = new PageLinkModel
             {
                 Text = TradingName,

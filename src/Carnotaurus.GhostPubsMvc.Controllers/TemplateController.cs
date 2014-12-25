@@ -18,15 +18,13 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
     {
         private readonly ICommandManager _commandManager;
 
-        // todo - come back sitemap history
-        // private readonly List<String> _historySitemap;
+        private readonly List<String> _historySitemap;
         private readonly IQueryManager _queryManager;
         private readonly IThirdPartyApiManager _thirdPartyApiManager;
 
         private String _currentRoot = String.Empty;
         private Guid _generationId;
-        private Boolean _isDeprecated;
-
+         
         public TemplateController(IQueryManager queryManager, ICommandManager commandManager,
             IThirdPartyApiManager thirdPartyApiManager)
         {
@@ -49,9 +47,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         }
 
         private void GenerateLiveContent()
-        {
-            _isDeprecated = false;
-
+        { 
             var orgsToUpdate = _queryManager.GetOrgsToUpdate();
 
             UpdateOrganisations(orgsToUpdate);
@@ -61,39 +57,27 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             if (_currentRoot != null)
             {
-                FileSystemHelper.EnsureFolders(_currentRoot, _isDeprecated);
+                FileSystemHelper.EnsureFolders(_currentRoot, false);
             }
 
             GenerateSimpleHtmlPages();
 
             GenerateContent();
 
+            GenerateLeaderboard();
 
-            // todo - come back sitemap history
-            // GenerateLeaderboard();
-
-
-            // todo - come back sitemap history
-            // GenerateWebmasterSitemap();
+            GenerateWebmasterSitemap();
         }
 
-        // todo - come back sitemap history
-        //private void GenerateWebmasterSitemap()
-        //{
-        //    var webmasterSitemap = _queryManager.PrepareWebmasterSitemap(_historySitemap);
-
-        //    var fullFilePath = String.Format("{0}/ghostpubs-sitemap.xml", _currentRoot);
-
-        //    FileSystemHelper.WriteFile(fullFilePath, webmasterSitemap);
-        //}
-
-        private void GenerateDeadContent()
+        private void GenerateWebmasterSitemap()
         {
-            _isDeprecated = true;
+            var webmasterSitemap = _queryManager.PrepareWebmasterSitemap(_historySitemap);
 
-            GenerateContent();
+            var fullFilePath = String.Format("{0}/ghostpubs-sitemap.xml", _currentRoot);
+
+            FileSystemHelper.WriteFile(fullFilePath, webmasterSitemap);
         }
-
+         
         private void GenerateContent()
         {
             var filter = new RegionFilterModel
@@ -177,9 +161,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         }
 
         private void GenerateLeaderboard()
-        {
-            if (_isDeprecated) return;
-
+        { 
             var data = GetLeaderboardData();
 
             CreatePageTypeFile(PageTypeEnum.Sitemap,
@@ -433,7 +415,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                         && org.AddressTypeId == 1)
                         .OrderByDescending(org => org.Locality)
                         .ThenByDescending(org => org.TradingName);
-                 
+
                 var localities = orgs
                     .Select(p => p.Locality)
                     .Distinct()
@@ -535,7 +517,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             var pathOverride = string.Format("{0}{1}", _currentRoot, "uk\\");
 
-            FileSystemHelper.CreateFolders(pathOverride, _isDeprecated);
+            FileSystemHelper.CreateFolders(pathOverride, false);
 
             WriteFile(model, pathOverride);
         }
@@ -574,17 +556,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         public void WriteFile(OutputViewModel model, string pathOverride)
         {
             if (model == null) throw new ArgumentNullException("model");
-
-            if (_isDeprecated) return;
-
-            //if (!pathOverride.IsNullOrEmpty())
-            //{
-            //    model.CurrentRoot = pathOverride;
-            //}
-
-
-            // todo - come back sitemap history
-            // if (_historySitemap != null) _historySitemap.Add(model.SitemapItem);
+             
+            if (_historySitemap != null) _historySitemap.Add(model.SitemapItem);
 
             WritePage(model, pathOverride);
         }
