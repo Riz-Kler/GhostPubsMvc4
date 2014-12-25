@@ -3,7 +3,7 @@ using System.IO;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 
 namespace Carnotaurus.GhostPubsMvc.Common.Helpers
-{ 
+{
     public class FileSystemHelper
     {
         public static void DeleteDirectory(string targetDir)

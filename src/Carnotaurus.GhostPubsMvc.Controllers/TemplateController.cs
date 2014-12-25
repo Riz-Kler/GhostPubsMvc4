@@ -60,9 +60,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 FileSystemHelper.EnsureFolders(_currentRoot, false);
             }
 
-            //GenerateSimpleHtmlPages();
+            GenerateSimpleHtmlPages();
 
-            //GenerateContent();
+            GenerateContent();
 
             GenerateHtmlSitemap();
 
@@ -350,7 +350,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         {
             int orgsInRegionCount;
 
-            if (!region.IsMainlandUnitedKingdomRegion)
+            if (!region.IsUnitedKingdomRegion)
             {
                 orgsInRegionCount = region.CountHauntedOrgs;
             }
@@ -452,7 +452,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 //town file needs knowledge of its pubs, e.g., trading name
                 CreateOrgFile(org);
 
-                localityLinks.Add(new KeyValuePair<string, PageLinkModel>(org.Locality, org.ExtractLink(_currentRoot)));
+                localityLinks.Add(new KeyValuePair<string, PageLinkModel>(org.Locality, org.ExtractLink()));
             }
 
             return localityLinks;
@@ -494,8 +494,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             WriteFile(model);
         }
-
-
+         
         private void CreateOrgFile(Org org)
         {
             if (org == null) throw new ArgumentNullException("org");

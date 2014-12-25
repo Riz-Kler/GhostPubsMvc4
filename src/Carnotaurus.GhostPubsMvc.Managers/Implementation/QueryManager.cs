@@ -238,7 +238,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             if (currentRoot == null) throw new ArgumentNullException("currentRoot");
 
             var data = _reader.Items<Org>()
-   .ToList();
+                .ToList();
 
             var queryable = data
                 .Where(org => org.HauntedStatus == true)
@@ -252,9 +252,9 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .ToList();
 
             var index = 1;
-             
+
             var results = ranked.Select(pair =>
-                CreatePageLinkModel(currentRoot, pair.Item, ref index, pair.Rank, data)
+                CreatePageLinkModel(pair.Item, ref index, pair.Rank, data)
                 )
                 .ToList();
 
@@ -285,12 +285,10 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             return sb.ToString();
         }
 
-        private PageLinkModel CreatePageLinkModel(string currentRoot, KeyValuePair<string, int> pathKeyValuePair,
-            ref int index, int rank, List<Org> data
-)
+        private PageLinkModel CreatePageLinkModel(KeyValuePair<string, int> pathKeyValuePair,
+            ref int index, int rank, IEnumerable<Org> data
+            )
         {
-            if (currentRoot == null) throw new ArgumentNullException("currentRoot");
-
             if (pathKeyValuePair.Key.IsNullOrEmpty())
             {
                 throw new Exception(
@@ -304,25 +302,29 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                               && org.HauntedStatus.Value
                               && org.Authority.ParentAuthority.Name == lineage.ParentOfRightmost
                               && org.Authority.QualifiedName == lineage.Rightmost
-                              )
-                .ToList()
-                .Select(x => x.ExtractFullLink())
+                )
+                .ToList();
+
+            var links = queryable
+                .Select(x => x.ExtractLink())
                 .ToList();
 
             var result = new PageLinkModel();
 
             if (queryable.Any())
             {
+                var first = queryable.First();
+
                 result = new PageLinkModel
-               {
-                   Text = string.Format("{0}. {1}", rank, lineage.FriendlyDescription),
-                   Title =
-                       string.Format("{0} ({1} pubs in this area)",
-                           lineage.FriendlyDescription, pathKeyValuePair.Value),
-                   Filename = string.Format("{0}\\{1}", currentRoot, pathKeyValuePair.Key),
-                   Id = index - 1,
-                   Links = queryable
-               };
+                {
+                    Text = string.Format("{0}. {1}", rank, lineage.FriendlyDescription),
+                    Title =
+                        string.Format("{0} ({1} pubs in this area)",
+                            lineage.FriendlyDescription, pathKeyValuePair.Value),
+                    Filename = first.Authority.QualifiedNameDashified,
+                    Id = index - 1,
+                    Links = links
+                };
             }
 
             return result;

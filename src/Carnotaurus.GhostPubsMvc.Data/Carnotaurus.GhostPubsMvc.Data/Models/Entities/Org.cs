@@ -200,21 +200,15 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         [NotMapped]
         public string GeoPath
         {
-            get
-            {
-                return Authority.Levels.JoinWithBackslash() + "\\" + Authority.QualifiedName;
-                
-            }
+            get { return Authority.Levels.JoinWithBackslash() + "\\" + Authority.QualifiedName; }
         }
 
         #endregion Unmapped properties
 
         #region Methods
 
-        public PageLinkModel ExtractLink(String currentRoot)
+        public PageLinkModel ExtractLink()
         {
-            if (currentRoot == null) throw new ArgumentNullException("currentRoot");
-
             var info = new PageLinkModel
             {
                 Id = Id,
@@ -258,7 +252,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             if (TradingName.IsNullOrEmpty()) throw new ArgumentNullException("TradingName");
 
             Org sibbling = null;
-             
+
             var result = new PageLinkModel
             {
                 Text = TradingName,

@@ -37,7 +37,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         }
 
         public static OutputViewModel CreateRegionOutputViewModel(Authority region,
-            int orgsInRegionCount, IList<PageLinkModel> authorityLinks, 
+            int orgsInRegionCount, IList<PageLinkModel> authorityLinks,
             PageLinkModel next)
         {
             if (region == null) throw new ArgumentNullException("region");
@@ -81,12 +81,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         }
 
         public static OutputViewModel CreateAuthorityOutputViewModel(Authority authority, int count,
-            IList<PageLinkModel> locations, 
-            PageLinkModel history)
+            IList<PageLinkModel> locations,
+            PageLinkModel next)
         {
             if (authority == null) throw new ArgumentNullException("authority");
-            if (locations == null) throw new ArgumentNullException("locations"); 
-            if (history == null) throw new ArgumentNullException("history");
+            if (locations == null) throw new ArgumentNullException("locations");
+            if (next == null) throw new ArgumentNullException("next");
             var model = new OutputViewModel
             {
                 // this is for example: cheshire-west-and-chester-ua.html
@@ -104,7 +104,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     locations.Select(x => x.Text).OxfordAnd()),
                 Total = count,
                 Priority = PageTypePriority.Authority,
-                Next = history,
+                Next = next,
                 Lineage = new Breadcrumb
                 {
                     Region = new PageLinkModel
@@ -130,13 +130,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public static OutputViewModel CreateLocalityOutputViewModel(string locality,
             Authority authority,
             IList<PageLinkModel> orgLinks,
-       
-            PageLinkModel history)
+            PageLinkModel next)
         {
             if (locality == null) throw new ArgumentNullException("locality");
             if (authority == null) throw new ArgumentNullException("authority");
             if (orgLinks == null) throw new ArgumentNullException("orgLinks");
-             if (history == null) throw new ArgumentNullException("history");
+            if (next == null) throw new ArgumentNullException("next");
 
             var model = new OutputViewModel
             {
@@ -161,7 +160,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     string.Format("{0}, {1}, {2}", locality, authority.Name, authority.ParentAuthority.Name),
                 Total = orgLinks.Count(),
                 Priority = PageTypePriority.Locality,
-                Next = history,
+                Next = next,
                 Lineage = new Breadcrumb
                 {
                     Region = new PageLinkModel
@@ -191,11 +190,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             return model;
         }
 
-        public static OutputViewModel CreateOrgOutputViewModel(Org org, 
-            PageLinkModel history)
+        public static OutputViewModel CreateOrgOutputViewModel(Org org,
+            PageLinkModel next)
         {
-            if (org == null) throw new ArgumentNullException("org"); 
-            if (history == null) throw new ArgumentNullException("history");
+            if (org == null) throw new ArgumentNullException("org");
+            if (next == null) throw new ArgumentNullException("next");
 
             var notes = org.Notes.Select(note => new PageLinkModel
             {
@@ -217,7 +216,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 ArticleDescription = string.Format("{0}, {1}", org.Address, org.PostcodePrimaryPart),
                 Tags = org.Sections,
                 Priority = PageTypePriority.Pub,
-                Next = history,
+                Next = next,
                 Lat = org.Lat.ToString(),
                 Lon = org.Lon.ToString(),
                 OtherNames = org.Authority.Orgs
@@ -272,12 +271,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public static OutputViewModel CreatePageTypeOutputViewModel(PageTypeEnum pageType, string priority,
             string description,
-            List<PageLinkModel> links, string title )
+            List<PageLinkModel> links, string title)
         {
             if (priority == null) throw new ArgumentNullException("priority");
             if (description == null) throw new ArgumentNullException("description");
             if (title == null) throw new ArgumentNullException("title");
-             
+
             var model = new OutputViewModel(true)
             {
                 JumboTitle = title,

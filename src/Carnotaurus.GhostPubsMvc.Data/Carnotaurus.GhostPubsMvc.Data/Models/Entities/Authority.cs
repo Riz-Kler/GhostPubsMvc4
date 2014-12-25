@@ -80,7 +80,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             }
         }
 
-         [NotMapped]
+        [NotMapped]
         public List<string> RegionalLineage
         {
             get
@@ -91,6 +91,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 list.Remove("England and Wales");
                 list.Remove("Great Britain");
                 list.Remove("United Kingdom");
+                list.Remove("British Isles");
 
                 return list;
             }
@@ -183,7 +184,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         }
 
         [NotMapped]
-        public bool IsMainlandUnitedKingdomRegion
+        public bool IsUnitedKingdomRegion
         {
             get { return IsRegion && Authoritys.Any(); }
         }
@@ -204,28 +205,31 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 Filename = QualifiedNameDashified
             };
 
-            var ints = ParentAuthority.Authoritys
-                .Where(h => h.HasHauntedOrgs)
-                .OrderBy(o => o.QualifiedName)
-                .Select(s => s.Id).ToList();
-
-            if (ints.Count() > 1)
+            if (ParentAuthority != null)
             {
-                var findIndex = ints.FindIndex(i => i == Id);
+                var ints = ParentAuthority.Authoritys
+                    .Where(h => h.HasHauntedOrgs)
+                    .OrderBy(o => o.QualifiedName)
+                    .Select(s => s.Id).ToList();
 
-                var nextIndex = findIndex + 1;
-
-                var maxIndex = ints.Count;
-
-                if (nextIndex == maxIndex)
+                if (ints.Count() > 1)
                 {
-                    nextIndex = 0;
+                    var findIndex = ints.FindIndex(i => i == Id);
+
+                    var nextIndex = findIndex + 1;
+
+                    var maxIndex = ints.Count;
+
+                    if (nextIndex == maxIndex)
+                    {
+                        nextIndex = 0;
+                    }
+
+                    var nextId = ints[nextIndex];
+
+                    sibbling = ParentAuthority.Authoritys
+                        .FirstOrDefault(x => x.Id == nextId);
                 }
-
-                var nextId = ints[nextIndex];
-
-                sibbling = ParentAuthority.Authoritys
-                    .FirstOrDefault(x => x.Id == nextId);
             }
 
             if (sibbling != null)
@@ -240,6 +244,5 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
             return result;
         }
-
     }
 }
