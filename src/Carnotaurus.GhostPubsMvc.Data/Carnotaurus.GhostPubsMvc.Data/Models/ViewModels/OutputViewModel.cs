@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
@@ -84,6 +85,43 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             IList<PageLinkModel> locations,
             PageLinkModel next)
         {
+            Breadcrumb lineage;
+
+            if (authority.IsExcluded)
+            {
+                lineage = new Breadcrumb
+              {
+                  Region = new PageLinkModel
+                  {
+                      Filename = authority.QualifiedName,
+                      Id = authority.Id,
+                      Text = authority.Name,
+                      Title = authority.Name
+                  },
+              };
+            }
+            else
+            {
+                lineage = new Breadcrumb
+                {
+                    Region = new PageLinkModel
+                    {
+                        Filename = authority.ParentAuthority.QualifiedName,
+                        Id = authority.ParentAuthority.Id,
+                        Text = authority.ParentAuthority.Name,
+                        Title = authority.ParentAuthority.Name
+                    },
+                    Authority = new PageLinkModel
+                    {
+                        Filename = authority.QualifiedName,
+                        Id = authority.Id,
+                        Text = authority.Name,
+                        Title = authority.Name
+                    }
+                };
+
+            }
+
             if (authority == null) throw new ArgumentNullException("authority");
             if (locations == null) throw new ArgumentNullException("locations");
             if (next == null) throw new ArgumentNullException("next");
@@ -105,23 +143,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 Total = count,
                 Priority = PageTypePriority.Authority,
                 Next = next,
-                Lineage = new Breadcrumb
-                {
-                    Region = new PageLinkModel
-                    {
-                        Filename = authority.ParentAuthority.QualifiedName,
-                        Id = authority.ParentAuthority.Id,
-                        Text = authority.ParentAuthority.Name,
-                        Title = authority.ParentAuthority.Name
-                    },
-                    Authority = new PageLinkModel
-                    {
-                        Filename = authority.QualifiedName,
-                        Id = authority.Id,
-                        Text = authority.Name,
-                        Title = authority.Name
-                    }
-                }
+                Lineage = lineage
             };
 
             return model;

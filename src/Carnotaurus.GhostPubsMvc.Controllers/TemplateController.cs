@@ -61,13 +61,13 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             }
 
             GenerateSimpleHtmlPages();
-             
+
             GenerateHtmlSitemap();
-            
+
             GenerateContent();
 
             GenerateGoogleWebmasterSitemap();
-         }
+        }
 
         private void GenerateGoogleWebmasterSitemap()
         {
@@ -350,7 +350,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         {
             int orgsInRegionCount;
 
-            if (!region.IsUnitedKingdomRegion)
+            if (region.IsExcluded)
             {
                 orgsInRegionCount = region.CountHauntedOrgs;
             }

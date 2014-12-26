@@ -184,9 +184,14 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         }
 
         [NotMapped]
-        public bool IsUnitedKingdomRegion
+        public bool IsExcluded
         {
-            get { return IsRegion && Authoritys.Any(); }
+            get
+            {
+                if (Code != null) {return (Code == "JE" || Code == "IOM");}
+                return false;
+                //return IsRegion && Authoritys.Any();
+            }
         }
 
         public int Id { get; set; }

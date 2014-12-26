@@ -2,7 +2,7 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = string.Format("Haunted pubs in {0}", Model.JumboTitle);
-    ViewBag.Link = Model.Lineage.Authority.Url;
+    ViewBag.Link = Model.Lineage.Authority != null ? Model.Lineage.Authority.Url : Model.Lineage.Region.Url ;
     ViewBag.MetaDescription = Model.MetaDescription;
     ViewBag.ArticleDescription = Model.ArticleDescription;
 

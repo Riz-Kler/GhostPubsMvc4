@@ -239,7 +239,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .ToList();
 
             var queryable = data
-                .Where(org => org.HauntedStatus == true)
+                .Where(org => org.HauntedStatus.HasValue && org.HauntedStatus.Value)
                 .ToList()
                 .GroupBy(org => org.GeoPath)
                 .Select(x => new KeyValuePair<String, Int32>(x.Key, x.Count()))
