@@ -152,14 +152,14 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
                 if (lastAncestor.IsExcluded) return true;
 
-                while (lastAncestor != null 
+                while (lastAncestor != null
                     && lastAncestor.ParentId != 0)
                 {
                     var currentAncestor = lastAncestor.ParentAuthority;
 
                     if (currentAncestor != null)
                     {
-                        if (!currentAncestor.Name.IsNullOrEmpty() 
+                        if (!currentAncestor.Name.IsNullOrEmpty()
                             && currentAncestor.IsExcluded)
                         {
                             excluded = true;

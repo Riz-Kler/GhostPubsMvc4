@@ -21,7 +21,7 @@ namespace Carnotaurus.GhostPubsMvc.Web
 
             container.RegisterPerWebRequest<IWriteStore, WriteStore>();
 
-            container.Scan(typeof (CommandManager).Assembly);
+            container.Scan(typeof(CommandManager).Assembly);
 
             container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
 

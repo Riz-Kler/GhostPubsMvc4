@@ -159,6 +159,42 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             if (orgLinks == null) throw new ArgumentNullException("orgLinks");
             if (next == null) throw new ArgumentNullException("next");
 
+            // todo - implement something like this:
+            //if (authority.IsDerivedFromExcludedArea)
+            //{
+            //    lineage = new Breadcrumb
+            //    {
+            //        Region = new PageLinkModel
+            //        {
+            //            Filename = authority.QualifiedName,
+            //            Id = authority.Id,
+            //            Text = authority.Name,
+            //            Title = authority.Name
+            //        },
+            //    };
+            //}
+            //else
+            //{
+            //    lineage = new Breadcrumb
+            //    {
+            //        Region = new PageLinkModel
+            //        {
+            //            Filename = authority.ParentAuthority.QualifiedName,
+            //            Id = authority.ParentAuthority.Id,
+            //            Text = authority.ParentAuthority.Name,
+            //            Title = authority.ParentAuthority.Name
+            //        },
+            //        Authority = new PageLinkModel
+            //        {
+            //            Filename = authority.QualifiedName,
+            //            Id = authority.Id,
+            //            Text = authority.Name,
+            //            Title = authority.Name
+            //        }
+            //    };
+
+            //}
+
             var model = new OutputViewModel
             {
                 // dpc - example: duddon-in-cheshire-west-and-chester-ua.html
@@ -226,6 +262,43 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             }).ToList();
 
             const PageTypeEnum action = PageTypeEnum.Pub;
+
+
+            // todo - implement something like this:
+            //if (authority.IsDerivedFromExcludedArea)
+            //{
+            //    lineage = new Breadcrumb
+            //    {
+            //        Region = new PageLinkModel
+            //        {
+            //            Filename = authority.QualifiedName,
+            //            Id = authority.Id,
+            //            Text = authority.Name,
+            //            Title = authority.Name
+            //        },
+            //    };
+            //}
+            //else
+            //{
+            //    lineage = new Breadcrumb
+            //    {
+            //        Region = new PageLinkModel
+            //        {
+            //            Filename = authority.ParentAuthority.QualifiedName,
+            //            Id = authority.ParentAuthority.Id,
+            //            Text = authority.ParentAuthority.Name,
+            //            Title = authority.ParentAuthority.Name
+            //        },
+            //        Authority = new PageLinkModel
+            //        {
+            //            Filename = authority.QualifiedName,
+            //            Id = authority.Id,
+            //            Text = authority.Name,
+            //            Title = authority.Name
+            //        }
+            //    };
+
+            //}
 
             var model = new OutputViewModel
             {

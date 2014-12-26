@@ -206,7 +206,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 return result;
             }
         }
- 
+
         [NotMapped]
         public bool IsDerivedFromExcludedArea
         {
@@ -234,7 +234,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
             return info;
         }
-         
+
         public PageLinkModel ExtractNextLink()
         {
             if (TradingName.IsNullOrEmpty()) throw new ArgumentNullException("TradingName");
