@@ -333,6 +333,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public bool IsStandardLink { get; set; }
 
+        public bool IsExcluded { get; set; }
 
         public String Lat { get; set; }
 

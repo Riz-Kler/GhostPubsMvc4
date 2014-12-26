@@ -177,7 +177,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
                 if (!Population.HasValue || !Hectares.HasValue) return density;
 
-                density = (double) Population/(double) Hectares;
+                density = (double)Population / (double)Hectares;
 
                 return density;
             }
@@ -188,8 +188,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                if (Code != null) {return (Code == "JE" || Code == "IOM");}
-                return false;
+                // todo - dpc - this should be in the database?
+                return Code != null && (Code == "JE" || Code == "IOM" || Code == "GUR");
                 //return IsRegion && Authoritys.Any();
             }
         }
