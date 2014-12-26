@@ -91,7 +91,10 @@
                 </ul>
                 @if (Model.Next != null)
                 {
-                    <p><a href='@Model.Next.Url' title="Next to @Model.Next.Title">Next to @Model.Next.Title</a></p>
+                    <p>
+                        <a href='@Model.Next.Url' title="Next to @Model.Next.Title">Next to @Model.Next.Title</a> |
+                        <a href='@Model.Lineage.Authority.Url' title="Back to @Model.Lineage.Authority.Text">Back to @Model.Lineage.Authority.Text</a>
+                    </p>
                 }
 
 
@@ -102,7 +105,6 @@
 
                 <div class="fb-like" data-href="@ViewBag.Link" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 
-                <p><a href='@Model.Lineage.Authority.Url' title="Back to @Model.Lineage.Authority.Text">Back to @Model.Lineage.Authority.Text</a></p>
                 <hr class="bs-docs-separator">
             </section>
         </div>

@@ -140,6 +140,43 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             }
         }
 
+
+        [NotMapped]
+        public Boolean IsDerivedFromExcludedArea
+        {
+            get
+            {
+                var excluded = false;
+
+                var lastAncestor = this;
+
+                if (lastAncestor.IsExcluded) return true;
+
+                while (lastAncestor != null 
+                    && lastAncestor.ParentId != 0)
+                {
+                    var currentAncestor = lastAncestor.ParentAuthority;
+
+                    if (currentAncestor != null)
+                    {
+                        if (!currentAncestor.Name.IsNullOrEmpty() 
+                            && currentAncestor.IsExcluded)
+                        {
+                            excluded = true;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
+                    lastAncestor = currentAncestor;
+                }
+
+                return excluded;
+            }
+        }
+
         [NotMapped]
         public bool HasHauntedOrgs
         {
@@ -156,9 +193,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                var count = 0;
-
-                count = Authoritys.Any()
+                var count = Authoritys.Any()
                     ? // how to get county and metropolian county 
                     Authoritys.Sum(s => s.Orgs.Count(x => x.HauntedStatus.HasValue && x.HauntedStatus.Value))
                     : // other ones
@@ -184,7 +219,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         }
 
         [NotMapped]
-        public bool IsExcluded
+        protected bool IsExcluded
         {
             get
             {
@@ -196,7 +231,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
         public int Id { get; set; }
 
-        public PageLinkModel GetNextLink()
+        public PageLinkModel ExtractNextLink()
         {
             if (QualifiedName.IsNullOrEmpty()) throw new ArgumentNullException("QualifiedName");
 

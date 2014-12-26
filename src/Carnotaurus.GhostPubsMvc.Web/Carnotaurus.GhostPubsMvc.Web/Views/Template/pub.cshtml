@@ -51,10 +51,10 @@
             <a href="@Model.Lineage.Locality.Url" title="@Model.Lineage.Locality.Title">@Model.Lineage.Locality.Text</a>
         }
 
-        @if (Model.Lineage.Pub != null)
+        @if (Model.Lineage.Organisation != null)
         {
             <span>&gt;&nbsp;</span>
-            <span>@Model.Lineage.Pub.Text</span>
+            <span>@Model.Lineage.Organisation.Text</span>
         }
 
     </div>
@@ -105,28 +105,34 @@
                         <p>&nbsp;</p>
                     }
 
-                    <div id="map" style="width: 720px; height: 400px"></div>
+                    @if (Model.IsMapAvailable)
+                    {
+                        <div id="map" style="width: 720px; height: 400px"></div>
 
-                    <script>
+                        <script>
 
-                        var map = L.map('map').setView([@Model.Lat, @Model.Lon], 13);
+                            var map = L.map('map').setView([@Model.Lat, @Model.Lon], 13);
 
-                        // add an OpenStreetMap tile layer
-                        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                        }).addTo(map);
+                            // add an OpenStreetMap tile layer
+                            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                            }).addTo(map);
 
-                        L.marker([@Model.Lat, @Model.Lon]).addTo(map)
-                            .bindPopup("<b>@Model.JumboTitle</b>").openPopup();
+                            L.marker([@Model.Lat, @Model.Lon]).addTo(map)
+                                .bindPopup("<b>@Model.JumboTitle</b>").openPopup();
 
-                        var popup = L.popup();
+                            var popup = L.popup();
 
-                    </script>
+                        </script>
 
+                    }
                     @if (Model.Next != null)
                     {
                         <p>&nbsp;</p>
-                        <p>Want to read about&nbsp;<a href='@Model.Next.Url' title="Next to @Model.Next.Title">@Model.Next.Title?</a></p>
+                        <p>
+                            Want to read about&nbsp;<a href='@Model.Next.Url' title="Next to @Model.Next.Title">@Model.Next.Title?</a> |
+                            <a href='@Model.Lineage.Locality.Url' title="Back to @Model.Lineage.Locality.Text">Back to @Model.Lineage.Locality.Text</a>
+                        </p>
                     }
 
                     <div class="fb-like" data-href="@ViewBag.Link" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
@@ -135,7 +141,7 @@
 
                     <div class="fb-comments" data-href="@ViewBag.Link" data-numposts="5" data-colorscheme="dark"></div>
 
-                    <div><a href='@Model.Lineage.Locality.Url' title="Back to @Model.Lineage.Locality.Text">Back to @Model.Lineage.Locality.Text</a></div>
+                    <hr class="bs-docs-separator">
                 </div>
                 <hr>
             </section>

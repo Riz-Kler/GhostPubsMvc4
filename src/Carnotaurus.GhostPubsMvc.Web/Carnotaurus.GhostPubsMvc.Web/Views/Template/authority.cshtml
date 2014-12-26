@@ -2,7 +2,7 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = string.Format("Haunted pubs in {0}", Model.JumboTitle);
-    ViewBag.Link = Model.Lineage.Authority != null ? Model.Lineage.Authority.Url : Model.Lineage.Region.Url ;
+    ViewBag.Link = Model.Lineage.Authority != null ? Model.Lineage.Authority.Url : Model.Lineage.Region.Url;
     ViewBag.MetaDescription = Model.MetaDescription;
     ViewBag.ArticleDescription = Model.ArticleDescription;
 
@@ -75,6 +75,7 @@
                 </div>
                 <h2>Let's journey through our haunted locations</h2>
                 <p>Please select from a haunted town from the following list:</p>
+
                 <ul>
                     @foreach (var link in @Model.PageLinks)
                     {
@@ -83,19 +84,21 @@
                         </li>
                     }
                 </ul>
+
                 @if (Model.Next != null)
                 {
-                    <p><a href='@Model.Next.Url' title="Next to @Model.Next.Title">Next to @Model.Next.Title</a></p>
+                    <p>
+                        <a href='@Model.Next.Url' title="Next to @Model.Next.Title">Next to @Model.Next.Title</a> |
+                        <a href='@Model.Lineage.Region.Url' title="Back to @Model.Lineage.Region.Text">Back to @Model.Lineage.Region.Text</a>
+                    </p>
                 }
-
 
                 <div id="fb-root"></div>
 
                 <div class="fb-comments" data-href="@ViewBag.Link" data-numposts="5" data-colorscheme="dark"></div>
-                 
+
                 <div class="fb-like" data-href="@ViewBag.Link" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 
-                <p><a href='@Model.Lineage.Region.Url' title="Back to @Model.Lineage.Region.Text">Back to @Model.Lineage.Region.Text</a></p>
                 <hr class="bs-docs-separator">
             </section>
         </div>

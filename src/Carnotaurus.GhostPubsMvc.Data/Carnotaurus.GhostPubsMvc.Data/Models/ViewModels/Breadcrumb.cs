@@ -8,6 +8,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public PageLinkModel Region { get; set; }
         public PageLinkModel Authority { get; set; }
         public PageLinkModel Locality { get; set; }
-        public PageLinkModel Pub { get; set; }
+        public PageLinkModel Organisation { get; set; }
     }
 }

@@ -350,7 +350,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         {
             int orgsInRegionCount;
 
-            if (region.IsExcluded)
+            if (region.IsDerivedFromExcludedArea)
             {
                 orgsInRegionCount = region.CountHauntedOrgs;
             }

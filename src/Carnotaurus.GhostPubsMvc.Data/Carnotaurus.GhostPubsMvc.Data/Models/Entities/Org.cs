@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Globalization;
 using System.Linq;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
@@ -200,7 +199,23 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         [NotMapped]
         public string GeoPath
         {
-            get { return Authority.Levels.JoinWithBackslash() + "\\" + Authority.QualifiedName; }
+            get
+            {
+                var result = string.Format("{0}\\{1}", Authority.Levels.JoinWithBackslash(), Authority.QualifiedName);
+
+                return result;
+            }
+        }
+ 
+        [NotMapped]
+        public bool IsDerivedFromExcludedArea
+        {
+            get
+            {
+                var result = Authority.IsDerivedFromExcludedArea;
+
+                return result;
+            }
         }
 
         #endregion Unmapped properties
@@ -219,35 +234,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
             return info;
         }
-
-
-        public PageLinkModel ExtractFullLink()
-        {
-            var result = Authority.Levels;
-
-            result.Add(Locality);
-
-            result.Add(Id.ToString(CultureInfo.InvariantCulture));
-
-            result.Add(TradingName);
-
-            var extractFilename = result.ExtractFilename();
-
-            extractFilename = string.Format(@"http://www.ghostpubs.com/haunted-pubs/{0}", extractFilename);
-
-            var info = new PageLinkModel
-            {
-                Id = Id,
-                Text = TradingName,
-                Title = string.Format("{0}, {1}", TradingName, Postcode),
-                Filename = extractFilename
-            };
-
-            return info;
-        }
-
-
-        public PageLinkModel GetNextLink()
+         
+        public PageLinkModel ExtractNextLink()
         {
             if (TradingName.IsNullOrEmpty()) throw new ArgumentNullException("TradingName");
 

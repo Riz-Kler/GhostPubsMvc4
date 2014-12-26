@@ -87,7 +87,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         {
             Breadcrumb lineage;
 
-            if (authority.IsExcluded)
+            if (authority.IsDerivedFromExcludedArea)
             {
                 lineage = new Breadcrumb
               {
@@ -229,6 +229,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
             var model = new OutputViewModel
             {
+                IsMapAvailable = !org.IsDerivedFromExcludedArea,
                 Filename = org.Filename,
                 JumboTitle = org.JumboTitle,
                 PageTitle = org.Title,
@@ -278,7 +279,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                         Text = org.Locality,
                         Title = org.Locality
                     },
-                    Pub = new PageLinkModel
+                    Organisation = new PageLinkModel
                     {
                         Filename = org.Filename,
                         Id = org.Id,
@@ -333,7 +334,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public bool IsStandardLink { get; set; }
 
-        public bool IsExcluded { get; set; }
+        public bool IsMapAvailable { get; set; }
 
         public String Lat { get; set; }
 

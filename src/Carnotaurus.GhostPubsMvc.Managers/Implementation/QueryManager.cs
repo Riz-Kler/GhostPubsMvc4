@@ -20,7 +20,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             _reader = reader;
         }
 
-        //public PageLinkModel GetNextLink()
+        //public PageLinkModel ExtractNextLink()
         //{
         //    if (QualifiedName.IsNullOrEmpty()) throw new ArgumentNullException("QualifiedName");
 
@@ -146,7 +146,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 Filename = authority.QualifiedNameDashified
             }).ToList();
 
-            var next = region.GetNextLink();
+            var next = region.ExtractNextLink();
 
             var model = OutputViewModel.CreateRegionOutputViewModel(region,
                 orgsInRegionCount, authorityLinks, next);
@@ -159,7 +159,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             if (authority == null) throw new ArgumentNullException("authority");
             if (localities == null) throw new ArgumentNullException("localities");
 
-            var next = authority.GetNextLink();
+            var next = authority.ExtractNextLink();
 
             // dpc - cheshire-west-and-chester-ua.html should contain links to localities, such as: duddon-in-cheshire-west-and-chester-ua.html
             var model = OutputViewModel.CreateAuthorityOutputViewModel(authority, count,
@@ -173,7 +173,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         {
             if (org == null) throw new ArgumentNullException("org");
 
-            var next = org.GetNextLink();
+            var next = org.ExtractNextLink();
 
             var model = OutputViewModel.CreateOrgOutputViewModel(org, next);
 
@@ -309,21 +309,20 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             var result = new PageLinkModel();
 
-            if (queryable.Any())
-            {
-                var first = queryable.First();
+            if (!queryable.Any()) return result;
 
-                result = new PageLinkModel
-                {
-                    Text = string.Format("{0}. {1}", rank, lineage.FriendlyDescription),
-                    Title =
-                        string.Format("{0} ({1} pubs in this area)",
-                            lineage.FriendlyDescription, pathKeyValuePair.Value),
-                    Filename = first.Authority.QualifiedNameDashified,
-                    Id = index - 1,
-                    Links = links
-                };
-            }
+            var first = queryable.First();
+
+            result = new PageLinkModel
+            {
+                Text = string.Format("{0}. {1}", rank, lineage.FriendlyDescription),
+                Title =
+                    string.Format("{0} ({1} pubs in this area)",
+                        lineage.FriendlyDescription, pathKeyValuePair.Value),
+                Filename = first.Authority.QualifiedNameDashified,
+                Id = index - 1,
+                Links = links
+            };
 
             return result;
         }
