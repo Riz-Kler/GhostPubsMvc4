@@ -252,27 +252,16 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                     .OrderBy(o => o.QualifiedName)
                     .Select(s => s.Id).ToList();
 
-                if (ints.Count() > 1)
+                var nextId = ints.FindNext(Id);
+
+                if (nextId.HasValue)
                 {
-                    var findIndex = ints.FindIndex(i => i == Id);
-
-                    var nextIndex = findIndex + 1;
-
-                    var maxIndex = ints.Count;
-
-                    if (nextIndex == maxIndex)
-                    {
-                        nextIndex = 0;
-                    }
-
-                    var nextId = ints[nextIndex];
-
                     sibbling = ParentAuthority.Authoritys
                         .FirstOrDefault(x => x.Id == nextId);
                 }
             }
 
-            if (sibbling != null)
+            if (sibbling != null) 
             {
                 result = new PageLinkModel
                 {

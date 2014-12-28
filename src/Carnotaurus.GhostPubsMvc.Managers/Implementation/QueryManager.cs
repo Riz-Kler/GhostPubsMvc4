@@ -79,37 +79,17 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             if (locality == null) throw new ArgumentNullException("locality");
             if (authority == null) throw new ArgumentNullException("authority");
 
-            var list = orgLocalityLinks.ToList();
-
-            var links = list
-                .Where(x => x.Key.Equals(locality))
-                .Select(x => x.Value)
-                .ToList();
-
-            var last = links.Last();
-
-            var findIndex = list.FindLastIndex(i => i.Value.Url == last.Url);
-
-            var nextIndex = findIndex + 1;
-
-            var maxIndex = list.Count;
-
-            if (nextIndex == maxIndex)
-            {
-                nextIndex = 0;
-            }
-
-            var result = list[nextIndex];
-
+            var collection = new PageLinkKeyedCollection(orgLocalityLinks, locality);
+             
             var next = new PageLinkModel
             {
-                Text = result.Key,
-                Title = result.Key,
-                Filename = result.Key.InDashifed(authority.QualifiedName)
+                Text = collection.NextSibling.Key,
+                Title = collection.NextSibling.Key,
+                Filename = collection.NextSibling.Key.InDashifed(authority.QualifiedName)
             };
 
             var model = OutputViewModel.CreateLocalityOutputViewModel(locality, authority,
-                links, next);
+                collection.Links, next);
 
             return model;
         }

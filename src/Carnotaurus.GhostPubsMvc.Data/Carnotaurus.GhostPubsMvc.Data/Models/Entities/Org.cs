@@ -253,23 +253,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 .OrderBy(o => o.QualifiedLocality)
                 .Select(s => s.Id).ToList();
 
-            if (ints.Count() > 1)
+            var nextId = ints.FindNext(Id);
+
+            if (nextId.HasValue)
             {
-                var findIndex = ints.FindIndex(i => i == Id);
-
-                var nextIndex = findIndex + 1;
-
-                var maxIndex = ints.Count;
-
-                if (nextIndex == maxIndex)
-                {
-                    nextIndex = 0;
-                }
-
-                var nextId = ints[nextIndex];
-
                 sibbling = Authority.Orgs
-                    .FirstOrDefault(x => x.Id == nextId);
+                    .FirstOrDefault(x => x.Id == nextId.Value);
             }
 
             if (sibbling != null)

@@ -6,6 +6,29 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 {
     public static class EnumerableCollectionExtensions
     {
+
+        public static int? FindNext(this IEnumerable<int> enumerable, int toFind)
+        {
+            var ints = enumerable.ToList();
+
+            if (ints.Count() <= 1) return null;
+
+            var findIndex = ints.FindIndex(i => i == toFind);
+
+            var nextIndex = findIndex + 1;
+
+            var maxIndex = ints.Count;
+
+            if (nextIndex >= maxIndex)
+            {
+                nextIndex = 0;
+            }
+
+            int? nextId = ints[nextIndex];
+
+            return nextId;
+        }
+
         public static string ExtractFilename(this IEnumerable<string> enumerable)
         {
             const string pattern = "{0}\\{1}";
@@ -25,9 +48,9 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
         public static List<string> ReverseItems(this IEnumerable<string> enumerable)
         {
-            var result = new List<string>(from c in enumerable.Select((value, index) => new {value, index})
-                orderby c.index descending
-                select c.value);
+            var result = new List<string>(from c in enumerable.Select((value, index) => new { value, index })
+                                          orderby c.index descending
+                                          select c.value);
 
             return result;
         }
