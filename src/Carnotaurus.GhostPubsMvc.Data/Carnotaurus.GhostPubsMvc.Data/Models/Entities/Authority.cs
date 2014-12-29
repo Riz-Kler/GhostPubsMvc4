@@ -153,7 +153,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 if (lastAncestor.IsExcluded) return true;
 
                 while (lastAncestor != null
-                    && lastAncestor.ParentId != 0)
+                       && lastAncestor.ParentId != 0)
                 {
                     var currentAncestor = lastAncestor.ParentAuthority;
 
@@ -212,7 +212,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
                 if (!Population.HasValue || !Hectares.HasValue) return density;
 
-                density = (double)Population / (double)Hectares;
+                density = (double) Population/(double) Hectares;
 
                 return density;
             }
@@ -261,7 +261,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 }
             }
 
-            if (sibbling != null) 
+            if (sibbling != null)
             {
                 result = new PageLinkModel
                 {

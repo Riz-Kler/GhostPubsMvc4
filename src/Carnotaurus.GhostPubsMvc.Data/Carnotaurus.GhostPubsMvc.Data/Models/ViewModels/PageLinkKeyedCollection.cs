@@ -7,12 +7,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
     [Serializable]
     public class PageLinkKeyedCollection : List<KeyValuePair<string, PageLinkModel>>
     {
-        public List<PageLinkModel> Links { get; set; }
-
-        public PageLinkModel Last { get; set; }
-
-        public KeyValuePair<string, PageLinkModel> NextSibling { get; set; }
-
         public PageLinkKeyedCollection(IEnumerable<KeyValuePair<string, PageLinkModel>> range, string key)
         {
             this.AddRange(range);
@@ -26,6 +20,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
             NextSibling = FindNextSibling();
         }
+
+        public List<PageLinkModel> Links { get; set; }
+
+        public PageLinkModel Last { get; set; }
+
+        public KeyValuePair<string, PageLinkModel> NextSibling { get; set; }
 
         private KeyValuePair<string, PageLinkModel> FindNextSibling()
         {
@@ -44,8 +44,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
             var result = this[nextIndex];
 
-            return result ;
+            return result;
         }
-
     }
 }

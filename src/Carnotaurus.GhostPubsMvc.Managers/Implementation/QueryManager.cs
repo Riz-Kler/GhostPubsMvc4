@@ -20,57 +20,6 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             _reader = reader;
         }
 
-        //public PageLinkModel ExtractNextLink()
-        //{
-        //    if (QualifiedName.IsNullOrEmpty()) throw new ArgumentNullException("QualifiedName");
-
-        //    Authority sibbling = null;
-
-        //    // create a default
-        //    var result = new PageLinkModel
-        //    {
-        //        Text = QualifiedName,
-        //        Title = QualifiedName,
-        //        Filename = QualifiedNameDashified
-        //    };
-
-        //    var ints = ParentAuthority.Authoritys
-        //        .Where(h => h.HasHauntedOrgs)
-        //        .OrderBy(o => o.QualifiedName)
-        //        .Select(s => s.Id).ToList();
-
-        //    if (ints.Count() > 1)
-        //    {
-        //        var findIndex = ints.FindIndex(i => i == Id);
-
-        //        var nextIndex = findIndex + 1;
-
-        //        var maxIndex = ints.Count;
-
-        //        if (nextIndex == maxIndex)
-        //        {
-        //            nextIndex = 0;
-        //        }
-
-        //        var nextId = ints[nextIndex];
-
-        //        sibbling = ParentAuthority.Authoritys
-        //            .FirstOrDefault(x => x.Id == nextId);
-        //    }
-
-        //    if (sibbling != null)
-        //    {
-        //        result = new PageLinkModel
-        //        {
-        //            Text = sibbling.QualifiedName,
-        //            Title = sibbling.QualifiedName,
-        //            Filename = sibbling.QualifiedNameDashified
-        //        };
-        //    }
-
-        //    return result;
-        //}
-
         public OutputViewModel PrepareLocalityModel(
             IEnumerable<KeyValuePair<string, PageLinkModel>> orgLocalityLinks, string locality,
             Authority authority)
@@ -80,7 +29,9 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             if (authority == null) throw new ArgumentNullException("authority");
 
             var collection = new PageLinkKeyedCollection(orgLocalityLinks, locality);
-             
+
+            if (collection.NextSibling.Key == null) return null;
+
             var next = new PageLinkModel
             {
                 Text = collection.NextSibling.Key,
@@ -89,7 +40,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             };
 
             var model = OutputViewModel.CreateLocalityOutputViewModel(locality, authority,
-                collection.Links, next);
+                collection.Links, next, "{0}, {1}, {2}");
 
             return model;
         }
@@ -128,8 +79,13 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             var next = region.ExtractNextLink();
 
-            var model = OutputViewModel.CreateRegionOutputViewModel(region,
-                orgsInRegionCount, authorityLinks, next);
+            var model = OutputViewModel.CreateRegionOutputViewModel(
+                region,
+                orgsInRegionCount,
+                authorityLinks,
+                next,
+                "Haunted pubs in {0}"
+                );
 
             return model;
         }
@@ -142,8 +98,13 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             var next = authority.ExtractNextLink();
 
             // dpc - cheshire-west-and-chester-ua.html should contain links to localities, such as: duddon-in-cheshire-west-and-chester-ua.html
-            var model = OutputViewModel.CreateAuthorityOutputViewModel(authority, count,
-                localities, next);
+            var model = OutputViewModel.CreateAuthorityOutputViewModel(
+                authority,
+                count,
+                localities,
+                next,
+                "Haunted pubs in {0}"
+                );
 
             return model;
         }
@@ -155,7 +116,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             var next = org.ExtractNextLink();
 
-            var model = OutputViewModel.CreateOrgOutputViewModel(org, next);
+            var model = OutputViewModel.CreateOrgOutputViewModel(org, next, "{0}, {1}");
 
             return model;
         }
@@ -226,7 +187,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .ToList();
 
             var ranked = queryable.RankByDescending(i => i.Value,
-                (i, r) => new { Rank = r, Item = i })
+                (i, r) => new {Rank = r, Item = i})
                 .ToList();
 
             var index = 1;

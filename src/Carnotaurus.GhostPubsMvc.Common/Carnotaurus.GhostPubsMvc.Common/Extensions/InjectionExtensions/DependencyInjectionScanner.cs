@@ -14,7 +14,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions.InjectionExtensions
                 from type in assembly.GetExportedTypes()
                 where type.Namespace != null && type.Namespace.StartsWith(namespacePrefix)
                 where type.GetInterfaces().Any(x => x.Namespace.StartsWith(namespacePrefix))
-                where Attribute.GetCustomAttribute(type, typeof(ExcludeFromDiRegistrationAttribute)) == null
+                where Attribute.GetCustomAttribute(type, typeof (ExcludeFromDiRegistrationAttribute)) == null
                 select new
                 {
                     Service = type.GetInterfaces().First(x => x.Namespace.StartsWith(namespacePrefix)),

@@ -6,7 +6,6 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 {
     public static class EnumerableCollectionExtensions
     {
-
         public static int? FindNext(this IEnumerable<int> enumerable, int toFind)
         {
             var ints = enumerable.ToList();
@@ -48,9 +47,9 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
         public static List<string> ReverseItems(this IEnumerable<string> enumerable)
         {
-            var result = new List<string>(from c in enumerable.Select((value, index) => new { value, index })
-                                          orderby c.index descending
-                                          select c.value);
+            var result = new List<string>(from c in enumerable.Select((value, index) => new {value, index})
+                orderby c.index descending
+                select c.value);
 
             return result;
         }
