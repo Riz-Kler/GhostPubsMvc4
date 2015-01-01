@@ -742,7 +742,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>4356</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/Carnotaurus.GhostPubsMvc.Web</IISUrl>
+          <IISUrl>http://GhostPubs</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
