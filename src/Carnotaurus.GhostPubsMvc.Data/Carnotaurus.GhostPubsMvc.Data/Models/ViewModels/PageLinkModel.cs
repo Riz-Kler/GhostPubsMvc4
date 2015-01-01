@@ -4,7 +4,7 @@ using Carnotaurus.GhostPubsMvc.Common.Extensions;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
-    [Serializable]
+    
     public class PageLinkModel
     {
         private readonly bool _isStandardLink;

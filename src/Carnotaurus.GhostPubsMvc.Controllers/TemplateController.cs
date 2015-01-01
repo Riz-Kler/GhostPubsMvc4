@@ -591,21 +591,6 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             FileSystemHelper.WriteFile(fullFilePath, contents);
         }
-
-        private void WriteMissingPage(OutputViewModel model)
-        {
-            if (model == null) throw new ArgumentNullException("model");
-            var missing = model.DeepClone();
-
-            missing.Action = PageTypeEnum.Missing;
-
-            var contents = PrepareModel(missing);
-
-            if (!contents.IsNotNullOrEmpty()) return;
-
-            FileSystemHelper.WriteFile(
-                String.Concat(model.Filename.ToLower(), @"\", "detail.html").RedirectionalFormat(),
-                contents);
-        }
+         
     }
 }

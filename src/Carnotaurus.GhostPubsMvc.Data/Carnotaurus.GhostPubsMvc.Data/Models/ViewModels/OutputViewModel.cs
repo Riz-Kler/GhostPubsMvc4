@@ -8,7 +8,7 @@ using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
-    [Serializable]
+
     public class OutputViewModel : IOutputViewModel
     {
         #region Statics
@@ -128,11 +128,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             {
                 // todo - Check this works
 
-                adjusted.Region = lineage.Authority;
-                adjusted.Authority = lineage.Locality;
-                adjusted.Locality = lineage.Organisation;
-
-                lineage = adjusted;
+                lineage = adjusted.Swap(lineage);
             }
 
 
@@ -207,11 +203,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             {
                 // todo - Check this works
 
-                adjusted.Region = lineage.Authority;
-                adjusted.Authority = lineage.Locality;
-                adjusted.Locality = lineage.Organisation;
-
-                lineage = adjusted;
+                lineage = adjusted.Swap(lineage);
             }
 
             var articleDescription = string.Format(descriptionPattern, locality, authority.Name,
@@ -308,11 +300,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             {
                 // todo - Check this works
 
-                adjusted.Region = lineage.Authority;
-                adjusted.Authority = lineage.Locality;
-                adjusted.Locality = lineage.Organisation;
-
-                lineage = adjusted;
+                lineage = adjusted.Swap(lineage);
             }
 
             var model = new OutputViewModel

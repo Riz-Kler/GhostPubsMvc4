@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
-    [Serializable]
+    
     public class PageLinkKeyedCollection : List<KeyValuePair<string, PageLinkModel>>
     {
         public PageLinkKeyedCollection(IEnumerable<KeyValuePair<string, PageLinkModel>> range, string key)
