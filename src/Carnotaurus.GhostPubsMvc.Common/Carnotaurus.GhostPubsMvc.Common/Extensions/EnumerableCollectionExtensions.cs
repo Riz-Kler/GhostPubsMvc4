@@ -47,9 +47,9 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
         public static List<string> ReverseItems(this IEnumerable<string> enumerable)
         {
-            var result = new List<string>(from c in enumerable.Select((value, index) => new {value, index})
-                orderby c.index descending
-                select c.value);
+            var result = new List<string>(from c in enumerable.Select((value, index) => new { value, index })
+                                          orderby c.index descending
+                                          select c.value);
 
             return result;
         }
@@ -94,15 +94,28 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
         public static string OxfordAnd(this IEnumerable<string> enumerable)
         {
-            var output = String.Empty;
-
             var list = enumerable.ToList();
 
-            if (list.Count > 1)
-            {
-                var delimited = String.Join(", ", list.Take(list.Count - 1));
+            string output;
 
-                output = String.Concat(delimited, ", and ", list.LastOrDefault());
+            switch (list.Count)
+            {
+                case 1:
+                    output = list.First();
+                    break;
+                case 2:
+                    output = JoinWithSpace(list);
+                    break;
+                default:
+                {
+                    var delimited = JoinWithComma(list.Take(list.Count - 1));
+
+                    output = String.Format("{0}, and {1}",
+                        delimited,
+                        list.LastOrDefault()
+                        );
+                }
+                    break;
             }
 
             return output;

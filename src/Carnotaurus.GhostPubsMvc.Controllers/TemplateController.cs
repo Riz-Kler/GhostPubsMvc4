@@ -92,7 +92,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
                 // W District
                 //Name = "Wales",
-                //Division = "The Vale of Glamorgan"
+                //Division = "Bridgend"
 
                 // Sc District
                 //Name = "Scotland",
@@ -106,15 +106,18 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 //Name = "North East",
                 //Division = "Tyne and Wear"
 
-                Name = "South West",
-                Division = "Devon",
-
+                //Name = "South West",
+                //Division = "Devon",
 
                 //// County
                 //Name = "North West",
                 //Division = "Cumbria"
+
+                // British Isles
+
             };
 
+            // GenerateGeographicHtmlPages(filter);
             GenerateGeographicHtmlPages();
         }
 
@@ -489,8 +492,12 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                     : locality.InDashifed(authority.QualifiedName)
             }).ToList();
 
+            locations = null;
+             
             var model = _queryManager.PrepareAuthorityModel(authority,
                 links, count);
+
+            links = null;
 
             WriteFile(model);
         }
@@ -591,6 +598,6 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             FileSystemHelper.WriteFile(fullFilePath, contents);
         }
-         
+
     }
 }

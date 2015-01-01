@@ -130,8 +130,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
                 lineage = adjusted.Swap(lineage);
             }
-
-
+             
             var pageLinks = locations.OrderBy(x => x.Text).ToList();
 
             var articleDescription = string.Format(
