@@ -49,5 +49,19 @@ namespace Carnotaurus.GhostPubsMvc.Common.Helpers
         {
             File.WriteAllText(fullFilePath.ToLower(), contents);
         }
+        
+        public static void CopyFolder(String source, String target)
+        {
+            var files = Directory.GetFiles(source);
+
+            foreach (var file in files)
+            {
+                var fileInfo = new FileInfo(file);
+
+                // todo - dpc - come back
+                fileInfo.CopyTo(target + @"\" + fileInfo.Name);
+            }
+
+        }
     }
 }

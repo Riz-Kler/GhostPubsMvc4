@@ -45,20 +45,23 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             return View();
         }
-
+         
         private void GenerateLiveContent()
         {
             var orgsToUpdate = _queryManager.GetOrgsToUpdate();
 
             UpdateOrganisations(orgsToUpdate);
 
-            _currentRoot = String.Format(@"C:\Carnotaurus\{0}\haunted-pubs\",
+            _currentRoot = String.Format(@"C:\Carnotaurus\ {0}\haunted-pubs\",
                 _generationId.ToString().Dashify());
 
             if (_currentRoot != null)
             {
                 FileSystemHelper.EnsureFolders(_currentRoot, false);
             }
+
+            // copy images
+            CopyImageFiles();
 
             GenerateSimpleHtmlPages();
 
@@ -67,6 +70,16 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             GenerateContent();
 
             GenerateGoogleWebmasterSitemap();
+        }
+
+        private void CopyImageFiles()
+        {
+            const string source = @"C:\Carnotaurus\GhostPubsMvc4\src\Carnotaurus.GhostPubsMvc.Web\Carnotaurus.GhostPubsMvc.Web\Images";
+
+            FileSystemHelper.CopyFolder(
+                source,
+                _currentRoot
+                );
         }
 
         private void GenerateGoogleWebmasterSitemap()
@@ -598,6 +611,5 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             FileSystemHelper.WriteFile(fullFilePath, contents);
         }
-
     }
 }

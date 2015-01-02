@@ -441,6 +441,10 @@
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Images\01.jpg" />
+    <Content Include="Images\02.jpg" />
+    <Content Include="Images\03.jpg" />
+    <Content Include="Images\favicon.ico" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\collections.js" />
