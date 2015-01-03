@@ -52,7 +52,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             UpdateOrganisations(orgsToUpdate);
 
-            _currentRoot = String.Format(@"C:\Carnotaurus\ {0}\haunted-pubs\",
+            _currentRoot = String.Format(@"C:\Carnotaurus\{0}\haunted-pubs\",
                 _generationId.ToString().Dashify());
 
             if (_currentRoot != null)
