@@ -39,6 +39,7 @@
             <p>&nbsp;</p>
         </div>
 
+
         <!-- Carousel
             ================================================== -->
         <div id="myCarousel" class="carousel slide">
@@ -87,6 +88,14 @@
             <a class="right carousel-control" href="#myCarousel" title="next" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
         </div>
         <!-- /.carousel -->
+        <hr />
+        <h2>Click on our haunted geographical areas below:</h2>
+        <div class="pull-left">
+            @foreach (var link in Model.PageLinks)
+            {
+                <a class="btn btn-primary btn-lg" title='@link.Title' href='@link.Url'>@link.Text</a>
+            }
+        </div>
         <hr />
 
         <p>

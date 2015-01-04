@@ -130,10 +130,18 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                     && org.AddressTypeId == 1
                     && org.Address != null
                     && org.Postcode != null
-                    && org.Authority != null
+                        // && org.Authority != null
                     && (!org.LaTried || !org.Tried)
                 )
                 //.Take(1)
+                .ToList();
+
+            return results;
+        }
+
+        public List<Authority> GetAllAuthorities()
+        {
+            var results = _reader.Items<Authority>()
                 .ToList();
 
             return results;
@@ -187,7 +195,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .ToList();
 
             var ranked = queryable.RankByDescending(i => i.Value,
-                (i, r) => new {Rank = r, Item = i})
+                (i, r) => new { Rank = r, Item = i })
                 .ToList();
 
             var index = 1;

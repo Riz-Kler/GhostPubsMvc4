@@ -18,6 +18,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Interfaces
 
         IEnumerable<Authority> GetRegions();
 
+        List<Authority> GetAllAuthorities();
+         
         List<PageLinkModel> GetSitemapData();
 
         // weird

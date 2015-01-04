@@ -45,7 +45,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             return View();
         }
-         
+
         private void GenerateLiveContent()
         {
             var orgsToUpdate = _queryManager.GetOrgsToUpdate();
@@ -64,6 +64,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             CopyImageFiles();
 
             GenerateSimpleHtmlPages();
+
+            GenerateHtmlHomePage();
 
             GenerateHtmlSitemap();
 
@@ -152,12 +154,6 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             CreatePageTypeFile(PageTypeEnum.About, PageTypePriority.About, "About Ghost Pubs");
 
-            CreatePageTypeFile(
-                PageTypeEnum.Home,
-                PageTypePriority.Home,
-                "We have the largest haunted pub directory. Please make your selection below!",
-                title: "Haunted pubs with a ghostly difference - Welcome to Ghost Pubs!");
-
             CreatePageTypeFile(PageTypeEnum.FaqBrewery,
                 PageTypePriority.FaqBrewery, "FAQs that Breweries ask about Ghost Pubs");
 
@@ -174,6 +170,28 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             CreatePageTypeFile(PageTypeEnum.ContactUs, PageTypePriority.ContactUs, "Contact Us");
 
             CreatePageTypeFile(PageTypeEnum.Privacy, PageTypePriority.Privacy, "Privacy policy");
+        }
+
+        private void GenerateHtmlHomePage()
+        {
+            var results = _queryManager.GetAllAuthorities().Where(x => x.HasHauntedOrgs);
+
+            var links = results.Select(result => new PageLinkModel
+            {
+                Filename = result.QualifiedName.Dashify(),
+                Id = result.Id,
+                Title = result.QualifiedName,
+                Text = result.QualifiedName
+            })
+            .OrderBy(o => o.Text)
+            .ToList();
+
+            CreatePageTypeFile(
+                PageTypeEnum.Home,
+                PageTypePriority.Home,
+                "We have the largest haunted pub directory. Please make your selection below!",
+                links,
+                "Haunted pubs with a ghostly difference - Welcome to Ghost Pubs!");
         }
 
         private void GenerateHtmlSitemap()
@@ -506,7 +524,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             }).ToList();
 
             locations = null;
-             
+
             var model = _queryManager.PrepareAuthorityModel(authority,
                 links, count);
 
