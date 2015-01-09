@@ -36,15 +36,35 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public virtual ICollection<Authority> Authoritys { get; set; }
 
         [NotMapped]
+        public virtual IEnumerable<Org> HauntedOrgs
+        {
+            get
+            {
+                var many = Authoritys.Where(s => s.Orgs.All(t => t.HauntedStatus.HasValue && t.HauntedStatus.Value
+                    && t.Locality != null
+                        && t.AddressTypeId == 1
+                    )).SelectMany(u => u.Orgs);
+
+                var orgs = Orgs.Where(t => t.HauntedStatus.HasValue && t.HauntedStatus.Value
+                    && t.Locality != null
+                        && t.AddressTypeId == 1);
+
+                var results = Authoritys.Any() ?   many : orgs;
+
+                return results;
+            }
+        }
+
+        [NotMapped]
         public string QualifiedName
         {
             get { return String.Format("{0} {1}", Name, Type.Replace("Met ", String.Empty)); }
         }
 
         [NotMapped]
-        public string QualifiedNameDashified
+        public string CleanQualifiedName
         {
-            get { return QualifiedName.Dashify(); }
+            get { return QualifiedName.Clean(); }
         }
 
         [NotMapped]
@@ -195,7 +215,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             {
                 var count = Authoritys.Any()
                     ? // how to get county and metropolian county 
-                    Authoritys.Sum(s => s.Orgs.Count(x => x.HauntedStatus.HasValue && x.HauntedStatus.Value))
+                    Authoritys.Sum(s => s.HauntedOrgs.Count())
                     : // other ones
                     Orgs.Count(x => x.HauntedStatus.HasValue && x.HauntedStatus.Value);
 
@@ -212,7 +232,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
                 if (!Population.HasValue || !Hectares.HasValue) return density;
 
-                density = (double) Population/(double) Hectares;
+                density = (double)Population / (double)Hectares;
 
                 return density;
             }
@@ -242,7 +262,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             {
                 Text = QualifiedName,
                 Title = QualifiedName,
-                Filename = QualifiedNameDashified
+                Filename = CleanQualifiedName
             };
 
             if (ParentAuthority != null)
@@ -267,7 +287,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 {
                     Text = sibbling.QualifiedName,
                     Title = sibbling.QualifiedName,
-                    Filename = sibbling.QualifiedNameDashified
+                    Filename = sibbling.CleanQualifiedName
                 };
             }
 

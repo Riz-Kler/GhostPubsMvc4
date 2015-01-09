@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
@@ -36,7 +37,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             {
                 Text = collection.NextSibling.Key,
                 Title = collection.NextSibling.Key,
-                Filename = collection.NextSibling.Key.InDashifed(authority.QualifiedName)
+                Filename = collection.NextSibling.Key.In(authority.CleanQualifiedName, true),
             };
 
             var model = OutputViewModel.CreateLocalityOutputViewModel(locality, authority,
@@ -74,7 +75,8 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             {
                 Text = authority.Name,
                 Title = authority.Name,
-                Filename = authority.QualifiedNameDashified
+                Filename = authority.CleanQualifiedName,
+                Total = authority.CountHauntedOrgs.ToString(CultureInfo.InvariantCulture)
             }).ToList();
 
             var next = region.ExtractNextLink();
@@ -268,7 +270,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 Title =
                     string.Format("{0} ({1} pubs in this area)",
                         lineage.FriendlyDescription, pathKeyValuePair.Value),
-                Filename = first.Authority.QualifiedNameDashified,
+                Filename = first.Authority.CleanQualifiedName,
                 Id = index - 1,
                 Links = links
             };

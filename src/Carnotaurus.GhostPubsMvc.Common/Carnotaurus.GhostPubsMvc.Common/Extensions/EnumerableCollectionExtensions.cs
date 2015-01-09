@@ -56,7 +56,7 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
         public static string Dash(this IEnumerable<string> enumerable)
         {
-            var result = JoinWithSpace(enumerable.ToArray()).Dashify();
+            var result = JoinWithSpace(enumerable.ToArray()).Clean(true);
 
             return result;
         }

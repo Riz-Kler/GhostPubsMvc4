@@ -14,9 +14,9 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             return string.Format("{0} in {1}", a, b);
         }
 
-        public static string InDashifed(this string a, string b)
+        public static string In(this string a, string b, bool allowHyphens)
         {
-            return (a.In(b)).Dashify();
+            return (a.In(b)).Clean(allowHyphens);
         }
 
         public static string Between(this string text, string a, string b)
@@ -138,21 +138,23 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
             return Regex.Replace(input.FirstCharToUpper(), "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ");
         }
 
-        public static string RedirectionalFormat(this string input)
+        public static string Clean(this string input)
         {
-            var replace = input.Dashify().ReplaceHyphens();
-
-            return replace;
+            return input.Clean(true);
         }
 
-        public static string Dashify(this string input)
+        public static string Clean(this string input, bool allowHyphen)
         {
             if (input.IsNullOrEmpty())
             {
                 return input;
             }
-
-            return input.ToLower().Underscore().Hyphenate();
+             
+            // todo - dpc - a recent change that should clean up a filename
+            //var f = Path.GetInvalidFileNameChars();
+            //var p = Path.GetInvalidPathChars();
+             
+            return input.ToLower().Underscore().Hyphenate().RemoveSpecialCharacters(allowHyphen);
         }
 
         public static string SeoMetaDescriptionTruncate(this string text)
@@ -176,10 +178,10 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
         public static String[] Wrap(this string text, int max)
         {
             var charCount = 0;
-            var lines = text.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
-            return lines.GroupBy(w => (charCount += (((charCount%max) + w.Length + 1 >= max)
-                ? max - (charCount%max)
-                : 0) + w.Length + 1)/max)
+            var lines = text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            return lines.GroupBy(w => (charCount += (((charCount % max) + w.Length + 1 >= max)
+                ? max - (charCount % max)
+                : 0) + w.Length + 1) / max)
                 .Select(g => string.Join(" ", g.ToArray()))
                 .ToArray();
         }

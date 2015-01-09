@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
@@ -37,11 +38,16 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         }
 
         public static OutputViewModel CreateRegionOutputViewModel(Authority region,
-            int orgsInRegionCount,
+            int count,
             IList<PageLinkModel> authorityLinks,
             PageLinkModel next,
             String descriptionPattern)
         {
+            if (count == 0)
+            {
+                int m = 1;
+            }
+
             if (region == null) throw new ArgumentNullException("region");
             if (authorityLinks == null) throw new ArgumentNullException("authorityLinks");
             if (next == null) throw new ArgumentNullException("next");
@@ -50,10 +56,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             {
                 Region = new PageLinkModel
                 {
-                    Filename = region.QualifiedName,
+                    Filename = region.CleanQualifiedName,
                     Id = region.Id,
                     Text = region.Name,
                     Title = region.Name,
+                    Total = region.CountHauntedOrgs.ToString(CultureInfo.InvariantCulture)
                 },
             };
 
@@ -77,11 +84,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
             var model = new OutputViewModel
             {
-                Filename = region.QualifiedName,
+                Filename = region.CleanQualifiedName,
                 PageTitle = region.Name,
                 JumboTitle = region.Name,
                 Action = PageTypeEnum.Region,
-                Total = orgsInRegionCount,
+                Total = count,
                 Priority = PageTypePriority.Region,
                 Next = next,
                 Lineage = lineage,
@@ -99,6 +106,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             string descriptionPattern
             )
         {
+            if (count == 0)
+            {
+                int m = 1;
+            }
+
             if (authority == null) throw new ArgumentNullException("authority");
             if (locations == null) throw new ArgumentNullException("locations");
             if (next == null) throw new ArgumentNullException("next");
@@ -107,17 +119,19 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             {
                 Region = new PageLinkModel
                 {
-                    Filename = authority.ParentAuthority.QualifiedName,
+                    Filename = authority.ParentAuthority.CleanQualifiedName,
                     Id = authority.ParentAuthority.Id,
                     Text = authority.ParentAuthority.Name,
-                    Title = authority.ParentAuthority.Name
+                    Title = authority.ParentAuthority.Name,
+                    Total = authority.ParentAuthority.CountHauntedOrgs.ToString(CultureInfo.InvariantCulture)
                 },
                 Authority = new PageLinkModel
                 {
-                    Filename = authority.QualifiedName,
+                    Filename = authority.CleanQualifiedName,
                     Id = authority.Id,
                     Text = authority.Name,
-                    Title = authority.Name
+                    Title = authority.Name,
+                    Total = authority.CountHauntedOrgs.ToString(CultureInfo.InvariantCulture)
                 }
             };
 
@@ -143,7 +157,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             var model = new OutputViewModel
             {
                 // this is for example: cheshire-west-and-chester-ua.html
-                Filename = authority.QualifiedName.Dashify(),
+                Filename = authority.CleanQualifiedName,
                 JumboTitle = authority.Name,
                 PageTitle = authority.Name,
                 Action = PageTypeEnum.Authority,
@@ -174,21 +188,23 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             {
                 Region = new PageLinkModel
                 {
-                    Filename = authority.ParentAuthority.QualifiedName,
+                    Filename = authority.ParentAuthority.CleanQualifiedName,
                     Id = authority.ParentAuthority.Id,
                     Text = authority.ParentAuthority.Name,
-                    Title = authority.ParentAuthority.Name
+                    Title = authority.ParentAuthority.Name,
+                    Total = authority.ParentAuthority.CountHauntedOrgs.ToString(CultureInfo.InvariantCulture)
                 },
                 Authority = new PageLinkModel
                 {
-                    Filename = authority.QualifiedName,
+                    Filename = authority.CleanQualifiedName,
                     Id = authority.Id,
                     Text = authority.Name,
-                    Title = authority.Name
+                    Title = authority.Name,
+                    Total = authority.CountHauntedOrgs.ToString(CultureInfo.InvariantCulture)
                 },
                 Locality = new PageLinkModel
                 {
-                    Filename = locality.InDashifed(authority.QualifiedName),
+                    Filename = locality.In(authority.CleanQualifiedName, true),
                     Id = authority.Id,
                     Text = locality,
                     Title = locality
@@ -226,7 +242,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             var model = new OutputViewModel
             {
                 // dpc - example: duddon-in-cheshire-west-and-chester-ua.html
-                Filename = locality.InDashifed(authority.QualifiedName),
+                Filename = locality.In(authority.CleanQualifiedName, true),
                 JumboTitle = locality.In(authority.QualifiedName),
                 PageTitle = locality.In(authority.QualifiedName),
                 Action = PageTypeEnum.Locality,
@@ -264,22 +280,24 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             {
                 Region = new PageLinkModel
                 {
-                    Filename = org.Authority.ParentAuthority.QualifiedName,
+                    Filename = org.Authority.ParentAuthority.CleanQualifiedName,
                     Id = org.Id,
                     Text = org.Authority.ParentAuthority.Name,
-                    Title = org.Authority.ParentAuthority.Name
+                    Title = org.Authority.ParentAuthority.Name,
+                    Total = org.Authority.ParentAuthority.CountHauntedOrgs.ToString(CultureInfo.InvariantCulture)
                 },
                 Authority = new PageLinkModel
                 {
-                    Filename = org.Authority.QualifiedName,
+                    Filename = org.Authority.CleanQualifiedName,
                     Id = org.Id,
                     Text = org.Authority.Name,
-                    Title = org.Authority.Name
+                    Title = org.Authority.Name,
+                    Total = org.Authority.CountHauntedOrgs.ToString(CultureInfo.InvariantCulture)
                 },
                 Locality = new PageLinkModel
                 {
                     Filename = org.QualifiedLocalityDashified
-                        .Dashify(),
+                        .Clean(),
                     Id = org.Id,
                     Text = org.Locality,
                     Title = org.Locality
@@ -402,7 +420,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         {
             get
             {
-                var result = Filename.Dashify().RemoveSpecialCharacters(true).ToLower();
+                var result = Filename.Clean().RemoveSpecialCharacters(true);
 
                 return result;
             }
@@ -420,7 +438,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
                 var url = String.Format(pattern, Filename.Replace("\\", "/"));
 
-                return url.Dashify().ToLower();
+                return url;
             }
         }
 

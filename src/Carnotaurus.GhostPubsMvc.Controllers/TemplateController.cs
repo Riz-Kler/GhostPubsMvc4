@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using System.Xml.Linq;
@@ -53,7 +54,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             UpdateOrganisations(orgsToUpdate);
 
             _currentRoot = String.Format(@"C:\Carnotaurus\{0}\haunted-pubs\",
-                _generationId.ToString().Dashify());
+                _generationId);
 
             if (_currentRoot != null)
             {
@@ -121,6 +122,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 //Name = "North East",
                 //Division = "Tyne and Wear"
 
+                Name = "North West",
+                Division = "Greater Manchester"
+
                 //Name = "South West",
                 //Division = "Devon",
 
@@ -133,7 +137,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             };
 
             // GenerateGeographicHtmlPages(filter);
-            GenerateGeographicHtmlPages();
+            GenerateGeographicHtmlPages(filter);
         }
 
         private void GenerateSimpleHtmlPages()
@@ -178,10 +182,11 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             var links = results.Select(result => new PageLinkModel
             {
-                Filename = result.QualifiedName.Dashify(),
+                Filename = result.CleanQualifiedName,
                 Id = result.Id,
                 Title = result.QualifiedName,
-                Text = result.QualifiedName
+                Text = result.QualifiedName,
+                Total = result.CountHauntedOrgs.ToString(CultureInfo.InvariantCulture)
             })
             .OrderBy(o => o.Text)
             .ToList();
@@ -322,7 +327,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 {
                     Text = x.Name,
                     Title = x.Name,
-                    Filename = x.QualifiedName.Dashify()
+                    Filename = x.CleanQualifiedName,
+                    Total = x.CountHauntedOrgs.ToString(CultureInfo.InvariantCulture)
                 }
                 : null).OrderBy(x => x.Text).ToList();
 
@@ -441,12 +447,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             if (!authority.IsCounty)
             {
                 var orgs =
-                    authority.Orgs.Where(org =>
-                        org.Authority.Name == authority.Name
-                        && org.Locality != null
-                        && org.HauntedStatus.HasValue
-                        && org.HauntedStatus.Value
-                        && org.AddressTypeId == 1)
+                    authority.HauntedOrgs.Where(org =>
+                        org.Authority.Name == authority.Name)
                         .OrderByDescending(org => org.Locality)
                         .ThenByDescending(org => org.TradingName);
 
@@ -514,21 +516,21 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             if (authority == null) throw new ArgumentNullException("authority");
             if (locations == null) throw new ArgumentNullException("locations");
 
+
             var links = locations.Select(locality => new PageLinkModel
             {
                 Text = locality,
                 Title = locality,
                 Filename = authority.IsCounty
-                    ? locality.Dashify()
-                    : locality.InDashifed(authority.QualifiedName)
+                    ? locality.Clean()
+                    : locality.In(authority.CleanQualifiedName, true),
+                Total = authority.HauntedOrgs
+                    .Count(x => x.Locality == locality)
+                    .ToString(CultureInfo.InvariantCulture)
             }).ToList();
-
-            locations = null;
 
             var model = _queryManager.PrepareAuthorityModel(authority,
                 links, count);
-
-            links = null;
 
             WriteFile(model);
         }

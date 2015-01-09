@@ -84,7 +84,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                var result = QualifiedLocality.Dashify();
+                var result = QualifiedLocality.Clean();
 
                 return result;
             }
@@ -190,7 +190,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                var dash = string.Format("{0} {1} {2}", Id, TradingName, Locality).Dashify();
+                var dash = string.Format("{0} {1} {2}", Id, TradingName, Locality).Clean();
 
                 return dash;
             }
@@ -207,6 +207,20 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             }
         }
 
+        [NotMapped]
+        public bool IsHauntedPub
+        {
+            get
+            {
+                var result = HauntedStatus.HasValue && HauntedStatus.Value
+                             && Locality != null
+                             && AddressTypeId == 1;
+
+                return result;
+            }
+        }
+
+        // 
         [NotMapped]
         public bool IsDerivedFromExcludedArea
         {
