@@ -73,18 +73,24 @@
                 <h2>Let's journey through our haunted locations</h2>
                 <p>Please select from a haunted authority from the following list:</p>
                 <ul>
-                    @foreach (var link in @Model.PageLinks)
+                    @foreach (var link in Model.PageLinks)
                     {
-                        if (link.Total.IsNullOrEmpty())
+                        if (link.Total.IsNullOrEmpty() || link.Total.Equals("0"))
                         {
                             <li>
                                 <a rel="nofollow" title='@link.Title' href='@link.Url'>@link.Text</a>
                             </li>
                         }
+                        else if (link.Total.Equals("1"))
+                        {
+                            <li>
+                                <a rel="nofollow" title='@link.Title' href='@link.Url'>@link.Text</a> <span class="label label-info">@link.Total haunted pub</span>
+                            </li>
+                        }
                         else
                         {
                             <li>
-                                <a rel="nofollow" title='@link.Title' href='@link.Url'>@link.Text</a> <span class="label label-info">@link.Total haunted pub(s)</span>
+                                <a rel="nofollow" title='@link.Title' href='@link.Url'>@link.Text</a> <span class="label label-info">@link.Total haunted pubs</span>
                             </li>
                         }
                     }

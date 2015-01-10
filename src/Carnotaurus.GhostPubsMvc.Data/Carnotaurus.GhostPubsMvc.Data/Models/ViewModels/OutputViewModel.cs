@@ -69,7 +69,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 {
                     Text = link.Text,
                     Title = link.Text,
-                    Filename = link.Filename
+                    Filename = link.Filename,
+                    Total = link.Total
                 }
                 : null)
                 .OrderBy(o => o.Text)

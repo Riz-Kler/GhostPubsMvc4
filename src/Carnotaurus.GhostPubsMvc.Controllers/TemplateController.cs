@@ -137,7 +137,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             };
 
             // GenerateGeographicHtmlPages(filter);
-            GenerateGeographicHtmlPages(filter);
+            GenerateGeographicHtmlPages(null);
         }
 
         private void GenerateSimpleHtmlPages()
@@ -516,7 +516,6 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             if (authority == null) throw new ArgumentNullException("authority");
             if (locations == null) throw new ArgumentNullException("locations");
 
-
             var links = locations.Select(locality => new PageLinkModel
             {
                 Text = locality,
@@ -524,9 +523,14 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Filename = authority.IsCounty
                     ? locality.Clean()
                     : locality.In(authority.CleanQualifiedName, true),
-                Total = authority.HauntedOrgs
-                    .Count(x => x.Locality == locality)
-                    .ToString(CultureInfo.InvariantCulture)
+                Total = authority.IsCounty
+                    ? authority.Authoritys
+                        .First(a => a.QualifiedName == locality).HauntedOrgs
+                        .Count()
+                        .ToString(CultureInfo.InvariantCulture)
+                    : authority.HauntedOrgs
+                        .Count(x => x.Locality == locality)
+                        .ToString(CultureInfo.InvariantCulture),
             }).ToList();
 
             var model = _queryManager.PrepareAuthorityModel(authority,

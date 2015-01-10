@@ -81,7 +81,7 @@
                 <div class="well well-large">
                     <p>@Model.ArticleDescription</p>
                     <ul>
-                        @foreach (var link in @Model.PageLinks)
+                        @foreach (var link in Model.PageLinks)
                         {
                             <li>
                                 @link.Text
@@ -89,7 +89,7 @@
                         }
                     </ul>
                     <p>
-                        @foreach (var tag in @Model.Tags)
+                        @foreach (var tag in Model.Tags)
                         {
                             <span class="label label-info">@tag</span>
                         }

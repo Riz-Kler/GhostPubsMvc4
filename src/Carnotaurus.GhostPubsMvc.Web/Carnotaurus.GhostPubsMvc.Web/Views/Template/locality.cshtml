@@ -1,4 +1,5 @@
-﻿@model Carnotaurus.GhostPubsMvc.Data.Models.ViewModels.OutputViewModel
+﻿@using Carnotaurus.GhostPubsMvc.Common.Extensions
+@model Carnotaurus.GhostPubsMvc.Data.Models.ViewModels.OutputViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = string.Format("Haunted pubs in {0}, {1}", Model.JumboTitle, Model.Lineage.Authority.Text);
@@ -81,13 +82,29 @@
                 <h2>Let's journey through our haunted locations</h2>
                 <p>Please select from a haunted pub from the following list:</p>
                 <ul>
-                    @foreach (var link in @Model.PageLinks)
+                    @foreach (var link in Model.PageLinks)
                     {
-                        <li>
-                            <a rel="nofollow" title='@link.Title' href='@link.Url'>@link.Title</a>
-                        </li>
+                        if (link.Total.IsNullOrEmpty() || link.Total.Equals("0"))
+                        {
+                            <li>
+                                <a rel="nofollow" title='@link.Title' href='@link.Url'>@link.Text</a>
+                            </li>
+                        }
+                        else if (link.Total.Equals("1"))
+                        {
+                            <li>
+                                <a rel="nofollow" title='@link.Title' href='@link.Url'>@link.Text</a> <span class="label label-info">@link.Total haunted pub</span>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a rel="nofollow" title='@link.Title' href='@link.Url'>@link.Text</a> <span class="label label-info">@link.Total haunted pubs</span>
+                            </li>
+                        }
                     }
                 </ul>
+
                 @if (Model.Next != null)
                 {
                     <p>

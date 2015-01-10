@@ -1,4 +1,5 @@
-﻿@model Carnotaurus.GhostPubsMvc.Data.Models.ViewModels.OutputViewModel
+﻿@using Carnotaurus.GhostPubsMvc.Common.Extensions
+@model Carnotaurus.GhostPubsMvc.Data.Models.ViewModels.OutputViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = Model.JumboTitle;
@@ -47,10 +48,26 @@
                     <div>
                         @foreach (var link in Model.PageLinks)
                         {
-                            <div>
-                                <a class="btn btn-large btn-primary pagelink" title='@link.Title' href='@link.Url'>@link.Text</a>
-                            </div>
 
+                            if (link.Total.IsNullOrEmpty() || link.Total.Equals("0"))
+                            {
+                                <div>
+                                    <a class="btn btn-large btn-primary pagelink" title='@link.Title' href='@link.Url'>@link.Text</a>
+                                </div>
+                            }
+                            else if (link.Total.Equals("1"))
+                            {
+                                <div>
+                                    <a class="btn btn-large btn-primary pagelink" title='@link.Title' href='@link.Url'>@link.Text</a> <span class="label label-info">@link.Total haunted pub</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div>
+                                    <a class="btn btn-large btn-primary pagelink" title='@link.Title' href='@link.Url'>@link.Text</a> <span class="label label-info">@link.Total haunted pubs</span>
+                                </div>
+
+                            }
                             foreach (var page in link.Links)
                             {
                                 <div>

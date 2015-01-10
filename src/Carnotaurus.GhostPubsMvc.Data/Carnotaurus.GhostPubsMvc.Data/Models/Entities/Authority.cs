@@ -36,23 +36,70 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public virtual ICollection<Authority> Authoritys { get; set; }
 
         [NotMapped]
-        public virtual IEnumerable<Org> HauntedOrgs
+        public virtual List<Org> HauntedOrgs
         {
             get
             {
-                var many = Authoritys.Where(s => s.Orgs.All(t => t.HauntedStatus.HasValue && t.HauntedStatus.Value
-                    && t.Locality != null
-                        && t.AddressTypeId == 1
-                    )).SelectMany(u => u.Orgs);
+                // todo - dpc - come back
 
-                var orgs = Orgs.Where(t => t.HauntedStatus.HasValue && t.HauntedStatus.Value
-                    && t.Locality != null
-                        && t.AddressTypeId == 1);
+                var pubs = new List<Org>();
 
-                var results = Authoritys.Any() ?   many : orgs;
+                if (IsDistrict || IsUnitary || IsLondonBorough)
+                {
+                    pubs.AddRange(Orgs.Where(o => o.IsHauntedPub).ToList());
+                }
+                else if (IsCounty)
+                {
+                    var haunted = Authoritys.SelectMany(a => a.Orgs, (a, b) => new { a, b })
+                        .Where(@t => @t.b.IsHauntedPub)
+                        .Select(@t => @t.b);
 
-                return results;
+                    pubs.AddRange(haunted);
+                }
+                else if (IsRegion || IsEngland || IsCrossBorderArea)
+                {
+                    var orgs = Authoritys.SelectMany(s => s.HauntedOrgs).ToList();
+                    pubs.AddRange(orgs);
+                }
+                else
+                {
+                    // todo - say that anything else isn't supported? Could do region but there are jagged authorities beneath but could go calling this property on those? 
+                    var many = Authoritys.Where(s => s.Orgs.All(t => t.IsHauntedPub
+                        )).SelectMany(u => u.Orgs).ToList();
+
+                    var orgs = Orgs.Where(t => t.IsHauntedPub).ToList();
+
+                    var z = Authoritys.SelectMany(s => s.HauntedOrgs).ToList();
+
+                    // todo - these only seem to be hit by exception regions and never the many? Actually try again
+
+                    // todo - come back - many always seems to be zero
+                    if (orgs.Count > 0)
+                    {
+                        var m = 0;
+                    }
+
+                    // todo - come back - many always seems to be zero
+                    if (many.Count > 0)
+                    {
+                        var m = 0;
+                    }
+
+                    pubs = Authoritys.Any() ? many : orgs;
+                }
+
+                return pubs.ToList();
             }
+        }
+
+        private bool IsCrossBorderArea
+        {
+            get { return Type == "Cross border area"; }
+        }
+
+        private bool IsEngland
+        {
+            get { return Name == "England"; }
         }
 
         [NotMapped]
@@ -83,7 +130,29 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                var result = Type.ToLower().Contains("district");
+                var result = CleanQualifiedName.ToLower().EndsWith("-district");
+
+                return result;
+            }
+        }
+
+        [NotMapped]
+        public bool IsUnitary
+        {
+            get
+            {
+                var result = CleanQualifiedName.ToLower().EndsWith("-ua");
+
+                return result;
+            }
+        }
+
+        [NotMapped]
+        public bool IsLondonBorough
+        {
+            get
+            {
+                var result = CleanQualifiedName.ToLower().EndsWith("-london-borough");
 
                 return result;
             }
@@ -217,7 +286,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                     ? // how to get county and metropolian county 
                     Authoritys.Sum(s => s.HauntedOrgs.Count())
                     : // other ones
-                    Orgs.Count(x => x.HauntedStatus.HasValue && x.HauntedStatus.Value);
+                    Orgs.Count(x => x.IsHauntedPub);
 
                 return count;
             }
