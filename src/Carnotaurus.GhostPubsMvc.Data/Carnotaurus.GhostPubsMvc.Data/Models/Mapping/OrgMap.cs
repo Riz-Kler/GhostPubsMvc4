@@ -71,8 +71,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             this.Property(t => t.Email).HasColumnName("Email");
             this.Property(t => t.Facebook).HasColumnName("Facebook");
             this.Property(t => t.Website).HasColumnName("Website");
-            this.Property(t => t.OsX).HasColumnName("OSX");
-            this.Property(t => t.OsY).HasColumnName("OSY");
             this.Property(t => t.Lat).HasColumnName("Lat");
             this.Property(t => t.Lon).HasColumnName("Lon");
             this.Property(t => t.Tried).HasColumnName("Tried");

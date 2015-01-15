@@ -1,0 +1,225 @@
+﻿@model Carnotaurus.GhostPubsMvc.Data.Models.ViewModels.OutputViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Model.JumboTitle;
+    ViewBag.MetaDescription = Model.MetaDescription;
+    ViewBag.ArticleDescription = Model.ArticleDescription;
+}
+
+<!-- Subhead
+    ================================================== -->
+<header class="jumbotron subhead">
+    <div class="container">
+        <div>
+            <h1>@Model.JumboTitle</h1>
+            <p class="lead">
+                @Model.ArticleDescription
+            </p>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <!-- Docs nav
+        ================================================== -->
+    <div class="row">
+
+        <a href="/" title="Home">Home</a>
+
+        <span>&gt;&nbsp;</span>
+        <span>@Model.JumboTitle</span>
+
+    </div>
+    <div class="row">
+        <div class="span4">
+            <div>
+                <div>
+                    <img width='200' height='200' onclick=" window.open('http://www.ghostpubs.com/haunted-pubs/uk.html', '_self'); " class="img-circle face-relative" src="~/Content/bootstrap/231/img/ghostpubs/padded-logo-125x125.png" alt="Ghost Pubs" title="Ghost Pubs" />
+
+                </div>
+
+            </div>
+        </div>
+        <div class="span8">
+
+            <!-- Well
+                ================================================== -->
+            <section id="well">
+                <div class="page-header">
+                    <h1>Fequently Asked Questions</h1>
+                </div>
+
+                <h2>Quicks links</h2>
+                <ul>
+                    <li>
+                        <a href="/haunted-pubs/uk/partnerships.html">Partner with us</a>
+                        <p>
+                            Here at Ghost Pubs, we love a good ghost story however, we also love to craft new partnerships.
+                        </p>
+                    </li>
+                    <li>
+                        <a href="/haunted-pubs/uk/featuredpartner.html">Featured partner</a>
+                        <p>
+                            You could even have a special promotion!
+                        </p>
+                    </li>
+                    @*<li>
+                            <a href="partners-merchandise.html">Merchandise</a>
+                            <p>
+                                Why not buy some of our merchandise; or contact us about becoming a re-seller?
+                            </p>
+                        </li>*@
+                </ul>
+                <div class="well well-large">
+                    <h3>
+                        Who are we?
+                    </h3>
+                    <p>&nbsp;</p>
+                    <p>
+                        We are an authority on haunted pubs. We have 1500 haunted pubs on record. We remain in contact with high calibre mediums, psychics, and the like. Also, we receive a high volume of web traffic.
+                        We were recently approached for featured articles in <a href="http://www.morningadvertiser.co.uk/Business-Support/haunted-Pubs-Where-there-s-a-chill-there-s-a-way"
+                                                                                title="Interview with Ghost Pubs"
+                                                                                rel="nofollow">The Publican’s Morning Advertiser</a> and <a href="http://www.nwemail.co.uk/news/does-your-regular-haunt-have-ghosts-1.1185925"
+                                                                                                                                            title="Interview with Ghost Pubs" rel="nofollow">the North West Evening Mail</a>.
+
+
+                    </p>
+                    <p>&nbsp;</p>
+                    <h3>What services do we offer?</h3>
+                    <p>&nbsp;</p>
+                    <p>We can help you if your know of a haunted public houses. We can help host events at one of your venues. Here's a list of what we offer:</p>
+                    <p>&nbsp;</p>
+                    <ul>
+                        <li>Advertising space on Ghost Pubs or one of our subsidiary websites (including software development any special requirements)</li>
+                        <li>Organising of ghost tours of haunted public houses, inns, hotels, and breweries</li>
+                        <li>Organising of ranormal events, e.g., séances, psychic nights, and, tarot readings</li>
+                        <li>Providing of prospects for haunted accommodation in your hotels and inns</li>
+                        <li>Providing of ghost stories about your haunted establishments</li>
+                    </ul>
+                    <p>&nbsp;</p>
+
+                </div>
+
+                <h2>Calling all breweries and pub chains</h2>
+                <div class="well well-large">
+                    <p>&nbsp;</p>
+
+                    <h3>How can we help you? Why should you advertise your pubs as haunted?</h3>
+                    <p>&nbsp;</p>
+                    <p>
+                        There is a growing dark tourism. Being haunted is good for business. Tourists from all over the world want to stay at haunted
+                        establishments or at least tour them. Some pubs thrive upon claiming a haunted presence. We are aware of over 1500 haunted pubs.
+                        So, that's over 3% of all UK public houses and it's rising. So, do you have haunted pubs?
+                    </p>
+                    <p>&nbsp;</p>
+
+                    <h3>How can this work for your haunted pubs?</h3>
+                    <p>&nbsp;</p>
+                    <p>
+                        At minimum, your pubs could opt to be included in a regular ghost tour. This can bring more people to your pubs.
+                        You may even be interested in hosting other paranormal events, such as, séances, psychic nights, tarot readings, and a ghost hunt.
+                        If you provide accommodation then being haunted would work even better for you.
+                        If you are interested then please contact Ghost Pubs to become involved. Even if we do not offer the specific
+                        paranormal service that you require ourselves, we would still endeavour to put you in contact with those who would fulfil your needs.
+                        Nonetheless, we are well stocked; one of our tour guides frighteningly resembles Bruce Campbell (Ash, the star of the classic Evil Dead film).
+                    </p>
+                    <p>&nbsp;</p>
+
+                </div>
+
+                <h2>Calling all Pubs</h2>
+                <div class="well well-large">
+                    <p>&nbsp;</p>
+
+                    <h3>Are you thinking of new ways to fill your venue without it costing you a single penny?</h3>
+                    <p>
+                        Have you thought of holding a Paranormal Evening?
+                        We specialise in club and pub events and we promote these evenings throughout the United Kingdom.
+                        We feel this is an excellent opportunity for you to fill your establishment on an evening you are very quiet or even closed.
+                        You do not have to worry about the marketing as we will design the poster and email it over to you.
+                        All you have to do is print a few out, put them up around your establishment, and take the bookings!
+                        It really is that simple.
+                        If this is something that interests you, please respond to this email as early as possible as dates are filling up and I am already taking repeat bookings.
+                    </p>
+                    <p>&nbsp;</p>
+
+                    <h3>How can we help your public house, hotel, or inn, make money?</h3>
+                    <p>&nbsp;</p>
+                    <p>
+                        We can help you if your establishment is supernaturally inhabited, you wish to be incorporated in a haunted hour, or you are
+                        interested in providing a venue for paranormal events. We are officially recognised by the paranormal community and
+                        those connected with pub houses. We, as of late, interviewed with The Publican's Morning Advertiser, the largest media outlet dedicated
+                        to publicans. Here is the article that resulted from our interaction:
+                        <a href="http://www.morningadvertiser.co.uk/Business-Support/haunted-Pubs-Where-there-s-a-chill-there-s-a-way"
+                           title="Interview with Ghost Pubs"
+                           rel="nofollow">Where there is a chill; there is a way!</a>
+                        More than that, we are in contact with highly respected mediums, psychics, and so forth.
+                        And that's only the tip of the iceberg: we get a high volume of web traffic. So, please see our contact details in the footer (below).
+                    </p>
+                    <p>&nbsp;</p>
+
+                    <h3>Why, as publican, should you advertise that your pub is haunted?</h3>
+                    <p>&nbsp;</p>
+                    <p>
+                        There is a developing black tourist undercurrent. Being spooky is useful for business. Travelers from everywhere throughout the
+                        world want to stay at haunted establishment or at a supernatural event at your public house. We are mindful that there are as many as
+                        1500 haunted public houses. That's some 3% of all UK pubs. Many of these pubs flourish and your pub could too.
+                    </p>
+                    <p>&nbsp;</p>
+
+                    <h3>How can running a haunted pub work for me?</h3>
+                    <p>&nbsp;</p>
+                    <p>
+                        It can work for you! Being haunted can bring more people to your pub. Even if you're not haunted then you may even entertain
+                        facilitating other paranormal occasions. For example, you could host: séances, psychic nights, tarot readings, or even a phantom chase.
+                    </p>
+                    <p>&nbsp;</p>
+
+                    <h3>What if Ghost Pubs do not offer everything we want?</h3>
+                    <p>&nbsp;</p>
+                    <p>
+                        This is highly improbably. We most likely offer the particular paranormal service that you require.
+                        If we cannot then we would attempt to place you in contact with the individuals who would satisfy your needs.
+                    </p>
+                    <p>&nbsp;</p>
+                </div>
+
+                <h2>Calling paranormal service providers</h2>
+                <div class="well well-large">
+                    <p>&nbsp;</p>
+
+                    <h3>We can we do?</h3>
+                    <p>&nbsp;</p>
+                    <p>
+                         We can offer you prospects (interested potential customers) if you register with us; or if you advertise your contact details from our pages. It's that simple!
+                    </p>
+                    <p>&nbsp;</p>
+                </div>
+                <p>&nbsp;</p>
+
+                <h2>Contact us as soon as possible</h2>
+                <div class="well well-large">
+                    <p>
+                        If you are interested then please contact Ghost Pubs to become involved.
+                    </p>
+                    <p>
+                        If you would like to become involved then tweet to us at <a rel="nofollow" href="http://www.twitter.com/ghost_pubs" title="Tweet the name of our ghost">@@ghost_pubs</a>
+                    </p>
+                    <p>
+                        Kindest regards,
+                    </p>
+                    <p>
+                        <strong>The Ghost Pubs Team</strong>
+                    </p>
+                    <p>
+                        <a href="/" title="The Ghost Pubs website">www.GhostPubs.com</a>
+                    </p>
+                </div>
+
+                <div class="fb-like" data-href="@ViewBag.Link" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+
+                <hr>
+            </section>
+        </div>
+    </div>
+</div>

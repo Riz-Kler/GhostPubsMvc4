@@ -37,8 +37,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public string Email { get; set; }
         public string Facebook { get; set; }
         public string Website { get; set; }
-        public int? OsX { get; set; }
-        public int? OsY { get; set; }
         public double? Lat { get; set; }
         public double? Lon { get; set; }
         public bool Tried { get; set; }
@@ -201,7 +199,16 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                var result = string.Format("{0}\\{1}", Authority.Levels.JoinWithBackslash(), Authority.QualifiedName);
+                string result = string.Empty;
+
+                try
+                {
+                    result = string.Format("{0}\\{1}", Authority.Levels.JoinWithBackslash(), Authority.QualifiedName);
+                }
+                catch (Exception ex)
+                {
+                    var q = ex.Message;
+                }
 
                 return result;
             }

@@ -11,9 +11,6 @@
         Submissions,
         Promotions,
         Competitions,
-        Partnerships,
-        Partners,
-        FeaturedPartner,
         Contributors,
         About,
         Home,
@@ -22,10 +19,7 @@
         Terms,
         ContactUs,
         Privacy,
-        FaqBrewery,
-        FaqPub,
-        FaqParanormalServiceConsumers,
-        FaqParanormalServiceProviders,
+        Faqs,
         Missing,
     }
 }

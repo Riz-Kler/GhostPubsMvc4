@@ -59,6 +59,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             if (_currentRoot != null)
             {
                 FileSystemHelper.EnsureFolders(_currentRoot, false);
+                FileSystemHelper.EnsureFolders(_currentRoot + @"\uk", false);
             }
 
             // copy images
@@ -81,7 +82,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             FileSystemHelper.CopyFolder(
                 source,
-                _currentRoot
+                _currentRoot + @"\uk"
                 );
         }
 
@@ -119,11 +120,11 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 //Division = "Strabane"
 
                 // Met County
-                //Name = "North East",
-                //Division = "Tyne and Wear"
+                Name = "North East",
+                Division = "Tyne and Wear"
 
-                Name = "North West",
-                Division = "Greater Manchester"
+                //Name = "North West",
+                //Division = "Greater Manchester"
 
                 //Name = "South West",
                 //Division = "Devon",
@@ -148,20 +149,24 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             CreatePageTypeFile(PageTypeEnum.Competitions, PageTypePriority.Competitions, "Competition - Name Our Ghost");
 
-            CreatePageTypeFile(PageTypeEnum.Partners, PageTypePriority.Partners, "Want to partner with us?");
-
-            CreatePageTypeFile(PageTypeEnum.Partnerships, PageTypePriority.Partnerships, "Partnering with Ghost Pubs");
-
-            CreatePageTypeFile(PageTypeEnum.FeaturedPartner, PageTypePriority.FeaturedPartner, "Who are our partners?");
-
             CreatePageTypeFile(PageTypeEnum.Contributors, PageTypePriority.Contributors, "Credits to our contributors");
 
             CreatePageTypeFile(PageTypeEnum.About, PageTypePriority.About, "About Ghost Pubs");
 
-            CreatePageTypeFile(PageTypeEnum.FaqBrewery,
-                PageTypePriority.FaqBrewery, "FAQs that Breweries ask about Ghost Pubs");
-
-            CreatePageTypeFile(PageTypeEnum.FaqPub, PageTypePriority.FaqPub, "FAQs that Publicans ask about Ghost Pubs");
+            // Card #235 - (3) Address FAQs
+            // Do FAQs in the partners and reword what is already there and put a link there and replace with a banner for paranormal services later
+            //✓
+            //If you provide paranormal tours other services then don't let the competition get ahead of you and advertise here
+            //✓
+            //Instead of saying prices - encourage them to make a donation or just discuss it with us? That way we won't appear commercial and could still obtain funding?
+            //✓
+            //Try not to give too much of the business model away for all our potential customers - get ahead of your competitors and don't come last
+            //✓
+            //Due to new advertising take facebook off the authority and region pages - allow it on the pubs for the minute
+            //✓
+            //Put it in an accordion
+             
+            CreatePageTypeFile(PageTypeEnum.Faqs, PageTypePriority.FaqPub, "FAQs that Publicans ask about Ghost Pubs");
 
             CreatePageTypeFile(PageTypeEnum.Newsletter,
                 PageTypePriority.Newsletter, "Sign up for our newsletter here for goodies!");
