@@ -154,19 +154,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             CreatePageTypeFile(PageTypeEnum.About, PageTypePriority.About, "About Ghost Pubs");
 
             // Card #235 - (3) Address FAQs
-            // Do FAQs in the partners and reword what is already there and put a link there and replace with a banner for paranormal services later
-            //✓
-            //If you provide paranormal tours other services then don't let the competition get ahead of you and advertise here
-            //✓
-            //Instead of saying prices - encourage them to make a donation or just discuss it with us? That way we won't appear commercial and could still obtain funding?
-            //✓
-            //Try not to give too much of the business model away for all our potential customers - get ahead of your competitors and don't come last
-            //✓
-            //Due to new advertising take facebook off the authority and region pages - allow it on the pubs for the minute
-            //✓
-            //Put it in an accordion
-             
-            CreatePageTypeFile(PageTypeEnum.Faqs, PageTypePriority.FaqPub, "FAQs that Publicans ask about Ghost Pubs");
+               
+            CreatePageTypeFile(PageTypeEnum.Faqs, PageTypePriority.FaqPub, "FAQs about us");
 
             CreatePageTypeFile(PageTypeEnum.Newsletter,
                 PageTypePriority.Newsletter, "Sign up for our newsletter here for goodies!");
