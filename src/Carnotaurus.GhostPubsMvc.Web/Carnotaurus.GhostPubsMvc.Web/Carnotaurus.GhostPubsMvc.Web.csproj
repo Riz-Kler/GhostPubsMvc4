@@ -669,7 +669,6 @@
     <Content Include="Views\Template\country.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Template\sitemap.cshtml" />
-    <Content Include="Views\Template\submissions.cshtml" />
     <Content Include="Views\Template\promotions.cshtml" />
     <Content Include="Views\Template\competitions.cshtml" />
     <Content Include="Views\Template\contributors.cshtml" />

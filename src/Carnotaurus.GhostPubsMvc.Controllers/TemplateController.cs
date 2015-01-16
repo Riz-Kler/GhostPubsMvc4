@@ -142,9 +142,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         }
 
         private void GenerateSimpleHtmlPages()
-        {
-            CreatePageTypeFile(PageTypeEnum.Submissions, PageTypePriority.Submissions, "Call for submissions");
-
+        { 
             CreatePageTypeFile(PageTypeEnum.Promotions, PageTypePriority.Promotions, "Who is promoting us this month?");
 
             CreatePageTypeFile(PageTypeEnum.Competitions, PageTypePriority.Competitions, "Competition - Name Our Ghost");

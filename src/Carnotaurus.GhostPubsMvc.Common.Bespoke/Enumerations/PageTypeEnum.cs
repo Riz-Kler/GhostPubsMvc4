@@ -8,7 +8,6 @@
         Locality,
         Pub,
         Sitemap,
-        Submissions,
         Promotions,
         Competitions,
         Contributors,

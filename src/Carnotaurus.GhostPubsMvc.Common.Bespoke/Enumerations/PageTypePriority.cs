@@ -15,7 +15,6 @@
 
         public const string Contributors = "0.4";
         public const string About = "0.3";
-        public const string Submissions = "0.2";
         public const string Promotions = "0.1";
         public const string Competitions = "0.1";
         public const string Partnerships = "0.1";
