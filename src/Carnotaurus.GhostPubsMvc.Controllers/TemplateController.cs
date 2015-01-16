@@ -82,7 +82,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             FileSystemHelper.CopyFolder(
                 source,
-                _currentRoot + @"\uk"
+                string.Format("{0}\\uk", _currentRoot)
                 );
         }
 
