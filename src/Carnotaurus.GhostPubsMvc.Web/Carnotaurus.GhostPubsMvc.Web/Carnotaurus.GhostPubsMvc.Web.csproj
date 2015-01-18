@@ -671,12 +671,10 @@
     <Content Include="Views\Template\sitemap.cshtml" />
     <Content Include="Views\Template\promotions.cshtml" />
     <Content Include="Views\Template\competitions.cshtml" />
-    <Content Include="Views\Template\contributors.cshtml" />
     <Content Include="Views\Template\about.cshtml" />
     <Content Include="Views\Template\home.cshtml" />
     <Content Include="Views\Template\accessibility.cshtml" />
     <Content Include="Views\Template\terms.cshtml" />
-    <Content Include="Views\Template\contactus.cshtml" />
     <Content Include="Views\Template\privacy.cshtml" />
     <Content Include="Views\Template\faqs.cshtml" />
     <Content Include="Views\Template\missing.cshtml" />

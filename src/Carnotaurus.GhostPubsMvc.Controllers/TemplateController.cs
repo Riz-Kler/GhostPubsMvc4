@@ -146,9 +146,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             CreatePageTypeFile(PageTypeEnum.Promotions, PageTypePriority.Promotions, "Who is promoting us this month?");
 
             CreatePageTypeFile(PageTypeEnum.Competitions, PageTypePriority.Competitions, "Competition - Name Our Ghost");
-
-            CreatePageTypeFile(PageTypeEnum.Contributors, PageTypePriority.Contributors, "Credits to our contributors");
-
+             
             CreatePageTypeFile(PageTypeEnum.About, PageTypePriority.About, "About Ghost Pubs");
 
             // Card #235 - (3) Address FAQs
@@ -162,9 +160,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 PageTypePriority.Accessibility, "What is our Accessibility Policy?");
 
             CreatePageTypeFile(PageTypeEnum.Terms, PageTypePriority.Terms, "Terms and conditions");
-
-            CreatePageTypeFile(PageTypeEnum.ContactUs, PageTypePriority.ContactUs, "Contact Us");
-
+             
             CreatePageTypeFile(PageTypeEnum.Privacy, PageTypePriority.Privacy, "Privacy policy");
         }
 
