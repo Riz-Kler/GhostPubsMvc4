@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
@@ -144,7 +145,9 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         public List<Authority> GetAllAuthorities()
         {
             var results = _reader.Items<Authority>()
-                .ToList();
+                 .ToList()
+                   .Where(x => !x.IsCrossBorderArea | !x.IsEngland)
+                   .ToList();
 
             return results;
         }

@@ -229,11 +229,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
         // 
         [NotMapped]
-        public bool IsDerivedFromExcludedArea
+        public bool IsOutsideUnitedKingdom
         {
             get
             {
-                var result = Authority.IsDerivedFromExcludedArea;
+                var result = Authority.IsOutsideUnitedKingdom;
 
                 return result;
             }

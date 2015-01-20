@@ -142,15 +142,15 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         }
 
         private void GenerateSimpleHtmlPages()
-        { 
+        {
             CreatePageTypeFile(PageTypeEnum.Promotions, PageTypePriority.Promotions, "Who is promoting us this month?");
 
             CreatePageTypeFile(PageTypeEnum.Competitions, PageTypePriority.Competitions, "Competition - Name Our Ghost");
-             
+
             CreatePageTypeFile(PageTypeEnum.About, PageTypePriority.About, "About Ghost Pubs");
 
             // Card #235 - (3) Address FAQs
-               
+
             CreatePageTypeFile(PageTypeEnum.Faqs, PageTypePriority.FaqPub, "FAQs about us");
 
             CreatePageTypeFile(PageTypeEnum.Newsletter,
@@ -160,13 +160,14 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 PageTypePriority.Accessibility, "What is our Accessibility Policy?");
 
             CreatePageTypeFile(PageTypeEnum.Terms, PageTypePriority.Terms, "Terms and conditions");
-             
+
             CreatePageTypeFile(PageTypeEnum.Privacy, PageTypePriority.Privacy, "Privacy policy");
         }
 
         private void GenerateHtmlHomePage()
         {
-            var results = _queryManager.GetAllAuthorities().Where(x => x.HasHauntedOrgs);
+            var results = _queryManager.GetAllAuthorities()
+                .Where(x => x.HasHauntedOrgs);
 
             var links = results.Select(result => new PageLinkModel
             {
@@ -378,7 +379,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         {
             int orgsInRegionCount;
 
-            if (region.IsDerivedFromExcludedArea)
+            if (region.IsOutsideUnitedKingdom)
             {
                 orgsInRegionCount = region.CountHauntedOrgs;
             }

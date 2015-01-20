@@ -40,11 +40,9 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                // todo - dpc - come back
-
                 var pubs = new List<Org>();
 
-                if (IsDistrict || IsUnitary || IsLondonBorough)
+                if (IsDistrict || IsUnitary || IsLondonBorough || IsOutsideUnitedKingdom)
                 {
                     pubs.AddRange(Orgs.Where(o => o.IsHauntedPub).ToList());
                 }
@@ -92,12 +90,24 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             }
         }
 
-        private bool IsCrossBorderArea
+        [NotMapped]
+        public bool IsCrossBorderArea
         {
-            get { return Type == "Cross border area"; }
+            get
+            {
+                var result = Type == "Cross border area";
+
+                if (result)
+                {
+                    var q = "test";
+                }
+
+                return result;
+            }
         }
 
-        private bool IsEngland
+        [NotMapped]
+        public bool IsEngland
         {
             get { return Name == "England"; }
         }
@@ -231,7 +241,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
 
         [NotMapped]
-        public Boolean IsDerivedFromExcludedArea
+        public Boolean IsOutsideUnitedKingdom
         {
             get
             {
@@ -337,7 +347,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             if (ParentAuthority != null)
             {
                 var ints = ParentAuthority.Authoritys
-                    .Where(h => h.HasHauntedOrgs)
+                    .Where(h => h.HasHauntedOrgs && !h.IsCrossBorderArea)
                     .OrderBy(o => o.QualifiedName)
                     .Select(s => s.Id).ToList();
 

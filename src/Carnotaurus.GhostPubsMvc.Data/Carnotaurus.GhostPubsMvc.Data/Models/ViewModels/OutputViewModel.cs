@@ -139,7 +139,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
             var adjusted = new Breadcrumb();
 
-            if (authority.IsDerivedFromExcludedArea)
+            if (authority.IsOutsideUnitedKingdom)
             {
                 // todo - Check this works
 
@@ -215,7 +215,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
             var adjusted = new Breadcrumb();
 
-            if (authority.IsDerivedFromExcludedArea)
+            if (authority.IsOutsideUnitedKingdom)
             {
                 // todo - Check this works
 
@@ -314,7 +314,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
             var adjusted = new Breadcrumb();
 
-            if (org.IsDerivedFromExcludedArea)
+            if (org.IsOutsideUnitedKingdom)
             {
                 // todo - Check this works
 
@@ -323,7 +323,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
             var model = new OutputViewModel
             {
-                IsMapAvailable = !org.IsDerivedFromExcludedArea,
+                IsMapAvailable = !org.IsOutsideUnitedKingdom,
                 Filename = org.Filename,
                 JumboTitle = org.JumboTitle,
                 PageTitle = org.Title,
