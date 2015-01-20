@@ -141,11 +141,9 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
             if (authority.IsOutsideUnitedKingdom)
             {
-                // todo - Check this works
-
                 lineage = adjusted.Swap(lineage);
             }
-             
+
             var pageLinks = locations.OrderBy(x => x.Text).ToList();
 
             var articleDescription = string.Format(
@@ -217,8 +215,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
             if (authority.IsOutsideUnitedKingdom)
             {
-                // todo - Check this works
-
                 lineage = adjusted.Swap(lineage);
             }
 
@@ -316,8 +312,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
             if (org.IsOutsideUnitedKingdom)
             {
-                // todo - Check this works
-
                 lineage = adjusted.Swap(lineage);
             }
 

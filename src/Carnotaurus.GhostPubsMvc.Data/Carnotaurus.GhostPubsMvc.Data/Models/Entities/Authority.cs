@@ -61,27 +61,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 }
                 else
                 {
-                    // todo - say that anything else isn't supported? Could do region but there are jagged authorities beneath but could go calling this property on those? 
-                    var many = Authoritys.Where(s => s.Orgs.All(t => t.IsHauntedPub
-                        )).SelectMany(u => u.Orgs).ToList();
+                    var many = Authoritys.Where(s => s.Orgs.All(t => t.IsHauntedPub))
+                        .SelectMany(u => u.Orgs)
+                        .ToList();
 
-                    var orgs = Orgs.Where(t => t.IsHauntedPub).ToList();
-
-                    var z = Authoritys.SelectMany(s => s.HauntedOrgs).ToList();
-
-                    // todo - these only seem to be hit by exception regions and never the many? Actually try again
-
-                    // todo - come back - many always seems to be zero
-                    if (orgs.Count > 0)
-                    {
-                        var m = 0;
-                    }
-
-                    // todo - come back - many always seems to be zero
-                    if (many.Count > 0)
-                    {
-                        var m = 0;
-                    }
+                    var orgs = Orgs.Where(t => t.IsHauntedPub)
+                        .ToList();
 
                     pubs = Authoritys.Any() ? many : orgs;
                 }
@@ -323,8 +308,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             get
             {
                 // todo - dpc - this should be in the database?
-                return Code != null && (Code == "JE" || Code == "IOM" || Code == "GUR");
-                //return IsRegion && Authoritys.Any();
+                var result = Code != null && (Code == "JE" || Code == "IOM" || Code == "GUR");
+                return result;
             }
         }
 

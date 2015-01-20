@@ -37,19 +37,19 @@ namespace Carnotaurus.GhostPubsMvc.Common.Helpers
 
         public static void DeleteFolders(String path, Boolean isRedirectional)
         {
-            DeleteDirectory( path.ToLower());
+            DeleteDirectory(path.ToLower());
         }
 
         public static void CreateFolders(String path, Boolean isRedirectional)
         {
-            Directory.CreateDirectory(  path.ToLower());
+            Directory.CreateDirectory(path.ToLower());
         }
 
         public static void WriteFile(string fullFilePath, string contents)
         {
             File.WriteAllText(fullFilePath.ToLower(), contents);
         }
-        
+
         public static void CopyFolder(String source, String target)
         {
             var files = Directory.GetFiles(source);
@@ -58,8 +58,9 @@ namespace Carnotaurus.GhostPubsMvc.Common.Helpers
             {
                 var fileInfo = new FileInfo(file);
 
-                // todo - dpc - come back
-                fileInfo.CopyTo(target + @"\" + fileInfo.Name);
+                var destination = string.Format("{0}\\{1}", target, fileInfo.Name);
+
+                fileInfo.CopyTo(destination);
             }
 
         }

@@ -145,16 +145,11 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
         public static string Clean(this string input, bool allowHyphen)
         {
-            if (input.IsNullOrEmpty())
-            {
-                return input;
-            }
-             
-            // todo - dpc - a recent change that should clean up a filename
-            //var f = Path.GetInvalidFileNameChars();
-            //var p = Path.GetInvalidPathChars();
-             
-            return input.ToLower().Underscore().Hyphenate().RemoveSpecialCharacters(allowHyphen);
+            var result = input.IsNullOrEmpty()
+                ? input
+                : input.ToLower().Underscore().Hyphenate().RemoveSpecialCharacters(allowHyphen);
+
+            return result;
         }
 
         public static string SeoMetaDescriptionTruncate(this string text)
