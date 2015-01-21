@@ -10,6 +10,7 @@ using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
 using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
+using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 {
@@ -77,7 +78,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 Text = authority.Name,
                 Title = authority.Name,
                 Filename = authority.CleanQualifiedName,
-                Total = authority.CountHauntedOrgs.ToString(CultureInfo.InvariantCulture)
+                Total = authority.CountHauntedOrgs
             }).ToList();
 
             var next = region.ExtractNextLink();

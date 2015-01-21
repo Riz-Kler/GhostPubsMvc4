@@ -1,5 +1,4 @@
-﻿@using Carnotaurus.GhostPubsMvc.Common.Extensions
-@model Carnotaurus.GhostPubsMvc.Data.Models.ViewModels.OutputViewModel
+﻿@model Carnotaurus.GhostPubsMvc.Data.Models.ViewModels.OutputViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = string.Format("Haunted pubs in {0}, {1}", Model.JumboTitle, Model.Lineage.Authority.Text);
@@ -76,7 +75,7 @@
                 ================================================== -->
             <section id="carousel">
                 <div class="page-header">
-                    <h1>@Model.JumboTitle <span class="label label-info">@Model.Total haunted pubs</span></h1>
+                    <h1>@Model.JumboTitle <span class="label label-info">@Model.TotalInWords haunted pubs</span></h1>
 
                 </div>
                 <h2>Let's journey through our haunted locations</h2>
@@ -84,22 +83,22 @@
                 <ul>
                     @foreach (var link in Model.PageLinks)
                     {
-                        if (link.Total.IsNullOrEmpty() || link.Total.Equals("0"))
+                        if (link.Total == 0)
                         {
                             <li>
                                 <a rel="nofollow" title='@link.Title' href='@link.Url'>@link.Text</a>
                             </li>
                         }
-                        else if (link.Total.Equals("1"))
+                        else if (link.Total == 1)
                         {
                             <li>
-                                <a rel="nofollow" title='@link.Title' href='@link.Url'>@link.Text</a> <span class="label label-info">@link.Total haunted pub</span>
+                                <a rel="nofollow" title='@link.Title' href='@link.Url'>@link.Text</a> <span class="label label-info">@link.TotalInWords haunted pub</span>
                             </li>
                         }
                         else
                         {
                             <li>
-                                <a rel="nofollow" title='@link.Title' href='@link.Url'>@link.Text</a> <span class="label label-info">@link.Total haunted pubs</span>
+                                <a rel="nofollow" title='@link.Title' href='@link.Url'>@link.Text</a> <span class="label label-info">@link.TotalInWords haunted pubs</span>
                             </li>
                         }
                     }

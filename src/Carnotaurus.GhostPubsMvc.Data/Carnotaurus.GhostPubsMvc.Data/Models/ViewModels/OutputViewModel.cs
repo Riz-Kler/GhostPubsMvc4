@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
+using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
-
     public class OutputViewModel : IOutputViewModel
     {
         #region Statics
@@ -45,7 +44,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         {
             if (count == 0)
             {
-                int m = 1;
+                var m = 1;
             }
 
             if (region == null) throw new ArgumentNullException("region");
@@ -60,7 +59,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     Id = region.Id,
                     Text = region.Name,
                     Title = region.Name,
-                    Total = region.CountHauntedOrgs.ToString(CultureInfo.InvariantCulture)
+                    Total = region.CountHauntedOrgs
                 },
             };
 
@@ -109,7 +108,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         {
             if (count == 0)
             {
-                int m = 1;
+                var m = 1;
             }
 
             if (authority == null) throw new ArgumentNullException("authority");
@@ -124,7 +123,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     Id = authority.ParentAuthority.Id,
                     Text = authority.ParentAuthority.Name,
                     Title = authority.ParentAuthority.Name,
-                    Total = authority.ParentAuthority.CountHauntedOrgs.ToString(CultureInfo.InvariantCulture)
+                    Total = authority.ParentAuthority.CountHauntedOrgs
                 },
                 Authority = new PageLinkModel
                 {
@@ -132,7 +131,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     Id = authority.Id,
                     Text = authority.Name,
                     Title = authority.Name,
-                    Total = authority.CountHauntedOrgs.ToString(CultureInfo.InvariantCulture)
+                    Total = authority.CountHauntedOrgs
                 }
             };
 
@@ -191,7 +190,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     Id = authority.ParentAuthority.Id,
                     Text = authority.ParentAuthority.Name,
                     Title = authority.ParentAuthority.Name,
-                    Total = authority.ParentAuthority.CountHauntedOrgs.ToString(CultureInfo.InvariantCulture)
+                    Total = authority.ParentAuthority.CountHauntedOrgs
                 },
                 Authority = new PageLinkModel
                 {
@@ -199,7 +198,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     Id = authority.Id,
                     Text = authority.Name,
                     Title = authority.Name,
-                    Total = authority.CountHauntedOrgs.ToString(CultureInfo.InvariantCulture)
+                    Total = authority.CountHauntedOrgs
                 },
                 Locality = new PageLinkModel
                 {
@@ -281,7 +280,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     Id = org.Id,
                     Text = org.Authority.ParentAuthority.Name,
                     Title = org.Authority.ParentAuthority.Name,
-                    Total = org.Authority.ParentAuthority.CountHauntedOrgs.ToString(CultureInfo.InvariantCulture)
+                    Total = org.Authority.ParentAuthority.CountHauntedOrgs
                 },
                 Authority = new PageLinkModel
                 {
@@ -289,7 +288,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     Id = org.Id,
                     Text = org.Authority.Name,
                     Title = org.Authority.Name,
-                    Total = org.Authority.CountHauntedOrgs.ToString(CultureInfo.InvariantCulture)
+                    Total = org.Authority.CountHauntedOrgs
                 },
                 Locality = new PageLinkModel
                 {
@@ -438,6 +437,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         }
 
         public IEnumerable<String> Tags { get; set; }
+
+        public String TotalInWords
+        {
+            get { return Total.ToWords(); }
+        }
 
         public Int32 Total { get; set; }
 

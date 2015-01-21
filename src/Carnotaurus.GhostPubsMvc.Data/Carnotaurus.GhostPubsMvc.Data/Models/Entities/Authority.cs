@@ -234,7 +234,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
                 var lastAncestor = this;
 
-                if (lastAncestor.IsExcluded) return true;
+                if (lastAncestor.IsCrownDependency) return true;
 
                 while (lastAncestor != null
                        && lastAncestor.ParentId != 0)
@@ -244,7 +244,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                     if (currentAncestor != null)
                     {
                         if (!currentAncestor.Name.IsNullOrEmpty()
-                            && currentAncestor.IsExcluded)
+                            && currentAncestor.IsCrownDependency)
                         {
                             excluded = true;
                         }
@@ -303,12 +303,31 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         }
 
         [NotMapped]
-        protected bool IsExcluded
+        protected bool IsCrownDependency
         {
             get
             {
                 // todo - dpc - this should be in the database?
                 var result = Code != null && (Code == "JE" || Code == "IOM" || Code == "GUR");
+                return result;
+            }
+        }
+
+        [NotMapped]
+        public string DetailedName
+        {
+            get
+            {
+                string result;
+                if (ParentAuthority != null)
+                {
+                    result = QualifiedName + " in " + ParentAuthority.QualifiedName;
+                }
+                else
+                {
+                    result = QualifiedName;
+                }
+
                 return result;
             }
         }

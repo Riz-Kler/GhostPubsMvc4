@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
+using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
-
     public class PageLinkModel
     {
         private readonly bool _isStandardLink;
@@ -40,7 +40,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 
         public String Text { get; set; }
 
-        public String Total { get; set; }
+        public String TotalInWords
+        {
+            get { return Total.ToWords(); }
+        }
+
+        public Int32 Total { get; set; }
 
         public Int32 Id { get; set; }
 

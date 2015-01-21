@@ -1,4 +1,5 @@
 ﻿@using Carnotaurus.GhostPubsMvc.Common.Extensions
+@using Humanizer
 @model Carnotaurus.GhostPubsMvc.Data.Models.ViewModels.OutputViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -49,24 +50,23 @@
                         @foreach (var link in Model.PageLinks)
                         {
 
-                            if (link.Total.IsNullOrEmpty() || link.Total.Equals("0"))
+                            if (link.Total == 0)
                             {
                                 <div>
                                     <a class="btn btn-large btn-primary pagelink" title='@link.Title' href='@link.Url'>@link.Text</a>
                                 </div>
                             }
-                            else if (link.Total.Equals("1"))
+                            else if (link.Total == 1)
                             {
                                 <div>
-                                    <a class="btn btn-large btn-primary pagelink" title='@link.Title' href='@link.Url'>@link.Text</a> <span class="label label-info">@link.Total haunted pub</span>
+                                    <a class="btn btn-large btn-primary pagelink" title='@link.Title' href='@link.Url'>@link.Text</a> <span class="label label-info">@link.TotalInWords haunted pub</span>
                                 </div>
                             }
                             else
                             {
                                 <div>
-                                    <a class="btn btn-large btn-primary pagelink" title='@link.Title' href='@link.Url'>@link.Text</a> <span class="label label-info">@link.Total haunted pubs</span>
+                                    <a class="btn btn-large btn-primary pagelink" title='@link.Title' href='@link.Url'>@link.Text</a> <span class="label label-info">@link.TotalInWords haunted pubs</span>
                                 </div>
-
                             }
                             foreach (var page in link.Links)
                             {

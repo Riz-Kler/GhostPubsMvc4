@@ -12,6 +12,7 @@ using Carnotaurus.GhostPubsMvc.Data.Models;
 using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
 using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
+using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Controllers
 {
@@ -175,7 +176,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Id = result.Id,
                 Title = result.QualifiedName,
                 Text = result.QualifiedName,
-                Total = result.CountHauntedOrgs.ToString(CultureInfo.InvariantCulture)
+                Total = result.CountHauntedOrgs
             })
             .OrderBy(o => o.Text)
             .ToList();
@@ -183,6 +184,31 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             CreatePageTypeFile(
                 PageTypeEnum.Home,
                 PageTypePriority.Home,
+                "We have the largest haunted pub directory. Please make your selection below!",
+                links,
+                "Haunted pubs with a ghostly difference - Welcome to Ghost Pubs!");
+        }
+
+
+        private void GenerateHtmlZeroMatchPage()
+        {
+            var results = _queryManager.GetAllAuthorities()
+                .Where(x => !x.HasHauntedOrgs);
+
+            var links = results.Select(result => new PageLinkModel
+            {
+                Filename = result.CleanQualifiedName,
+                Id = result.Id,
+                Title = result.QualifiedName,
+                Text = result.DetailedName,
+                Total = result.CountHauntedOrgs
+            })
+          .OrderBy(o => o.Text)
+          .ToList();
+
+            CreatePageTypeFile(
+                PageTypeEnum.ZeroMatch,
+                PageTypePriority.Competitions,
                 "We have the largest haunted pub directory. Please make your selection below!",
                 links,
                 "Haunted pubs with a ghostly difference - Welcome to Ghost Pubs!");
@@ -317,7 +343,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                     Text = x.Name,
                     Title = x.Name,
                     Filename = x.CleanQualifiedName,
-                    Total = x.CountHauntedOrgs.ToString(CultureInfo.InvariantCulture)
+                    Total = x.CountHauntedOrgs
                 }
                 : null).OrderBy(x => x.Text).ToList();
 
@@ -516,10 +542,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                     ? authority.Authoritys
                         .First(a => a.QualifiedName == locality).HauntedOrgs
                         .Count()
-                        .ToString(CultureInfo.InvariantCulture)
                     : authority.HauntedOrgs
                         .Count(x => x.Locality == locality)
-                        .ToString(CultureInfo.InvariantCulture),
+
             }).ToList();
 
             var model = _queryManager.PrepareAuthorityModel(authority,
