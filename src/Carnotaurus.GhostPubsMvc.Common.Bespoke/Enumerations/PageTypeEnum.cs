@@ -18,6 +18,6 @@
         Privacy,
         Faqs,
         Missing,
-        ZeroMatch
+        LeastHaunted
     }
 }

@@ -678,6 +678,7 @@
     <Content Include="Views\Template\privacy.cshtml" />
     <Content Include="Views\Template\faqs.cshtml" />
     <Content Include="Views\Template\missing.cshtml" />
+    <Content Include="Views\Template\leasthaunted.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\images\" />

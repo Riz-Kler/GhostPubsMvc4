@@ -332,6 +332,25 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             }
         }
 
+        [NotMapped]
+        public string LongName
+        {
+            get
+            {
+                string result;
+                if (ParentAuthority != null)
+                {
+                    result = string.Format("{0} : {1}", ParentAuthority.QualifiedName, QualifiedName);
+                }
+                else
+                {
+                    result = QualifiedName;
+                }
+
+                return result;
+            }
+        }
+
         public int Id { get; set; }
 
         public PageLinkModel ExtractNextLink()

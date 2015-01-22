@@ -16,6 +16,7 @@ using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Controllers
 {
+
     public class TemplateController : Controller
     {
         private readonly ICommandManager _commandManager;
@@ -60,11 +61,13 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             if (_currentRoot != null)
             {
                 FileSystemHelper.EnsureFolders(_currentRoot, false);
-                FileSystemHelper.EnsureFolders(_currentRoot + @"\uk", false);
+                FileSystemHelper.EnsureFolders(string.Format("{0}\\uk", _currentRoot), false);
             }
 
             // copy images
             CopyImageFiles();
+
+            GenerateHtmlLeastHauntedPage();
 
             GenerateSimpleHtmlPages();
 
@@ -189,29 +192,28 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 "Haunted pubs with a ghostly difference - Welcome to Ghost Pubs!");
         }
 
-
-        private void GenerateHtmlZeroMatchPage()
+        private void GenerateHtmlLeastHauntedPage()
         {
             var results = _queryManager.GetAllAuthorities()
                 .Where(x => !x.HasHauntedOrgs);
-
+             
             var links = results.Select(result => new PageLinkModel
             {
                 Filename = result.CleanQualifiedName,
                 Id = result.Id,
-                Title = result.QualifiedName,
-                Text = result.DetailedName,
+                Title = result.DetailedName,
+                Text = result.LongName,
                 Total = result.CountHauntedOrgs
             })
           .OrderBy(o => o.Text)
           .ToList();
 
             CreatePageTypeFile(
-                PageTypeEnum.ZeroMatch,
+                PageTypeEnum.LeastHaunted,
                 PageTypePriority.Competitions,
-                "We have the largest haunted pub directory. Please make your selection below!",
+                "Can you find a haunted pub in any of the areas below?",
                 links,
-                "Haunted pubs with a ghostly difference - Welcome to Ghost Pubs!");
+                "The least haunted local authorities in the British Isles");
         }
 
         private void GenerateHtmlSitemap()

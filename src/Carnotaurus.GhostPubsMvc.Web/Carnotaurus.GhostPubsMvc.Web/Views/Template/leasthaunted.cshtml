@@ -1,10 +1,9 @@
 ﻿@using Carnotaurus.GhostPubsMvc.Common.Extensions
-@using Humanizer
 @model Carnotaurus.GhostPubsMvc.Data.Models.ViewModels.OutputViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = string.Format("Haunted pubs in {0}", Model.JumboTitle);
-    ViewBag.Link = Model.Lineage.Region.Url;
+    ViewBag.Title = string.Format("{0} | GhostPubs.com", Model.JumboTitle);
+    ViewBag.Link = "http://www.ghostpubs.com/haunted-pubs/uk.html";
     ViewBag.MetaDescription = Model.MetaDescription;
     ViewBag.ArticleDescription = Model.ArticleDescription;
 
@@ -17,7 +16,7 @@
 <header class="jumbotron subhead">
     <div class="container">
         <div>
-            <h1>Haunted pubs in the @Model.JumboTitle region</h1>
+            <h1>@Model.JumboTitle</h1>
             <p class="lead">
                 @Model.ArticleDescription
             </p>
@@ -33,34 +32,24 @@
 
         <a href="/" title="Home">Home</a>
 
-        <span>&gt;</span>
-        <a href="/haunted-pubs/uk.html" title="Regions">Regions</a>
-
-        @if (Model.Lineage.Region != null)
-        {
-            <span>&gt;&nbsp;</span>
-            <span>@Model.Lineage.Region.Text</span>
-        }
-
+        <span>&gt;&nbsp;</span>
+        <span>@Model.JumboTitle</span>
     </div>
     <div class="row"><p>&nbsp;</p></div>
     <div class="row">
         <div class="span4 bs-docs-sidebar text-center">
             <div>
                 <div>
+                    @*<a href="/haunted-pubs/uk.html">*@
                     <img width='200' height='200' onclick=" window.open('http://www.ghostpubs.com/haunted-pubs/uk.html', '_self'); " class="img-circle face-relative" src="~/Content/bootstrap/231/img/ghostpubs/padded-logo-125x125.png" alt="Ghost Pubs" title="Ghost Pubs" />
+                    @*</a>*@
                 </div>
 
                 <div class="btn-group btn-group-vertical">
-                    @foreach (var link in Model.PageLinks)
-                    {
-                        <a class="btn btn-large btn-primary pagelink" title='@link.Title' href='@link.Url'>@link.Text</a>
-                    }
+
                 </div>
             </div>
         </div>
-
-
 
         <div class="span8">
 
@@ -68,44 +57,22 @@
                 ================================================== -->
             <section id="carousel">
                 <div class="page-header">
-                    <h2>@Model.JumboTitle <span class="label label-info">@Model.TotalInWords haunted pubs</span></h2>
+                    <h2>The list of local authorities that have no haunted pubs</h2>
                 </div>
-
-                <h3>Let's journey through our haunted locations</h3>
-                <p>Please select from a haunted authority from the following list:</p>
+                <h3>Please help us find haunted pubs in the following areas:</h3>
                 <ul>
                     @foreach (var link in Model.PageLinks)
                     {
                         <li>
-                            @if (link.Total == 0)
-                            {
-                                <a rel="nofollow" title='@link.Title' href='@link.Url'>@link.Text</a>
-                            }
-                            else if (link.Total == 1)
-                            {
-                                <a rel="nofollow" title='@link.Title' href='@link.Url'>@link.Text</a> <span class="label label-info">@link.TotalInWords haunted pub</span>
-                            }
-                            else
-                            {
-                                <a rel="nofollow" title='@link.Title' href='@link.Url'>@link.Text</a> <span class="label label-info">@link.TotalInWords haunted pubs</span>
-                            }
+                            @link.Text
                         </li>
                     }
                 </ul>
-                @if (Model.Next != null)
-                {
-                    <p>
-                        <a href='@Model.Next.Url' title="Next to @Model.Next.Title">Next to @Model.Next.Title</a> |
-                        <a href='/haunted-pubs/uk.html' title="Back to regions">Back to regions</a>
-                    </p>
-                }
 
 
                 <div id="fb-root"></div>
 
                 <div class="fb-comments" data-href="@ViewBag.Link" data-numposts="5" data-colorscheme="dark"></div>
-
-
 
                 <div class="fb-like" data-href="@ViewBag.Link" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 
@@ -113,4 +80,6 @@
             </section>
         </div>
     </div>
+
+
 </div>
