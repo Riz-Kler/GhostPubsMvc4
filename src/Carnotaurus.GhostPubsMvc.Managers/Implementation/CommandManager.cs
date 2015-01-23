@@ -68,19 +68,20 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
             if (code == null) return;
 
-            // todo - dpc - Card #389 - St Albans
+            // Card #389 - St Albans
             if (code.Value == "E07000100")
             {
                 code.Value = "E07000240";
             }
-              
+
+            // Card #389 - Glasgow City
             if (code.Value == "S12000043")
             {
                 code.Value = "S12000046";
             }
-             
+
             org.LaCode = code.Value;
-                 
+
             org.Modified = DateTime.Now;
         }
 
