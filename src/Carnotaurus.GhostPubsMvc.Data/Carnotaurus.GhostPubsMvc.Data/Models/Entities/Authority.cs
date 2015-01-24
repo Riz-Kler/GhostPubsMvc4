@@ -5,6 +5,7 @@ using System.Linq;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
+using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 {
@@ -309,6 +310,31 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             {
                 // todo - dpc - this should be in the database?
                 var result = Code != null && (Code == "JE" || Code == "IOM" || Code == "GUR");
+                return result;
+            }
+        }
+
+
+        [NotMapped]
+        public string Summary
+        {
+            get
+            {
+                string result;
+
+                if (Hectares != null && Population != null)
+                {
+                    result = string.Format("{0} has {1} haunted pubs. Also, it has {2} people. It occupies is {3} square miles... So, stayed tuned to find out what this all means!",
+                        DetailedName,
+                        CountHauntedOrgs.ToWords(),
+                        Population.Value.ToWords(),
+                        ((double)Hectares.Value / (double)258.999).ToInt32().ToWords());
+                }
+                else
+                {
+                    result = string.Empty;
+                }
+
                 return result;
             }
         }

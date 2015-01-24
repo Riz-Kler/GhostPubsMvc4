@@ -195,8 +195,12 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         private void GenerateHtmlLeastHauntedPage()
         {
             var results = _queryManager.GetAllAuthorities()
-                .Where(x => !x.HasHauntedOrgs);
-             
+                .Where(x => !x.HasHauntedOrgs)
+                .ToList()
+                .OrderBy(o => o.IsEngland).ThenBy(o => o.LongName)
+                .ToList()
+                ;
+
             var links = results.Select(result => new PageLinkModel
             {
                 Filename = result.CleanQualifiedName,
@@ -205,8 +209,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Text = result.LongName,
                 Total = result.CountHauntedOrgs
             })
-          .OrderBy(o => o.Text)
-          .ToList();
+           .ToList();
 
             CreatePageTypeFile(
                 PageTypeEnum.LeastHaunted,

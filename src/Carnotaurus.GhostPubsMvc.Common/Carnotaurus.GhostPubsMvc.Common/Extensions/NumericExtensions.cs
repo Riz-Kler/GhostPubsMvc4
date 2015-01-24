@@ -22,5 +22,12 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
             return result;
         }
+
+        public static Int32 ToInt32(this Double value)
+        {
+            var result = Convert.ToInt32(value);
+
+            return result;
+        }
     }
 }

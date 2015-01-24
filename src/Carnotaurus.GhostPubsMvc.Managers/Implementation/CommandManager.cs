@@ -40,7 +40,14 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 
         public void Save()
         {
-            _writer.SaveChanges();
+            try
+            {
+                _writer.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                var message = ex.InnerException;
+            }
         }
 
         public void UpdateOrgFromGoogleResponse(Org org, XContainer element)
