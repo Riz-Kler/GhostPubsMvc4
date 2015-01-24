@@ -94,7 +94,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 Lineage = lineage,
                 PageLinks = pageLinks,
                 MetaDescription = metaDescription,
-                ArticleDescription = articleDescription
+                ArticleDescription = articleDescription,
+                Summary = region.Summary
             };
 
             return model;

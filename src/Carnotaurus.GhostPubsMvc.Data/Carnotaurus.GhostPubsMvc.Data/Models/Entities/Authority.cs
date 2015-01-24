@@ -324,7 +324,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
                 if (Hectares != null && Population != null)
                 {
-                    result = string.Format("{0} has {1} haunted pubs. Also, it has {2} people. It occupies is {3} square miles... So, stayed tuned to find out what this all means!",
+                    result = string.Format("{0} has {1} haunted pubs. Also, it has {2} people. It occupies {3} square miles.",
                         DetailedName,
                         CountHauntedOrgs.ToWords(),
                         Population.Value.ToWords(),
