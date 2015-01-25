@@ -29,5 +29,13 @@ namespace Carnotaurus.GhostPubsMvc.Common.Extensions
 
             return result;
         }
+
+
+        public static Int64 ToInt64(this Double value)
+        {
+            var result = Convert.ToInt64(value);
+
+            return result;
+        }
     }
 }

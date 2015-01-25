@@ -304,6 +304,36 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         }
 
         [NotMapped]
+        public double DensityInSquareMiles
+        {
+            get
+            {
+                var density = 0.0;
+
+                if (!Population.HasValue || !Hectares.HasValue) return density;
+
+                density = ((double)Population / ((double)SquareMiles));
+
+                return density;
+            }
+        }
+
+        [NotMapped]
+        public double CountHauntedPubOverSquareMiles
+        {
+            get
+            {
+                var density = 0.0;
+
+                if (!Population.HasValue || !Hectares.HasValue || CountHauntedOrgs <= 0) return density;
+                 
+                density = (((double) SquareMiles)/(double) CountHauntedOrgs);
+
+                return density;
+            }
+        }
+
+        [NotMapped]
         protected bool IsCrownDependency
         {
             get
@@ -316,6 +346,15 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
 
         [NotMapped]
+        public int SquareMiles
+        {
+            get
+            {
+                return ((double)Hectares.Value / (double)258.999).ToInt32();
+            }
+        }
+
+        [NotMapped]
         public string Summary
         {
             get
@@ -324,11 +363,27 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
                 if (Hectares != null && Population != null)
                 {
-                    result = string.Format("{0} has {1} haunted pubs. Also, it has {2} people. It occupies {3} square miles.",
-                        DetailedName,
-                        CountHauntedOrgs.ToWords(),
-                        Population.Value.ToWords(),
-                        ((double)Hectares.Value / (double)258.999).ToInt32().ToWords());
+                    try
+                    {
+                        result =
+                            string.Format(
+                                "{0} has {1} haunted pubs. Also, it has {2} people. It occupies {3} square miles. " +
+                                "So, that's {4} people per square mile. It has {5} haunted pubs per square mile. " +
+                                "Finally, it has {6} people per haunted pub.",
+                                DetailedName,
+                                CountHauntedOrgs.ToWords(),
+                                Population.Value.ToWords(),
+                                SquareMiles.ToWords(),
+                                DensityInSquareMiles.ToInt32().ToWords(),
+                                CountHauntedPubOverSquareMiles.ToInt32().ToWords(),
+                                ((double)Population.Value / (double)CountHauntedOrgs).ToInt32().ToWords())
+                            ;
+                    }
+                    catch (Exception ex)
+                    {
+                        var m = ex.InnerException;
+                        result = string.Empty;
+                    }
                 }
                 else
                 {
