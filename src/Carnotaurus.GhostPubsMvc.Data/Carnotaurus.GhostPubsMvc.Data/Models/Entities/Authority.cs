@@ -20,8 +20,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public string Name { get; set; }
         public string Code { get; set; }
         public string Type { get; set; }
-        public int? Population { get; set; }
-        public int? Hectares { get; set; }
+        public int Population { get; set; }
+        public int Hectares { get; set; }
         public DateTime? Created { get; set; }
         public DateTime? Modified { get; set; }
         public DateTime? Deleted { get; set; }
@@ -267,14 +267,14 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                var result = CountHauntedOrgs.IsAboveZero();
+                var result = HauntedPubCount.IsAboveZero();
 
                 return result;
             }
         }
 
         [NotMapped]
-        public int CountHauntedOrgs
+        public int HauntedPubCount
         {
             get
             {
@@ -289,47 +289,40 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         }
 
         [NotMapped]
-        public double Density
+        public double DensityInHectares
         {
             get
             {
-                var density = 0.0;
-
-                if (!Population.HasValue || !Hectares.HasValue) return density;
-
-                density = (double)Population / (double)Hectares;
+                var density = Population / (double)Hectares;
 
                 return density;
             }
         }
 
         [NotMapped]
-        public double DensityInSquareMiles
+        public int DensityInSquareMiles
         {
             get
             {
-                var density = 0.0;
+                var result = (Population / (double)AreaSizeInSquareMiles).ToInt32();
 
-                if (!Population.HasValue || !Hectares.HasValue) return density;
-
-                density = ((double)Population / ((double)SquareMiles));
-
-                return density;
+                return result;
             }
         }
 
         [NotMapped]
-        public double CountHauntedPubOverSquareMiles
+        public int DensityPerHauntedPub
         {
             get
             {
-                var density = 0.0;
+                var result = 0;
 
-                if (!Population.HasValue || !Hectares.HasValue || CountHauntedOrgs <= 0) return density;
-                 
-                density = (((double) SquareMiles)/(double) CountHauntedOrgs);
+                if (HauntedPubCount <= 0) return result;
 
-                return density;
+                result = (DensityInSquareMiles / (double)HauntedPubCount)
+                    .ToInt32();
+
+                return result;
             }
         }
 
@@ -343,15 +336,28 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 return result;
             }
         }
-
-
+         
         [NotMapped]
-        public int SquareMiles
+        public int AreaSizeInSquareMiles
         {
             get
             {
-                return ((double)Hectares.Value / (double)258.999).ToInt32();
+                var result = (Hectares / 258.999).ToInt32();
+
+                return result;
             }
+        }
+
+        [NotMapped]
+        public int PeoplePerHauntedPub
+        {
+            get { return (Population / (double)HauntedPubCount).ToInt32(); }
+        }
+
+        [NotMapped]
+        public int AreaSizeInSquareMilesPerHauntedPub
+        {
+            get { return (AreaSizeInSquareMiles / (double)HauntedPubCount).ToInt32(); }
         }
 
         [NotMapped]
@@ -361,32 +367,32 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             {
                 string result;
 
-                if (Hectares != null && Population != null)
+                try
                 {
-                    try
-                    {
-                        result =
-                            string.Format(
-                                "{0} has {1} haunted pubs. Also, it has {2} people. It occupies {3} square miles. " +
-                                "So, that's {4} people per square mile. It has {5} haunted pubs per square mile. " +
-                                "Finally, it has {6} people per haunted pub.",
-                                DetailedName,
-                                CountHauntedOrgs.ToWords(),
-                                Population.Value.ToWords(),
-                                SquareMiles.ToWords(),
-                                DensityInSquareMiles.ToInt32().ToWords(),
-                                CountHauntedPubOverSquareMiles.ToInt32().ToWords(),
-                                ((double)Population.Value / (double)CountHauntedOrgs).ToInt32().ToWords())
-                            ;
-                    }
-                    catch (Exception ex)
-                    {
-                        var m = ex.InnerException;
-                        result = string.Empty;
-                    }
+                    result =
+                        string.Format(
+                            "In approximate terms: {0} has " +
+                            "It has a population of {1} people. " +
+                            "It occupies {2} square miles. " +
+                            "So, that's a density of {3} people per square mile. " +
+                            "More interestingly in terms of haunted pubs, it has {4} such pubs. " +
+                            "So that's {5} people per haunted pub. " +
+                            "Further, that's {6} area size in square miles per haunted pub. " +
+                            "Considering both factors of population and area size for haunted pubs, it means there is one haunted pub for every {7} square miles. ",
+                            FullyQualifiedName,
+                            Population.ToWords(),
+                            AreaSizeInSquareMiles.ToWords(),
+                            DensityInSquareMiles.ToWords(),
+                            HauntedPubCount.ToWords(),
+                            PeoplePerHauntedPub.ToWords(),
+                            AreaSizeInSquareMilesPerHauntedPub.ToWords(),
+                            DensityPerHauntedPub.ToWords()
+                            )
+                        ;
                 }
-                else
+                catch (Exception ex)
                 {
+                    var m = ex.InnerException;
                     result = string.Empty;
                 }
 
@@ -395,44 +401,43 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         }
 
         [NotMapped]
-        public string DetailedName
+        public string FullyQualifiedName
         {
             get
             {
-                string result;
-                if (ParentAuthority != null)
-                {
-                    result = QualifiedName + " in " + ParentAuthority.QualifiedName;
-                }
-                else
-                {
-                    result = QualifiedName;
-                }
+                const string pattern = "{0} in {1}";
+
+                var result = GetFullyQualifiedName(pattern);
 
                 return result;
             }
         }
 
         [NotMapped]
-        public string LongName
+        public string FullyQualifiedNameParentFirst
         {
             get
             {
-                string result;
-                if (ParentAuthority != null)
-                {
-                    result = string.Format("{0} : {1}", ParentAuthority.QualifiedName, QualifiedName);
-                }
-                else
-                {
-                    result = QualifiedName;
-                }
+                const string pattern = "{1} : {0}";
+
+                var result = GetFullyQualifiedName(pattern);
 
                 return result;
             }
         }
 
         public int Id { get; set; }
+
+        private string GetFullyQualifiedName(string pattern)
+        {
+            var result = ParentAuthority != null
+                ? string.Format(pattern,
+                    QualifiedName,
+                    ParentAuthority.QualifiedName)
+                : QualifiedName;
+
+            return result;
+        }
 
         public PageLinkModel ExtractNextLink()
         {
@@ -463,16 +468,15 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                         .FirstOrDefault(x => x.Id == nextId);
                 }
             }
+             
+            if (sibbling == null) return result;
 
-            if (sibbling != null)
+            result = new PageLinkModel
             {
-                result = new PageLinkModel
-                {
-                    Text = sibbling.QualifiedName,
-                    Title = sibbling.QualifiedName,
-                    Filename = sibbling.CleanQualifiedName
-                };
-            }
+                Text = sibbling.QualifiedName,
+                Title = sibbling.QualifiedName,
+                Filename = sibbling.CleanQualifiedName
+            };
 
             return result;
         }

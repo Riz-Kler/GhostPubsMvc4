@@ -78,7 +78,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 Text = authority.Name,
                 Title = authority.Name,
                 Filename = authority.CleanQualifiedName,
-                Total = authority.CountHauntedOrgs
+                Total = authority.HauntedPubCount
             }).ToList();
 
             var next = region.ExtractNextLink();

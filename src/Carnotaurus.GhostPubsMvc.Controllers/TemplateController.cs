@@ -179,7 +179,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Id = result.Id,
                 Title = result.QualifiedName,
                 Text = result.QualifiedName,
-                Total = result.CountHauntedOrgs
+                Total = result.HauntedPubCount
             })
             .OrderBy(o => o.Text)
             .ToList();
@@ -197,7 +197,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             var results = _queryManager.GetAllAuthorities()
                 .Where(x => !x.HasHauntedOrgs)
                 .ToList()
-                .OrderBy(o => o.IsEngland).ThenBy(o => o.LongName)
+                .OrderBy(o => o.IsEngland).ThenBy(o => o.FullyQualifiedNameParentFirst)
                 .ToList()
                 ;
 
@@ -205,9 +205,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             {
                 Filename = result.CleanQualifiedName,
                 Id = result.Id,
-                Title = result.DetailedName,
-                Text = result.LongName,
-                Total = result.CountHauntedOrgs
+                Title = result.FullyQualifiedName,
+                Text = result.FullyQualifiedNameParentFirst,
+                Total = result.HauntedPubCount
             })
            .ToList();
 
@@ -348,7 +348,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                     Text = x.Name,
                     Title = x.Name,
                     Filename = x.CleanQualifiedName,
-                    Total = x.CountHauntedOrgs
+                    Total = x.HauntedPubCount
                 }
                 : null).OrderBy(x => x.Text).ToList();
 
@@ -412,14 +412,14 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             if (region.IsOutsideUnitedKingdom)
             {
-                orgsInRegionCount = region.CountHauntedOrgs;
+                orgsInRegionCount = region.HauntedPubCount;
             }
             else
             {
                 var firstDescendantAuthoritiesInRegion =
                     _queryManager.GetHauntedFirstDescendantAuthoritiesInRegion(region.Id);
 
-                orgsInRegionCount = firstDescendantAuthoritiesInRegion.Sum(x => x.CountHauntedOrgs);
+                orgsInRegionCount = firstDescendantAuthoritiesInRegion.Sum(x => x.HauntedPubCount);
             }
 
             if (orgsInRegionCount == 0) return;
@@ -494,7 +494,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                     .ToList();
 
                 CreateAuthorityFile(authority, districts,
-                    authority.CountHauntedOrgs
+                    authority.HauntedPubCount
                     );
             }
         }

@@ -59,7 +59,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     Id = region.Id,
                     Text = region.Name,
                     Title = region.Name,
-                    Total = region.CountHauntedOrgs
+                    Total = region.HauntedPubCount
                 },
             };
 
@@ -124,7 +124,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     Id = authority.ParentAuthority.Id,
                     Text = authority.ParentAuthority.Name,
                     Title = authority.ParentAuthority.Name,
-                    Total = authority.ParentAuthority.CountHauntedOrgs
+                    Total = authority.ParentAuthority.HauntedPubCount
                     
                 },
                 Authority = new PageLinkModel
@@ -133,7 +133,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     Id = authority.Id,
                     Text = authority.Name,
                     Title = authority.Name,
-                    Total = authority.CountHauntedOrgs,
+                    Total = authority.HauntedPubCount,
                      
                 }
             };
@@ -194,7 +194,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     Id = authority.ParentAuthority.Id,
                     Text = authority.ParentAuthority.Name,
                     Title = authority.ParentAuthority.Name,
-                    Total = authority.ParentAuthority.CountHauntedOrgs
+                    Total = authority.ParentAuthority.HauntedPubCount
                 },
                 Authority = new PageLinkModel
                 {
@@ -202,7 +202,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     Id = authority.Id,
                     Text = authority.Name,
                     Title = authority.Name,
-                    Total = authority.CountHauntedOrgs
+                    Total = authority.HauntedPubCount
                 },
                 Locality = new PageLinkModel
                 {
@@ -284,7 +284,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     Id = org.Id,
                     Text = org.Authority.ParentAuthority.Name,
                     Title = org.Authority.ParentAuthority.Name,
-                    Total = org.Authority.ParentAuthority.CountHauntedOrgs
+                    Total = org.Authority.ParentAuthority.HauntedPubCount
                 },
                 Authority = new PageLinkModel
                 {
@@ -292,7 +292,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     Id = org.Id,
                     Text = org.Authority.Name,
                     Title = org.Authority.Name,
-                    Total = org.Authority.CountHauntedOrgs
+                    Total = org.Authority.HauntedPubCount
                 },
                 Locality = new PageLinkModel
                 {
