@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using System.Xml.Linq;
@@ -12,11 +11,9 @@ using Carnotaurus.GhostPubsMvc.Data.Models;
 using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
 using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
-using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Controllers
 {
-
     public class TemplateController : Controller
     {
         private readonly ICommandManager _commandManager;
@@ -82,7 +79,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
         private void CopyImageFiles()
         {
-            const string source = @"C:\Carnotaurus\GhostPubsMvc4\src\Carnotaurus.GhostPubsMvc.Web\Carnotaurus.GhostPubsMvc.Web\Images";
+            const string source =
+                @"C:\Carnotaurus\GhostPubsMvc4\src\Carnotaurus.GhostPubsMvc.Web\Carnotaurus.GhostPubsMvc.Web\Images";
 
             FileSystemHelper.CopyFolder(
                 source,
@@ -138,7 +136,6 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 //Division = "Cumbria"
 
                 // British Isles
-
             };
 
             // GenerateGeographicHtmlPages(filter);
@@ -181,8 +178,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Text = result.QualifiedName,
                 Total = result.HauntedPubCount
             })
-            .OrderBy(o => o.Text)
-            .ToList();
+                .OrderBy(o => o.Text)
+                .ToList();
 
             CreatePageTypeFile(
                 PageTypeEnum.Home,
@@ -209,7 +206,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 Text = result.FullyQualifiedNameParentFirst,
                 Total = result.HauntedPubCount
             })
-           .ToList();
+                .ToList();
 
             CreatePageTypeFile(
                 PageTypeEnum.LeastHaunted,
@@ -549,7 +546,6 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                         .Count()
                     : authority.HauntedOrgs
                         .Count(x => x.Locality == locality)
-
             }).ToList();
 
             var model = _queryManager.PrepareAuthorityModel(authority,

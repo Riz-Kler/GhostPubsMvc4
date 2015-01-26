@@ -125,7 +125,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     Text = authority.ParentAuthority.Name,
                     Title = authority.ParentAuthority.Name,
                     Total = authority.ParentAuthority.HauntedPubCount
-                    
                 },
                 Authority = new PageLinkModel
                 {
@@ -134,7 +133,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     Text = authority.Name,
                     Title = authority.Name,
                     Total = authority.HauntedPubCount,
-                     
                 }
             };
 
@@ -478,6 +476,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             }
         }
 
+        public string Summary { get; set; }
+
         public String Filename { get; set; }
 
         public String JumboTitle { get; set; }
@@ -485,8 +485,5 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public PageTypeEnum Action { get; set; }
 
         public string PageTitle { get; set; }
-
-        public string Summary { get; set; }
-
     }
 }

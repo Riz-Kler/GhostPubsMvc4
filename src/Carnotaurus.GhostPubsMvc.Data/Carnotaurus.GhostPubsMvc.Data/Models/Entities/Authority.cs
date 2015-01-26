@@ -336,7 +336,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 return result;
             }
         }
-         
+
         [NotMapped]
         public int AreaSizeInSquareMiles
         {
@@ -378,7 +378,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                             "More interestingly in terms of haunted pubs, it has {4} such pubs. " +
                             "So that's {5} people per haunted pub. " +
                             "Further, that's {6} area size in square miles per haunted pub. " +
-                            "Considering both factors of population and area size for haunted pubs, it means there is one haunted pub for every {7} square miles. ",
+                            "Considering it's density for haunted pubs, there are {7} per person for every square mile. " +
+                            "There lower the value, the more haunted it is in terms of haunted pubs. " +
+                            "However, how does this compare to elsewhere? " +
+                            "Well, we'll tell you later. Why not revisit us in a few days to find? ",
                             FullyQualifiedName,
                             Population.ToWords(),
                             AreaSizeInSquareMiles.ToWords(),
@@ -468,7 +471,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                         .FirstOrDefault(x => x.Id == nextId);
                 }
             }
-             
+
             if (sibbling == null) return result;
 
             result = new PageLinkModel
