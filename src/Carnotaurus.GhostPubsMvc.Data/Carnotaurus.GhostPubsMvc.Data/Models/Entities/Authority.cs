@@ -398,6 +398,9 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                     result = string.Empty;
                 }
 
+                // fix for Card #398 - replace England Country with England
+                result = result.Replace("England Country", "England");
+
                 return result;
             }
         }
