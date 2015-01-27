@@ -371,17 +371,16 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 {
                     result =
                         string.Format(
-                            "In approximate terms: {0} has " +
-                            "It has a population of {1} people. " +
+                            "In approximate terms: {0} has a population of {1} people. " +
                             "It occupies {2} square miles. " +
                             "So, that's a density of {3} people per square mile. " +
                             "More interestingly in terms of haunted pubs, it has {4} such pubs. " +
-                            "So that's {5} people per haunted pub. " +
+                            "That's {5} people per haunted pub. " +
                             "Further, that's {6} area size in square miles per haunted pub. " +
-                            "Considering it's density for haunted pubs, there are {7} per person for every square mile. " +
-                            "There lower the value, the more haunted it is in terms of haunted pubs. " +
+                            "It has a haunted pub density of {7}. " +
+                            "The lower the value, the more haunted it is in terms of haunted pubs. " +
                             "However, how does this compare to elsewhere? " +
-                            "Well, we'll tell you later. Why not revisit us in a few days to find? ",
+                            "Well, we'll tell you later. Why not revisit us in a few days to find out? ",
                             FullyQualifiedName,
                             Population.ToWords(),
                             AreaSizeInSquareMiles.ToWords(),

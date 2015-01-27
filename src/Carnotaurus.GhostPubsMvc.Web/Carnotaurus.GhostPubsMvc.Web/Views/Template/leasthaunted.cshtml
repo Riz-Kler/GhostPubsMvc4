@@ -1,5 +1,4 @@
-﻿@using Carnotaurus.GhostPubsMvc.Common.Extensions
-@model Carnotaurus.GhostPubsMvc.Data.Models.ViewModels.OutputViewModel
+﻿@model Carnotaurus.GhostPubsMvc.Data.Models.ViewModels.OutputViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = string.Format("{0} | GhostPubs.com", Model.JumboTitle);
@@ -56,10 +55,33 @@
             <!-- Carousel
                 ================================================== -->
             <section id="carousel">
-                <div class="page-header">
-                    <h2>The list of local authorities that have no haunted pubs</h2>
-                </div>
-                <h3>Please help us find haunted pubs in the following areas:</h3>
+                <h2>The background behind this competition</h2>
+                <p>
+                    In early January 2015, we were approached by a Senior Features Reporter for the North West Evening Mail.
+                    He noticed that we did not list any haunted pubs for the <a href="http://www.ghostpubs.com/haunted-pubs/barrow-in-furness-district.html" rel="nofollow" title="No haunted pubs in Barrow-in-Furness?">Barrow-in-Furness</a> district.
+                    This is because we do not have any information on haunted pubs in the area. This is not to say that there are no haunted pubs in Barrow.
+                    We could not find any; and we have tried. Therefore, he wrote an article and put it in the newspaper.
+                    The article is here for us all to read: <a href="http://www.nwemail.co.uk/news/does-your-regular-haunt-have-ghosts-1.1185925"
+                                                               title="Does your regular haunt have ghost?"
+                                                               rel="nofollow"
+                                                               target="nwemail">Does your regular haunt have ghost?</a>
+                </p>
+                <p>
+                    Even with the help of the media, we still cannot find haunted pubs in Barrow.
+                    We also noticed that there are other districts throughout the United Kingdom, where haunted pub information is not forthcoming.
+                    So, we decided to compile a list of least haunted local authorities (i.e., those local authorities that have zero haunted pub listings on our website).
+                    If you can find one in the following areas then we will give you full credit for your efforts on our website.
+                </p>
+                <p>
+                    Particularly, we noticed that Northern Ireland does not seem have many haunted pubs.
+                    Oddly, we noticed the district of Cannock Chase, in Staffordshire, appears to have zero haunted pubs.
+                    This is supposedly the location of the most famous Four Crosses pub.
+                    The pub occupied the news for months in late 2014 and still swaps searches when looking for haunted pubs in the district of Cannock Chase.
+                    Unless our address validation services are incorrect, which is doubtful as these are issued by the UK government, the Four Crosses is not in the district of Cannock Chase.
+                    It is instead in the authority of South Staffordshire.
+                </p>
+                <h3>The list of local authorities that apparently have no haunted pubs</h3>
+                <h4>Please help us find haunted pubs in the following areas:</h4>
                 <ul>
                     @foreach (var link in Model.PageLinks)
                     {

@@ -60,7 +60,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 FileSystemHelper.EnsureFolders(_currentRoot, false);
                 FileSystemHelper.EnsureFolders(string.Format("{0}\\uk", _currentRoot), false);
             }
-
+             
             // copy images
             CopyImageFiles();
 
