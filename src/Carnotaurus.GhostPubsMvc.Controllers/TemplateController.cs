@@ -70,7 +70,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             GenerateHtmlHomePage();
             // todo - dpc - come back 
-            //  GenerateHtmlSitemap();
+            GenerateHtmlSitemap();
 
             GenerateContent();
 
