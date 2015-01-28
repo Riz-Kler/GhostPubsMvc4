@@ -25,6 +25,99 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public DateTime? Created { get; set; }
         public DateTime? Modified { get; set; }
         public DateTime? Deleted { get; set; }
+        // Ghost Specialist
+        public string LocalGhostSpecialistName { get; set; }
+        public string LocalGhostSpecialistUrl { get; set; }
+
+        public bool IsLocalGhostSpecialistValid
+        {
+            get { return LocalGhostSpecialistName.IsNotNullOrEmpty() && LocalGhostSpecialistUrl.IsNotNullOrEmpty(); }
+        }
+
+        // Ghost Tour Specialist
+        public string LocalGhostTourSpecialistName { get; set; }
+        public string LocalGhostTourSpecialistUrl { get; set; }
+
+        public bool IsLocalGhostTourSpecialistValid
+        {
+            get
+            {
+                return LocalGhostTourSpecialistName.IsNotNullOrEmpty() && LocalGhostTourSpecialistUrl.IsNotNullOrEmpty();
+            }
+        }
+
+        // Ghost Hunt Specialist
+        public string LocalGhostHuntSpecialistName { get; set; }
+        public string LocalGhostHuntSpecialistUrl { get; set; }
+
+        public bool IsLocalGhostHuntSpecialistValid
+        {
+            get
+            {
+                return LocalGhostHuntSpecialistName.IsNotNullOrEmpty() && LocalGhostHuntSpecialistUrl.IsNotNullOrEmpty();
+            }
+        }
+
+        // Medium
+        public string LocalMediumName { get; set; }
+        public string LocalMediumUrl { get; set; }
+
+        public bool IsLocalMediumValid
+        {
+            get { return LocalMediumName.IsNotNullOrEmpty() && LocalMediumUrl.IsNotNullOrEmpty(); }
+        }
+
+        // Council
+        public string LocalGhostCouncilName { get; set; }
+        public string LocalGhostCouncilUrl { get; set; }
+
+        public bool IsLocalGhostCouncilValid
+        {
+            get { return LocalGhostCouncilName.IsNotNullOrEmpty() && LocalGhostCouncilUrl.IsNotNullOrEmpty(); }
+        }
+
+        // Brewery
+        public string LocalGhostBreweryName { get; set; }
+        public string LocalGhostBreweryUrl { get; set; }
+
+        public bool IsLocalGhostBreweryValid
+        {
+            get { return LocalGhostBreweryName.IsNotNullOrEmpty() && LocalGhostBreweryUrl.IsNotNullOrEmpty(); }
+        }
+
+        // Pub Chain
+        public string LocalGhostPubChainName { get; set; }
+        public string LocalGhostPubChainUrl { get; set; }
+
+        public bool IsLocalGhostPubChainValid
+        {
+            get { return LocalGhostPubChainName.IsNotNullOrEmpty() && LocalGhostPubChainUrl.IsNotNullOrEmpty(); }
+        }
+
+        // Heritage Society
+        public string LocalGhostHeritageSocietyName { get; set; }
+        public string LocalGhostHeritageSocietytUrl { get; set; }
+
+        public bool IsLocalGhostHeritageSocietyValid
+        {
+            get
+            {
+                return LocalGhostHeritageSocietyName.IsNotNullOrEmpty() &&
+                       LocalGhostHeritageSocietytUrl.IsNotNullOrEmpty();
+            }
+        }
+
+        // Special events
+        public string LocalGhostSpecialEventsName { get; set; }
+        public string LocalGhostSpecialEventsUrl { get; set; }
+
+        public bool LocalGhostSpecialEventsValid
+        {
+            get
+            {
+                return LocalGhostSpecialEventsName.IsNotNullOrEmpty() && LocalGhostSpecialEventsUrl.IsNotNullOrEmpty();
+            }
+        }
 
         // recursive fix
         public int ParentId { get; set; }
@@ -49,7 +142,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 }
                 else if (IsCounty)
                 {
-                    var haunted = Authoritys.SelectMany(a => a.Orgs, (a, b) => new { a, b })
+                    var haunted = Authoritys.SelectMany(a => a.Orgs, (a, b) => new {a, b})
                         .Where(@t => @t.b.IsHauntedPub)
                         .Select(@t => @t.b);
 
@@ -293,7 +386,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                var density = Population / (double)Hectares;
+                var density = Population/(double) Hectares;
 
                 return density;
             }
@@ -304,7 +397,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                var result = (Population / (double)AreaSizeInSquareMiles).ToInt32();
+                var result = (Population/(double) AreaSizeInSquareMiles).ToInt32();
 
                 return result;
             }
@@ -319,7 +412,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
                 if (HauntedPubCount <= 0) return result;
 
-                result = (DensityInSquareMiles / (double)HauntedPubCount)
+                result = (DensityInSquareMiles/(double) HauntedPubCount)
                     .ToInt32();
 
                 return result;
@@ -342,7 +435,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                var result = (Hectares / 258.999).ToInt32();
+                var result = (Hectares/258.999).ToInt32();
 
                 return result;
             }
@@ -351,13 +444,13 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         [NotMapped]
         public int PeoplePerHauntedPub
         {
-            get { return (Population / (double)HauntedPubCount).ToInt32(); }
+            get { return (Population/(double) HauntedPubCount).ToInt32(); }
         }
 
         [NotMapped]
         public int AreaSizeInSquareMilesPerHauntedPub
         {
-            get { return (AreaSizeInSquareMiles / (double)HauntedPubCount).ToInt32(); }
+            get { return (AreaSizeInSquareMiles/(double) HauntedPubCount).ToInt32(); }
         }
 
         [NotMapped]

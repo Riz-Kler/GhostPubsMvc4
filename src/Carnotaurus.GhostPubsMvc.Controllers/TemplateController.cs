@@ -60,7 +60,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                 FileSystemHelper.EnsureFolders(_currentRoot, false);
                 FileSystemHelper.EnsureFolders(string.Format("{0}\\uk", _currentRoot), false);
             }
-             
+
             // copy images
             CopyImageFiles();
 
@@ -69,8 +69,8 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             GenerateSimpleHtmlPages();
 
             GenerateHtmlHomePage();
-
-            GenerateHtmlSitemap();
+            // todo - dpc - come back 
+            //  GenerateHtmlSitemap();
 
             GenerateContent();
 
@@ -168,7 +168,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         private void GenerateHtmlHomePage()
         {
             var results = _queryManager.GetAllAuthorities()
-                .Where(x => x.HasHauntedOrgs);
+                .Where(x => x.HasHauntedOrgs
+                    && !x.IsCrossBorderArea
+                    && !x.IsEngland);
 
             var links = results.Select(result => new PageLinkModel
             {

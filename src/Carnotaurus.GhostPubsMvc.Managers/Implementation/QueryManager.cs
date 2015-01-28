@@ -107,7 +107,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 count,
                 localities,
                 next,
-                "Haunted pubs in {0}"
+                "Haunted pubs in {0}" 
                 );
 
             return model;

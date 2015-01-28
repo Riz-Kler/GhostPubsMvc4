@@ -30,7 +30,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 PageLinks = pageLinks,
                 MetaDescription = metaDescription,
                 ArticleDescription = articleDescription,
-                Priority = PageTypePriority.Country,
+                Priority = PageTypePriority.Country
             };
 
             return viewModel;
@@ -41,12 +41,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             IList<PageLinkModel> authorityLinks,
             PageLinkModel next,
             String descriptionPattern)
-        {
-            if (count == 0)
-            {
-                var m = 1;
-            }
-
+        { 
             if (region == null) throw new ArgumentNullException("region");
             if (authorityLinks == null) throw new ArgumentNullException("authorityLinks");
             if (next == null) throw new ArgumentNullException("next");
@@ -95,7 +90,13 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 PageLinks = pageLinks,
                 MetaDescription = metaDescription,
                 ArticleDescription = articleDescription,
-                Summary = region.Summary
+                Summary = region.Summary,
+                LocalGhostSpecialist = region.IsLocalGhostSpecialistValid ? new PageLinkModel()
+                {
+                    Text = region.LocalGhostSpecialistName,
+                    Title = region.LocalGhostSpecialistName,
+                    ExternalUrl = region.LocalGhostSpecialistUrl
+                } : null
             };
 
             return model;
@@ -124,7 +125,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     Id = authority.ParentAuthority.Id,
                     Text = authority.ParentAuthority.Name,
                     Title = authority.ParentAuthority.Name,
-                    Total = authority.ParentAuthority.HauntedPubCount
+                    Total = authority.ParentAuthority.HauntedPubCount,
                 },
                 Authority = new PageLinkModel
                 {
@@ -135,7 +136,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     Total = authority.HauntedPubCount,
                 }
             };
-
 
             var adjusted = new Breadcrumb();
 
@@ -167,7 +167,13 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 MetaDescription = metaDescription,
                 ArticleDescription = articleDescription,
                 PageLinks = pageLinks,
-                Summary = authority.Summary
+                Summary = authority.Summary,
+                LocalGhostSpecialist = authority.IsLocalGhostSpecialistValid ? new PageLinkModel()
+                {
+                    Text = authority.LocalGhostSpecialistName,
+                    Title = authority.LocalGhostSpecialistName,
+                    ExternalUrl = authority.LocalGhostSpecialistUrl
+                } : null
             };
 
             return model;
@@ -477,6 +483,13 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         }
 
         public string Summary { get; set; }
+
+        public PageLinkModel LocalGhostSpecialist { get; set; }
+
+        public bool IsLocalGhostSpecialistAvailable
+        {
+            get { return LocalGhostSpecialist != null; }
+        }
 
         public String Filename { get; set; }
 

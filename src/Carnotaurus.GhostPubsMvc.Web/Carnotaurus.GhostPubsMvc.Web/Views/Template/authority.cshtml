@@ -64,17 +64,24 @@
             </div>
         </div>
 
-
-
         <div class="span8">
 
-            <!-- Carousel
-            ================================================== -->
-
-            <section id="carousel">
+            <section id="authority">
                 <div class="page-header">
                     <h2>@Model.JumboTitle</h2>
+
+                    @if (Model.IsLocalGhostSpecialistAvailable)
+                    {
+                        <h3>
+                            The designated ghost specialist for this area is <a rel="nofollow"
+                                                                                target="LocalGhostSpecialist"
+                                                                                title='@Model.LocalGhostSpecialist.Title'
+                                                                                href='@Model.LocalGhostSpecialist.ExternalUrl'>@Model.LocalGhostSpecialist.Text</a>
+                                                                            </h3>
+                    }
+
                 </div>
+
                 <h3>Let's journey through our haunted locations</h3>
                 <p>@Model.Summary</p>
                 <p>Please select from a haunted town from the following list:</p>
@@ -109,8 +116,6 @@
                 }
 
                 <div id="fb-root"></div>
-
-                <div class="fb-comments" data-href="@ViewBag.Link" data-numposts="5" data-colorscheme="dark"></div>
 
                 <div class="fb-like" data-href="@ViewBag.Link" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 
