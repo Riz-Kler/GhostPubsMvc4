@@ -41,7 +41,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             IList<PageLinkModel> authorityLinks,
             PageLinkModel next,
             String descriptionPattern)
-        { 
+        {
             if (region == null) throw new ArgumentNullException("region");
             if (authorityLinks == null) throw new ArgumentNullException("authorityLinks");
             if (next == null) throw new ArgumentNullException("next");
@@ -96,6 +96,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     Text = region.LocalGhostSpecialistName,
                     Title = region.LocalGhostSpecialistName,
                     ExternalUrl = region.LocalGhostSpecialistUrl
+                } : null,
+                LocalGhostHunter = region.IsLocalGhostHuntSpecialistValid ? new PageLinkModel()
+                {
+                    Text = region.LocalGhostHuntSpecialistName,
+                    Title = region.LocalGhostHuntSpecialistName,
+                    ExternalUrl = region.LocalGhostHuntSpecialistUrl
                 } : null
             };
 
@@ -173,6 +179,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                     Text = authority.LocalGhostSpecialistName,
                     Title = authority.LocalGhostSpecialistName,
                     ExternalUrl = authority.LocalGhostSpecialistUrl
+                } : null,
+                LocalGhostHunter = authority.IsLocalGhostHuntSpecialistValid ? new PageLinkModel()
+                {
+                    Text = authority.LocalGhostHuntSpecialistName,
+                    Title = authority.LocalGhostHuntSpecialistName,
+                    ExternalUrl = authority.LocalGhostHuntSpecialistUrl
                 } : null
             };
 
@@ -489,6 +501,14 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public bool IsLocalGhostSpecialistAvailable
         {
             get { return LocalGhostSpecialist != null; }
+        }
+
+
+        public PageLinkModel LocalGhostHunter { get; set; }
+
+        public bool IsLocalGhostHunterAvailable
+        {
+            get { return LocalGhostHunter != null; }
         }
 
         public String Filename { get; set; }

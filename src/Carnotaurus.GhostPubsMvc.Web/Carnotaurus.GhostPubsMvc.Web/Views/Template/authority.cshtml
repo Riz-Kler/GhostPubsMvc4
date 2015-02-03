@@ -79,7 +79,43 @@
                                                                                 href='@Model.LocalGhostSpecialist.ExternalUrl'>@Model.LocalGhostSpecialist.Text</a>
                                                                             </h3>
                     }
+                    else
+                    {
+                        <div>
+                            <p>
+                                We are looking to designate the ghost specialist for this area.
+                                If you are a haunted knowledge authority then you may advertise right here for free.
+                                Advertising here would promote you and your activities more than simply having a web page.
+                                We will give you a link from here to represent to your page elsewhere.
+                                So, if your are pretty clued up on this haunted area then we can even give you the opportunity to
+                                write up the listings for your designated area and more.
+                                So, please get in touch with us on <a href="https://twitter.com/ghost_pubs" rel="nofollow">twitter</a> or <a href="https://www.facebook.com/groups/ghostpubs/" rel="nofollow">facebook</a>. You'll receive full credit and you may win a prize.
+                            </p>
+                        </div>
+                    }
 
+                    @if (Model.IsLocalGhostHunterAvailable)
+                    {
+                        <h3>
+                            The designated ghost hunter for this area is <a rel="nofollow"
+                                                                            target="gp"
+                                                                            title='@Model.LocalGhostHunter.Title'
+                                                                            href='@Model.LocalGhostHunter.ExternalUrl'>@Model.LocalGhostHunter.Text</a>
+                                                                        </h3>
+                    }
+                    else
+                    {
+                        <div>
+                            <p>
+                                We are looking to designate the ghost hunter for this area.
+                                If you provider ghost hunts in this area then you may advertise right here for free.
+                                Advertising here would promote you and your activities more than simply having a web page.
+                                We will provide a link from this page to your website.
+                                So, if you actively provider hunts in this area then any prospective customers go directly to your website from here.
+                                So, please get in touch with us on <a href="https://twitter.com/ghost_pubs" rel="nofollow">twitter</a> or <a href="https://www.facebook.com/groups/ghostpubs/" rel="nofollow">facebook</a>.
+                            </p>
+                        </div>
+                    }
                 </div>
 
                 <h3>Let's journey through our haunted locations</h3>
