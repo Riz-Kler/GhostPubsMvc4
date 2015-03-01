@@ -69,7 +69,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             GenerateSimpleHtmlPages();
 
             GenerateHtmlHomePage();
-            // todo - dpc - come back 
+            
             GenerateHtmlSitemap();
 
             GenerateContent();
@@ -349,7 +349,9 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
                     Filename = x.CleanQualifiedName,
                     Total = x.HauntedPubCount
                 }
-                : null).OrderBy(x => x.Text).ToList();
+                : null)
+                .OrderBy(x => x.Text)
+                .ToList();
 
             var metaDescription = string.Format("Haunted pubs in {0}",
                 regions.Select(region => region.Name).OxfordAnd())
@@ -431,13 +433,13 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
             }
             else
             {
-                foreach (var authority in inRegion)
+                // todo - work out why filterModel == null?
+                var filtered = inRegion.Where(authority => filterModel == null || filterModel.Division.IsNullOrEmpty() ||
+                                                    authority.Name == filterModel.Division);
+
+                foreach (var authority in filtered)
                 {
-                    if (filterModel == null || filterModel.Division.IsNullOrEmpty() ||
-                        authority.Name == filterModel.Division)
-                    {
-                        CreateAuthorityFilesTop(authority);
-                    }
+                    CreateAuthorityFilesTop(authority);
                 }
             }
         }
