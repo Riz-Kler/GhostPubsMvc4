@@ -8,13 +8,14 @@ using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 {
+    [Table("Org", Schema = "Organisation")]
     public class Org : IEntity
     {
         public Org()
         {
             //BookItems = new List<BookItem>();
-            Notes = new List<Note>();
-            Tags = new List<Tag>();
+            this.Notes = new HashSet<Note>();
+            this.Tags = new HashSet<Tag>();
         }
 
         public DateTime Created { get; set; }
@@ -29,7 +30,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public string TradingName { get; set; }
         public string SimpleName { get; set; }
         public string Locality { get; set; }
-        public string PostalTown { get; set; }
         public string Postcode { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
@@ -176,8 +176,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
                 items.AddIf(Locality);
 
-                items.AddIf(PostalTown);
-
                 items.AddIf(Authority.Name);
                 return items;
             }
@@ -199,7 +197,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                string result = string.Empty;
+                var result = string.Empty;
 
                 try
                 {
@@ -270,7 +268,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             };
 
             var ints = Authority.Orgs
-                .Where(h => h.HauntedStatus == true)
+                .Where(h => h.HauntedStatus)
                 .OrderBy(o => o.QualifiedLocality)
                 .Select(s => s.Id).ToList();
 

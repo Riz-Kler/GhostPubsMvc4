@@ -1,14 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 {
+    [Table("Feature", Schema = "Organisation")]
     public class Feature : IEntity
     {
         public Feature()
         {
-            this.Tags = new List<Tag>();
+            this.Tags = new HashSet<Tag>();
         }
 
         public DateTime Created { get; set; }

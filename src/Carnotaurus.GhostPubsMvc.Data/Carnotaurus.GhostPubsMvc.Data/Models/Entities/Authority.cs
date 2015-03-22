@@ -9,6 +9,7 @@ using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 {
+    [Table("Authority", Schema = "dbo")]
     public class Authority : IEntity
     {
         public Authority()
@@ -142,7 +143,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
                 }
                 else if (IsCounty)
                 {
-                    var haunted = Authoritys.SelectMany(a => a.Orgs, (a, b) => new { a, b })
+                    var haunted = Authoritys.SelectMany(a => a.Orgs, (a, b) => new {a, b})
                         .Where(@t => @t.b.IsHauntedPub)
                         .Select(@t => @t.b);
 
@@ -386,7 +387,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                var density = Population / (double)Hectares;
+                var density = Population/(double) Hectares;
 
                 return density;
             }
@@ -397,7 +398,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                var result = (Population / (double)AreaSizeInSquareMiles).ToInt32();
+                var result = (Population/(double) AreaSizeInSquareMiles).ToInt32();
 
                 return result;
             }
@@ -412,7 +413,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 
                 if (HauntedPubCount <= 0) return result;
 
-                result = (DensityInSquareMiles / (double)HauntedPubCount)
+                result = (DensityInSquareMiles/(double) HauntedPubCount)
                     .ToInt32();
 
                 return result;
@@ -435,7 +436,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                var result = (Hectares / 258.999).ToInt32();
+                var result = (Hectares/258.999).ToInt32();
 
                 return result;
             }
@@ -444,13 +445,13 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         [NotMapped]
         public int PeoplePerHauntedPub
         {
-            get { return (Population / (double)HauntedPubCount).ToInt32(); }
+            get { return (Population/(double) HauntedPubCount).ToInt32(); }
         }
 
         [NotMapped]
         public int AreaSizeInSquareMilesPerHauntedPub
         {
-            get { return (AreaSizeInSquareMiles / (double)HauntedPubCount).ToInt32(); }
+            get { return (AreaSizeInSquareMiles/(double) HauntedPubCount).ToInt32(); }
         }
 
         [NotMapped]

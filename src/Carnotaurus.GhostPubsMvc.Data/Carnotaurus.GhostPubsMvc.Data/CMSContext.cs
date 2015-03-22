@@ -5,7 +5,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
-using Carnotaurus.GhostPubsMvc.Data.Models.Mapping;
+
+//using Carnotaurus.GhostPubsMvc.Data.Models.Mapping;
 
 namespace Carnotaurus.GhostPubsMvc.Data
 {
@@ -23,10 +24,6 @@ namespace Carnotaurus.GhostPubsMvc.Data
 
         public DbSet<AddressType> AddressTypes { get; set; }
         public DbSet<FeatureType> FeatureTypes { get; set; }
-        //  public DbSet<Book> Books { get; set; }
-        // public DbSet<BookItem> BookItems { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<ContentPage> ContentPages { get; set; }
         public DbSet<Authority> Authorities { get; set; }
         public DbSet<Feature> Features { get; set; }
         public DbSet<Note> Notes { get; set; }
@@ -70,15 +67,15 @@ namespace Carnotaurus.GhostPubsMvc.Data
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Configurations.Add(new AddressTypeMap());
-            modelBuilder.Configurations.Add(new FeatureTypeMap());
-            modelBuilder.Configurations.Add(new CategoryMap());
-            modelBuilder.Configurations.Add(new ContentPageMap());
-            modelBuilder.Configurations.Add(new AuthorityMap());
-            modelBuilder.Configurations.Add(new FeatureMap());
-            modelBuilder.Configurations.Add(new NoteMap());
-            modelBuilder.Configurations.Add(new OrgMap());
-            modelBuilder.Configurations.Add(new TagMap());
+            // modelBuilder.Configurations.Add(new AddressTypeMap());
+            //modelBuilder.Configurations.Add(new FeatureTypeMap());
+            // modelBuilder.Configurations.Add(new CategoryMap());
+            //modelBuilder.Configurations.Add(new ContentPageMap());
+            // modelBuilder.Configurations.Add(new AuthorityMap());
+            //modelBuilder.Configurations.Add(new FeatureMap());
+            //modelBuilder.Configurations.Add(new NoteMap());
+            //modelBuilder.Configurations.Add(new OrgMap());
+            //modelBuilder.Configurations.Add(new TagMap());
         }
     }
 }

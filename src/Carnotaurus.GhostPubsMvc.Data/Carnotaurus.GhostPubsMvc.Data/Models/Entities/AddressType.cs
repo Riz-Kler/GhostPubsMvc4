@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 
 namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
 {
+    [Table("AddressType", Schema = "Category")]
     public class AddressType : IEntity
     {
         public AddressType()

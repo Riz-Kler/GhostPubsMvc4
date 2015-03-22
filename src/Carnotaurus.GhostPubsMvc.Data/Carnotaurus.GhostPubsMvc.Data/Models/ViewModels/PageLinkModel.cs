@@ -33,9 +33,9 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 return url;
             }
         }
-        
+
         public String ExternalUrl { get; set; }
-        
+
         public String Filename { get; set; }
 
         public String Title { get; set; }

@@ -91,18 +91,22 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 MetaDescription = metaDescription,
                 ArticleDescription = articleDescription,
                 Summary = region.Summary,
-                LocalGhostSpecialist = region.IsLocalGhostSpecialistValid ? new PageLinkModel()
-                {
-                    Text = region.LocalGhostSpecialistName,
-                    Title = region.LocalGhostSpecialistName,
-                    ExternalUrl = region.LocalGhostSpecialistUrl
-                } : null,
-                LocalGhostHunter = region.IsLocalGhostHuntSpecialistValid ? new PageLinkModel()
-                {
-                    Text = region.LocalGhostHuntSpecialistName,
-                    Title = region.LocalGhostHuntSpecialistName,
-                    ExternalUrl = region.LocalGhostHuntSpecialistUrl
-                } : null
+                LocalGhostSpecialist = region.IsLocalGhostSpecialistValid
+                    ? new PageLinkModel
+                    {
+                        Text = region.LocalGhostSpecialistName,
+                        Title = region.LocalGhostSpecialistName,
+                        ExternalUrl = region.LocalGhostSpecialistUrl
+                    }
+                    : null,
+                LocalGhostHunter = region.IsLocalGhostHuntSpecialistValid
+                    ? new PageLinkModel
+                    {
+                        Text = region.LocalGhostHuntSpecialistName,
+                        Title = region.LocalGhostHuntSpecialistName,
+                        ExternalUrl = region.LocalGhostHuntSpecialistUrl
+                    }
+                    : null
             };
 
             return model;
@@ -174,18 +178,22 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 ArticleDescription = articleDescription,
                 PageLinks = pageLinks,
                 Summary = authority.Summary,
-                LocalGhostSpecialist = authority.IsLocalGhostSpecialistValid ? new PageLinkModel()
-                {
-                    Text = authority.LocalGhostSpecialistName,
-                    Title = authority.LocalGhostSpecialistName,
-                    ExternalUrl = authority.LocalGhostSpecialistUrl
-                } : null,
-                LocalGhostHunter = authority.IsLocalGhostHuntSpecialistValid ? new PageLinkModel()
-                {
-                    Text = authority.LocalGhostHuntSpecialistName,
-                    Title = authority.LocalGhostHuntSpecialistName,
-                    ExternalUrl = authority.LocalGhostHuntSpecialistUrl
-                } : null
+                LocalGhostSpecialist = authority.IsLocalGhostSpecialistValid
+                    ? new PageLinkModel
+                    {
+                        Text = authority.LocalGhostSpecialistName,
+                        Title = authority.LocalGhostSpecialistName,
+                        ExternalUrl = authority.LocalGhostSpecialistUrl
+                    }
+                    : null,
+                LocalGhostHunter = authority.IsLocalGhostHuntSpecialistValid
+                    ? new PageLinkModel
+                    {
+                        Text = authority.LocalGhostHuntSpecialistName,
+                        Title = authority.LocalGhostHuntSpecialistName,
+                        ExternalUrl = authority.LocalGhostHuntSpecialistUrl
+                    }
+                    : null
             };
 
             return model;

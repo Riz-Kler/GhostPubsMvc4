@@ -1,8 +1,5 @@
-﻿using System;
-
-namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
+﻿namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
 {
-
     public class Breadcrumb
     {
         public PageLinkModel Region { get; set; }
@@ -16,7 +13,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             Region = lineage.Authority;
             Authority = lineage.Locality;
             Locality = lineage.Organisation;
-             
+
             return this;
         }
     }

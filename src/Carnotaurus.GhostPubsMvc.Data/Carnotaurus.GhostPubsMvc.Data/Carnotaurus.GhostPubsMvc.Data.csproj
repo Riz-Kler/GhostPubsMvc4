@@ -159,31 +159,15 @@
     <Compile Include="Interfaces\IOutputViewModel.cs" />
     <Compile Include="Interfaces\IReadStore.cs" />
     <Compile Include="Interfaces\IWriteStore.cs" />
-    <Compile Include="Migrations\201409090829434_firstly.cs" />
-    <Compile Include="Migrations\201409090829434_firstly.Designer.cs">
-      <DependentUpon>201409090829434_firstly.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Entities\AddressType.cs" />
-    <Compile Include="Models\Entities\Category.cs" />
     <Compile Include="CmsContext.cs" />
-    <Compile Include="Models\Entities\ContentPage.cs" />
     <Compile Include="Models\Entities\Feature.cs" />
     <Compile Include="Models\Entities\FeatureType.cs" />
     <Compile Include="Models\Entities\Authority.cs" />
-    <Compile Include="Models\Mapping\AuthorityMap.cs" />
     <Compile Include="Models\RegionFilterModel.cs" />
     <Compile Include="Models\ViewModels\Breadcrumb.cs" />
     <Compile Include="Models\ViewModels\PageLinkKeyedCollection.cs" />
     <Compile Include="Models\ViewModels\PageLinkModel.cs" />
-    <Compile Include="Models\Mapping\AddressTypeMap.cs" />
-    <Compile Include="Models\Mapping\CategoryMap.cs" />
-    <Compile Include="Models\Mapping\ContentPageMap.cs" />
-    <Compile Include="Models\Mapping\FeatureMap.cs" />
-    <Compile Include="Models\Mapping\FeatureTypeMap.cs" />
-    <Compile Include="Models\Mapping\NoteMap.cs" />
-    <Compile Include="Models\Mapping\OrgMap.cs" />
-    <Compile Include="Models\Mapping\TagMap.cs" />
     <Compile Include="Models\Entities\Note.cs" />
     <Compile Include="Models\Entities\Org.cs" />
     <Compile Include="Models\ViewModels\OutputViewModel.cs" />
@@ -209,11 +193,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Extensions\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201409090829434_firstly.resx">
-      <DependentUpon>201409090829434_firstly.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\Carnotaurus.GhostPubsMvc.Web\packages\AutoMapper.3.3.0\tools\AutoMapper.targets" Condition="Exists('..\..\Carnotaurus.GhostPubsMvc.Web\packages\AutoMapper.3.3.0\tools\AutoMapper.targets')" />
