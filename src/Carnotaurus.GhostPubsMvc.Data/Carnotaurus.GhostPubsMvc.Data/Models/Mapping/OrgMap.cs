@@ -14,10 +14,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             this.Property(t => t.TradingName)
                 .IsRequired()
                 .HasMaxLength(300);
-
-            this.Property(t => t.AlternateName)
-                .HasMaxLength(300);
-
+             
             this.Property(t => t.SimpleName)
                 .HasMaxLength(300);
 
@@ -60,7 +57,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             this.Property(t => t.TradingStatus).HasColumnName("TradingStatus");
             this.Property(t => t.HauntedStatus).HasColumnName("HauntedStatus");
             this.Property(t => t.TradingName).HasColumnName("TradingName");
-            this.Property(t => t.AlternateName).HasColumnName("AlternateName");
             this.Property(t => t.SimpleName).HasColumnName("SimpleName");
             this.Property(t => t.Locality).HasColumnName("Locality");
             this.Property(t => t.PostalTown).HasColumnName("Town");

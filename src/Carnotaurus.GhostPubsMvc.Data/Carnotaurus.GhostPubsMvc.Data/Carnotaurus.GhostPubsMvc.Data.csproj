@@ -165,8 +165,6 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Entities\AddressType.cs" />
-    <Compile Include="Models\Entities\Book.cs" />
-    <Compile Include="Models\Entities\BookItem.cs" />
     <Compile Include="Models\Entities\Category.cs" />
     <Compile Include="CmsContext.cs" />
     <Compile Include="Models\Entities\ContentPage.cs" />
@@ -179,8 +177,6 @@
     <Compile Include="Models\ViewModels\PageLinkKeyedCollection.cs" />
     <Compile Include="Models\ViewModels\PageLinkModel.cs" />
     <Compile Include="Models\Mapping\AddressTypeMap.cs" />
-    <Compile Include="Models\Mapping\BookItemMap.cs" />
-    <Compile Include="Models\Mapping\BookMap.cs" />
     <Compile Include="Models\Mapping\CategoryMap.cs" />
     <Compile Include="Models\Mapping\ContentPageMap.cs" />
     <Compile Include="Models\Mapping\FeatureMap.cs" />

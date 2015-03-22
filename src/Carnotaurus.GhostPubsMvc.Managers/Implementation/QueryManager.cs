@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Carnotaurus.GhostPubsMvc.Common.Bespoke.Enumerations;
 using Carnotaurus.GhostPubsMvc.Common.Extensions;
@@ -10,7 +8,6 @@ using Carnotaurus.GhostPubsMvc.Data.Interfaces;
 using Carnotaurus.GhostPubsMvc.Data.Models.Entities;
 using Carnotaurus.GhostPubsMvc.Data.Models.ViewModels;
 using Carnotaurus.GhostPubsMvc.Managers.Interfaces;
-using Humanizer;
 
 namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
 {
@@ -107,7 +104,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 count,
                 localities,
                 next,
-                "Haunted pubs in {0}" 
+                "Haunted pubs in {0}"
                 );
 
             return model;
@@ -130,7 +127,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             var results = _reader.Items<Org>()
                 .Where(org =>
                     org != null
-                    && org.HauntedStatus.HasValue && org.HauntedStatus.Value
+                    && org.HauntedStatus
                     && org.AddressTypeId == 1
                     && org.Address != null
                     && org.Postcode != null
@@ -138,7 +135,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                     && (!org.LaTried || !org.Tried)
                 )
                 //.Take(1)
-                .ToList();
+                 .ToList();
 
             return results;
         }
@@ -146,9 +143,9 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
         public List<Authority> GetAllAuthorities()
         {
             var results = _reader.Items<Authority>()
-                 .ToList()
-                   .Where(x => !x.IsCrossBorderArea | !x.IsEngland)
-                   .ToList();
+                .ToList()
+                .Where(x => !x.IsCrossBorderArea | !x.IsEngland)
+                .ToList();
 
             return results;
         }
@@ -194,7 +191,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
                 .ToList();
 
             var queryable = data
-                .Where(org => org.HauntedStatus.HasValue && org.HauntedStatus.Value)
+                .Where(org => org.HauntedStatus)
                 .ToList()
                 .GroupBy(org => org.GeoPath)
                 .Select(x => new KeyValuePair<String, Int32>(x.Key, x.Count()))
@@ -251,8 +248,7 @@ namespace Carnotaurus.GhostPubsMvc.Managers.Implementation
             var lineage = new GeoPathModel(pathKeyValuePair.Key);
 
             var queryable = data
-                .Where(org => org.HauntedStatus.HasValue
-                              && org.HauntedStatus.Value
+                .Where(org => org.HauntedStatus
                               && org.Authority.ParentAuthority.Name == lineage.ParentOfRightmost
                               && org.Authority.QualifiedName == lineage.Rightmost
                 )

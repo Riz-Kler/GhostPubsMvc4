@@ -22,8 +22,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public string Type { get; set; }
         public int Population { get; set; }
         public int Hectares { get; set; }
-        public DateTime? Created { get; set; }
-        public DateTime? Modified { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Modified { get; set; }
         public DateTime? Deleted { get; set; }
         // Ghost Specialist
         public string LocalGhostSpecialistName { get; set; }

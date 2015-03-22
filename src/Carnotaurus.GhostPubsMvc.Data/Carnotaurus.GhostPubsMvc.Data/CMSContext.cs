@@ -72,8 +72,6 @@ namespace Carnotaurus.GhostPubsMvc.Data
         {
             modelBuilder.Configurations.Add(new AddressTypeMap());
             modelBuilder.Configurations.Add(new FeatureTypeMap());
-            modelBuilder.Configurations.Add(new BookMap());
-            modelBuilder.Configurations.Add(new BookItemMap());
             modelBuilder.Configurations.Add(new CategoryMap());
             modelBuilder.Configurations.Add(new ContentPageMap());
             modelBuilder.Configurations.Add(new AuthorityMap());

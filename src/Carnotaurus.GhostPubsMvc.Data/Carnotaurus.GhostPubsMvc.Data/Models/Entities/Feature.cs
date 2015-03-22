@@ -11,7 +11,10 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             this.Tags = new List<Tag>();
         }
 
-        public DateTime LastModified { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Modified { get; set; }
+        public DateTime? Deleted { get; set; }
+
         public int FeatureTypeId { get; set; }
         public string Name { get; set; }
         public virtual FeatureType FeatureType { get; set; }

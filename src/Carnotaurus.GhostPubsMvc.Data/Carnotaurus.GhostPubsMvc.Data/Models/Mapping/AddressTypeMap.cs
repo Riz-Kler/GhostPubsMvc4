@@ -23,7 +23,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             // Table & Column Mappings
             this.ToTable("AddressType", "Category");
             this.Property(t => t.Id).HasColumnName("ID");
-            this.Property(t => t.LastModified).HasColumnName("LastModified");
+            this.Property(t => t.Modified).HasColumnName("Modified");
+            this.Property(t => t.Created).HasColumnName("Created");
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.Description).HasColumnName("Description");
             this.Property(t => t.Deleted).HasColumnName("Deleted");

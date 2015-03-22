@@ -14,9 +14,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public string WellHeader { get; set; }
         public string Description { get; set; }
         public string HtmlText { get; set; }
-        public DateTime? DateCreated { get; set; }
-        public DateTime? DateModified { get; set; }
+
+        public DateTime Created { get; set; }
+        public DateTime Modified { get; set; }
         public DateTime? Deleted { get; set; }
+
         public virtual Category Category { get; set; }
         public int Id { get; set; }
     }

@@ -22,7 +22,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             this.ToTable("FeatureType", "Category");
             this.Property(t => t.Id).HasColumnName("ID");
             this.Property(t => t.ParentFeatureTypeId).HasColumnName("ParentFeatureTypeID");
-            this.Property(t => t.LastModified).HasColumnName("LastModified");
+            this.Property(t => t.Modified).HasColumnName("Modified");
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.Description).HasColumnName("Description");
             this.Property(t => t.Deleted).HasColumnName("Deleted");

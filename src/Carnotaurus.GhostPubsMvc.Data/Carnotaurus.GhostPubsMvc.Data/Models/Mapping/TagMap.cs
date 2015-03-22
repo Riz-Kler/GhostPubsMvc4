@@ -14,7 +14,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             // Table & Column Mappings
             this.ToTable("Tag", "Organisation");
             this.Property(t => t.Id).HasColumnName("ID");
-            this.Property(t => t.LastModified).HasColumnName("LastModified");
+            this.Property(t => t.Created).HasColumnName("Created");
+            this.Property(t => t.Modified).HasColumnName("Modified");
             this.Property(t => t.OrgId).HasColumnName("OrgID");
             this.Property(t => t.FeatureId).HasColumnName("FeatureID");
 
@@ -22,7 +23,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             this.HasRequired(t => t.Feature)
                 .WithMany(t => t.Tags)
                 .HasForeignKey(d => d.FeatureId);
-            this.HasOptional(t => t.Org)
+            this.HasRequired(t => t.Org)
                 .WithMany(t => t.Tags)
                 .HasForeignKey(d => d.OrgId);
         }

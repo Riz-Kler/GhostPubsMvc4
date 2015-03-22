@@ -20,13 +20,13 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public DateTime Created { get; set; }
         public DateTime Modified { get; set; }
         public DateTime? Deleted { get; set; }
+
         public int? AddressTypeId { get; set; }
         public int? AuthorityId { get; set; }
         public int? ParentId { get; set; }
-        public bool? TradingStatus { get; set; }
-        public bool? HauntedStatus { get; set; }
+        public bool TradingStatus { get; set; }
+        public bool HauntedStatus { get; set; }
         public string TradingName { get; set; }
-        public string AlternateName { get; set; }
         public string SimpleName { get; set; }
         public string Locality { get; set; }
         public string PostalTown { get; set; }
@@ -219,7 +219,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         {
             get
             {
-                var result = HauntedStatus.HasValue && HauntedStatus.Value
+                var result = HauntedStatus
                              && Locality != null
                              && AddressTypeId == 1;
 
@@ -270,7 +270,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             };
 
             var ints = Authority.Orgs
-                .Where(h => h.HauntedStatus.HasValue && h.HauntedStatus.Value)
+                .Where(h => h.HauntedStatus == true)
                 .OrderBy(o => o.QualifiedLocality)
                 .Select(s => s.Id).ToList();
 

@@ -39,8 +39,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Mapping
             this.Property(t => t.WellHeader).HasColumnName("WellHeader");
             this.Property(t => t.Description).HasColumnName("Description");
             this.Property(t => t.HtmlText).HasColumnName("HtmlText");
-            this.Property(t => t.DateCreated).HasColumnName("DateCreated");
-            this.Property(t => t.DateModified).HasColumnName("DateModified");
+            this.Property(t => t.Modified).HasColumnName("Modified");
+            this.Property(t => t.Modified).HasColumnName("Modified");
             this.Property(t => t.Deleted).HasColumnName("Deleted");
 
             // Relationships
