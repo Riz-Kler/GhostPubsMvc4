@@ -118,11 +118,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             string descriptionPattern
             )
         {
-            if (count == 0)
-            {
-                var m = 1;
-            }
-
             if (authority == null) throw new ArgumentNullException("authority");
             if (locations == null) throw new ArgumentNullException("locations");
             if (next == null) throw new ArgumentNullException("next");

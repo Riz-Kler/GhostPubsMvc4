@@ -176,12 +176,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             get
             {
                 var result = Type == "Cross border area";
-
-                if (result)
-                {
-                    var q = "test";
-                }
-
+                 
                 return result;
             }
         }
