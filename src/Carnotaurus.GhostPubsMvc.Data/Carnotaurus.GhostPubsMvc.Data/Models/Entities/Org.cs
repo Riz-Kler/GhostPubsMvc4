@@ -146,7 +146,7 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
             {
                 var items = NameExtended;
 
-                var result = string.Format("{0} | {1} Ghost", items.JoinWithComma(), TradingName);
+                var result = string.Format("{0} | {1} Haunted, {2}", items.JoinWithComma(), TradingName, PostcodePrimaryPart);
 
                 return result;
             }
