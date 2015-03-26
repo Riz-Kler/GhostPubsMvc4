@@ -13,8 +13,6 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
     {
         public Org()
         {
-            //BookItems = new List<BookItem>();
-            this.Notes = new HashSet<Note>();
             this.Tags = new HashSet<Tag>();
         }
 
@@ -45,11 +43,11 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         public bool LaTried { get; set; }
         public string LaData { get; set; }
         public string LaCode { get; set; }
+        public string Description { get; set; }
 
         public virtual AddressType AddressType { get; set; }
         public virtual Authority Authority { get; set; }
-        public virtual ICollection<Note> Notes { get; set; }
-        public virtual ICollection<Tag> Tags { get; set; }
+         public virtual ICollection<Tag> Tags { get; set; }
 
         // this slows down retreival tragically
         //   public virtual ICollection<BookItem> BookItems { get; set; }
@@ -100,11 +98,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.Entities
         }
 
         [NotMapped]
-        public string DescriptionFromNotes
+        public string SeoDescription
         {
             get
             {
-                var result = Notes.Select(x => x.Text).JoinWithSpace();
+                // var result = Notes.Select(x => x.Text).JoinWithSpace();
+                var result = Description;
 
                 return result.SeoMetaDescriptionTruncate();
             }

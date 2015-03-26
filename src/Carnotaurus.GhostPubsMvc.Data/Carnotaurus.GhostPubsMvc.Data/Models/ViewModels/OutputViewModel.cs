@@ -286,12 +286,12 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
             if (org == null) throw new ArgumentNullException("org");
             if (next == null) throw new ArgumentNullException("next");
 
-            var notes = org.Notes.Select(note => new PageLinkModel
-            {
-                Id = note.Id,
-                Text = note.Text,
-                Title = note.Text
-            }).ToList();
+            //var notes = org.Notes.Select(note => new PageLinkModel
+            //{
+            //    Id = note.Id,
+            //    Text = note.Text,
+            //    Title = note.Text
+            //}).ToList();
 
             const PageTypeEnum action = PageTypeEnum.Pub;
 
@@ -344,8 +344,9 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
                 JumboTitle = org.JumboTitle,
                 PageTitle = org.Title,
                 Action = action,
-                PageLinks = notes,
-                MetaDescription = org.DescriptionFromNotes,
+                PageLinks = new List<PageLinkModel>(),
+                MetaDescription = org.SeoDescription,
+                Description = org.Description,
                 ArticleDescription = string.Format(descriptionPattern, org.Address, org.PostcodePrimaryPart),
                 Tags = org.Sections,
                 Priority = PageTypePriority.Pub,
@@ -422,6 +423,8 @@ namespace Carnotaurus.GhostPubsMvc.Data.Models.ViewModels
         public Breadcrumb Lineage { get; set; }
 
         public String MetaDescription { get; set; }
+
+        public String Description { get; set; }
 
         public String ArticleDescription { get; set; }
 

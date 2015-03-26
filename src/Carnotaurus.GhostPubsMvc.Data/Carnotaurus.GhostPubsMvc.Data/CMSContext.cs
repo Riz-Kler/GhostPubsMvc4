@@ -26,7 +26,6 @@ namespace Carnotaurus.GhostPubsMvc.Data
         public DbSet<FeatureType> FeatureTypes { get; set; }
         public DbSet<Authority> Authorities { get; set; }
         public DbSet<Feature> Features { get; set; }
-        public DbSet<Note> Notes { get; set; }
         public DbSet<Org> Orgs { get; set; }
         public DbSet<Tag> Tags { get; set; }
 
