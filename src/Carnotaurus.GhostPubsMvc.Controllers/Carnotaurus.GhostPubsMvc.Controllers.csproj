@@ -59,6 +59,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Carnotaurus.GhostPubsMvc.Web\packages\NLog.4.0.1\lib\net45\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="RazorEngine">
+      <HintPath>..\Carnotaurus.GhostPubsMvc.Web\packages\RazorEngine.3.7.0\lib\net45\RazorEngine.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
