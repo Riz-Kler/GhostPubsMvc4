@@ -52,7 +52,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
 
             UpdateOrganisations(orgsToUpdate);
 
-            _currentRoot = String.Format(@"C:\Carnotaurus\{0}\haunted-pubs\",
+            _currentRoot = String.Format(@"C:\Carno\Backups\{0}\haunted-pubs\",
                 _generationId);
 
             if (_currentRoot != null)
@@ -80,7 +80,7 @@ namespace Carnotaurus.GhostPubsMvc.Controllers
         private void CopyImageFiles()
         {
             const string source =
-                @"C:\Carnotaurus\GhostPubsMvc4\src\Carnotaurus.GhostPubsMvc.Web\Carnotaurus.GhostPubsMvc.Web\Images";
+                @"C:\Carno\GhostPubsMvc4\src\Carnotaurus.GhostPubsMvc.Web\Carnotaurus.GhostPubsMvc.Web\Images";
 
             FileSystemHelper.CopyFolder(
                 source,
